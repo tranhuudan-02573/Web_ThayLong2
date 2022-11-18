@@ -2,8 +2,10 @@ package vn.edu.hcmuaf.fit.model;
 
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 @Data
-public class Role {
+public class Role extends AModel {
     int id;
     String code;
 
@@ -13,8 +15,12 @@ public class Role {
     }
 
     public Role() {
-    }
+        super();
 
+    }
+    public Role(int id, Timestamp create_at, Timestamp updated_at) {
+        super(id, create_at, updated_at);
+    }
     public int getId() {
         return id;
     }

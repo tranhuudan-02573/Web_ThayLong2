@@ -1,4 +1,11 @@
 package vn.edu.hcmuaf.fit.model;
 
-public class Cap {
+import java.sql.Timestamp;
+
+public class Cap extends AModel{
+    private String cap;
+    public Cap() {
+        super();
+
+    }
 }

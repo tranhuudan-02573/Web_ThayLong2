@@ -1,4 +1,6 @@
 package vn.edu.hcmuaf.fit.model;
 
-public class Promot {
+import java.sql.Timestamp;
+
+public class Promot  {
 }

@@ -3,6 +3,9 @@ package vn.edu.hcmuaf.fit.model;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
 @Data
 public class Phone implements Serializable {
     private int id;
@@ -10,6 +13,19 @@ public class Phone implements Serializable {
     private int price;
     private String desc;
     private String shortDesc;
+
+    List<Color> colors;
+
+    List<Image> images;
+
+    List<Cap> caps;
+
+    Map<String,String> spec ;
+
+    boolean isIM;
+
+
+
     public Phone(){
 
     }
