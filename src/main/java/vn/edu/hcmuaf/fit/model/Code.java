@@ -1,4 +1,14 @@
 package vn.edu.hcmuaf.fit.model;
 
-public class Code {
+import java.sql.Timestamp;
+
+public class Code extends AModel {
+    private String code;
+    private int value;
+    private Timestamp killed_at;
+    public Code() {
+        super();
+
+    }
 }
+

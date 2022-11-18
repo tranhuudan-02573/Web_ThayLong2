@@ -9,17 +9,14 @@ public class User {
     private int id;
     private String name;
     private String password;
-    private List<Role> l = new ArrayList<>();
+    private Role l ;
 
-
+    private Cart cart;
     private String email ;
 
     public User() {
     }
 
-    public void addRole(Role r){
-        l.add(r);
-    }
 
     public User(String email){
         this.email=email;
