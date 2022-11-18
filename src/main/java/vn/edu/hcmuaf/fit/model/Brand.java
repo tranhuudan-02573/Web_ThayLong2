@@ -1,4 +1,8 @@
 package vn.edu.hcmuaf.fit.model;
 
-public class Brand {
+public class Brand extends  Model {
+
+    
+
+
 }

@@ -1,5 +1,9 @@
 package vn.edu.hcmuaf.fit.db;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.*;
 
 public class DBConnect {
@@ -25,15 +29,15 @@ public class DBConnect {
         return install;
     }
 
-    public Statement get() throws SQLException {
+    public PreparedStatement get(String sql) throws SQLException {
         if(connection==null) throw new SQLException("DB do not connect");
-        return connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+        return connection.prepareStatement(sql);
     }
 
     public static void main(String[] args) {
         try {
-            Statement statement =  DBConnect.getInstall().get();
-            ResultSet rs=statement.executeQuery("select username, password from users ");
+            PreparedStatement statement =  DBConnect.getInstall().get("select username, password from users ");
+            ResultSet rs=statement.executeQuery();
             rs.last();
             System.out.println(rs.getRow());
 //            while (rs.next()) System.out.println(rs.getString(1));

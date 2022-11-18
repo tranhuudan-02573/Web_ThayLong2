@@ -1,11 +1,18 @@
 package vn.edu.hcmuaf.fit.db;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
+import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.model.Phone;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class JDBiConnector {
@@ -22,13 +29,17 @@ public class JDBiConnector {
 
     private static void create() {
         try {
-            MysqlDataSource dataSource = new MysqlDataSource();
-            dataSource.setURL("jdbc:mysql://" + DBProperties.getDBHost() + ":" + DBProperties.getDBPort() + "/" + DBProperties.getDBDatabaseName());
-            dataSource.setUser(DBProperties.getDBUsername());
-            dataSource.setPassword(DBProperties.getDBPassword());
-            dataSource.setUseCompression(true);
-            dataSource.setAutoReconnect(true);
-            jdbi = Jdbi.create(dataSource);
+
+            BasicDataSource ds = new BasicDataSource();
+ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
+ds.setPassword("");
+ds.setUsername("root");
+ds.setMaxIdle(2);
+ds.setMinIdle(2);
+ds.setUrl("jdbc:mysql://localhost:3306/shop_phone");
+            Connection cn = ds.getConnection();
+                    jdbi = Jdbi.create(cn);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -36,7 +47,7 @@ public class JDBiConnector {
 
     public static void main(String[] args) {
         List<Phone> list = JDBiConnector.get().withHandle(handle -> {
-            return handle.createQuery("select * from products").mapToBean(Phone.class).stream().collect(Collectors.toList());
+            return handle.createQuery("select * from phones where id = :id").bind("id",2).mapToBean(Phone.class).stream().collect(Collectors.toList());
         });
         System.out.println(list);
     }
