@@ -40,7 +40,12 @@
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
 
-
+    <!-- https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet -->
+    <dependency>
+      <groupId>org.jboss.weld.servlet</groupId>
+      <artifactId>weld-servlet</artifactId>
+      <version>2.4.8.Final</version>
+    </dependency>
     <dependency>
       <groupId>org.jdbi</groupId>
       <artifactId>jdbi3-core</artifactId>
@@ -52,6 +57,13 @@
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.jdbi/jdbi3-sqlobject -->
+    <dependency>
+      <groupId>org.jdbi</groupId>
+      <artifactId>jdbi3-sqlobject</artifactId>
+      <version>3.34.0</version>
+    </dependency>
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -62,6 +74,12 @@
       <artifactId>javax.mail</artifactId>
       <version>1.5.5</version>
     </dependency>
+      <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <version>1.18.20</version>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
   <build>
     <finalName>project_web</finalName>

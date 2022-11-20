@@ -1,25 +1,29 @@
 package vn.edu.hcmuaf.fit.model;
 
+import lombok.Data;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
-public class Cart extends AModel {
-    private List<Phone> lsPhone = new ArrayList<>();
+@Data
+public class Cart {
+    private int id;
+    private Timestamp create_at;
+    private Timestamp updated_at;
+    private List<Phone> phones = new ArrayList<>();
     private int quantity;
 
     private String status;
     private String save;
-    private int idPay;
+    private Pay pay;
 
-
+    void addPhone(Phone phone){
+        phones.add(phone);
+    }
 
     public Cart() {
         super();
 
     }
 
-    public void addPhone(Phone phone){
-        this.lsPhone.add(phone);
-    }
 }

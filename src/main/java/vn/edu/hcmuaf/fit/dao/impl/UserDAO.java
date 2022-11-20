@@ -1,22 +1,26 @@
 package vn.edu.hcmuaf.fit.dao.impl;
 
-import org.jdbi.v3.core.mapper.JoinRowMapper;
 import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 import org.jdbi.v3.core.result.RowView;
+import vn.edu.hcmuaf.fit.dao.GenericDAO;
+import vn.edu.hcmuaf.fit.dao.IUserDAO;
 import vn.edu.hcmuaf.fit.db.DBConnect;
 import vn.edu.hcmuaf.fit.db.JDBiConnector;
-import vn.edu.hcmuaf.fit.model.Role;
+import vn.edu.hcmuaf.fit.model.Color;
+import vn.edu.hcmuaf.fit.model.Pay;
+import vn.edu.hcmuaf.fit.model.Phone;
 import vn.edu.hcmuaf.fit.model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
-public class UserDAO extends AbstractDAO<User> {
+public class UserDAO extends AbstractDAO<User> implements IUserDAO {
     private static UserDAO install;
 
     public UserDAO() {
@@ -28,85 +32,70 @@ public class UserDAO extends AbstractDAO<User> {
         return install;
     }
 
-    List<User> join() {
+    List<Phone> join() {
 
 
+        return new JDBiConnector().get().withHandle(handle -> {
+                    return handle.createQuery("select phones.id p_id ,phones.name p_name, phones.cap p_cap, phones.price p_price, phones.shortdesc p_shortdesc, phones.status p_status ,phones.thumbnail p_thumbnail, phones.total p_total,phones.`desc` p_desc,phone_color.id c_id,phone_color.name c_name,phone_color.img c_img, phone_color.total c_total from phones inner join phone_color on phone_color.idphone = phones.id\n")
+                            .registerRowMapper(BeanMapper.factory(Phone.class, "p"))
+                            .registerRowMapper(BeanMapper.factory(Color.class, "c"))
+                            .reduceRows((Map<Integer, Phone> map, RowView rowView) -> {
+                                Phone phone = map.computeIfAbsent(
+                                        rowView.getColumn("p_id", Integer.class),
+                                        id -> rowView.getRow(Phone.class));
 
-        return  JDBiConnector.get().withHandle(handle -> {
-                    return handle.createQuery("select users.id c_id,  name c_name, password c_password, roles.id p_id, code p_code\n" +
-                                    "from users\n" +
-                                    "inner join roles on users.idrole= roles.id ;")
-                            .registerRowMapper(BeanMapper.factory(User.class, "c"))
-                            .registerRowMapper(BeanMapper.factory(Role.class, "p"))
-                            .reduceRows((Map<Integer, User> map, RowView rowView) -> {
-                                User contact = map.computeIfAbsent(
-                                        rowView.getColumn("c_id", Integer.class),
-                                        id -> rowView.getRow(User.class));
-
-                                if (rowView.getColumn("p_id", Integer.class) != null) {
-                                    contact.addRole(rowView.getRow(Role.class));
+                                if (rowView.getColumn("c_id", Integer.class) != null) {
+                                    phone.addColor(rowView.getRow(Color.class));
+                                    phone.setColors(phone.getColors());
                                 }
                             })
                             .collect(toList());
                 }
-                );
-//
-//            handle.createQuery("select users.id c_id,  name, password, roles.id p_id, code\n" +
-//                            "from users\n" +
-//                            "inner join roles on users.idrole= roles.id ;")
-//                    .reduceResultSet(new LinkedHashMap<Integer, User>(),
-//                            (acc, resultSet, ctx) -> {
-//                                int userid = resultSet.getInt("c_id");
-//                                User user;
-//                                if (acc.containsKey(userid)) {
-//                                    user = acc.get(userid);
-//                                } else {
-//                                    user = new User();
-//                                    acc.put(userid,user);
-//                                    user.setId(userid);
-//                                    user.setName(resultSet.getString("name"));
-//                                    user.setPassword(resultSet.getString("password"));
-//                                }
-//
-//                                int roleid = resultSet.getInt("p_id");
-//                                if (!resultSet.wasNull()) {
-//                                    Role role = new Role();
-//                                    role.setId(roleid);
-//                                    role.setCode(resultSet.getString("code"));
-//                                    user.addRole(role);
-//                                }
-//
-//                                return acc;
-//                            })
-//                    .values()
-//                    .stream()
-//                    .collect(toList());
+        );
 
 
-        }
+    }
+
+    @Override
+    public List<Phone> getCartByIdUser(int id) {
+        List<Phone> rs = new LinkedList<>();
 
 
+        return rs;
 
-//    void map(){
-//        Multimap<User, Role> joined = HashMultimap.create();
-//        h.createQuery("SELECT * FROM \"user\" NATURAL JOIN author NATURAL JOIN article")
-//                .map(JoinRowMapper.forTypes(User.class, Article.class))
-//                .forEach(jr -> joined.put(jr.get(User.class), jr.get(Article.class)));
-//    }
+    }
 
-    public User getUserByUsername(String username){
+    @Override
+    public List<Phone> getWishListByIdUser(int id) {
+        List<Phone> rs = new LinkedList<>();
+
+
+        return rs;
+
+    }
+
+    @Override
+    public List<Pay> getPayByIdUer(int id) {
+        List<Pay> rs = new LinkedList<>();
+
+        return rs;
+
+
+    }
+
+    public User getUserByUP(String username, String password) {
 
 
         try {
-            PreparedStatement statement= DBConnect.getInstall().get("select name, password from users where status = 1 and name = '"+username+"'");
-            ResultSet rs=statement.executeQuery();
+            PreparedStatement statement = DBConnect.getInstall().get("select name, password from users where status = 1 and name = '" + username + "'");
+            ResultSet rs = statement.executeQuery();
 //            kiem tra lấy dc bao nhieu dong dư lieu
             rs.last();
             int count = rs.getRow();
-            if(count==0) return null;
-            if(count>1) throw new SQLException("SQL Query Error");
+            if (count == 0) return null;
+            if (count > 1) throw new SQLException("SQL Query Error");
             rs.first();
-            User user= new User();
+            User user = new User();
 //            user.setUsername(rs.getString(1));
 //            user.setPassword(rs.getString(2));
             return user;
@@ -115,6 +104,7 @@ public class UserDAO extends AbstractDAO<User> {
             return null;
         }
     }
+
 
     public static void main(String[] args) {
         System.out.println(new UserDAO().join());

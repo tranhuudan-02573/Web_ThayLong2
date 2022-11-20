@@ -5,6 +5,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.model.Phone;
 
+import javax.inject.Inject;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -16,38 +17,34 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class JDBiConnector {
-    private static Jdbi jdbi;
+    @Inject
+    private Jdbi jdbi;
 
-    private JDBiConnector() {
+    public JDBiConnector() {
 
     }
 
-    public static Jdbi get() {
-        if (jdbi == null) create();
-        return jdbi;
-    }
 
-    private static void create() {
+    public Jdbi get() {
         try {
 
             BasicDataSource ds = new BasicDataSource();
-ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-ds.setPassword("");
-ds.setUsername("root");
-ds.setMaxIdle(2);
-ds.setMinIdle(2);
-ds.setUrl("jdbc:mysql://localhost:3306/shop_phone");
+            ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
+            ds.setPassword("");
+            ds.setUsername("root");
+            ds.setMaxIdle(2);
+            ds.setMinIdle(2);
+            ds.setUrl("jdbc:mysql://localhost:3306/shop_phone");
             Connection cn = ds.getConnection();
-                    jdbi = Jdbi.create(cn);
-
+            return jdbi = Jdbi.create(cn);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static void main(String[] args) {
-        List<Phone> list = JDBiConnector.get().withHandle(handle -> {
-            return handle.createQuery("select * from phones where id = :id").bind("id",2).mapToBean(Phone.class).stream().collect(Collectors.toList());
+        List<Phone> list = new JDBiConnector().get().withHandle(handle -> {
+            return handle.createQuery("select * from phones where id = :id").bind("id", 2).mapToBean(Phone.class).stream().collect(Collectors.toList());
         });
         System.out.println(list);
     }
