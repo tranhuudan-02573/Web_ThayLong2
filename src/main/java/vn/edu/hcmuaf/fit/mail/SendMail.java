@@ -121,7 +121,6 @@ e.getMessage();
  
     }
 
-    public static void main(String[] args) {
-        System.out.println(new SendMail().sendEmail(new User("20130432@st.hcmuaf.edu.vn")));
-    }
+
+
 }

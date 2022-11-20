@@ -1,23 +1,27 @@
 package vn.edu.hcmuaf.fit.model;
 
-import java.sql.Timestamp;
+import lombok.Data;
 
-public class Pay extends AModel{
+import java.sql.Timestamp;
+import java.util.List;
+
+@Data
+public class Pay {
+    private int id;
+    private Timestamp create_at;
+    private Timestamp updated_at;
     private String payment;
-    private  String address;
+    private String address;
     private String name;
     private String phone;
-    private  String email;
+    private String email;
     private int status;
-    private int idCode;
+    List<Code> codes;
     private int total;
+
     public Pay() {
         super();
 
-    }
-    public Pay(int id, Timestamp create_at, Timestamp updated_at) {
-
-        super(id, create_at, updated_at);
     }
 
 }
