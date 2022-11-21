@@ -6,10 +6,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Data
-public class Pay {
-    private int id;
-    private Timestamp create_at;
-    private Timestamp updated_at;
+public class Pay extends  BaseModel{
     private String payment;
     private String address;
     private String name;

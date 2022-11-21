@@ -1,7 +1,6 @@
 package vn.edu.hcmuaf.fit.dao.impl;
 
 import lombok.Data;
-import lombok.experimental.SuperBuilder;
 import vn.edu.hcmuaf.fit.dao.GenericDAO;
 import vn.edu.hcmuaf.fit.db.JDBiConnector;
 

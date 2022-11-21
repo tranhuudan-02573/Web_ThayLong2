@@ -5,10 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 import java.util.List;
 @Data
-public class Review {
-    private int id;
-    private Timestamp create_at;
-    private Timestamp updated_at;
+public class Review extends  BaseModel{
     private  String content;
     private int star;
     private  boolean isQuestion;

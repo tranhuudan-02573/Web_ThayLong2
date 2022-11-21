@@ -6,10 +6,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 @Data
-public class Cart {
-    private int id;
-    private Timestamp create_at;
-    private Timestamp updated_at;
+public class Cart extends  BaseModel{
     private List<Phone> phones = new ArrayList<>();
     private int quantity;
 

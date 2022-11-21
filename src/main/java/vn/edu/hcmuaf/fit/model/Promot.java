@@ -4,10 +4,7 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 @Data
-public class Promot {
-    private int id;
-    private Timestamp create_at;
-    private Timestamp updated_at;
+public class Promot extends  BaseModel{
 
     private String name;
     private String desc;
