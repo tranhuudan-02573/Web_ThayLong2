@@ -4,10 +4,7 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 @Data
-public class Code {
-    private int id;
-    private Timestamp create_at;
-    private Timestamp updated_at;
+public class Code extends  BaseModel{
     private String code;
     private int value;
     private Timestamp killed_at;

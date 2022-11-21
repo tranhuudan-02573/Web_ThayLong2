@@ -5,9 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class Reply {private int id;
-    private Timestamp create_at;
-    private Timestamp updated_at;
+public class Reply extends  BaseModel{
 
     private boolean isLike;
     private String content;
