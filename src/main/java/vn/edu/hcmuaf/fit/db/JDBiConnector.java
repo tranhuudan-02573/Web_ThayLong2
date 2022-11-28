@@ -1,31 +1,28 @@
 package vn.edu.hcmuaf.fit.db;
 
-import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.jdbi.v3.core.Jdbi;
-import vn.edu.hcmuaf.fit.model.Phone;
+import vn.edu.hcmuaf.fit.model.phone.Phone;
 
 import javax.inject.Inject;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class JDBiConnector {
-    @Inject
-    private Jdbi jdbi;
+    private static Jdbi jdbi;
 
-    public JDBiConnector() {
+    private JDBiConnector() {
 
     }
 
+    public static Jdbi get() {
+        if (jdbi == null) create();
+        return jdbi;
+    }
 
-    public Jdbi get() {
+    public static void create() {
         try {
 
             BasicDataSource ds = new BasicDataSource();
@@ -36,7 +33,7 @@ public class JDBiConnector {
             ds.setMinIdle(2);
             ds.setUrl("jdbc:mysql://localhost:3306/shop_phone");
             Connection cn = ds.getConnection();
-            return jdbi = Jdbi.create(cn);
+            jdbi = Jdbi.create(cn);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

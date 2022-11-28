@@ -5,9 +5,10 @@
  */
 package vn.edu.hcmuaf.fit.filter;
 
-import dal.cart.CartDBContext;
-import model.auth.User;
-import model.cart.Cart;
+
+import vn.edu.hcmuaf.fit.dao.impl.user.CartDAO;
+import vn.edu.hcmuaf.fit.model.user.User;
+import vn.edu.hcmuaf.fit.model.user.Cart;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -20,11 +21,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
-/**
- *
- * @author giaki
- */
-@WebFilter(filterName = "CartFilter", urlPatterns = {"/*","/pods/*", "/orders/*"})
+
+@WebFilter(filterName = "CartFilter", urlPatterns = {"/*", "/pods/*", "/orders/*"})
 public class CartFilter implements Filter {
 
     private static final boolean debug = true;
@@ -91,16 +89,14 @@ public class CartFilter implements Filter {
     }
 
     /**
-     *
-     * @param request The servlet request we are processing
+     * @param request  The servlet request we are processing
      * @param response The servlet response we are creating
-     * @param chain The filter chain we are processing
-     *
-     * @exception IOException if an input/output error occurs
-     * @exception ServletException if a servlet error occurs
+     * @param chain    The filter chain we are processing
+     * @throws IOException      if an input/output error occurs
+     * @throws ServletException if a servlet error occurs
      */
     public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain)
+                         FilterChain chain)
             throws IOException, ServletException {
 
         if (debug) {
@@ -114,11 +110,11 @@ public class CartFilter implements Filter {
             HttpServletRequest req = (HttpServletRequest) request;
             HttpServletResponse res = (HttpServletResponse) response;
             HttpSession session = req.getSession();
-            CartDBContext cartDB = new CartDBContext();
+            CartDAO cartDB = new CartDAO();
             ArrayList<Cart> carts = new ArrayList<Cart>();
             User user = (User) session.getAttribute("user");
             if (user != null) {
-                carts = cartDB.findByUser(user.getId());
+//                carts = cartDB.findByUser(user.getId());
             } else {
                 carts = (ArrayList<Cart>) session.getAttribute("carts");
                 if (carts == null) {

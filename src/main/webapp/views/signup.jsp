@@ -19,7 +19,7 @@
 
 	<body>
 
-	<jsp:include page="/layout/header.jsp"/>
+	<jsp:include page="layout/header.jsp"/>
 		<main class="">
 			<div class="container ">
 				<section class="my-5 ">
@@ -94,7 +94,7 @@
 
 		</main>
 
-	<jsp:include page="/layout/footer.jsp"/>
+	<jsp:include page="layout/footer.jsp"/>
 
 
 
