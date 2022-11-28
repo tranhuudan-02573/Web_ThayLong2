@@ -6,7 +6,6 @@
 package vn.edu.hcmuaf.fit.model.common;
 
 /**
- *
  * @author giaki
  */
 public class Pagination {
@@ -20,8 +19,8 @@ public class Pagination {
 
     public Pagination() {
     }
-    
-    public Pagination(int pageIndex,int pageSize, int size) {
+
+    public Pagination(int pageIndex, int pageSize, int size) {
         this.pageIndex = pageIndex;
         this.pageSize = pageSize;
         this.size = size;
@@ -29,7 +28,7 @@ public class Pagination {
         this.next = Math.min(this.pageIndex + 1, this.count);
         this.prev = Math.max(1, this.pageIndex - 1);
     }
-    
+
     public void upDateCount() {
         int count = (int) Math.ceil((double) this.size / pageSize);
         this.count = count > 0 ? count : 1;
@@ -39,7 +38,7 @@ public class Pagination {
         this.size = size;
         upDateCount();
     }
-    
+
     public int getSize() {
         return this.size;
     }

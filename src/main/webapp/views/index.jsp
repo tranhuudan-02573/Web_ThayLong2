@@ -51,7 +51,7 @@
 
 	<body class="">
 
-	<jsp:include page="/layout/header.jsp"/>
+	<jsp:include page="layout/header.jsp"/>
 		<div class="homecontent ">
 			<div class="container ">
 				<section class="homeslider py-5">
@@ -5673,7 +5673,7 @@
 				<!--end card-mobile-->
 			</div>
 		</div>
-	<jsp:include page="/layout/footer.jsp"/>
+	<jsp:include page="layout/footer.jsp"/>
 
 		<script type="text/javascript" src="/lib/mdb4/js/jquery.min.js"></script>
 		<script src="/lib/mdb4/js/popper.min.js"></script>

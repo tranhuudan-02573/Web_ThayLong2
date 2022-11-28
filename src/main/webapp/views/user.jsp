@@ -66,11 +66,11 @@
       </div>
     </div>
 
-    <jsp:include page="/layout/header.jsp"/>
+    <jsp:include page="layout/header.jsp"/>
 
     <main>
       <div class="container">
-        <jsp:include page="/layout/breadcrumb.jsp"/>
+        <jsp:include page="layout/breadcrumb.jsp"/>
         <section class="my-5">
 
           <div class="d-flex justify-content-between align-items-center">
@@ -293,7 +293,7 @@
     </main>
 
 
-    <jsp:include page="/layout/footer.jsp"/>
+    <jsp:include page="layout/footer.jsp"/>
 
 
     <script type="text/javascript" src="/lib/mdb4/js/jquery.min.js"></script>

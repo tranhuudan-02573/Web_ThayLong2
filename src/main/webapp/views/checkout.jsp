@@ -19,11 +19,11 @@
 
 	<body>
 
-	<jsp:include page="/layout/header.jsp"/>
+	<jsp:include page="layout/header.jsp"/>
 
 		<main>
 			<div class="container mx-auto">
-				<jsp:include page="/layout/breadcrumb.jsp"/>
+				<jsp:include page="layout/breadcrumb.jsp"/>
 				<section class="my-5 dark-grey-text">
 
 
@@ -186,7 +186,7 @@
 
 		</main>
 
-	<jsp:include page="/layout/footer.jsp"/>
+	<jsp:include page="layout/footer.jsp"/>
 
 
 		<script>$(document).ready(function () {
