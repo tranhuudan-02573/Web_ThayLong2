@@ -246,7 +246,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
     void insertPhone(Phone phone) {
 
         Map<String, Object> o = new HashMap<>();
-
+        
 
         JDBiConnector.get().useHandle(handle -> {
             new AbstractDAO<Image>();
@@ -262,20 +262,23 @@ public class AbstractDAO<T> implements GenericDAO<T> {
                     new ColorDAO().insertColor(color);
                 }
             }
-            if (!phone.getReviews().isEmpty()) {
-                Map<Integer, Review> reviews = phone.getReviews();
-
-                for (:
-                     ) {
-
-                }
-
-
-
-                for (Review review : reviews) {
-                    new ReviewDAO().insertReview(review);
+            if (!phone.getCapList().isEmpty()) {
+                Set<Cap> caps = phone.getCapList();
+                for (Cap cap : caps) {
+                    new ColorDAO().insertColor(color);
                 }
             }
+            if (!phone.getReviews().isEmpty()) {
+                Map<Integer, Review> reviews = phone.getReviews();
+                Set<Integer> set = reviews.keySet();
+                for (Integer i : set) {
+                    new ReviewDAO().insertReview(reviews.get(i));
+                }
+            }
+
+
+
+
 
             handle.createUpdate("").bindMap(o).executeAndReturnGeneratedKeys()
                     .mapToBean(Phone.class);
