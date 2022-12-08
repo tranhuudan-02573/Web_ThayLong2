@@ -5,13 +5,17 @@
  */
 package vn.edu.hcmuaf.fit.model.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Permission implements Serializable {
     private int id;

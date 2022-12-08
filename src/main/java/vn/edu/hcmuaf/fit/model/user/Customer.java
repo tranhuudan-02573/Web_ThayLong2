@@ -5,11 +5,15 @@
  */
 package vn.edu.hcmuaf.fit.model.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 
 public class Customer implements Serializable {

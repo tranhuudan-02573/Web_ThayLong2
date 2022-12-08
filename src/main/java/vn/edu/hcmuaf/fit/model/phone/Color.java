@@ -1,20 +1,20 @@
 package vn.edu.hcmuaf.fit.model.phone;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class Color  implements Serializable {
-    private String name;
-    private int phoneId;
+public class Color implements Serializable {
+    private int id;
     private Timestamp created_at;
     private Timestamp updated_at;
-    private String img;
-    private int total;
 
-    public Color() {
-    }
+    private String name;
 
 }

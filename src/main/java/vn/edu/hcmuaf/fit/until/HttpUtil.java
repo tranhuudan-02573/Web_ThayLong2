@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HttpUtil {
@@ -21,6 +23,16 @@ public class HttpUtil {
 			System.out.print(e.getMessage());
 		}
 		return null;
+	}
+
+	public <T> List<T> listModel(Class<T> tClass){
+		List<T> list = new ArrayList<>();
+		try{
+	list.add(new ObjectMapper().readValue(value,tClass));
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}
+		return list;
 	}
 	
 	public static HttpUtil of (BufferedReader reader) {

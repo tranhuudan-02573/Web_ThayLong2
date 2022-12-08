@@ -10,6 +10,6 @@ public class Spec implements Serializable {
     private Timestamp created_at;
     private Timestamp updated_at;
     private String name;
-    private int specTypeId;
+    private Integer specTypeId;
     private SpecType specType;
 }

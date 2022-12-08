@@ -114,7 +114,7 @@
   display: none;">
 			<i class="fas fa-arrow-up"></i>
 		</button>
-		<jsp:include page="/layout/header.jsp"/>
+		<jsp:include page="layout/header.jsp"/>
 		<!--Main Navigation-->
 		<header>
 
@@ -247,7 +247,7 @@
 
 			</main>
 
-			<jsp:include page="/layout/footer.jsp"/>
+			<jsp:include page="layout/footer.jsp"/>
 
 
 			<script type="text/javascript" src="/lib/mdb4/js/jquery.min.js"></script>
