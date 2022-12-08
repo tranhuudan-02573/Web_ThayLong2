@@ -67,10 +67,10 @@
 
 	<body>
 
-	<jsp:include page="/layout/header.jsp"/>
+	<jsp:include page="layout/header.jsp"/>
 		<div class="content my-5">
 			<div class="container">
-				<jsp:include page="/layout/breadcrumb.jsp"/>
+				<jsp:include page="layout/breadcrumb.jsp"/>
 				<!--end homeSlider-->
 				<section class="homeMenuMobile1 d-block d-sm-none nav-scroller">
 					<ul class="nav">
@@ -2753,7 +2753,7 @@
 		</div>
 		<!--end content-->
 
-	<jsp:include page="/layout/footer.jsp"/>
+	<jsp:include page="layout/footer.jsp"/>
 
 		<script type="text/javascript" src="/lib/mdb4/js/jquery.min.js"></script>
 		<script src="/lib/mdb4/js/popper.min.js"></script>

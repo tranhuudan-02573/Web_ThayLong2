@@ -134,12 +134,12 @@
 
 	<body class=" " >
 
-	<jsp:include page="/layout/header.jsp"/>
+	<jsp:include page="layout/header.jsp"/>
 		<div class="homeContent  mb-5">
 			<div class="container">
 				<div class="row w-100 mx-auto mb-2" >
 					<div class="col-12">
-						<jsp:include page="/layout/breadcrumb.jsp"/>
+						<jsp:include page="layout/breadcrumb.jsp"/>
 					</div>
 				</div>
 				<section class="mb-4">
@@ -2708,7 +2708,7 @@
 
 		<!--homeContent-->
 
-	<jsp:include page="/layout/footer.jsp"/>
+	<jsp:include page="layout/footer.jsp"/>
 
 		<footer id="footer" class="p-4 border-top  bg-white"></footer>
 		<script type="text/javascript" src="/lib/mdb4/js/jquery.min.js"></script>

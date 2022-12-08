@@ -1,15 +1,34 @@
 package vn.edu.hcmuaf.fit.dao.impl.phone;
 
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.model.phone.PhoneColor;
 import vn.edu.hcmuaf.fit.model.phone.Color;
-import vn.edu.hcmuaf.fit.model.phone.Image;
+
+import javax.annotation.ManagedBean;
+import java.sql.Timestamp;
+import java.util.Set;
+@ManagedBean
 
 public class ColorDAO extends AbstractDAO<Color> {
 
 
-    public void insertColor(Color color) {
-        insert("insert into phone_color (name,phoneId,img,created_at,updated_at,total) values(:t.name,:t.phoneId,:t.img,:t.created_at,:t.updated_at,t.total)",
-                color);
+    public int insertColor(Color pp) {
+        pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
+        pp.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        return insertWithId("insert into colors (name,created_at,updated_at)" +
+                        " values(:t.name,:t.created_at,:t.updated_at)",
+                pp);
     }
 
+    public void deleteColor(Color c) {
+        delete("delete from colors  where id = " + c.getId(), c);
+
+    }
+
+    public void updateColor(Color c) {
+        c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        update("update colors set name = :t.name,updated_at = :t.updated_at where id = :t.id", c);
+
+
+    }
 }

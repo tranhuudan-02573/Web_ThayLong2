@@ -1,10 +1,14 @@
 package vn.edu.hcmuaf.fit.model.phone;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Brand  implements Serializable {
     private int id;

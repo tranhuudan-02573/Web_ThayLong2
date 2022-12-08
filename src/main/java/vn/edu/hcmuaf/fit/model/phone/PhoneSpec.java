@@ -6,19 +6,22 @@
 package vn.edu.hcmuaf.fit.model.phone;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class PhoneSpec implements Serializable {
-    private int id;
     private Timestamp created_at;
     private Timestamp updated_at;
     private String value;
-    private int specId;
-    private int phoneId;
+    private Integer specId;
+    private Integer phoneId;
     private Spec spec;
 
 }

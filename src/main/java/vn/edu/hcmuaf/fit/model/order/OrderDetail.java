@@ -5,13 +5,17 @@
  */
 package vn.edu.hcmuaf.fit.model.order;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class OrderDetail implements Serializable {
     private Timestamp created_at;

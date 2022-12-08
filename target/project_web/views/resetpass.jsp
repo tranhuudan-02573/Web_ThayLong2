@@ -23,7 +23,7 @@
   </head>
 
   <body>
-  <jsp:include page="/layout/header.jsp"/>
+  <jsp:include page="layout/header.jsp"/>
 
   <main>
     <div class="container">
@@ -78,7 +78,7 @@
     </div>
   </main>
 
-  <jsp:include page="/layout/footer.jsp"/>
+  <jsp:include page="layout/footer.jsp"/>
 
   <!-- jQuery -->
   <script type="text/javascript" src="/lib/mdb4/js/jquery.min.js"></script>

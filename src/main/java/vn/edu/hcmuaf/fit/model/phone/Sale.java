@@ -15,7 +15,8 @@ public class Sale  implements Serializable {
     private String img;
 
 
-    private Timestamp killed_at;
+    private Timestamp end_at;
+    private Timestamp start_at;
 
 
     public Sale() {

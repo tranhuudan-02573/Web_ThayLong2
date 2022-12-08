@@ -6,9 +6,9 @@
 package vn.edu.hcmuaf.fit.filter;
 
 
-import vn.edu.hcmuaf.fit.dao.impl.user.CartDAO;
+import vn.edu.hcmuaf.fit.dao.impl.cart.CartDAO;
 import vn.edu.hcmuaf.fit.model.user.User;
-import vn.edu.hcmuaf.fit.model.user.Cart;
+import vn.edu.hcmuaf.fit.model.cart.Cart;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -22,7 +22,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 
 
-@WebFilter(filterName = "CartFilter", urlPatterns = {"/*", "/pods/*", "/orders/*"})
+@WebFilter(filterName = "CartFilter", urlPatterns = { "/pods/*", "/orders/*"})
 public class CartFilter implements Filter {
 
     private static final boolean debug = true;

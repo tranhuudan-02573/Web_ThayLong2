@@ -23,7 +23,7 @@
 <body class="fixed-sn mdb-skin">
 
   <!--Double navigation-->
-  <jsp:include page="/layout/admin/header.jsp"/>
+  <jsp:include page="/views/layout/admin/header.jsp"/>
   <!--/.Double navigation-->
 
   <!--Main Layout-->

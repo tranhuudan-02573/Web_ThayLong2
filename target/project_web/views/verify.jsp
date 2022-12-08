@@ -18,8 +18,8 @@
 
 <body>
 
-<jsp:include page="/layout/header.jsp"/>
-<jsp:include page="/layout/breadcrumb.jsp"/>
+<jsp:include page="layout/header.jsp"/>
+<jsp:include page="layout/breadcrumb.jsp"/>
 
 <main>
 	<div class="container">
@@ -49,7 +49,7 @@
 
 </main>
 
-<jsp:include page="/layout/footer.jsp"/>
+<jsp:include page="layout/footer.jsp"/>
 
 
 <script type="text/javascript" src="/lib/mdb4/js/jquery.min.js"></script>

@@ -19,11 +19,11 @@
 
   <body>
 
-  <jsp:include page="/layout/header.jsp"/>
+  <jsp:include page="layout/header.jsp"/>
 
     <main>
       <div class="container">
-          <jsp:include page="/layout/breadcrumb.jsp"/>
+          <jsp:include page="layout/breadcrumb.jsp"/>
         <section class="my-5">
           <div class="row mx-auto w-100 ">
             <div class="col-md-3 pl-0">
@@ -328,7 +328,7 @@ Chúng tôi cũng có thể thu thập thông tin về số lần viếng thăm,
     </main>
 
 
-  <jsp:include page="/layout/footer.jsp"/>
+  <jsp:include page="layout/footer.jsp"/>
 
 
     <script type="text/javascript" src="/lib/mdb4/js/jquery.min.js"></script>

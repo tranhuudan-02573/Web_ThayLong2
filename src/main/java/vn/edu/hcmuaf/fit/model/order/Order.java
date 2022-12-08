@@ -5,7 +5,9 @@
  */
 package vn.edu.hcmuaf.fit.model.order;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.fit.model.user.Customer;
 
 import java.io.Serializable;
@@ -14,25 +16,28 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Order implements Serializable {
     private int id;
     private Timestamp created_at;
     private Timestamp updated_at;
 
-    private int userId;
-    private int customerId;
-    private int order_stateId;
+    private Integer userId;
+    private Integer customerId;
+    private Integer order_stateId;
     private OrderState orderState;
     private Set<OrderDetail> orderDetails = new HashSet<>();
     private OrderState state;
     private Customer customer;
     private String payment;
-    private int total;
+    private Integer total;
     private String status;
-    private int codeId;
+    private Integer codeId;
     private Code code;
-    public void addOrderDetail(OrderDetail od){
+
+    public void addOrderDetail(OrderDetail od) {
         this.orderDetails.add(od);
     }
 
