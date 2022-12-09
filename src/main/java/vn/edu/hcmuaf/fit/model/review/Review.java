@@ -18,7 +18,6 @@ public class Review {
     private String content;
     private Integer star;
     private String title;
-    private boolean like;
     Set<Review> replyList = new HashSet<>();
     Set<Vote> votes = new HashSet<>();
     private Integer userId;

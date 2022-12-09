@@ -39,10 +39,6 @@ public class Phone implements Serializable {
     private Model model;
     private Integer created_by;
     private Set<Image> imageList = new HashSet<>();
-    private Map<Integer, Review> reviews = new HashMap<>();
-    public void addReview(Integer id, Review r) {
-        reviews.put(id, r);
-    }
     public void addCap(PhoneCap pc) {
         capList.add(pc);
     }

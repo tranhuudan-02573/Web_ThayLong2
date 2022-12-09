@@ -20,6 +20,10 @@ public class PhoneDAO extends AbstractDAO<Phone> {
     final String SELECT_TYPE = " and p.typeId = :typeId";
     final String SELECT_STATE = " and p.stateId = :stateId";
 
+    public PhoneDAO(String table) {
+        super(table);
+    }
+
     public Phone getPhoneById(int id) {
         Map<String, Object> o = new HashMap<>();
         o.put("id", id);
@@ -176,7 +180,7 @@ public class PhoneDAO extends AbstractDAO<Phone> {
 //       new PhoneDAO().insert("insert into phones (`name`,typeId,price,content,created_at,updated_at,total,thumbnail,`desc`,stateId,brandId,modelId,saleId) " +
 //                "values (:t.name,:t.typeId,:t.price,:t.content,:t.created_at,:t.updated_at,:t.total,:t.thumbnail,:t.desc,:t.stateId,:t.brandId,:t.modelId,:t.saleId)", phone);
 
-        Phone p = new PhoneDAO().getPhoneById(2);
+        Phone p = new PhoneDAO("phones").getPhoneById(2);
         p.setName("tran huu dan");
 //        new PhoneDAO().updatePhone(p);
         PhonePromot pr = new PhonePromot();
@@ -186,7 +190,7 @@ public class PhoneDAO extends AbstractDAO<Phone> {
         Phone pp = new Phone();
         pp.setName("kkk123");
 
-        System.out.println( new PhoneDAO().getPhoneById( new PhoneDAO().savePhone(pp)));
+        System.out.println( new PhoneDAO("phones").getPhoneById( new PhoneDAO("phones").savePhone(pp)));
 //        new PhoneDAO().updatePhone(p);
 //        System.out.println(new PhoneDAO().getAll());
 //        System.out.println(new PhoneDAO().getPhoneBy(o));

@@ -13,6 +13,10 @@ import java.util.*;
 public class PhoneColorDAO extends AbstractDAO<PhoneColor> {
 
 
+    public PhoneColorDAO(String table) {
+        super(table);
+    }
+
     public void savePhoneColor(PhoneColor color, int id) {
         color.setPhoneId(id);
         color.setCreated_at(new Timestamp(System.currentTimeMillis()));
@@ -83,9 +87,9 @@ public class PhoneColorDAO extends AbstractDAO<PhoneColor> {
     }
 
     public static void main(String[] args) {
-        Map<String, Object> o = new HashMap<>();
-        o.put("phoneId", 1);
-        List<PhoneColor> l = new PhoneColorDAO().list(" and phoneId =:phoneId ", "phone_color", PhoneColor.class, o);
+        PhoneColor pc = new PhoneColor();
+        pc.setPhoneId(1);
+        List<PhoneColor> l = new PhoneColorDAO("phone_color").list(" and phoneId =:phoneId ",  PhoneColor.class, pc);
         Set<PhoneColor> s = new HashSet<>(l);
         Set<PhoneColor> s2 = s;
 
@@ -95,7 +99,7 @@ public class PhoneColorDAO extends AbstractDAO<PhoneColor> {
         }
 
 
-        new PhoneColorDAO().updatePhoneColorList(s, s2);
+        new PhoneColorDAO("phone_color").updatePhoneColorList(s, s2);
     }
 
     public void save(Set<PhoneColor> colorList, int id) {

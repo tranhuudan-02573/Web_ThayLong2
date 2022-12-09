@@ -27,9 +27,7 @@ public class Order implements Serializable {
     private Integer userId;
     private Integer customerId;
     private Integer order_stateId;
-    private OrderState orderState;
     private Set<OrderDetail> orderDetails = new HashSet<>();
-    private OrderState state;
     private Customer customer;
     private String payment;
     private Integer total;

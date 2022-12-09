@@ -4,7 +4,13 @@ import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.cart.Cart;
 import vn.edu.hcmuaf.fit.model.user.User;
 
+import java.util.List;
+
 public class CartDAO extends AbstractDAO<Cart> {
+
+    public CartDAO(String table) {
+        super(table);
+    }
 
     public void insertCart(Cart pp) {
         insert("insert into carts (phoneId,quantity,userId,save,created_at,updated_at)" +
@@ -12,14 +18,18 @@ public class CartDAO extends AbstractDAO<Cart> {
                 pp);
     }
 
+    List<Cart> getAllByUser(int uid){
+
+        return list(" and id ="+uid, Cart.class,null);
+
+    }
 
 
     public static void main(String[] args) {
-        Cart c = new Cart();
-        c.setSave(false);
-        c.setPhoneId(1);
-        c.setUserId(2);
-        new CartDAO().insertCart(c);
+
+        System.out.println(new CartDAO("cart").getAllByUser(1));
+
+
     }
 
 }

@@ -12,12 +12,16 @@ import java.util.*;
 public class ReviewDAO extends AbstractDAO<Review> {
 
 
+    public ReviewDAO(String table) {
+        super(table);
+    }
+
     public int insertReview(Review r, Object id) {
         r.setPhoneId(((BigInteger) id).intValue());
         r.setCreated_at(new Timestamp(System.currentTimeMillis()));
         r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        return insertWithId("insert into phone_review (userId,phoneId,content,created_at,updated_at,star,title,customerId,like,replyId)" +
-                        " values(:t.userId,:t.phoneId,:t.content,:t.created_at,:t.updated_at,t.star,t.title,t.customerId,t.like,t.replyId)",
+        return insertWithId("insert into reviews (userId,phoneId,content,created_at,updated_at,star,title,customerId,status,question)" +
+                        " values(:t.userId,:t.phoneId,:t.content,:t.created_at,:t.updated_at,t.star,t.title,t.customerId,t.status,t.question)",
                 r);
     }
 
@@ -44,13 +48,13 @@ public class ReviewDAO extends AbstractDAO<Review> {
 
     public List<Review> getAll(){
 
-        return list("","phone_review", Review.class,null);
+        return list("", Review.class,null);
     }
 
 
     public List<Review> cmtByUser(int u){
 
-        return list(" and userId = "+u,"phone_review", Review.class,null);
+        return list(" and userId = "+u, Review.class,null);
 
     }
 
@@ -73,10 +77,10 @@ public class ReviewDAO extends AbstractDAO<Review> {
 
     public Review getReviewById(int id) {
 
-        Map<String, Object> o = new HashMap<>();
-        o.put("id", id);
+        Review r = new Review();
+        r.setId(id);
 
-        return get(" and id = :id", "phone_review", Review.class, o);
+        return get(" and id = :id",  Review.class,r);
 
 
     }
@@ -88,7 +92,22 @@ public class ReviewDAO extends AbstractDAO<Review> {
 
 
     }
+/*     if (rowView.getColumn("prw_id", Long.class) != null) {
+                            Review r = rowView.getRow(Review.class);
 
+                            if (r.getReplyId() == null) {
+                                if (!(phone.getReviews().containsKey(r.getId())))
+                                    phone.addReview(r.getId(), r);
+                            } else {
+                                if (phone.getReviews().containsKey(new ReviewDAO().getO(r).getId())) {
+                                    phone.getReviews().get(new ReviewDAO().getO(r).getId()).addReview(r);
+                                } else {
+                                    Review rs = new ReviewDAO().getO(r);
+                                    rs.addReview(r);
+                                    phone.addReview(new ReviewDAO().getO(r).getId(), rs);
+                                }
+                            }
+                        }*/
 
 
 

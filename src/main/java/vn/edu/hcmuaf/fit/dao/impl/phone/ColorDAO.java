@@ -12,6 +12,10 @@ import java.util.Set;
 public class ColorDAO extends AbstractDAO<Color> {
 
 
+    public ColorDAO(String table) {
+        super(table);
+    }
+
     public int insertColor(Color pp) {
         pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
         pp.setUpdated_at(new Timestamp(System.currentTimeMillis()));

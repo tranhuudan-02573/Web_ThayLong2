@@ -14,6 +14,10 @@ import java.util.*;
 public class PhoneSpecDAO extends AbstractDAO<PhoneSpec> {
 
 
+    public PhoneSpecDAO(String table) {
+        super(table);
+    }
+
     public void insertPhoneSpec(PhoneSpec ps, int id) {
         ps.setPhoneId(id);
         ps.setUpdated_at(new Timestamp(System.currentTimeMillis()));
@@ -86,10 +90,9 @@ public class PhoneSpecDAO extends AbstractDAO<PhoneSpec> {
     }
 
     public static void main(String[] args) {
-
-        Map<String, Object> o = new HashMap<>();
-        o.put("phoneId", 1);
-        List<PhoneSpec> l = new PhoneSpecDAO().list(" and phoneId =:phoneId ", "phone_spec", PhoneSpec.class, o);
+        PhoneSpec spec = new PhoneSpec();
+        spec.setPhoneId(1);
+        List<PhoneSpec> l = new PhoneSpecDAO("phone_spec").list(" and phoneId =:t.phoneId ",  PhoneSpec.class,spec);
         Set<PhoneSpec> s = new HashSet<>(l);
         Set<PhoneSpec> s2 = new HashSet<>(l);
 
@@ -108,7 +111,7 @@ public class PhoneSpecDAO extends AbstractDAO<PhoneSpec> {
 
 
 //new PhoneSpecDAO().updateSpec(ppp,2);
-        new PhoneSpecDAO().updateSpecList(s, s2);
+        new PhoneSpecDAO("phone_spec").updateSpecList(s, s2);
 
     }
 

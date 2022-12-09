@@ -12,6 +12,10 @@ import java.util.*;
 @ManagedBean
 public class PhonePromotDAO extends AbstractDAO<PhonePromot> {
 
+    public PhonePromotDAO(String table) {
+        super(table);
+    }
+
     public void insertPhonePromot(PhonePromot pp, int id) {
         pp.setPhoneId(id);
         pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
@@ -26,12 +30,13 @@ public class PhonePromotDAO extends AbstractDAO<PhonePromot> {
     }
 
     public static void main(String[] args) {
-        Map<String, Object> o = new HashMap<>();
-        o.put("promotId", 1);
-        o.put("phoneId", 1);
-        PhonePromot pp = new PhonePromotDAO().get(" and promotId = :promotId and phoneId = :phoneId", "phone_promot", PhonePromot.class, o);
+        PhonePromot pp1 = new PhonePromot();
+        pp1.setPromotId(1);
+        pp1.setPhoneId(1);
 
-        new PhonePromotDAO().deletePhonePromot(pp);
+        PhonePromot pp = new PhonePromotDAO("phone_promot").get(" and promotId = :t.promotId and phoneId = :t.phoneId",  PhonePromot.class,pp1);
+
+        new PhonePromotDAO("phone_promot").deletePhonePromot(pp);
     }
 
     public void updatePromotList(Set<PhonePromot> old, Set<PhonePromot> colors) {
