@@ -18,9 +18,9 @@ public class CartDAO extends AbstractDAO<Cart> {
                 pp);
     }
 
-    List<Cart> getAllByUser(int uid){
+   public List<Cart> getAllByUser(int uid){
 
-        return list(" and id ="+uid, Cart.class,null);
+        return list(" and userId ="+uid, Cart.class,null);
 
     }
 

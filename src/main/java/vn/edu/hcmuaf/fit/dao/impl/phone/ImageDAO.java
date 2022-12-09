@@ -101,10 +101,10 @@ public class ImageDAO extends AbstractDAO<Image> {
 
     public void save(Set<Image> imageList, int id) {
         if (!imageList.isEmpty()) {
-
             for (Image img : imageList) {
                 insertImage(img, id);
             }
         }
     }
+
 }

@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.dao.impl;
 import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 import org.jdbi.v3.core.result.ResultBearing;
 import org.jdbi.v3.core.result.RowView;
+import org.jdbi.v3.core.statement.Query;
 import vn.edu.hcmuaf.fit.dao.GenericDAO;
 import vn.edu.hcmuaf.fit.dao.impl.phone.*;
 import vn.edu.hcmuaf.fit.dao.impl.review.ReviewDAO;
@@ -28,13 +29,14 @@ import static java.util.stream.Collectors.toList;
 
 public class AbstractDAO<T> implements GenericDAO<T> {
     String table;
+
     public AbstractDAO(String table) {
         this.table = table;
     }
 
 
     protected final String SELECT_ALL_PHONE =
-            "select  p.capId p_capId,p.id p_id, p.created_by p_created_by, p.name p_name, p.typeId p_typeId, p.price p_price, p.content p_content, p.total p_total, p.thumbnail p_thumbnail, p.desc p_desc , p.stateId p_stateId, p.brandId p_brandId, p.modelId p_modelId, p.saleId p_saleId,p.created_at p_created_at,p.updated_at p_updated_at,  pc.colorId pc_colorId, pc.phoneId pc_phoneId, pc.img pc_img, pc.total pc_total, pc.created_at pc_created_at,pc.updated_at pc_updated_at, t.id t_id, t.name t_name, t.created_at t_created_at, t.updated_at t_updated_at, sl.id sl_id, sl.name sl_name, sl.created_at sl_created_at, sl.updated_at sl_updated_at,sl.end_at sl_end_at,sl.start_at sl_start_at, img.id img_id, img.link img_link, img.desc img_desc, img.phoneId img_phoneId, img.created_at img_created_at, img.updated_at img_updated_at, m.id m_id, m.name m_name, m.img m_img, m.brandId m_brandId, m.created_at m_created_at, m.updated_at m_updated_at, b.id b_id,b.name b_name, b.logo b_logo, b.country b_country, b.created_at b_created_at, b.updated_at b_updated_at, pp.promotId pp_promotId, pp.phoneId pp_phoneId, pp.created_at pp_created_at, pp.updated_at pp_updated_at, pp.end_at pp_end_at,pp.start_at pp_start_at,pr.id pr_id, pr.name pr_name, pr.created_at pr_created_at, pr.updated_at pr_updated_at,ps.value ps_value, ps.specId ps_specId, ps.phoneId ps_phoneId,ps.created_at ps_created_at, ps.updated_at ps_updated_at,sp.id sp_id,sp.name sp_name, sp.spec_typeId sp_spec_typeId, sp.created_at sp_created_at, sp.updated_at sp_updated_at,spt.id spt_id,spt.name spt_name, spt.created_at spt_created_at, spt.updated_at spt_updated_at,pca.capId pca_capId ,pca.phoneId pca_phoneId,pca.created_at pca_created_at,pca.updated_at pca_updated_at,\n" +
+            "select  p.capId p_capId,p.id p_id, p.name p_name, p.typeId p_typeId, p.price p_price, p.content p_content, p.total p_total, p.thumbnail p_thumbnail, p.desc p_desc , p.brandId p_brandId, p.modelId p_modelId, p.saleId p_saleId,p.created_at p_created_at,p.updated_at p_updated_at,p.created_by p_created_by,p.updated_by p_updated_by,  pc.colorId pc_colorId, pc.phoneId pc_phoneId, pc.img pc_img, pc.total pc_total, pc.created_at pc_created_at,pc.updated_at pc_updated_at, t.id t_id, t.name t_name, t.created_at t_created_at, t.updated_at t_updated_at, sl.id sl_id, sl.name sl_name, sl.created_at sl_created_at, sl.updated_at sl_updated_at,sl.end_at sl_end_at,sl.start_at sl_start_at, img.id img_id, img.link img_link, img.desc img_desc, img.phoneId img_phoneId, img.created_at img_created_at, img.updated_at img_updated_at, m.id m_id, m.name m_name, m.img m_img, m.brandId m_brandId, m.created_at m_created_at, m.updated_at m_updated_at, b.id b_id,b.name b_name, b.logo b_logo, b.country b_country, b.created_at b_created_at, b.updated_at b_updated_at, pp.promotId pp_promotId, pp.phoneId pp_phoneId, pp.created_at pp_created_at, pp.updated_at pp_updated_at, pp.end_at pp_end_at,pp.start_at pp_start_at,pr.id pr_id, pr.name pr_name, pr.created_at pr_created_at, pr.updated_at pr_updated_at,ps.value ps_value, ps.specId ps_specId, ps.phoneId ps_phoneId,ps.created_at ps_created_at, ps.updated_at ps_updated_at,sp.id sp_id,sp.name sp_name, sp.spec_typeId sp_spec_typeId, sp.created_at sp_created_at, sp.updated_at sp_updated_at,spt.id spt_id,spt.name spt_name, spt.created_at spt_created_at, spt.updated_at spt_updated_at,pca.capId pca_capId ,pca.phoneId pca_phoneId,pca.created_at pca_created_at,pca.updated_at pca_updated_at,\n" +
                     "c.id c_id,c.cap c_cap,c.name c_name,c.created_at c_created_at, c.updated_at c_updated_at\n\n" +
                     ", cls.id cls_id,cls.name cls_name,cls.created_at cls_created_at,cls.updated_at cls_updated_at  from phones p\n" +
                     "LEFT JOIN types t on p.typeId = t.id\n" +
@@ -71,10 +73,15 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             "left join permission_detail pd on p.id = pd.permissionId where 1=1  ";
 
     @Override
-    public List<T> list(String sql,  Class<T> t,T t2) {
-        System.out.println(this.table);
+    public List<T> list(String sql, Class<T> t, T t2) {
+
+
         return JDBiConnector.get().withHandle(handle -> {
-            return handle.createQuery("select * from <TABLE> where 1=1 " + sql).define("TABLE", this.table).bindBean("t", t2).mapToBean(t).list();
+            Query query = handle.createQuery("select * from <TABLE> where 1=1 " + sql).define("TABLE", this.table);
+            if (t2 == null) return query.mapToBean(t).list();
+            else return query.bindBean("t", t2).mapToBean(t).list();
+
+
         });
     }
 
@@ -198,9 +205,9 @@ public class AbstractDAO<T> implements GenericDAO<T> {
 
 
     @Override
-    public T get(String sql,  Class<T> t,T t2) {
+    public T get(String sql, Class<T> t, T t2) {
 
-        List<T> l = list(sql,  t,t2);
+        List<T> l = list(sql, t, t2);
 
         if (l.size() > 1 || l.isEmpty()) return null;
 
@@ -246,9 +253,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
 
 //        System.out.println(new AbstractDAO<Order>().joinOrder("", Order.class, null).get(0));
 //        System.out.println(new AbstractDAO<User>().list("","users",User.class,null));
-        User user = new User();
-        user.setId(1);
-        System.out.println(new UserDAO("users").list("and id =:t.id", User.class,user));
+        System.out.println(new UserDAO("users").list("", User.class, null));
 //        System.out.println(new AbstractDAO<Phone>().joinPhone("", Phone.class, null).get(0).getColorList());
 //        System.out.println(new AbstractDAO<>().joinOrder("",Order.class,null));
     }

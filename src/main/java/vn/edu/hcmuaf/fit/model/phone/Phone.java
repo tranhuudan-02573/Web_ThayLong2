@@ -2,7 +2,9 @@ package vn.edu.hcmuaf.fit.model.phone;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import vn.edu.hcmuaf.fit.model.review.Review;
 
 import java.io.Serializable;
@@ -12,6 +14,8 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Getter
+@Setter
 public class Phone implements Serializable {
     private int id;
     private Timestamp created_at;
@@ -31,6 +35,7 @@ public class Phone implements Serializable {
     private  Set<PhoneSpec> specList = new HashSet<>();
     private Set<PhoneColor> colorList = new HashSet<>();
     private Type type;
+    private Integer updated_by;
     private Set<PhoneCap> capList = new HashSet<>();
     private Set<PhonePromot> promotList = new HashSet<>();
     private Integer brandId;

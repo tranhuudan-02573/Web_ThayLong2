@@ -25,7 +25,6 @@
 <body class="fixed-sn mdb-skin">
 
   <!--Double navigation-->
-  <jsp:include page="/views/layout/admin/header.jsp"/>
   <!--/.Double navigation-->
   <main class="mt-1">
     <div class="container-fluid panel-scroll">
