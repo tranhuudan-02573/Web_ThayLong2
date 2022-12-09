@@ -15,6 +15,10 @@ import java.util.Set;
 public class PhoneCapDAO extends AbstractDAO<PhoneCap> {
 
 
+    public PhoneCapDAO(String table) {
+        super(table);
+    }
+
     public void insertPhoneCap(PhoneCap pcap, int id) {
         pcap.setPhoneId(id);
         pcap.setCreated_at(new Timestamp(System.currentTimeMillis()));

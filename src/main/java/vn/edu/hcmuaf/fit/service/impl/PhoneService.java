@@ -12,9 +12,9 @@ import java.util.*;
 public class PhoneService {
 
     //    @Inject
-    PhoneDAO phoneDAO = new PhoneDAO();
+    PhoneDAO phoneDAO ;
     //    @Inject
-    ImageDAO imageDAO = new ImageDAO();
+    ImageDAO imageDAO ;
     @Inject
     PhoneCapDAO phoneCapDAO;
     @Inject
@@ -43,8 +43,6 @@ public class PhoneService {
             phone.setSpecList(new HashSet<>());
         if (phone.getPromotList() == null)
             phone.setPromotList(new HashSet<>());
-        if (phone.getReviews() == null)
-            phone.setReviews(new HashMap<>());
 
 
         imageDAO.save(phone.getImageList(), id);
@@ -52,13 +50,12 @@ public class PhoneService {
         phoneCapDAO.save(phone.getCapList(), id);
         phoneSpecDAO.save(phone.getSpecList(), id);
         phonePromotDAO.save(phone.getPromotList(), id);
-        reviewDAO.save(phone.getReviews(), id);
 
         return phoneDAO.getPhoneById(id);
     }
 
     public Phone update(Phone phone) {
-        Phone old = new PhoneDAO().getPhoneById(phone.getId());
+        Phone old = new PhoneDAO("phones").getPhoneById(phone.getId());
         if (phone.getImageList() == null)
             phone.setImageList(new HashSet<>());
         if (phone.getColorList() == null)
@@ -69,8 +66,7 @@ public class PhoneService {
             phone.setSpecList(new HashSet<>());
         if (phone.getPromotList() == null)
             phone.setPromotList(new HashSet<>());
-        if (phone.getReviews() == null)
-            phone.setReviews(new HashMap<>());
+
 
         imageDAO.updateImageList(old.getImageList(), phone.getImageList());
         phoneColorDAO.updatePhoneColorList(old.getColorList(), phone.getColorList());
@@ -93,8 +89,8 @@ public class PhoneService {
             phone.setSpecList(new HashSet<>());
         if (phone.getPromotList() == null)
             phone.setPromotList(new HashSet<>());
-        if (phone.getReviews() == null)
-            phone.setReviews(new HashMap<>());
+//        if (phone.getReviews() == null)
+//            phone.setReviews(new HashMap<>());
 
         imageDAO.deleteImageList(phone.getImageList());
         phoneColorDAO.deletePhoneColor(phone.getColorList());
@@ -102,11 +98,11 @@ public class PhoneService {
         phoneCapDAO.deletePhoneCap(phone.getCapList());
         phonePromotDAO.deletePhonePromot(phone.getPromotList());
 
-        for (Integer r : phone.getReviews().keySet()
-        ) {
-            reviewDAO.deleteReview(phone.getReviews().get(r));
-            reviewDAO.deleteReviewList(phone.getReviews().get(r).getReplyList());
-        }
+//        for (Integer r : phone.getReviews().keySet()
+//        ) {
+//            reviewDAO.deleteReview(phone.getReviews().get(r));
+//            reviewDAO.deleteReviewList(phone.getReviews().get(r).getReplyList());
+//        }
 
 
         phoneDAO.deletePhone(phone);

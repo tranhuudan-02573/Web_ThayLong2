@@ -12,6 +12,10 @@ import java.util.Set;
 public class PromotDAO extends AbstractDAO<Promot> {
 
 
+    public PromotDAO(String table) {
+        super(table);
+    }
+
     public int insertPromot(Promot pp) {
 
         pp.setCreated_at(new Timestamp(System.currentTimeMillis()));

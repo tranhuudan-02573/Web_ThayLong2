@@ -10,6 +10,10 @@ import javax.annotation.ManagedBean;
 public class TypeDAO extends AbstractDAO<Type> {
 
 
+    public TypeDAO(String table) {
+        super(table);
+    }
+
     public int insertType(Type pp) {
       return  insertWithId("insert into types (name,created_at,updated_at)" +
                         " values(:t.name,:t.created_at,:t.updated_at)",

@@ -13,6 +13,10 @@ import java.util.Set;
 public class OrderDAO extends AbstractDAO<Order> {
 
 
+    public OrderDAO(String table) {
+        super(table);
+    }
+
     public Object insertOrder(Order o) {
 
         Object id = insertWithId("insert into `order` (`userId`,customerId,created_at,updated_at,order_stateId,payment,total,codeId) " +
@@ -24,7 +28,7 @@ public class OrderDAO extends AbstractDAO<Order> {
                 Set<OrderDetail> pds = o.getOrderDetails();
                 for (OrderDetail pd : pds) {
                     pd.setOrderId(((BigInteger) id).intValue());
-                    new OrderDetailDAO().insertOD(pd);
+                    new OrderDetailDAO("order_detail").insertOD(pd);
                 }
             }
 
@@ -47,7 +51,7 @@ public class OrderDAO extends AbstractDAO<Order> {
         o.setCodeId(1);
         o.setPayment("thanh toan qua the");
         o.addOrderDetail(od);
-        System.out.println(new OrderDAO().insertOrder(o));
+        System.out.println(new OrderDAO("orders").insertOrder(o));
 
 
     }

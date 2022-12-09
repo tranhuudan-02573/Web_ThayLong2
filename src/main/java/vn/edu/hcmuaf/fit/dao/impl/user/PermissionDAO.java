@@ -13,6 +13,10 @@ import java.util.Set;
 public class PermissionDAO extends AbstractDAO<Permission> {
 
 
+    public PermissionDAO(String table) {
+        super(table);
+    }
+
     public Object insertPermission(Permission p) {
 
         Object id = insertWithId("insert into permission (`name`,licensed,created_at,updated_at) values (:t.name,:t.licensed,:t.created_at,:t.updated_at) ", p);
@@ -22,7 +26,7 @@ public class PermissionDAO extends AbstractDAO<Permission> {
                 Set<PermissionDetail> pds = p.getPermissionDetails();
                 for (PermissionDetail pd : pds) {
                     pd.setPermissionId(((BigInteger) id).intValue());
-                    new PermissionDetailDAO().insertPD(pd);
+                    new PermissionDetailDAO("permission_detail").insertPD(pd);
                 }
             }
 
@@ -41,7 +45,7 @@ public class PermissionDAO extends AbstractDAO<Permission> {
         p.addAction(pd);
         p.setLicensed(true);
         p.setName("manager 2");
-        System.out.println(new PermissionDAO().insertPermission(p));
+        System.out.println(new PermissionDAO("permissions").insertPermission(p));
     }
 
 

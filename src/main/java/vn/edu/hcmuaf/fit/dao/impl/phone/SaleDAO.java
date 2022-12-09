@@ -10,6 +10,10 @@ import java.sql.Timestamp;
 public class SaleDAO extends AbstractDAO<Sale> {
 
 
+    public SaleDAO(String table) {
+        super(table);
+    }
+
     public int insertSale(Sale pp) {
         pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
         pp.setUpdated_at(new Timestamp(System.currentTimeMillis()));

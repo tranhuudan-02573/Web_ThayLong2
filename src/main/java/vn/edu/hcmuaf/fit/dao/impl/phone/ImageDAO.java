@@ -10,6 +10,10 @@ import java.util.*;
 
 @ManagedBean
 public class ImageDAO extends AbstractDAO<Image> {
+    public ImageDAO(String table) {
+        super(table);
+    }
+
     public int insertImage(Image img, int id) {
         img.setPhoneId(id);
         img.setCreated_at(new Timestamp(System.currentTimeMillis()));
@@ -77,10 +81,9 @@ public class ImageDAO extends AbstractDAO<Image> {
     }
 
     public static void main(String[] args) {
-
-        Map<String, Object> o = new HashMap<>();
-        o.put("phoneId", 1);
-        List<Image> l = new ImageDAO().list(" and phoneId =:phoneId", "images", Image.class, o);
+        Image img1 = new Image();
+        img1.setPhoneId(1);
+        List<Image> l = new ImageDAO("images").list(" and phoneId =:t.phoneId",  Image.class,img1);
         Set<Image> s = new HashSet<>(l);
         Set<Image> s2 = s;
         Image image = new Image();
@@ -93,7 +96,7 @@ public class ImageDAO extends AbstractDAO<Image> {
         }
 
 
-        new ImageDAO().updateImageList(s, s2);
+        new ImageDAO("images").updateImageList(s, s2);
     }
 
     public void save(Set<Image> imageList, int id) {

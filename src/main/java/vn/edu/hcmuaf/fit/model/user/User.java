@@ -2,7 +2,9 @@ package vn.edu.hcmuaf.fit.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -12,7 +14,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
+public class User  implements Serializable {
     private int id;
     private Timestamp created_at;
     private Timestamp updated_at;
@@ -28,6 +30,5 @@ public class User implements Serializable {
     private String email;
     private Integer permissionId;
     private Permission permission;
-
 
 }

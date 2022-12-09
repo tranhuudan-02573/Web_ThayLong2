@@ -9,9 +9,9 @@ import java.util.Map;
 
 public interface GenericDAO<T> {
 
-    public abstract List<T> list(String sql,String table, Class<T> t, Map<String, Object> o);
+    public abstract List<T> list(String sql, Class<T> t,T t2);
 
-    public abstract T get(String sql, String table, Class<T> t, Map<String, Object> o);
+    public abstract T get(String sql,  Class<T> t,T t2);
 
 
     public abstract int insertWithId(String sql,  T o);
