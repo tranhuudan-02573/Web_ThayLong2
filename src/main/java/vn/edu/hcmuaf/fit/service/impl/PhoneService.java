@@ -11,68 +11,61 @@ import java.util.*;
 @ManagedBean
 public class PhoneService {
 
+    //        @Inject
+    PhoneDAO phoneDAO = new PhoneDAO("phones");
+    //        @Inject
+    ImageDAO imageDAO = new ImageDAO("images");
     //    @Inject
-    PhoneDAO phoneDAO ;
+    PhoneCapDAO phoneCapDAO = new PhoneCapDAO("phone_cap");
     //    @Inject
-    ImageDAO imageDAO ;
-    @Inject
-    PhoneCapDAO phoneCapDAO;
-    @Inject
-    PhoneSpecDAO phoneSpecDAO;
-    @Inject
-    PhoneColorDAO phoneColorDAO;
-    @Inject
-    PhonePromotDAO phonePromotDAO;
-    @Inject
-    ReviewDAO reviewDAO;
+    PhoneSpecDAO phoneSpecDAO = new PhoneSpecDAO("phone_spec");
+    //    @Inject
+    PhoneColorDAO phoneColorDAO = new PhoneColorDAO("phone_color");
+    //    @Inject
+    PhonePromotDAO phonePromotDAO = new PhonePromotDAO("phone_promot");
+    //    @Inject
+//    ReviewDAO reviewDAO = new ReviewDAO("phone_review");
 
     public List<Phone> getAll() {
         return phoneDAO.getAll();
     }
 
+    public Phone get(Phone p) {
+        return phoneDAO.getPhoneById(p.getId());
+
+    }
+
     public Phone save(Phone phone) {
         int id = phoneDAO.savePhone(phone);
-        if (phone.getImageList() == null)
-            phone.setImageList(new HashSet<>());
+        System.out.println(id   );
+        if (phone.getImageList() != null)
+            imageDAO.save(phone.getImageList(), id);
         if (phone.getColorList() == null)
-            phone.setColorList(new HashSet<>());
-
+            phoneColorDAO.save(phone.getColorList(), id);
         if (phone.getCapList() == null)
-            phone.setCapList(new HashSet<>());
+            phoneCapDAO.save(phone.getCapList(), id);
         if (phone.getSpecList() == null)
-            phone.setSpecList(new HashSet<>());
+            phoneSpecDAO.save(phone.getSpecList(), id);
         if (phone.getPromotList() == null)
-            phone.setPromotList(new HashSet<>());
-
-
-        imageDAO.save(phone.getImageList(), id);
-        phoneColorDAO.save(phone.getColorList(), id);
-        phoneCapDAO.save(phone.getCapList(), id);
-        phoneSpecDAO.save(phone.getSpecList(), id);
-        phonePromotDAO.save(phone.getPromotList(), id);
-
+            phonePromotDAO.save(phone.getPromotList(), id);
         return phoneDAO.getPhoneById(id);
     }
 
     public Phone update(Phone phone) {
         Phone old = new PhoneDAO("phones").getPhoneById(phone.getId());
         if (phone.getImageList() == null)
-            phone.setImageList(new HashSet<>());
+            imageDAO.updateImageList(old.getImageList(), phone.getImageList());
         if (phone.getColorList() == null)
-            phone.setColorList(new HashSet<>());
+            phoneColorDAO.updatePhoneColorList(old.getColorList(), phone.getColorList());
         if (phone.getCapList() == null)
-            phone.setCapList(new HashSet<>());
+            phoneCapDAO.updateCapList(old.getCapList(), phone.getCapList());
+
         if (phone.getSpecList() == null)
-            phone.setSpecList(new HashSet<>());
+            phoneSpecDAO.updateSpecList(old.getSpecList(), phone.getSpecList());
+
         if (phone.getPromotList() == null)
-            phone.setPromotList(new HashSet<>());
+            phonePromotDAO.updatePromotList(old.getPromotList(), phone.getPromotList());
 
-
-        imageDAO.updateImageList(old.getImageList(), phone.getImageList());
-        phoneColorDAO.updatePhoneColorList(old.getColorList(), phone.getColorList());
-        phoneSpecDAO.updateSpecList(old.getSpecList(), phone.getSpecList());
-        phonePromotDAO.updatePromotList(old.getPromotList(), phone.getPromotList());
-        phoneCapDAO.updateCapList(old.getCapList(), phone.getCapList());
 
         phoneDAO.updatePhone(phone);
         return phoneDAO.getPhoneById(phone.getId());
@@ -80,24 +73,17 @@ public class PhoneService {
 
     public void delete(Phone phone) {
         if (phone.getImageList() == null)
-            phone.setImageList(new HashSet<>());
+            imageDAO.deleteImageList(phone.getImageList());
         if (phone.getColorList() == null)
-            phone.setColorList(new HashSet<>());
+            phoneColorDAO.deletePhoneColor(phone.getColorList());
         if (phone.getCapList() == null)
-            phone.setCapList(new HashSet<>());
+            phoneSpecDAO.deletePhoneSpec(phone.getSpecList());
         if (phone.getSpecList() == null)
-            phone.setSpecList(new HashSet<>());
+            phoneCapDAO.deletePhoneCap(phone.getCapList());
         if (phone.getPromotList() == null)
-            phone.setPromotList(new HashSet<>());
+            phonePromotDAO.deletePhonePromot(phone.getPromotList());
 //        if (phone.getReviews() == null)
 //            phone.setReviews(new HashMap<>());
-
-        imageDAO.deleteImageList(phone.getImageList());
-        phoneColorDAO.deletePhoneColor(phone.getColorList());
-        phoneSpecDAO.deletePhoneSpec(phone.getSpecList());
-        phoneCapDAO.deletePhoneCap(phone.getCapList());
-        phonePromotDAO.deletePhonePromot(phone.getPromotList());
-
 //        for (Integer r : phone.getReviews().keySet()
 //        ) {
 //            reviewDAO.deleteReview(phone.getReviews().get(r));

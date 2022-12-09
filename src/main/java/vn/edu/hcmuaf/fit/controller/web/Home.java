@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Home", value = "/Home")
+@WebServlet(name = "Home", value = "/home")
 public class Home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        request.getRequestDispatcher("/views/index.jsp").forward(request,response);
+        request.getRequestDispatcher("/views/web/index.jsp").forward(request,response);
     }
 
     @Override

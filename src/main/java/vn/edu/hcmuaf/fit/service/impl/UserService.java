@@ -9,8 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 @ManagedBean
 public class UserService {
-    @Inject
-    UserDAO userDao;
+//    @Inject
+    UserDAO userDao = new UserDAO("users");
 
     //    boolean register(String name, String email, String phone,String address,String pass, String confirm){}
 

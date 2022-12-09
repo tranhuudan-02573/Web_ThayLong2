@@ -23,10 +23,9 @@ public class PhoneAPI extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        List<Phone> ps = HttpUtil.of(request.getReader()).listModel(Phone.class);
-        ps = phoneService.getAll();
-        System.out.println(ps);
-        mapper.writeValue(response.getOutputStream(), ps);
+        List<Phone> phone = HttpUtil.of(request.getReader()).listModel(Phone.class);
+        phone = phoneService.getAll();
+        mapper.writeValue(response.getOutputStream(), phone);
     }
 
     @Override
@@ -35,6 +34,7 @@ public class PhoneAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Phone phone = HttpUtil.of(request.getReader()).toModel(Phone.class);
+        System.out.println(phone);
         phone = phoneService.save(phone);
         mapper.writeValue(response.getOutputStream(), phone);
     }
