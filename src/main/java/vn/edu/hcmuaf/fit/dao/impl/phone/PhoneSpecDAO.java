@@ -89,31 +89,6 @@ public class PhoneSpecDAO extends AbstractDAO<PhoneSpec> {
 
     }
 
-    public static void main(String[] args) {
-        PhoneSpec spec = new PhoneSpec();
-        spec.setPhoneId(1);
-        List<PhoneSpec> l = new PhoneSpecDAO("phone_spec").list(" and phoneId =:t.phoneId ",  PhoneSpec.class,spec);
-        Set<PhoneSpec> s = new HashSet<>(l);
-        Set<PhoneSpec> s2 = new HashSet<>(l);
-
-        s2.clear();
-
-
-//        List<PhoneSpec> list = new ArrayList<PhoneSpec>(s2);
-//        list.get(0).setValue("tran huu dan");
-
-//        PhoneSpec ppp = l.get(0);
-//        ppp.setSpecId(2);
-
-//        s2 = new HashSet<>(list);
-        System.out.println(s);
-        System.out.println(s2);
-
-
-//new PhoneSpecDAO().updateSpec(ppp,2);
-        new PhoneSpecDAO("phone_spec").updateSpecList(s, s2);
-
-    }
 
     public void save(Set<PhoneSpec> specList, int id) {
         if (!specList.isEmpty()) {

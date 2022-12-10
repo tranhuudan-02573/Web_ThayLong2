@@ -80,24 +80,6 @@ public class ImageDAO extends AbstractDAO<Image> {
         return false;
     }
 
-    public static void main(String[] args) {
-        Image img1 = new Image();
-        img1.setPhoneId(1);
-        List<Image> l = new ImageDAO("images").list(" and phoneId =:t.phoneId",  Image.class,img1);
-        Set<Image> s = new HashSet<>(l);
-        Set<Image> s2 = s;
-        Image image = new Image();
-        image.setDesc("dasd");
-        s2.add(image);
-
-        for (Image img : s2
-        ) {
-            img.setLink("abc");
-        }
-
-
-        new ImageDAO("images").updateImageList(s, s2);
-    }
 
     public void save(Set<Image> imageList, int id) {
         if (!imageList.isEmpty()) {

@@ -86,21 +86,6 @@ public class PhoneColorDAO extends AbstractDAO<PhoneColor> {
 
     }
 
-    public static void main(String[] args) {
-        PhoneColor pc = new PhoneColor();
-        pc.setPhoneId(1);
-        List<PhoneColor> l = new PhoneColorDAO("phone_color").list(" and phoneId =:phoneId ",  PhoneColor.class, pc);
-        Set<PhoneColor> s = new HashSet<>(l);
-        Set<PhoneColor> s2 = s;
-
-        for (PhoneColor img : s2
-        ) {
-            img.setImg("abc");
-        }
-
-
-        new PhoneColorDAO("phone_color").updatePhoneColorList(s, s2);
-    }
 
     public void save(Set<PhoneColor> colorList, int id) {
         if (!colorList.isEmpty()) {

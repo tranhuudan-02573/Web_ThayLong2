@@ -29,7 +29,7 @@
       <span class="badge badge-danger mr-1">Trả góp 0%</span>
     </div>
 
-    <a href="${pageContext.request.contextPath}/detail?id=${param.id}" class="text-dark align-self-stretch" style="height: 375px;">
+    <a href="${pageContext.request.contextPath}/phone-detail?id=${param.id}" class="text-dark align-self-stretch" style="height: 375px;">
       <div class=" cart-content  h-100">
         <div class="my-2 d-block overflow-hidden item hvr-float ">
           <img class="object-cover mw-100 " src="${param.thumbnail}" alt="">

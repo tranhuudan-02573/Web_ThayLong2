@@ -20,7 +20,7 @@ public class CartDAO extends AbstractDAO<Cart> {
 
    public List<Cart> getAllByUser(int uid){
 
-        return list(" and userId ="+uid, Cart.class,null);
+        return list(" and userId ="+uid, Cart.class,null,null);
 
     }
 

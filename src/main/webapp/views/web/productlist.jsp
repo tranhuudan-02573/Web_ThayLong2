@@ -1103,240 +1103,26 @@
 								<div class="tab-pane fade" id="hot" role="tabpanel" aria-labelledby="hot-tab">
 									<div class="products-mobile mt-3 w-100">
 										<div class="row w-100 mx-auto row-cols-4  ">
-
+											<c:forEach var="phone" items="${requestScope.phoneList}">
 											<div class="col-6 col-sm-3 p-0">
 												<div class="card border rounded-0" style="box-shadow: unset;">
 													<div class="card-body " style="padding: 0.75rem;">
-														<div class=" d-block overflow-hidden   ">
-															<style>
-																p {
-																	margin: 0;
+														<jsp:include page="/common/web/card.jsp">
+															<jsp:param name="thumbnail" value="${phone.thumbnail}"/>
+															<jsp:param name="name" value="${phone.name}"/>
+															<jsp:param name="price" value="${phone.price}"/>
+															<jsp:param name="id" value="${phone.id}"/>
+															<jsp:param name="capname" value="${phone.cap.name}"/>
+														</jsp:include>
 
-																}
 
-																.quote::before {
-																	content: '●';
-																	margin-right: 2px;
-																	left: 0;
-																	top: 0;
-																	color: #333;
-																	font-size: 10px;
-																}
 
-															</style>
-															<div class="d-flex flex-column h-100 w-100  ">
-
-																<div class=" align-items-start">
-																	<span class="badge badge-danger mr-1">Trả góp
-																		0%</span>
-																</div>
-
-																<a href="/src/views/product.html" class="text-dark">
-																	<div class="align-items-start cart-content  h-100">
-																		<div
-																			class="my-2 d-block overflow-hidden item hvr-float ">
-																			<img class="object-cover mw-100 "
-																				src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-																				alt="">
-																		</div>
-																		<h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-																			style="display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;font-size: 14px;">
-																			iPhone 14 Pro Max 256GB Lorem ipsum dolor
-																			sit amet consectetur
-																			adipisicing elit. Iste, maiores.
-																		</h3>
-																		<div class="mb-1">
-																			<span class="mr-2 badge badge-light">6.7
-																				incheslor
-																			</span>
-
-																			<span class="mr-2 badge badge-light">128
-																				GB</span>
-																		</div>
-
-																		<div class="mb-1">
-																			<i class=" d-inline-block text-decoration-line-through price-old"
-																				style="text-decoration: line-through">
-																				40.000.000đ</i>
-																			<b
-																				class="d-inline-block price-new ">-25%</b>
-																		</div>
-																		<strong
-																			class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-																		<div class=" mb-1 d-flex flex-end">
-																			<p class=" text-warning "
-																				style="font-size: 12px;">
-																				<i class=" fa-solid fa-star "></i>
-																				<i class=" fa-solid fa-star "></i>
-																				<i class=" fa-solid fa-star "></i>
-																				<i
-																					class="fa-solid fa-star-half-stroke "></i>
-																				<i class="fa-regular fa-star "></i>
-																			</p>
-																			<p class="ms-1 fw-light d-inline-block align-middle "
-																				style="font-size: 12px;">54</p>
-																		</div>
-																		<div class="mt-2 text-ellipsis overflow-hidden text-break  d-none d-sm-block"
-																			style="font-size:12px ;">
-																			<p
-																				class="d-flex quote  text-ellipsis overflow-hidden text-break">
-																				Chip Snapdragon 8+ Gen 1
-
-																			</p>
-																			<p class="d-flex quote">RAM: 8 GB</p>
-																			<p class="d-flex quote">Dung lượng: 256 GB
-																			</p>
-																			<p class="d-flex quote">Camera sau: Chính 50
-																				MP &amp; Phụ 12 MP, 10
-																				MP</p>
-																			<p class="d-flex quote">Camera trước: 10 MP
-																				&amp; 4 MP</p>
-																			<p class="d-flex quote">Pin 4400 mAh, Sạc 25
-																				W</p>
-																		</div>
-																	</div>
-																</a>
-																<div
-																	class="mt-2  d-flex justify-content-between align-items-end">
-																	<a href="" class=" d-block  align-middle"
-																		style="font-size:14px ;">
-																		<i class="fa-regular fa-square-plus fa-sm"></i>
-																		so sánh
-																	</a>
-
-																	<a href="" class="d-block  align-middle"
-																		style="font-size:14px ;">
-																		<i class="fa-regular fa-heart fa-sm"></i> yêu
-																		thích
-																	</a>
-																</div>
-															</div>
-														</div>
 													</div>
 												</div>
 
 
 											</div>
-											<div class="col-6 col-sm-3 p-0">
-												<div class="card border rounded-0" style="box-shadow: unset;">
-													<div class="card-body " style="padding: 0.75rem;">
-														<div class=" d-block overflow-hidden   ">
-															<style>
-																p {
-																	margin: 0;
-
-																}
-
-																.quote::before {
-																	content: '●';
-																	margin-right: 2px;
-																	left: 0;
-																	top: 0;
-																	color: #333;
-																	font-size: 10px;
-																}
-
-															</style>
-															<div class="d-flex flex-column h-100 w-100  ">
-
-																<div class=" align-items-start">
-																	<span class="badge badge-danger mr-1">Trả góp
-																		0%</span>
-																</div>
-
-																<a href="/src/views/product.html" class="text-dark">
-																	<div class="align-items-start cart-content  h-100">
-																		<div
-																			class="my-2 d-block overflow-hidden item hvr-float ">
-																			<img class="object-cover mw-100 "
-																				src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-																				alt="">
-																		</div>
-																		<h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-																			style="display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;font-size: 14px;">
-																			iPhone 14 Pro Max 256GB Lorem ipsum dolor
-																			sit amet consectetur
-																			adipisicing elit. Iste, maiores.
-																		</h3>
-																		<div class="mb-1">
-																			<span class="mr-2 badge badge-light">6.7
-																				incheslor
-																			</span>
-
-																			<span class="mr-2 badge badge-light">128
-																				GB</span>
-																		</div>
-
-																		<div class="mb-1">
-																			<i class=" d-inline-block text-decoration-line-through price-old"
-																				style="text-decoration: line-through">
-																				40.000.000đ</i>
-																			<b
-																				class="d-inline-block price-new ">-25%</b>
-																		</div>
-																		<strong
-																			class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-																		<div class=" mb-1 d-flex flex-end">
-																			<p class=" text-warning "
-																				style="font-size: 12px;">
-																				<i class=" fa-solid fa-star "></i>
-																				<i class=" fa-solid fa-star "></i>
-																				<i class=" fa-solid fa-star "></i>
-																				<i
-																					class="fa-solid fa-star-half-stroke "></i>
-																				<i class="fa-regular fa-star "></i>
-																			</p>
-																			<p class="ms-1 fw-light d-inline-block align-middle "
-																				style="font-size: 12px;">54</p>
-																		</div>
-																		<div class="mt-2 text-ellipsis overflow-hidden text-break  d-none d-sm-block"
-																			style="font-size:12px ;">
-																			<p
-																				class="d-flex quote  text-ellipsis overflow-hidden text-break">
-																				Chip Snapdragon 8+ Gen 1
-
-																			</p>
-																			<p class="d-flex quote">RAM: 8 GB</p>
-																			<p class="d-flex quote">Dung lượng: 256 GB
-																			</p>
-																			<p class="d-flex quote">Camera sau: Chính 50
-																				MP &amp; Phụ 12 MP, 10
-																				MP</p>
-																			<p class="d-flex quote">Camera trước: 10 MP
-																				&amp; 4 MP</p>
-																			<p class="d-flex quote">Pin 4400 mAh, Sạc 25
-																				W</p>
-																		</div>
-																	</div>
-																</a>
-																<div
-																	class="mt-2  d-flex justify-content-between align-items-end">
-																	<a href="" class=" d-block  align-middle"
-																		style="font-size:14px ;">
-																		<i class="fa-regular fa-square-plus fa-sm"></i>
-																		so sánh
-																	</a>
-
-																	<a href="" class="d-block  align-middle"
-																		style="font-size:14px ;">
-																		<i class="fa-regular fa-heart fa-sm"></i> yêu
-																		thích
-																	</a>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-
-
-											</div>
-
+											</c:forEach>
 
 										</div>
 									</div>
