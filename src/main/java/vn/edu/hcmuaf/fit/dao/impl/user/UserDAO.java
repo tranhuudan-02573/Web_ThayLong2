@@ -14,20 +14,34 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
+
 @ManagedBean
 public class UserDAO extends AbstractDAO<User> implements GenericDAO<User> {
     public UserDAO(String table) {
         super(table);
     }
 
-    public void deleteCart(User c){
+    public void deleteCart(User c) {
 
-        delete("delete from cart where userId = :t.id",c);
+        delete("delete from cart where userId = :t.id", c);
 
     }
 
-    public void deleteReview(User u){
-        delete("delete from phone_review where userId =:t.id",u);
+    public User findByEmail(String email) {
+        User u = new User();
+        u.setEmail(email);
+
+        return get(" and email =:t.email ", User.class, u);
+
+
+    }
+
+    public void enableUser(String email) {
+        update("update users set active = true where email = " + email, null);
+    }
+
+    public void deleteReview(User u) {
+        delete("delete from phone_review where userId =:t.id", u);
     }
 //    List<Phone> join() {
 //
@@ -94,12 +108,11 @@ public class UserDAO extends AbstractDAO<User> implements GenericDAO<User> {
 
     }
 
-
     public User checkLogin(String username, String pass) {
         String sql = "select * from users where name = :name";
         User u = new User();
         u.setName("dan");
-        List<User> users = list(sql,  User.class,u);
+        List<User> users = list(sql, User.class, u);
         User user = users.get(0);
         if (users.size() != 1 || !user.getPassword().equals(new HashPass().hashPassword(pass)) || !username.equals(user.getName()))
             return null;
@@ -168,4 +181,5 @@ public class UserDAO extends AbstractDAO<User> implements GenericDAO<User> {
 //        System.out.println(new UserDAO().insertUser(user));
         System.out.println(new UserDAO("users").joinUser("", User.class, null));
     }
+
 }

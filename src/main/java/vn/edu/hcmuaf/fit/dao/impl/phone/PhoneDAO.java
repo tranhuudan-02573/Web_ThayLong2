@@ -151,6 +151,9 @@ public class PhoneDAO extends AbstractDAO<Phone> {
         HashMap<String, Object> o = new HashMap<>();
         o.put("name", "dt");
         o.put("price", 2000);
+        Phone p = new Phone();
+        p.setId(2);
+        new PhoneDAO("phones").deleteSoftPhone(p);
 //        o.put("dnas", "djsad");
 
 
@@ -178,7 +181,7 @@ public class PhoneDAO extends AbstractDAO<Phone> {
 //       new PhoneDAO().insert("insert into phones (`name`,typeId,price,content,created_at,updated_at,total,thumbnail,`desc`,stateId,brandId,modelId,saleId) " +
 //                "values (:t.name,:t.typeId,:t.price,:t.content,:t.created_at,:t.updated_at,:t.total,:t.thumbnail,:t.desc,:t.stateId,:t.brandId,:t.modelId,:t.saleId)", phone);
 
-        Phone p = new PhoneDAO("phones").getPhoneById(2);
+//        Phone p = new PhoneDAO("phones").getPhoneById(2);
         p.setName("tran huu dan");
 //        new PhoneDAO().updatePhone(p);
         PhonePromot pr = new PhonePromot();
@@ -188,13 +191,18 @@ public class PhoneDAO extends AbstractDAO<Phone> {
         Phone pp = new Phone();
         pp.setName("kkk123123");
 
-        System.out.println( new PhoneDAO("phones").savePhone(pp));
+//        System.out.println( new PhoneDAO("phones").savePhone(pp));
 //        new PhoneDAO().updatePhone(p);
 //        System.out.println(new PhoneDAO().getAll());
 //        System.out.println(new PhoneDAO().getPhoneBy(o));
 //        System.out.println(new PhoneDAO().getPhoneById(2));
 //        System.out.println(new PhoneDAO().getByPrice(2000));
 //        System.out.println(new PhoneDAO().getByName("dt"));
+    }
+    public void deleteSoftPhone(Phone phone) {
+    phone.setDeleted_at(new Timestamp(System.currentTimeMillis()));
+        update("update phones set status = 'da xoa' , deleted_at =:t.deleted_at where id = :t.id ",phone);
+
     }
 
 

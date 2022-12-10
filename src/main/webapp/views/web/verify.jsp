@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,18 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-	<link rel="stylesheet" type="text/css" href="/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="/lib/fa6/fontawesome-free-6.2.0-web/css/all.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/owl.theme.default.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/hover-min.css">
-	<link rel="stylesheet" href="/lib/mdb4/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/lib/mdb4/css/mdb.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/product.css">
-	<link rel="stylesheet" type="text/css" href="/css/custom.css">
 </head>
-
 <body>
 
+<header id="header"></header>
 
 <main>
 	<div class="container">
@@ -48,15 +39,5 @@
 </main>
 
 
-
-<script type="text/javascript" src="/lib/mdb4/js/jquery.min.js"></script>
-<script src="/lib/mdb4/js/popper.min.js"></script>
-<script src="/lib/mdb4/js/bootstrap.min.js"></script>
-<script src="/lib/mdb4/js/mdb.min.js"></script>
-	<script type="text/javascript" src="/js/owl.carousel.min.js"></script>
-	<script type="text/javascript" src="/js/product.js"></script>
-
-
-	</body>
+</body>
 </html>
-

@@ -32,6 +32,7 @@ public class Phone implements Serializable {
     private Sale sale;
     private Integer capId;
     private Cap cap;
+    private String status;
     private  Set<PhoneSpec> specList = new HashSet<>();
     private Set<PhoneColor> colorList = new HashSet<>();
     private Type type;
@@ -43,6 +44,8 @@ public class Phone implements Serializable {
     private Brand brand;
     private Model model;
     private Integer created_by;
+    private Integer deleted_by;
+    private Timestamp   deleted_at;
     private Set<Image> imageList = new HashSet<>();
     public void addCap(PhoneCap pc) {
         capList.add(pc);

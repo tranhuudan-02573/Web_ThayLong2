@@ -6,12 +6,13 @@ import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface GenericDAO<T> {
 
     public abstract List<T> list(String sql, Class<T> t,T t2);
 
-    public abstract T get(String sql,  Class<T> t,T t2);
+    public abstract T get(String sql, Class<T> t, T t2);
 
 
     public abstract int insertWithId(String sql,  T o);

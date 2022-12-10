@@ -104,9 +104,7 @@ public class PhoneColorDAO extends AbstractDAO<PhoneColor> {
 
     public void save(Set<PhoneColor> colorList, int id) {
         if (!colorList.isEmpty()) {
-
             for (PhoneColor color : colorList) {
-
                 savePhoneColor(color, id);
             }
         }

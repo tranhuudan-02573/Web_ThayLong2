@@ -5,7 +5,7 @@
   Time: 4:23 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -41,7 +41,7 @@
       <!-- Material checked -->
       <!-- Material checked -->
       <div class="modal-footer d-flex justify-content-between">
-        <span>Bạn chưa có tài khoản? <a href="/views/admin/profile.jsp" class="text-default">Đăng kí</a></span>
+        <span>Bạn chưa có tài khoản? <a href="/views/admin/profile.html" class="text-default">Đăng kí</a></span>
         <button class="btn btn-default ">Reset</button>
       </div>
     </div>
@@ -49,7 +49,7 @@
 </div>
 <header>
   <!-- Sidebar navigation -->
-  <div id="slide-out" class="side-nav fixed wide sn-bg-1">
+  <div id="slide-out" role="navigation" class="side-nav fixed wide sn-bg-1">
     <ul class="custom-scrollbar">
       <!-- Logo -->
       <li>
@@ -61,47 +61,141 @@
       <!-- Side navigation links -->
       <li>
         <ul class="collapsible collapsible-accordion">
-          <li><a class="collapsible-header waves-effect arrow-r active" style="font-size: 16px;"><i class="sv-slim-icon fas fa-chevron-rightfa-chevron-right fa-angle-double-left"></i>Quản lí<i class="fas fa-angle-down rotate-icon"></i></a>
+          <li>
+            <a class="collapsible-header waves-effect arrow-r active" style="font-size: 16px;"><i
+                    class="sv-slim-icon fas fa-chevron-rightfa-chevron-right fa-angle-double-left"></i>Quản
+              lí<i class="fas fa-angle-down rotate-icon"></i>
+            </a>
             <div class="collapsible-body">
-              <ul>
-                <li><a href="/views/admin/manauser/index.jsp" class="waves-effect active">
-                  <span class="sv-slim"> SL </span>
-                  <span class="sv-normal" style="font-size: 16px;">Quản lí người dùng</span></a>
-                </li>
-                <li><a href="/views/admin/manaproduct/index.jsp" class="waves-effect" >
-                  <span class="sv-slim"> RF </span>
-                  <span class="sv-normal" style="font-size: 16px;">Quản lí sản phẩm</span></a>
-                </li>
-                <li><a href="/views/admin/manapromot/index.jsp" class="waves-effect" >
-                  <span class="sv-slim"> RF </span>
-                  <span class="sv-normal" style="font-size: 16px;">Quản lí chương trình</span></a>
-                </li>
-                <li><a href="/views/admin/manaorder/index.jsp" class="waves-effect">
-                  <span class="sv-slim"> RF </span>
-                  <span class="sv-normal" style="font-size: 16px;">Quản lí đơn hàng</span></a>
-                </li>
-                <li><a href="/views/admin/manasale/index.jsp" class="waves-effect">
-                  <span class="sv-slim"> RF </span>
-                  <span class="sv-normal" style="font-size: 16px;">Quản lí ưu đãi</span></a>
-                </li>
-                <li><a href="/views/admin/manareview/index.jsp" class="waves-effect">
-                  <span class="sv-slim"> RF </span>
-                  <span class="sv-normal" style="font-size: 16px;">Quản lí đánh giá</span></a>
-                </li>
 
+              <ul class="collapsible collapsible-accordion">
+                <li>
+                  <a class="collapsible-header  text-white waves-effect arrow-r "
+                     style="font-size: 16px;"><i
+                          class=" fas fa-solid fa-users "></i>Người dùng<i
+                          class="fas fa-angle-down rotate-icon"></i></a>
+                  <div class="collapsible-body">
+                    <ul class="">
+                      <li>
+                        <a href="/views/admin/manausers/index.html"
+                           class="waves-effect ">
+
+                                                                <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>danh sách người dùng
+                                                                </span></a>
+                      </li>
+
+
+                    </ul>
+                  </div>
+                </li>
+                <li>
+                  <a class="collapsible-header  text-white waves-effect arrow-r "
+                     style="font-size: 16px;"><i
+                          class=" fas fa-regular fa-pen-to-square"></i>Đơn hàng<i
+                          class="fas fa-angle-down rotate-icon"></i></a>
+                  <div class="collapsible-body">
+                    <ul class="">
+                      <li>
+                        <a href="/views/admin/manaorders/index.html"
+                           class="waves-effect ">
+                          <span class="sv-slim"> SL </span>
+                          <span class="sv-normal"
+                                style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>Danh sách đơn hàng
+                                                                            </span></a>
+                      </li>
+
+
+                    </ul>
+                  </div>
+                </li>
+                <li>
+                  <a class="collapsible-header active text-white waves-effect arrow-r "
+                     style="font-size: 16px;"><i
+                          class=" fas fa-solid fa-mobile-screen-button "></i>Điện thoại<i
+                          class="fas fa-angle-down rotate-icon"></i></a>
+                  <div class="collapsible-body">
+                    <ul class=" ">
+                      <li>
+                        <a href="/views/admin/manaphones/index.html"
+                           class="waves-effect ">
+                          <span class="sv-slim"> SL </span>
+                          <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>
+                                                                    Danh sách điện thoại</span></a>
+                      </li>
+
+
+                      <li>
+                        <a href="/views/admin/manacolor/index.html"
+                           class="waves-effect ">
+                          <span class="sv-slim"> SL </span>
+                          <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>
+                                                                    Màu</span></a>
+                      </li>
+                      <li>
+                        <a href="/views/admin/manacap/index.html"
+                           class="waves-effect ">
+                          <span class="sv-slim"> SL </span>
+                          <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>
+                                                                    bộ nhớ</span></a>
+                      </li>
+
+                      <li>
+                        <a href="/views/admin/manaspec/index.html"
+                           class="waves-effect ">
+                          <span class="sv-slim"> SL </span>
+                          <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>
+                                                                    Thông số</span></a>
+                      </li>
+
+
+                      <li>
+                        <a href="/views/admin/manapromot/index.html"
+                           class="waves-effect ">
+                          <span class="sv-slim"> SL </span>
+                          <span class="sv-normal"
+                                style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>Khuyến mãi</span></a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li>
+                  <a class="collapsible-header active text-white waves-effect arrow-r "
+                     style="font-size: 16px;"><i
+                          class="sv-slim-icon fas fa-brands fa-opencart"></i>review<i
+                          class="fas fa-angle-down rotate-icon"></i></a>
+                  <div class="collapsible-body">
+                    <ul class=" ">
+                      <li>
+                        <a href="/views/admin/manareview/index.html" class="waves-effect">
+                          <span class="sv-slim"> RF </span>
+                          <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>review</span></a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+                </li>
               </ul>
+
             </div>
           </li>
 
-          <li><a id="toggle" class="waves-effect" >
-            <i class="sv-slim-icon fas fa-angle-double-left" style="font-size: 18px;"></i>
-            <span style="font-size: 17px;">Thu nhỏ menu</span></a>
-          </li>
         </ul>
       </li>
-      <!--/. Side navigation links -->
+
+
+      <li>
+        <a id="toggle" class="waves-effect">
+          <i class="sv-slim-icon fas fa-angle-double-left" style="font-size: 18px;"></i>
+          <span style="font-size: 17px;">Thu nhỏ menu</span>
+        </a>
+      </li>
+
+
     </ul>
-    <div class="sidenav-bg rgba-blue-strong"></div>
+  </div>
+  <div class="sidenav-bg rgba-blue-strong"></div>
   </div>
   <!--/. Sidebar navigation -->
   <!-- Navbar -->
@@ -117,13 +211,13 @@
     <ul class="nav navbar-nav nav-flex-icons ml-auto">
 
       <li class="nav-item">
-        <a class="nav-link" href="/views/admin/index.jsp"><i class="fa-solid fa-house-user mr-1 fa-lg"></i><span class="clearfix d-none d-sm-inline-block">Trang chủ</span></a>
+        <a class="nav-link" href="/views/admin/index.html"><i class="fa-solid fa-house-user mr-1 fa-lg"></i><span class="clearfix d-none d-sm-inline-block">Trang chủ</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" data-target="#modal" data-toggle="modal"><i class="fa-solid fa-key"></i> <span class="clearfix d-none d-sm-inline-block">Đổi mật khẩu</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/views/admin/profile.jsp"><i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">Thông tin cá nhân</span></a>
+        <a class="nav-link" href="/views/admin/profile.html"><i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">Thông tin cá nhân</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link"><i class="fa-solid fa-right-from-bracket"></i> <span class="clearfix d-none d-sm-inline-block">Thoát</span></a>

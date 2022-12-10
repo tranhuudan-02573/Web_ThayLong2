@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -32,5 +31,14 @@ public class User implements Serializable {
 	private String email;
 	private Integer permissionId;
 	private Permission permission;
+
+
+	public User(String name,String password,String phone,String email,Integer p){
+		this.name = name;
+		this.password =password;
+		this.phone = phone;
+		this.email=email;
+		this.permissionId = p;
+	}
 
 }

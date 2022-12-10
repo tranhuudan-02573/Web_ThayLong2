@@ -12,12 +12,12 @@ $(function(){
 			},
 			600:{
 				items:2,
-				nav:false
+				nav:true
 			},
 			1000:{
 				items:5,
 				nav:true,
-				loop:false
+				loop:true
 			}
 		}
 	});
@@ -35,12 +35,12 @@ $(function(){
 			600:{
 
 				items:1,
-				nav:false
+				nav:true
 			},
 			1000:{
 				items:1,
 				nav:true,
-				loop:false
+				loop:true
 			}
 		}
 	});
@@ -63,12 +63,5 @@ $(function(){
 
 	});
 
-	// $(window).resize(function(){
-	// 	var width =
 
-	// });
-
-
-
-	// $('.items-select').removeClass('flex-column');
 });

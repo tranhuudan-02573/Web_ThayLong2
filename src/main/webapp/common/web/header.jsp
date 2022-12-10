@@ -5,56 +5,85 @@ Date: 11/14/2022
 Time: 3:39 PM
 To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <header>
+
+    <div class="modal fade show" id="modalStarRating" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-modal="true"
+         style="padding-right: 17px; display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center pt-1 pb-1">
+                    <h4 class="modal-title w-100 font-weight-bold text-uppercase">chon tinh thanh pho</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3 ">
+                    <select class="mdb-select md-form" searchable="Search here..">
+                        <option value="" disabled selected>Choose your country</option>
+                        <option value="1">USA</option>
+                        <option value="2">Germany</option>
+                        <option value="3">France</option>
+                        <option value="3">Poland</option>
+                        <option value="3">Japan</option>
+                    </select>
+                    <label class="mdb-main-label">Label example</label>
+                </div>
+
+                <div class="modal-footer d-flex justify-content-center pt-1 pb-1">
+                    <button class="btn btn-danger ">Gửi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="post" action="">
-                    <div class="modal-header text-center">
-                        <h4 class="modal-title w-100 font-weight-bold text-uppercase">đăng nhập tài khoản</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold text-uppercase">đăng nhập tài khoản</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <i class="fas fa-envelope prefix grey-text text-danger"></i>
+                        <input type="email" id="defaultForm-email" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="defaultForm-email"> Email</label>
                     </div>
-                    <div class="modal-body mx-3">
 
-                        <div class="md-form mb-5">
-                            <i class="fas fa-envelope prefix grey-text text-danger"></i>
-                            <input type="email" id="defaultForm-email" class="form-control validate">
-                            <label data-error="wrong" data-success="right" for="defaultForm-email"> Email</label>
-                        </div>
+                    <div class="md-form mb-4">
+                        <i class="fas fa-lock prefix grey-text text-danger"></i>
+                        <input type="password" id="defaultForm-pass" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="defaultForm-pass">Mật khẩu</label>
 
-                        <div class="md-form mb-4">
-                            <i class="fas fa-lock prefix grey-text text-danger"></i>
-                            <input type="password" id="defaultForm-pass" class="form-control validate">
-                            <label data-error="wrong" data-success="right" for="defaultForm-pass">Mật khẩu</label>
-
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <!-- Material checked -->
-                            <!-- Material checked -->
-                            <div class="form-check p-0">
-                                <input type="checkbox" class="form-check-input" id="materialChecked2" checked>
-                                <label class="form-check-label" for="materialChecked2">Nhớ mật khẩu</label>
-                            </div>
-                            <a href="/views/web/resetpass.jsp" class="text-danger">Quên mật khẩu</a>
-                        </div>
                     </div>
-                    <div class="modal-footer d-flex justify-content-between">
-                        <span>Bạn chưa có tài khoản? <a href="/views/web/signup.jsp" class="text-danger">Đăng ký</a></span>
-                        <input class="btn btn-danger " type="submit"> Đăng nhập
+                    <div class="d-flex justify-content-between">
+                        <!-- Material checked -->
+                        <!-- Material checked -->
+                        <div class="form-check p-0">
+                            <input type="checkbox" class="form-check-input" id="materialChecked2" checked>
+                            <label class="form-check-label" for="materialChecked2">Nhớ mật khẩu</label>
+                        </div>
+                        <a href="/views/resetpass.html" class="text-danger">Quên mật khẩu</a>
                     </div>
-                </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <span>Bạn chưa có tài khoản? <a href="/views/signup.html" class="text-danger">Đăng ký</a></span>
+                    <button class="btn btn-danger ">Đăng nhập</button>
+                </div>
             </div>
         </div>
     </div>
     <div class="d-head ">
         <div class="head-top bg-danger">
             <div class="container">
-                <div class="row align-items-center ">
+                <div class="row align-items-center w-100 mx-auto ">
                     <div class="col-1 d-block d-sm-none d-flex align-items-center text-white"><i class="fa fa-bars"></i>
                     </div>
                     <div class="col-9 position-absolute p-2 menu-multi-mobile">
@@ -78,15 +107,12 @@ To change this template use File | Settings | File Templates.
                                                 Điện thoại
                                             </a>
                                             <h2 class="mb-0 pull-right">
-                                                <button class="btn p-0" type="button" data-toggle="collapse"
-                                                        data-target="#collapseOne" aria-expanded="true"
-                                                        aria-controls="collapseOne">
+                                                <button class="btn p-0" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                                 </button>
                                             </h2>
                                         </div>
-                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                             data-parent="#accordionExample">
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="row row-md">
                                                     <div class="col-6">
@@ -113,7 +139,7 @@ To change this template use File | Settings | File Templates.
                                                     <div class="col-6">
                                                         <a href="#" title="" class="nav-link text-dark">HONOR</a>
                                                     </div>
-                                                    <div class="col-12 text-center">
+                                                    <div class="col-12 text-center" >
                                                         <a href="#" title="" class="nav-link text-dark">Mobiistar</a>
                                                     </div>
                                                 </div>
@@ -127,15 +153,12 @@ To change this template use File | Settings | File Templates.
                                                 Laptop
                                             </a>
                                             <h2 class="mb-0 pull-right">
-                                                <button class="btn p-0  collapsed " type="button" data-toggle="collapse"
-                                                        data-target="#collapseTwo" aria-expanded="false"
-                                                        aria-controls="collapseTwo">
+                                                <button class="btn p-0  collapsed " type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                                 </button>
                                             </h2>
                                         </div>
-                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                             data-parent="#accordionExample">
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="row row-md">
                                                     <div class="col-6">
@@ -162,7 +185,7 @@ To change this template use File | Settings | File Templates.
                                                     <div class="col-6">
                                                         <a href="#" title="" class="nav-link text-dark">HONOR</a>
                                                     </div>
-                                                    <div class="col-12 text-center">
+                                                    <div class="col-12 text-center" >
                                                         <a href="#" title="" class="nav-link text-dark">Mobiistar</a>
                                                     </div>
                                                 </div>
@@ -176,15 +199,12 @@ To change this template use File | Settings | File Templates.
                                                 Tablet
                                             </a>
                                             <h2 class="mb-0 pull-right">
-                                                <button class="btn p-0 collapsed " type="button" data-toggle="collapse"
-                                                        data-target="#collapseThree" aria-expanded="false"
-                                                        aria-controls="collapseThree">
+                                                <button class="btn p-0 collapsed " type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                                 </button>
                                             </h2>
                                         </div>
-                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                             data-parent="#accordionExample">
+                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                                             <div class="row row-md">
                                                 <div class="col-6">
                                                     <a href="#" title="" class="nav-link text-dark">Iphone</a>
@@ -210,7 +230,7 @@ To change this template use File | Settings | File Templates.
                                                 <div class="col-6">
                                                     <a href="#" title="" class="nav-link text-dark">HONOR</a>
                                                 </div>
-                                                <div class="col-12 text-center">
+                                                <div class="col-12 text-center" >
                                                     <a href="#" title="" class="nav-link text-dark">Mobiistar</a>
                                                 </div>
                                             </div>
@@ -223,15 +243,12 @@ To change this template use File | Settings | File Templates.
                                                 Apple
                                             </a>
                                             <h2 class="mb-0 pull-right">
-                                                <button class="btn p-0  collapsed " type="button" data-toggle="collapse"
-                                                        data-target="#collapseFour" aria-expanded="false"
-                                                        aria-controls="collapseFour">
+                                                <button class="btn p-0  collapsed " type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                                 </button>
                                             </h2>
                                         </div>
-                                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
-                                             data-parent="#accordionExample">
+                                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="row row-md">
                                                     <div class="col-6">
@@ -258,7 +275,7 @@ To change this template use File | Settings | File Templates.
                                                     <div class="col-6">
                                                         <a href="#" title="" class="nav-link text-dark">HONOR</a>
                                                     </div>
-                                                    <div class="col-12 text-center">
+                                                    <div class="col-12 text-center" >
                                                         <a href="#" title="" class="nav-link text-dark">Mobiistar</a>
                                                     </div>
                                                 </div>
@@ -315,47 +332,47 @@ To change this template use File | Settings | File Templates.
                         <!--end-row-->
                     </div>
                     <!--end col-9-->
-                    <div class="col-3 position-absolute overplay"></div>
-                    <div class="col-xl-2 col-lg-2 col-md-2 col-4  pl-1 pr-1 ">
-                        <a href="/index.jsp" title=""><img src="/images/fptshop-logo.png" class="img-fluid"></a>
+                    <div class="col-2 position-absolute overplay"></div>
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-4 p-0 ">
+                        <a href="/index.html" title=""><img src="/images/fptshop-logo.png" class="img-fluid"></a>
                     </div>
-                    <div class="col-7 pull-right d-flex justify-content-end align-items-center d-sm-none text-white"><i
-                            class="fa fa-shopping-cart"></i></div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 ">
+                    <div class="col-7 pull-right d-flex justify-content-end align-items-center d-sm-none text-white"><i class="fa fa-shopping-cart"></i></div>
+                    <div class="col-1" >
+
+                        <a class="nav-link p-0 text-center text-white " href="/views/user.html" data-toggle="modal" data-target="#modalStarRating">  <i class="fa-solid fa-location-dot fa-lg mr-2 "></i>xem giá tại</a>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 p-0 ">
                         <div class="input-group ">
-                            <input type="text" class="form-control " placeholder="Tìm kiếm sản phẩm"
-                                   aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <div class="input-group-append ">
-                                <a class="input-group-text bg-dark text-white  border-0 " id="basic-addon2"><i
-                                        class="fa fa-search"></i></a>
+                            <input type="text" class="form-control " placeholder="Tìm kiếm sản phẩm" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append " >
+                                <a class="input-group-text bg-dark text-white  border-0 " id="basic-addon2"><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                     </div>
                     <!--end col-6-->
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-none d-sm-block pl-1 pr-1">
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-12 d-none d-sm-block p-0">
                         <ul class="nav justify-content-end">
 
-                            <li class="nav-item">
-                                <a class="nav-link text-center text-white " href="/views/web/user.jsp">
-                                    <div><i class="fa-solid fa-clock-rotate-left fa-lg"></i></div>
-                                    lịch sử mua hàng</a>
+                            <li class="nav-item ">
+                                <a class="nav-link text-center text-white " href="/views/user.html"><div>
+                                    <i class="fa-solid fa-clock-rotate-left fa-lg "style="line-height: 1;"></i>
+                                </div>
+
+                                    lịch sử mua hàng
+                                </a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-center text-white " href="/views/web/cart.jsp">
-                                    <div><i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i></div>
-                                    Giỏ hàng</a>
+                                <a class="nav-link text-center text-white " href="/views/cart.html"> <div> <i class="fa fa-shopping-cart fa-lg" style="line-height: 1;" aria-hidden="true"></i></div>Giỏ hàng</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-center text-white " href="/views/web/user.jsp">
-                                    <div><i class="fa fa-heart fa-lg" aria-hidden="true"></i></div>
-                                    Sản phẩm đã thích</a>
+                                <a class="nav-link text-center text-white " href="/views/user.html"><div><i class="fa fa-heart fa-lg" style="line-height: 1;" aria-hidden="true"></i></div> Sản phẩm đã thích</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-center text-white " href="/views/web/user.jsp" data-toggle="modal"
-                                   data-target="#modalLoginForm">
-                                    <div><i class="fa fa-user fa-lg" aria-hidden="true"></i></div>
+                                <a class="nav-link text-center text-white " href="/views/user.html" data-toggle="modal" data-target="#modalLoginForm">
+                                    <div><i class="fa fa-user fa-lg"aria-hidden="true" style="line-height: 1;"></i></div>
                                     Tài khoản
                                 </a>
                             </li>
@@ -375,7 +392,7 @@ To change this template use File | Settings | File Templates.
 
 
     <li class="nav-item">
-     <a href="html/cart.jsp" class="nav-link waves-effect text-center " target="_blank">
+     <a href="html/cart.html" class="nav-link waves-effect text-center " target="_blank">
                <div class="text-center"> <i class="fa-solid fa-cart-arrow-down fa-lg"></i> </div>
                <span>gio hang</span>
 
@@ -405,49 +422,40 @@ To change this template use File | Settings | File Templates.
         <div class="head-menu bg-dark nav-scroller">
             <div class="container">
                 <ul class="nav row row-sm">
-                    <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/web/productlist.jsp"><i
-                                class="fa-solid fa-mobile-screen mr-2"></i></i></i>iPhone
+                    <li class="nav-item ol-md-4 hvr-grow_color" >
+                        <a class="nav-link text-white text-uppercase"href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>iPhone
                         </a>
                     </li>
                     <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/web/productlist.jsp"><i
-                                class="fa-solid fa-mobile-screen mr-2"></i></i></i>SamSung
+                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>SamSung
                         </a>
                     </li>
                     <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/web/productlist.jsp"><i
-                                class="fa-solid fa-mobile-screen mr-2"></i></i></i>Oppo
+                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Oppo
                         </a>
                     </li>
                     <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/web/productlist.jsp"><i
-                                class="fa-solid fa-mobile-screen mr-2"></i></i></i>Xiaomi
+                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Xiaomi
                         </a>
                     </li>
                     <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/web/productlist.jsp"><i
-                                class="fa-solid fa-mobile-screen mr-2"></i></i></i>Vivo
+                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Vivo
                         </a>
                     </li>
                     <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/web/productlist.jsp"><i
-                                class="fa-solid fa-mobile-screen mr-2"></i></i></i>Realme
+                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Realme
                         </a>
                     </li>
                     <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/web/productlist.jsp"><i
-                                class="fa-solid fa-mobile-screen mr-2"></i></i></i>Nokia
+                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Nokia
                         </a>
                     </li>
                     <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/web/productlist.jsp"><i
-                                class="fa-solid fa-mobile-screen mr-2"></i></i></i>Itel
+                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Itel
                         </a>
                     </li>
                     <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/web/productlist.jsp"><i
-                                class="fa-solid fa-mobile-screen mr-2"></i></i></i>Msstel
+                        <a class="nav-link text-white text-uppercase"  href="#"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Asus
                         </a>
                     </li>
 
@@ -459,5 +467,4 @@ To change this template use File | Settings | File Templates.
     <!--end d-head-->
 
     <div class="m-head d-block d-sm-none"></div>
-
 </header>

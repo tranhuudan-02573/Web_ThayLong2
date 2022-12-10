@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,19 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/lib/fa6/fontawesome-free-6.2.0-web/css/all.min.css">
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/lib/mdb4/css/bootstrap.min.css">
-  <!-- Material Design Bootstrap -->
-  <link rel="stylesheet" href="/lib/mdb4/css/mdb.min.css">
-  <!-- Your custom styles (optional) -->
-  <link rel="stylesheet" href="/lib/mdb4/css/style.css">
-
- 	<!-- <link rel="stylesheet" type="text/css" href="/css/owl.theme.default.min.css"> -->
-	<!-- <link rel="stylesheet" type="text/css" href="/css/hover-min.css"> -->
-	<link rel="stylesheet" type="text/css" href="/css/product.css">
-	<link rel="stylesheet" type="text/css" href="/css/custom.css">
   </head>
 
   <body>
@@ -33,7 +19,7 @@
 
 						 <div class="card">
                <div class="card-header text-white text-center bg-danger text-uppercase font-weight-bold ">
-		   <h3 class="mt-2"> reset mật khẩu tài khoản</h3>
+		   <h4 class="mt-2"> reset mật khẩu tài khoản</h4>
 		 </div>
             <div class="card-body">
               <!-- Header -->
@@ -60,7 +46,7 @@
 										</div>
 
 										<div class=" d-flex justify-content-between align-items-center">
-											<span>Đăng nhập bằng tài khoản khác? <a href="/index.jsp" target="_blank"
+											<span>Đăng nhập bằng tài khoản khác? <a href="/src/index.html" target="_blank"
 													class="text-danger">Đăng nhập</a></span>
 											<button class="btn btn-danger waves-effect">cập nhật</button>
 										</div>
@@ -77,15 +63,6 @@
     </div>
   </main>
 
-
-  <!-- jQuery -->
-  <script type="text/javascript" src="/lib/mdb4/js/jquery.min.js"></script>
-  <!-- Bootstrap tooltips -->
-  <script type="text/javascript" src="/lib/mdb4/js/popper.min.js"></script>
-  <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="/lib/mdb4/js/bootstrap.min.js"></script>
-  <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="/lib/mdb4/js/mdb.min.js"></script>
 
   </body>
 

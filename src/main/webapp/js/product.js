@@ -15,13 +15,15 @@ $(function(){
 	$('.fa-times').click(function(){
 		$('.menu-multi-mobile').hide();
 		$('.overplay').hide();
-
 	});
 
 	$('.products-iphone .owl-carousel').owlCarousel({
 		loop:true,
 		margin:10,
-		nav:true,
+		nav: true,
+		 autoplay:true,
+    autoplayTimeout:3000,
+    autoplayHoverPause:true,
 		dots:true,
 		navText: ["<span aria-label='Prev'></span>","<span aria-label='Next'></span>"],
 		responsive:{
@@ -37,8 +39,11 @@ $(function(){
 		}
 	});
 	$('.introduce-products .owl-carousel').owlCarousel({
-		loop:false,
+		loop:true,
 		margin:10,
+		 autoplay:true,
+    autoplayTimeout:3000,
+    autoplayHoverPause:true,
 		nav:true,
 		dots:false,
 		navText: ["<span aria-label='Prev'></span>","<span aria-label='Next'></span>"],
@@ -57,6 +62,9 @@ $(function(){
 	$('.details-product .owl-carousel').owlCarousel({
 		loop:true,
 		margin:10,
+		 autoplay:true,
+    autoplayTimeout:3000,
+    autoplayHoverPause:true,
 		nav:true,
 		navText: ["<span aria-label='Prev'></span>","<span aria-label='Next'></span>"],
 		responsive:{
@@ -72,9 +80,12 @@ $(function(){
 		}
 	});
 	$('.productseen .owl-carousel').owlCarousel({
-		loop:false,
+		loop:true,
 		margin:10,
 		nav:true,
+		 autoplay:true,
+    autoplayTimeout:3000,
+    autoplayHoverPause:true,
 		dots:false,
 		navText: ["<span aria-label='Prev'></span>","<span aria-label='Next'></span>"],
 		responsive:{
@@ -114,4 +125,62 @@ $(function(){
 		if($(this).scrollTop() > 1300) $("#navbar-example3").css('position','fixed').css('display','block');
 		else $("#navbar-example3").css('display','none');
 	});
-});
+	$('#modalStarRating .modal-footer button').click(function(){
+		const name = $('#modalStarRating div #name-horizontal');
+		const phone = $('#modalStarRating div #phone-horizontal');
+		const email = $('#modalStarRating div #email-horizontal');
+		let hasInvalid = false;
+		
+		if(name.val()==''){ name.addClass('invalid');
+		hasInvalid=true;
+	}
+		if(phone.val()==''){ phone.addClass('invalid');
+		hasInvalid=true;
+	}
+		if(email.val()==''){ email.addClass('invalid');
+		hasInvalid=true;
+	}
+		if(hasInvalid)return;
+		$('#modalStarRating').css('display','none');
+		$('.modal-backdrop').css('display','none');
+
+	})
+	$('#modalLoginForm .modal-footer button').click(function(){
+		const email = $('#modalLoginForm div #defaultForm-email');
+		const pass = $('#modalLoginForm div #defaultForm-pass');
+		let hasInvalid = false;
+		
+		if(pass.val()==''){ pass.addClass('invalid');
+		hasInvalid=true;
+	}
+		if(email.val()==''){ email.addClass('invalid');
+		hasInvalid=true;
+	}
+		if(hasInvalid)return;
+		$('#modalLoginForm').css('display','none');
+		$('.modal-backdrop').css('display','none');
+
+	})
+	 
+	setInterval('updateTimeSale()',1000)
+});	
+
+function updateTimeSale(){
+	const cH = $('.box-time li .hourse');
+	const cM = $('.box-time li .minutes');
+	const cS = $('.box-time li .second');
+	const h = Number.parseInt(cH.text());
+	const m = Number.parseInt(cM.text());
+	const s = Number.parseInt(cS.text());
+	if(s>0){
+		cS.text(s-1);
+	}
+	if(m>0 && s<=0){
+		cM.text(m-1);
+		cS.text(60)
+	}
+	if(h>0 && m<=0){
+		cH.text(h-1);
+		cM.text(60);
+	}
+}
