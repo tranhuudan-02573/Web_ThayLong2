@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,19 +6,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="/lib/fa6/fontawesome-free-6.2.0-web/css/all.css">
-  <link rel="stylesheet" href="/lib/mdb4/css/mdb.css">
-  <link rel="stylesheet" href="/lib/mdb4/css/bootstrap.css">
-  <link rel="stylesheet" href="/lib/datatable/DataTables/datatables.css">
-  <style>
-    .double-nav .breadcrumb-dn {
-      color: #fff;
-    }
-
-    .side-nav.wide.slim .sn-ad-avatar-wrapper a span {
-      display: none;
-    }
-  </style>
 </head>
 
 <body class="fixed-sn mdb-skin">
@@ -32,15 +18,8 @@
       <div id="container">
         <div class="row col col-12 col-sm-12 col-md-12 col-lg-12 ml-auto mr-auto float-none pl-1 pr-0">
           <div class="col col-12 p-0">
-            <div class="card card-cascade narrower ml-2 mr-2 mb-1 ">
-              <div class="view view-cascade gradient-card-header blue-gradient   ">
-                <div class="text-center w-100 text-uppercase"><span class="h5">Trang Quản Trị</span></div>
 
-
-              </div>
-
-              <div class="card-body">
-                <div class="row w-100 mx-auto">
+              <div class="row w-100 mx-auto">
                   <div class="col-3 my-3">
                     <a href="">
                       <!-- Card -->
@@ -50,7 +29,7 @@
                           <img class="card-img-top"
                             src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).webp"
                             alt="Card image cap">
-                          <a href="/views/admin/manaorder/index.jsp">
+                          <a href="/src/views/admin/manaorder/index.html">
                             <div class="mask rgba-white-slight"></div>
                           </a>
                         </div>
@@ -79,7 +58,7 @@
                           <img class="card-img-top"
                             src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).webp"
                             alt="Card image cap">
-                          <a href="/views/admin/manasale/index.jsp">
+                          <a href="/src/views/admin/manasale/index.html">
                             <div class="mask rgba-white-slight"></div>
                           </a>
                         </div>
@@ -108,7 +87,7 @@
                           <img class="card-img-top"
                             src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).webp"
                             alt="Card image cap">
-                          <a href="/views/admin/manareview/index.jsp">
+                          <a href="/src/views/admin/manareview/index.html">
                             <div class="mask rgba-white-slight"></div>
                           </a>
                         </div>
@@ -137,7 +116,7 @@
                           <img class="card-img-top"
                             src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).webp"
                             alt="Card image cap">
-                          <a href="/views/admin/manaproduct/index.jsp">
+                          <a href="/src/views/admin/manaproduct/index.html">
                             <div class="mask rgba-white-slight"></div>
                           </a>
                         </div>
@@ -166,7 +145,7 @@
                           <img class="card-img-top"
                             src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).webp"
                             alt="Card image cap">
-                          <a href="/views/admin/manauser/index.jsp">
+                          <a href="/src/views/admin/manauser/index.html">
                             <div class="mask rgba-white-slight"></div>
                           </a>
                         </div>
@@ -195,7 +174,7 @@
                           <img class="card-img-top"
                             src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).webp"
                             alt="Card image cap">
-                          <a href="/views/admin/manapromot/index.jsp">
+                          <a href="/src/views/admin/manapromot/index.html">
                             <div class="mask rgba-white-slight"></div>
                           </a>
                         </div>
@@ -215,7 +194,6 @@
 
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -226,15 +204,117 @@
   </main>
 
 
-  <!--Main Layout-->
-  <script src="/lib/mdb4/js/jquery.js"></script>
-  <script src="/lib/mdb4/js/popper.js"></script>
-  <script src="/lib/mdb4/js/mdb.js"></script>
-  <script src="/lib/mdb4/js/bootstrap.js"></script>
-  <script src="/lib/datatable/DataTables/datatables.js"></script>
+  <script src="/src/js/admin/form.js"></script>
+  <script>
+        // Data
+    const usersChrome = 243;
+    const usersFirefox = 70;
+    const usersOpera = 100;
+    const usersSafari = 60;
+    const usersEdge = 120;
+
+    //pie
+    var ctxP = document.getElementById("pieChart").getContext('2d');
+    var myPieChart = new Chart(ctxP, {
+      type: 'pie',
+      data: {
+        labels: ["Chrome", "FireFox", "Opera", "Safari", "Edge"],
+        datasets: [{
+          data: [usersChrome, usersFirefox, usersOpera, usersSafari, usersEdge],
+          backgroundColor: ["#9c27b0", "#ad1457", "#0277bd", "#303f9f ", "#009688"],
+          hoverBackgroundColor: ["#a34cb3", "#a85076", "#679bb9", "#6d74a1", "#28a89b"],
+          borderWidth: 4,
+          borderColor: '#eee'
+        }]
+      },
+      options: {
+        responsive: true,
+        legend: {
+          position: 'bottom',
+          labels: {
+            padding: 20,
+            boxWidth: 10
+          }
+        },
+        plugins: {
+          datalabels: {
+            formatter: (value, ctx) => {
+              let sum = 0;
+              let dataArr = ctx.chart.data.datasets[0].data;
+              dataArr.map(data => {
+                sum += data;
+              });
+              let percentage = (value * 100 / sum).toFixed(2) + "%";
+              return percentage;
+            },
+            color: 'white',
+            labels: {
+              title: {
+                font: {
+                  size: '10'
+                }
+              }
+            }
+          }
+        },
+        tooltips: {
+          callbacks: {
+            label: function (tooltipItem, data) {
+              return data.labels[tooltipItem.index] + ' users ' + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+            }
+          }
+        }
+      }
+    });
+
+    // Table
+    document.getElementById("cell-chrome").innerHTML = usersChrome;
+    document.getElementById("cell-firefox").innerHTML = usersFirefox;
+    document.getElementById("cell-opera").innerHTML = usersOpera;
+    document.getElementById("cell-safari").innerHTML = usersSafari;
+    document.getElementById("cell-edge").innerHTML = usersEdge;
+
+    //bar
+    var ctxB = document.getElementById("barChart").getContext('2d');
+    var myBarChart = new Chart(ctxB, {
+      type: 'bar',
+      data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  </script>
   <script>
     $(document).ready(function () {
-
       // SideNav Initialization
       $(".button-collapse").sideNav({
         slim: true

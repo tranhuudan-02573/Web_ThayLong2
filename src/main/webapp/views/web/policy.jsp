@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,14 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/lib/mdb4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/lib/mdb4/css/mdb.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/lib/fa6/fontawesome-free-6.2.0-web/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/owl.theme.default.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
-    <link rel="stylesheet" type="text/css" href="/css/product.css">
-    <link rel="stylesheet" type="text/css" href="/css/custom.css">
   </head>
 
   <body>
@@ -22,6 +13,7 @@
 
     <main>
       <div class="container">
+        <div id="breadcrumb"></div>
         <section class="my-5">
           <div class="row mx-auto w-100 ">
             <div class="col-md-3 pl-0">
@@ -29,7 +21,7 @@
                 <li class="nav-item">
                   <a class="nav-link active  text-dark text-left" data-toggle="tab" href="#panel21" role="tab"
                     aria-controls="profile-just" aria-selected="false">Chính sách bảo mật
-                    <i class="fas fa-download ml-2"></i>
+                    <i class="fas fa-file-alt ml-2 "></i>
                   </a>
                 </li>
                 <li class="nav-item ">
@@ -65,17 +57,11 @@
 
                 <li class="nav-item ">
                   <a class="nav-link bg-white text-dark text-left" data-toggle="tab" href="#panel27" role="tab"
-                    aria-controls="doitra" aria-selected="false">Hệ thống cửa hàng
+                    aria-controls="doitra" aria-selected="false">Hệ thống cửa hàng<i class="fas fa-file-alt ml-2"></i>
                   </a>
                 </li>
-                 <li class="nav-item ">
-                  <a class="nav-link bg-white text-dark text-left" data-toggle="tab" href="#panel26" role="tab"
-                    aria-controls="doitra" aria-selected="false">Về chúng tôi
 
-                    <i class="fas fa-file-alt ml-2"></i>
-                  </a>
-                </li>
-                
+
               </ul>
             </div>
             <div class="col-md-9 pr-0">
@@ -316,8 +302,8 @@ Chúng tôi cũng có thể thu thập thông tin về số lần viếng thăm,
               </div>
               <!-- Panel 3 -->
             </div>
-
-
+          </div>
+      </div>
 
       </section>
 
@@ -328,12 +314,7 @@ Chúng tôi cũng có thể thu thập thông tin về số lần viếng thăm,
 
 
 
-    <script type="text/javascript" src="/lib/mdb4/js/jquery.min.js"></script>
-    <script src="/lib/mdb4/js/popper.min.js"></script>
-    <script src="/lib/mdb4/js/bootstrap.min.js"></script>
-    <script src="/lib/mdb4/js/mdb.min.js"></script>
-    <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
-    <script type="text/javascript" src="/js/product.js"></script>
+    <script src="/src/js/admin/form.js"></script>
   </body>
 
 </html>

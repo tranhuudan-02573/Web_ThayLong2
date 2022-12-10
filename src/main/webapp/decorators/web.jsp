@@ -6,18 +6,8 @@
     <title><dec:title default="Trang chủ" /></title>
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/css/owl.carousel.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/owl.theme.default.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
-    <link rel="stylesheet" href="/lib/mdb4/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet" href="/css/hover-min.css">
-    <link rel="stylesheet" href="/css/styleSP.css">
-    <link rel="stylesheet" href="/css/product.css">
-    <link rel="stylesheet" type="text/css" href="/css/custom.css">
-    <link rel="stylesheet" href="/lib/mdb4/css/mdb.min.css">
-    <link rel="stylesheet" href="/lib/fa6/fontawesome-free-6.2.0-web/css/fontawesome.min.css">
-    <link rel="stylesheet" href="/lib/fa6/fontawesome-free-6.2.0-web/css/all.css">
+    <%@include file="/common/web/css.jsp" %>
+    <dec:getProperty property="page.local_style"/>
 </head>
 <body>
 	<!-- header -->
@@ -29,13 +19,9 @@
 	<!-- footer -->
 	<%@ include file="/common/web/footer.jsp" %>
 	<!-- footer -->
+    <%@include file="/common/web/js.jsp" %>
 
-    <script type="text/javascript" src="/lib/mdb4/js/jquery.min.js"></script>
-    <script src="/lib/mdb4/js/popper.min.js"></script>
-    <script src="/lib/mdb4/js/mdb.min.js"></script>
-    <script src="/lib/mdb4/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
-    <script type="text/javascript" src="/js/product.js"></script>
-    <script src="/js/scriptSp.js"></script>
+    <dec:getProperty property="page.local_script"/>
+
 </body>
 </html>

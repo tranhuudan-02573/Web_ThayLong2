@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,19 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/lib/fa6/fontawesome-free-6.2.0-web/css/all.css">
-    <link rel="stylesheet" href="/lib/mdb4/css/bootstrap.css">
-    <link rel="stylesheet" href="/lib/mdb4/css/mdb.css">
-    <link rel="stylesheet" href="/lib/mdb4/css/addons/datatables.min.css">
-    <style>
-        .double-nav .breadcrumb-dn {
-            color: #fff;
-        }
-
-        .side-nav.wide.slim .sn-ad-avatar-wrapper a span {
-            display: none;
-        }
-    </style>
 </head>
 
 <body class="fixed-sn mdb-skin">
@@ -56,23 +42,22 @@
                                                         <div class="col-md-12">
                                                             <!-- Material input -->
                                                             <div class="form-group">
-                                                                <label for="question"
+                                                                <label for="exampleFormControlTextarea3"
                                                                     style="float: left; color: #6c757d;">câu hỏi</label>
-                                                                <textarea placeholder="Viết ở đây" class="form-control"
-                                                                    id="question" rows="7"
+                                                                <textarea placeholder="iphone 14 này có trả góp không ? " class="form-control"
+                                                                    id="exampleFormControlTextarea3" rows="7"
                                                                     style="height: 80px; " readonly disabled></textarea>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12">
+                                                        <style>
+                                                              .ck.ck-reset.ck-editor,  .ck.ck-editor__main,.ck.ck-content
+                {
+                height: 95%;
+              }
+                                                        </style>
+                                                        <div class="col-md-12" style="height: 400px;" >
                                                             <!-- Material input -->
-                                                            <div class="form-group">
-                                                                <label for="reply"
-                                                                    style="float: left; color: #6c757d;">Câu trả
-                                                                    lời</label>
-                                                                <textarea placeholder="Viết ở đây" class="form-control"
-                                                                    id="reply" rows="7"
-                                                                    style="height: 80px; "></textarea>
-                                                            </div>
+                                                           <div id="editor"></div>
                                                         </div>
                                                         <!-- Grid column -->
                                                     </div>
@@ -116,7 +101,7 @@
                                                             <td>thông số</td>
                                                             <td>
                                                                 <i class="fa-solid fa-eye"></i>
-                                                                <a href="/html/admin/manauser/edit.jsp"
+                                                                <a href="/src/html/admin/manauser/edit.html"
                                                                     class="fa-solid fa-pencil" aria-hidden="true"></a>
                                                                 <i class="fa-solid fa-trash">
                                                                     <input type="hidden" id="url" value="">
@@ -127,7 +112,6 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
-
                                             </div>
                                         </div>
                                     </div>
@@ -140,12 +124,7 @@
 
         </div>
     </main>
-    <!--Main Layout-->
-    <script src="/lib/mdb4/js/jquery.js"></script>
-    <script src="/lib/mdb4/js/popper.js"></script>
-    <script src="/lib/mdb4/js/mdb.js"></script>
-    <script src="/lib/mdb4/js/bootstrap.js"></script>
-    <script src="/lib/mdb4/js/addons/datatables.min.js"></script>
+    <script src="/src/js/admin/form.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -160,6 +139,11 @@ $('.dataTables_length').addClass('bs-select');
 
 
         })
+          ClassicEditor
+        .create(document.querySelector('#editor'))
+        .catch(error => {
+          console.error(error);
+        });
     </script>
 </body>
 

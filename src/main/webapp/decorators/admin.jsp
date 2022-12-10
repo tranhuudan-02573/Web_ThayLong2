@@ -8,10 +8,10 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
-	<link rel="stylesheet" href="/lib/fa6/fontawesome-free-6.2.0-web/css/all.css">
-	<link rel="stylesheet" href="/lib/mdb4/css/bootstrap.css">
-	<link rel="stylesheet" href="/lib/mdb4/css/mdb.css">
-	<link rel="stylesheet" href="/lib/mdb4/css/addons/datatables.min.css">
+	<link rel="stylesheet" href="<c:url value='/lib/fa6/fontawesome-free-6.2.0-web/css/all.css'/>">
+	<link rel="stylesheet" href="<c:url value='/lib/mdb4/css/bootstrap.css'/>">
+	<link rel="stylesheet" href="<c:url value='/lib/mdb4/css/mdb.css'/>">
+	<link rel="stylesheet" href="<c:url value='/lib/mdb4/css/addons/datatables.min.css'/>">
 	<style>
 		.double-nav .breadcrumb-dn {
 			color: #fff;
@@ -27,14 +27,16 @@
 
 	<%@include file="/common/admin/header.jsp"%>
 
-		<dec:body />
+		<div>
+			<dec:body />
+		</div>
 
 
-	<script src="/lib/mdb4/js/jquery.js"></script>
-	<script src="/lib/mdb4/js/popper.js"></script>
-	<script src="/lib/mdb4/js/mdb.js"></script>
-	<script src="/lib/mdb4/js/bootstrap.js"></script>
-	<script src="/lib/mdb4/js/addons/datatables.min.js"></script>
+	<script src="<c:url value='/lib/mdb4/js/jquery.js'/>"></script>
+	<script src="<c:url value='/lib/mdb4/js/popper.js'/>"></script>
+	<script src="<c:url value='/lib/mdb4/js/mdb.js'/>"></script>
+	<script src="<c:url value='/lib/mdb4/js/bootstrap.js'/>"></script>
+	<script src="<c:url value='/lib/mdb4/js/addons/datatables.min.js'/>"></script>
 
 </body>
 </html>

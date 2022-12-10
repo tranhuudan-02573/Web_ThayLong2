@@ -23,8 +23,8 @@ public class PhoneAPI extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        List<Phone> phone = HttpUtil.of(request.getReader()).listModel(Phone.class);
-        phone = phoneService.getAll();
+        Phone phone = HttpUtil.of(request.getReader()).toModel(Phone.class);
+        phone = phoneService.get(phone);
         mapper.writeValue(response.getOutputStream(), phone);
     }
 
@@ -34,7 +34,6 @@ public class PhoneAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Phone phone = HttpUtil.of(request.getReader()).toModel(Phone.class);
-        System.out.println(phone);
         phone = phoneService.save(phone);
         mapper.writeValue(response.getOutputStream(), phone);
     }

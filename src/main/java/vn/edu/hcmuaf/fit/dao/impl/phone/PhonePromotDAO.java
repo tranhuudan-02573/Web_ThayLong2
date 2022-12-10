@@ -29,15 +29,6 @@ public class PhonePromotDAO extends AbstractDAO<PhonePromot> {
         delete("delete from phone_promot where promotId = :t.promotId and phoneId = :t.phoneId", pp);
     }
 
-    public static void main(String[] args) {
-        PhonePromot pp1 = new PhonePromot();
-        pp1.setPromotId(1);
-        pp1.setPhoneId(1);
-
-        PhonePromot pp = new PhonePromotDAO("phone_promot").get(" and promotId = :t.promotId and phoneId = :t.phoneId",  PhonePromot.class,pp1);
-
-        new PhonePromotDAO("phone_promot").deletePhonePromot(pp);
-    }
 
     public void updatePromotList(Set<PhonePromot> old, Set<PhonePromot> colors) {
         if (old.size() < colors.size()) {

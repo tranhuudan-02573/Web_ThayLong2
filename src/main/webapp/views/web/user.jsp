@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,15 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/lib/mdb4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/lib/mdb4/css/mdb.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/lib/fa6/fontawesome-free-6.2.0-web/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/owl.theme.default.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
-    <link rel="stylesheet" href="/lib/mdb4/css/addons/datatables.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/product.css">
-    <link rel="stylesheet" type="text/css" href="/css/custom.css">
   </head>
 
   <body>
@@ -33,13 +23,13 @@
           <div class="modal-body mx-3">
             <div class="md-form mb-5">
               <i class="fas fa-envelope prefix grey-text text-danger"></i>
-              <input type="email" id="modal-email" class="form-control validate">
-              <label data-error="wrong" data-success="right" for="modal-email">Email</label>
+              <input type="email" id="email2" class="form-control validate">
+              <label data-error="wrong" data-success="right" for="email2">Email</label>
             </div>
             <div class="md-form mb-5">
               <i class="fas fa-lock prefix grey-text text-danger"></i>
-              <input type="email" id="modal-password" class="form-control validate">
-              <label data-error="wrong" data-success="right" for="modal-password">Mật khẩu</label>
+              <input type="email" id="password" class="form-control validate">
+              <label data-error="wrong" data-success="right" for="password">Mật khẩu</label>
             </div>
 
             <div class="md-form mb-4">
@@ -55,11 +45,11 @@
                 <input type="checkbox" class="form-check-input" id="materialChecked2" checked>
                 <label class="form-check-label" for="materialChecked2">Ghi nhớ mật khẩu</label>
               </div>
-              <a href="/views/web/resetpass.jsp.jsp" class="text-danger">Quên mật khẩu</a>
+              <a href="/src/views/resetpass.html" class="text-danger">Quên mật khẩu</a>
             </div>
           </div>
           <div class="modal-footer d-flex justify-content-between">
-            <span> Đăng nhập tài khoản khác? <a href="/index.jsp" class="text-danger">Thoát</a></span>
+            <span> Đăng nhập tài khoản khác? <a href="/src/index.html" class="text-danger">Thoát</a></span>
             <button class="btn btn-danger waves-effect ">Thay đổi</button>
           </div>
         </div>
@@ -69,6 +59,7 @@
 
     <main>
       <div class="container">
+        <div id="breadcrumb"></div>
         <section class="my-5">
 
           <div class="d-flex justify-content-between align-items-center">
@@ -81,12 +72,12 @@
               </li>
               <li class="nav-item mr-2">
 
-                <a class="nav-link text-dark bg-light" style="font-size: 15px;"  data-toggle="tab" href="#panel22"
-                  role="tab" aria-controls="panel22-tab" aria-selected="false">lịch sử mua hàng</a>
+                <a class="nav-link text-dark bg-light" style="font-size: 15px;" id="history" data-toggle="tab" href="#panel22"
+                  role="tab" aria-controls="panel22-tab" aria-selected="false">Lịch sử mua hàng</a>
               </li>
 
               <li class="nav-item mr-2">
-                <a class="nav-link text-dark bg-light" style="font-size: 15px;"  data-toggle="tab" href="#panel23"
+                <a class="nav-link text-dark bg-light" style="font-size: 15px;" id="wishlist" data-toggle="tab" href="#panel23"
                   role="tab" aria-controls="panel23-tab" aria-selected="false">Danh sách yêu thích</a>
               </li>
             </ul>
@@ -107,7 +98,7 @@
 
               <div class="card">
                 <div class="card-header   ">
-                  <h5 class="my-2 h5 d-inline-block">Trần Hữu Dân - 0377162712</h5>
+                  <h5 class="my-2 h5  text-danger d-inline-block">Trần Hữu Dân - 0377162712</h5>
                 </div>
                 <div class="card-body">
 
@@ -142,7 +133,7 @@
                       <div class="md-form m-0">
                         <i class="fa-solid fa-phone prefix text-danger"></i>
                         <input type="text" id="phone" class="form-control">
-                        <label for="email">Số điện thoại</label>
+                        <label for="phone">Số điện thoại</label>
                       </div>
                     </div>
                   </div>
@@ -151,7 +142,7 @@
                       <div class="md-form">
                         <i class="fa-solid fa-envelope prefix text-danger"></i>
                         <input type="email" id="email" class="form-control">
-                        <label for="address">Email</label>
+                        <label for="email">Email</label>
                       </div>
                     </div>
                     <div class="col-6">
@@ -176,11 +167,11 @@
               <div class="card">
                 <div class="card-header">
 
-                  <h5 class="my-2 h5 d-inline-block">Ngày mua cuối cùng: 20/12/2022</h5>
+                  <h5 class="my-2 text-danger  h5 d-inline-block">Ngày mua cuối cùng: 20/12/2022</h5>
                 </div>
 
                 <div class="card-body">
-                  <table id="dtMaterialDesignExample" class="table table-striped" cellspacing="0" width="100%">
+                  <table id="dtMaterialDesignExample" class="table " cellspacing="0" width="100%">
                     <thead>
                       <tr>
                         <th scope="col">Mã đơn hàng</th>
@@ -198,11 +189,11 @@
                         <td style="width: 45%;">
                           <a href="" style="width: 50px;" class="float-left">
                             <img class="object-fit d-block w-100"
-                              src="https://cdn.tgdd.vn/Products/Images/7077/245579/amazfit-neo-den-600x600.jpg" alt="">
+                              src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg" alt="">
                           </a>
                           <div style="margin-left: 60px;">
                             <a href=""
-                              class="text-truncate w-50 text-truncate text-wrap text-break text-ellipsis overflow-hidden">ahjdbljas</a>
+                              class="text-truncate w-50 text-truncate text-wrap text-break text-ellipsis overflow-hidden">iPhone 14 Pro Max 256GB</a>
                             <div class="d-block mb-1 ">
                               <a href="" class="mt-1 pr-2 d-inline-block text-primary">Xem chi
                                 tiết</a>
@@ -226,12 +217,12 @@
               </div>
               <div class="card">
                 <div class="card-header">
-                  <h5 class="my-2 h5 d-inline-block">Ngày yêu thích cuối cùng: 20/12/2022</h5>
+                  <h5 class="my-2 h5 text-danger d-inline-block">Ngày yêu thích cuối cùng: 20/12/2022</h5>
 
                 </div>
                 <div class="card-body">
 
-                    <table id="dtMaterialDesignExample2" class="table table-striped" cellspacing="0" width="100%">
+                    <table id="dtMaterialDesignExample2" class="table " cellspacing="0" width="100%">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -252,15 +243,14 @@
                               alt=""></td>
                           <td class="justify-content-center align-middle">36000000.VND</td>
                           <td class="justify-content-center align-middle">Còn hàng</td>
-                          <td class="justify-content-center align-middle">
-                            <div class="text-center">
-
-                              <button
-                              class="btn btn-outline-danger btn-sm btn-rounded">xóa khỏi danh sách yêu thích</button>
+                          <td class="justify-content-center align-middle group-selectBTN">
+                            <div class="ILB mr-3" style="display: inline-block; cursor: pointer;">
+                          <i class="fa-solid fa-cart-plus mr-1"></i>
+                            Thêm
                             </div>
-                            <div class="text-center">
-
-                              <button class="btn  btn-sm btn-rounded btn-outline-info">thêm vào giỏ hàng</button>
+                            <div class="ILB" style="display: inline-block; cursor: pointer;">
+                              <i class="fa-regular fa-trash-can mr-1"></i>
+                              Xóa 
                             </div>
                           </td>
 
@@ -283,7 +273,6 @@
 
 
 
-
       </section>
 
       </div>
@@ -291,15 +280,10 @@
     </main>
 
 
+    <footer id="footer" class="p-4 border-top  bg-white"></footer>
 
 
-    <script type="text/javascript" src="/lib/mdb4/js/jquery.min.js"></script>
-    <script src="/lib/mdb4/js/popper.min.js"></script>
-    <script src="/lib/mdb4/js/mdb.min.js"></script>
-    <script src="/lib/mdb4/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
-    <script type="text/javascript" src="/js/product.js"></script>
-    <script src="/lib/mdb4/js/addons/datatables.min.js"></script>
+    <script src="/src/lib/mdb4/js/addons/datatables.min.js"></script>
     <script>
 
         // Material Design example
@@ -345,6 +329,7 @@ $('#dtMaterialDesignExample_paginate .pagination').addClass('pg-red');
 
     </script>
 
+    <script src="/src/js/breadcrumb.js"></script>
   </body>
 
 </html>
