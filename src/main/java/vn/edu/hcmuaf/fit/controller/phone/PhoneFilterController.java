@@ -23,7 +23,6 @@ public class PhoneFilterController extends HttpServlet {
         Map<String, Object> o = new HashMap<>();
         o.put("brandId",id);
 
-
         List<Phone> phoneList = phoneDAO.joinPhone(" and p.brandId =:brandId" , Phone.class, o);
         response.getWriter().println(phoneList);
         request.setAttribute("phoneList", phoneList);
