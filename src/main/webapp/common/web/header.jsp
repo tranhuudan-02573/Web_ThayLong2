@@ -423,7 +423,7 @@ To change this template use File | Settings | File Templates.
             <div class="container">
                 <ul class="nav row row-sm">
 
-                     <c:forEach var="brand" items="${param.brandList}" >
+                     <c:forEach var="brand" items="${requestScope.brandList}" >
 
                     <li class="nav-item ol-md-4 hvr-grow_color">
                         <a class="nav-link text-white text-uppercase"  href="#">
