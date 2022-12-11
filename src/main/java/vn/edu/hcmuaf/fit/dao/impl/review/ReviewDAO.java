@@ -48,13 +48,13 @@ public class ReviewDAO extends AbstractDAO<Review> {
 
     public List<Review> getAll(){
 
-        return list("", Review.class,null);
+        return list("", Review.class,null,null);
     }
 
 
     public List<Review> cmtByUser(int u){
 
-        return list(" and userId = "+u, Review.class,null);
+        return list(" and userId = "+u, Review.class,null,null);
 
     }
 

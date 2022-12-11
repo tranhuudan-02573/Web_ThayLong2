@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface GenericDAO<T> {
 
-    public abstract List<T> list(String sql, Class<T> t,T t2);
+    public abstract List<T> list(String sql, Class<T> t,T t2,Integer num);
 
     public abstract T get(String sql, Class<T> t, T t2);
 

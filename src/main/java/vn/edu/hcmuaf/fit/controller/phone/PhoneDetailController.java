@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/detail"})
+@WebServlet(urlPatterns = {"/phone-detail"})
 public class PhoneDetailController extends HttpServlet {
 
     PhoneService phoneService  = new PhoneService();

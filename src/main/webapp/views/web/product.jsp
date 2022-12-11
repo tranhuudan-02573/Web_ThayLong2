@@ -296,7 +296,7 @@
                                             List<PhonePromot> promots =new ArrayList<>(p.getPromotList());
                                             List<PhoneSpec> specs =new ArrayList<>(p.getSpecList());
                                         %>
-                                        <c:forEach var="image" items="<%=images%>">
+                                        <c:forEach var="image" items="<%=images %>">
                                             <div class="carousel-item text-center ">
                                                 <img src="${image.link}" alt="" class="img-fluid"
                                                      style="width: 300px;height:300px;">
@@ -398,7 +398,7 @@
                                             <div class="form-check p-0   rounded">
                                                 <input type="radio" class="form-check-input" id="cap1"
                                                        name="cap" checked>
-                                                <label class="form-check-label  px-3 " for="cap1" style="width: 96.5%;">
+                                                <label class="form-check-label  px-3 " for="cap1" style="width: 96.5%; height: 100%; ">
                                                     <div class="text-center">
                                                         <div class=" text-center">
                                                             <strong class="font-weight-bold  "
@@ -420,7 +420,7 @@
                                             <div class="form-check p-0   rounded">
                                                 <input type="radio" class="form-check-input" id="color1"
                                                        name="color" checked>
-                                                <label class="form-check-label  px-1 " for="color1">
+                                                <label class="form-check-label  px-1 " style=" height: 100%; " for="color1">
                                                     <div class="d-flex justify-content-center align-items-center  ">
                                                         <img src="${color.img}"
                                                              alt="" class="img-fluid">

@@ -74,11 +74,13 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             "left join permission_detail pd on p.id = pd.permissionId where 1=1  ";
 
     @Override
-    public List<T> list(String sql, Class<T> t, T t2) {
+    public List<T> list(String sql, Class<T> t, T t2, Integer num) {
 
-
+        String q = "select * from <TABLE> where 0=0 " + sql;
+        if (num != null) q += " limit " + num;
+        String finalQ = q;
         return JDBiConnector.get().withHandle(handle -> {
-            Query query = handle.createQuery("select * from <TABLE> where 1=1 " + sql).define("TABLE", this.table);
+            Query query = handle.createQuery(finalQ).define("TABLE", this.table);
             if (t2 == null) return query.mapToBean(t).list();
             else return query.bindBean("t", t2).mapToBean(t).list();
 
@@ -208,7 +210,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
     @Override
     public T get(String sql, Class<T> t, T t2) {
 
-        List<T> l = list(sql, t, t2);
+        List<T> l = list(sql, t, t2,null);
 
         if (l.size() > 1 || l.isEmpty()) return null;
 

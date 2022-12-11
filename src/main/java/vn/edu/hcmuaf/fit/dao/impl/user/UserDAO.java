@@ -112,7 +112,7 @@ public class UserDAO extends AbstractDAO<User> implements GenericDAO<User> {
         String sql = "select * from users where name = :name";
         User u = new User();
         u.setName("dan");
-        List<User> users = list(sql, User.class, u);
+        List<User> users = list(sql, User.class, u,null);
         User user = users.get(0);
         if (users.size() != 1 || !user.getPassword().equals(new HashPass().hashPassword(pass)) || !username.equals(user.getName()))
             return null;

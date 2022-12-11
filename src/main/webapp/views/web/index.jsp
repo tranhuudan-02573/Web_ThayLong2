@@ -1,6 +1,8 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.phone.Image" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Set" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.Sale" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.Brand" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp" %>
 
@@ -52,24 +54,24 @@
 				<div class="col-xl-8 col-lg-8 col-md-7">
 					<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 						<div class="carousel-inner">
-							<div class="carousel-item active">
-								<img src="/images/anh1.png" alt="" class="img-fluid w-100">
-							</div>
-							<div class="carousel-item">
-								<img src="/images/anh2.png" alt="" class="img-fluid w-100">
-							</div>
-							<div class="carousel-item">
-								<img src="/images/anh3.png" alt="" class="img-fluid w-100">
-							</div>
-							<div class="carousel-item">
-								<img src="/images/anh4.jpg" alt="" class="img-fluid w-100">
-							</div>
-							<div class="carousel-item">
-								<img src="/images/anh5.jpg" alt="" class="img-fluid w-100">
-							</div>
-							<div class="carousel-item">
-								<img src="/images/anh6.png" alt="" class="img-fluid w-100">
-							</div>
+							<%   List<Sale> sales = (List<Sale> ) request.getAttribute("saleList");
+
+								int size = sales.size();
+
+							%>
+						<%  for (int i = 0;i<sales.size();i++){ %>
+								<% if(i==0){ %>
+								<div class="carousel-item active ">
+									<img src="<%= sales.get(i).getImg() %>" alt="" class="img-fluid w-100">
+								</div>
+								<% } else{%>
+
+
+								<div class="carousel-item  ">
+									<img src="<%= sales.get(i).getImg() %>" alt="" class="img-fluid w-100">
+								</div>
+							<% }%>
+							<%}%>
 						</div>
 						<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
 						   data-slide="prev">
@@ -82,54 +84,28 @@
 							<span class="sr-only">Next</span>
 						</a>
 						<ol class="carousel-indicators m-0">
-							<li data-target="#carouselExampleIndicators" data-slide-to="0"
-								class="active w-100  text-center" style="height: 0;">
+
+							<%  for (int i = 0;i<sales.size();i++){ %>
+							<% if(i==0){ %>
+							<li data-target="#carouselExampleIndicators" data-slide-to="<%=i%>"
+								class=" w-100  text-center active" style="height: 0;">
 								<div class="d-block d-sm-block">
 									<br>
-									<span>Đặt gạch galaxy Note 10|10+</span>
+									<span><%=sales.get(i).getName()%></span>
 									<hr class="m-0">
 								</div>
 							</li>
-							<li data-target="#carouselExampleIndicators" data-slide-to="1"
+							<% } else{%>
+							<li data-target="#carouselExampleIndicators" data-slide-to="<%=i%>"
 								class=" w-100  text-center" style="height: 0;">
-								<div class="d-none d-sm-block">
+								<div class="d-block d-sm-block">
 									<br>
-									<span>Xiaomi bộ đôi độc quyền</span>
+									<span><%=sales.get(i).getName()%></span>
 									<hr class="m-0">
 								</div>
 							</li>
-							<li data-target="#carouselExampleIndicators" data-slide-to="2"
-								class=" w-100 text-center" style="height: 0;">
-								<div class="d-none d-sm-block">
-									<br>
-									<span>Điểm cao thưởng lớn</span>
-									<hr class="m-0">
-								</div>
-							</li>
-							<li data-target="#carouselExampleIndicators" data-slide-to="3"
-								class=" w-100 text-center" style="height: 0;">
-								<div class="d-none d-sm-block">
-									<br>
-									<span>Toàn bộ iPhone trả góp 0%</span>
-									<hr class="m-0">
-								</div>
-							</li>
-							<li data-target="#carouselExampleIndicators" data-slide-to="4"
-								class=" w-100 text-center" style="height: 0;">
-								<div class="d-none d-sm-block">
-									<br>
-									<span>Oppo F11 Pro 128GB quà hot</span>
-									<hr class="m-0">
-								</div>
-							</li>
-							<li data-target="#carouselExampleIndicators" data-slide-to="5"
-								class=" w-100 text-center" style="height: 0;">
-								<div class="d-none d-sm-block">
-									<br>
-									<span>Mua Vsmart Live quà khủng</span>
-									<hr class="m-0">
-								</div>
-							</li>
+							<% }%>
+							<% }%>
 						</ol>
 					</div>
 				</div>
@@ -180,203 +156,29 @@
 			</div>
 			<div class="catebody">
 				<div class="row w-100 mx-auto rounded-lg">
-					<a class="border border-white  hvr-glow" href="/views/productlist.html" style="width:calc(100%/7) ; height: 100%;">
+
+					<%
+					List<Brand> brands = (List<Brand>) request.getAttribute("brandList");
+
+
+						for (int i =0;i<brands.size();i++){%>
+
+					<a class="border border-white  hvr-glow" href="/phone-filter?id=<%= brands.get(i).getId() %>" style="width:calc(100%/7) ; height: 100%;">
 						<div class="p-2 ">
 							<div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
 						border-radius: 50%;
 					 width: 120px; height: 120px;">
-								<img class="mx-auto" src="https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-vang-thumb-200x200.jpg" alt=""
+								<img class="mx-auto" src="<%= brands.get(i).getLogo() %>" alt=""
 									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
 							</div>
 							<div class="text-center ">
-								<h6 class="text-danger text-uppercase ">IPHONE</h6>
-							</div>
-						</div>
-
-					</a>
-					<a class="border border-white hvr-glow"  href="/views/productlist.html"  style="width:calc(100%/7) ; height: 100%;">
-						<div class="p-2 ">
-							<div class="picture bg-white mb-4 mx-auto bg-white" style="position:relative;  justify-content: center; align-items: center;
-						border-radius: 50%;
-						background-color: #f4f4f4; width: 120px; height: 120px;">
-								<img class="mx-auto" src="https://cdn.tgdd.vn/Products/Images/42/248218/Xiaomi-11T-Pro-Grey-200x200.jpg" alt=""
-									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
-							</div>
-							<div class="text-center ">
-								<h6 class="text-danger text-uppercase">OPPO</h6>
-							</div>
-						</div>
-
-					</a>
-					<a class="border border-white  hvr-glow"  href="/views/productlist.html"  style="width:calc(100%/7) ; height: 100%;">
-						<div class="p-2 ">
-							<div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
-						border-radius: 50%;
-						background-color: #f4f4f4; width: 120px; height: 120px;">
-								<img class="mx-auto" src="images/636891293603309358_ss-galaxy-a20-dd.jpg" alt=""
-									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
-							</div>
-							<div class="text-center ">
-								<h6 class="text-danger text-uppercase">SAMSUNG</h6>
-							</div>
-						</div>
-
-					</a>
-					<a class="border border-white hvr-glow"   href="/views/productlist.html" style="width:calc(100%/7) ; height: 100%;">
-						<div class="p-2 ">
-							<div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
-						border-radius: 50%;
-						background-color: #f4f4f4; width: 120px; height: 120px;">
-								<img class="mx-auto" src="	https://cdn.tgdd.vn/Products/Images/42/282389/vivo-v25-pro-5g-xanh-thumb-1-200x200.jpg" alt=""
-									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
-							</div>
-							<div class="text-center ">
-								<h6 class="text-danger text-uppercase">VIVO</h6>
-							</div>
-						</div>
-
-					</a>
-					<a class="borde rborder-white  hvr-glow"  href="/views/productlist.html"  style="width:calc(100%/7) ; height: 100%;">
-						<div class="p-2 ">
-							<div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
-						border-radius: 50%;
-						background-color: #f4f4f4; width: 120px; height: 120px;">
-								<img class="mx-auto" src="	https://cdn.tgdd.vn/Products/Images/42/234621/Xiaomi-12-xam-thumb-mau-200x200.jpg" alt=""
-									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
-							</div>
-							<div class="text-center ">
-								<h6 class="text-danger text-uppercase">XIAOMI</h6>
-							</div>
-						</div>
-
-					</a>
-					<a class="border border-white hvr-glow"  href="/views/productlist.html"  style="width:calc(100%/7) ; height: 100%;">
-						<div class="p-2 ">
-							<div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
-						border-radius: 50%;
-						background-color: #f4f4f4; width: 120px; height: 120px;">
-								<img class="mx-auto" src="https://cdn.tgdd.vn/Products/Images/42/275632/realme-9-4g-vang-thumb-1-200x200.jpg" alt=""
-									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
-							</div>
-							<div class="text-center ">
-								<h6 class="text-danger text-uppercase">REALME</h6>
-							</div>
-						</div>
-
-					</a>
-					<a class="border border-white hvr-glow"  href="/views/productlist.html"  style="width:calc(100%/7) ; height: 100%;">
-						<div class="p-2 ">
-							<div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
-						border-radius: 50%;
-						background-color: #f4f4f4; width: 120px; height: 120px;">
-								<img class="mx-auto" src="https://cdn.tgdd.vn/Products/Images/42/281827/nokia-g11-plus-xam-thumb-200x200.jpg" alt=""
-									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
-							</div>
-							<div class="text-center ">
-								<h6 class="text-danger text-uppercase">NOKIA</h6>
-							</div>
-						</div>
-
-					</a>
-					<a class="border border-white  hvr-glow"  href="/views/productlist.html"  style="width:calc(100%/7) ; height: 100%;">
-						<div class="p-2 ">
-							<div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
-						border-radius: 50%;
-						background-color: #f4f4f4; width: 120px; height: 120px;">
-								<img class="mx-auto" src="	https://cdn.tgdd.vn/Products/Images/42/284122/mobell-m239-do-thumb-1-200x200.jpg" alt=""
-									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
-							</div>
-							<div class="text-center ">
-								<h6 class="text-danger text-uppercase">MOBELL</h6>
-							</div>
-						</div>
-
-					</a>
-					<a class="border border-white  hvr-glow"  href="/views/productlist.html"  style="width:calc(100%/7) ; height: 100%;">
-						<div class="p-2 ">
-							<div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
-						border-radius: 50%;
-						background-color: #f4f4f4; width: 120px; height: 120px;">
-								<img class="mx-auto" src="https://cdn.tgdd.vn/Products/Images/42/260146/itel-it9210-black-1-200x200.jpg" alt=""
-									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
-							</div>
-							<div class="text-center ">
-								<h6 class="text-danger text-uppercase">ITEL</h6>
-							</div>
-						</div>
-
-					</a>
-					<a class="border border-white hvr-glow"  href="/views/productlist.html"  style="width:calc(100%/7) ; height: 100%;">
-						<div class="p-2 ">
-							<div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
-						border-radius: 50%;
-						background-color: #f4f4f4; width: 120px; height: 120px;">
-								<img class="mx-auto" src="https://cdn.tgdd.vn/Products/Images/42/264121/masstel-fami-60-thumb-200x200.jpeg" alt=""
-									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
-							</div>
-							<div class="text-center ">
-								<h6 class="text-danger text-uppercase">MASSTEL</h6>
-							</div>
-						</div>
-
-					</a>
-					<a class="border border-white hvr-glow"  href="/views/productlist.html"  style="width:calc(100%/7) ; height: 100%;">
-						<div class="p-2 ">
-							<div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
-						border-radius: 50%;
-						background-color: #f4f4f4; width: 120px; height: 120px;">
-								<img class="mx-auto" src="https://cdn.tgdd.vn/Products/Images/42/264121/masstel-fami-60-vang-thumb-200x200.jpeg" alt=""
-									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
-							</div>
-							<div class="text-center ">
-								<h6 class="text-danger text-uppercase">ASUS</h6>
-							</div>
-						</div>
-
-					</a>
-					<a class="border border-white hvr-glow"  href="/views/productlist.html"  style="width:calc(100%/7) ; height: 100%;">
-						<div class="p-2 ">
-							<div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
-						border-radius: 50%;
-						background-color: #f4f4f4; width: 120px; height: 120px;">
-								<img class="mx-auto" src="https://cdn.tgdd.vn/Products/Images/42/249720/Vivo-y15s-2021-xanh-thuy-tinh-200x200.jpg" alt=""
-									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
-							</div>
-							<div class="text-center ">
-								<h6 class="text-danger text-uppercase">TECNO</h6>
-							</div>
-						</div>
-
-					</a>
-					<a class="border border-white  hvr-glow"  href="/views/productlist.html"  style="width:calc(100%/7) ; height: 100%;">
-						<div class="p-2 ">
-							<div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
-						border-radius: 50%;
-						background-color: #f4f4f4; width: 120px; height: 120px;">
-								<img class="mx-auto" src="https://cdn.tgdd.vn/Products/Images/42/250625/samsung-galaxy-z-fold4-den-256gb-200x200.jpg" alt=""
-									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
-							</div>
-							<div class="text-center ">
-								<h6 class="text-danger text-uppercase">HUAWEI</h6>
-							</div>
-						</div>
-
-					</a>
-					<a class="border border-white hvr-glow"  href="/views/productlist.html"  style="width:calc(100%/7) ; height: 100%;">
-						<div class="p-2 ">
-							<div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
-						border-radius: 50%;
-						background-color: #f4f4f4; width: 120px; height: 120px;">
-								<img class="mx-auto" src="https://cdn.tgdd.vn/Products/Images/42/271734/xiaomi-redmi-10a-xanh-thumb-200x200.jpg" alt=""
-									 style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
-							</div>
-							<div class="text-center ">
-								<h6 class="text-danger text-uppercase">MOBIISTAR</h6>
+								<h6 class="text-danger text-uppercase "><%= brands.get(i).getName() %></h6>
 							</div>
 						</div>
 
 					</a>
 
+					<%}%>
 				</div>
 			</div>
 
@@ -471,6 +273,7 @@
 											<jsp:param name="name" value="${phone.name}"/>
 											<jsp:param name="price" value="${phone.price}"/>
 											<jsp:param name="id" value="${phone.id}"/>
+											<jsp:param name="capname" value="${phone.cap.name}"/>
 										</jsp:include>
 									</div>
 								</div>
