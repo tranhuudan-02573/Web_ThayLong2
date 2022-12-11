@@ -11,7 +11,10 @@
 </head>
 <body>
 	<!-- header -->
-    <%@ include file="/common/web/header.jsp" %>
+    <jsp:include page="/common/web/header.jsp">
+        <jsp:param name="brandList" value="${requestScope.brandList}"/>
+
+    </jsp:include>
     <!-- header -->
     
     	<dec:body/>

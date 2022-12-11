@@ -50,5 +50,11 @@ List<Brand> brandList =  brandDAO.list("",Brand.class,null,14);
     }
 
 
+    public static void main(String[] args) {
+        BrandDAO br = new BrandDAO("brands");
+         List<Brand> l = br.list("",Brand.class,null,14);
 
+        System.out.println(l);
+
+    }
 }

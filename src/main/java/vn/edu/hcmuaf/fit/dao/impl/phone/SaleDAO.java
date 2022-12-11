@@ -29,7 +29,7 @@ public class SaleDAO extends AbstractDAO<Sale> {
 
     public void updateSale(Sale c) {
         c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        update("update colors set name = :t.name,updated_at = :t.updated_at where id = :t.id", c);
+        update("update sales set name = :t.name,updated_at = :t.updated_at where id = :t.id", c);
 
 
     }
