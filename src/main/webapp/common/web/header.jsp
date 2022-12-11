@@ -422,43 +422,16 @@ To change this template use File | Settings | File Templates.
         <div class="head-menu bg-dark nav-scroller">
             <div class="container">
                 <ul class="nav row row-sm">
-                    <li class="nav-item ol-md-4 hvr-grow_color" >
-                        <a class="nav-link text-white text-uppercase"href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>iPhone
-                        </a>
-                    </li>
-                    <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>SamSung
-                        </a>
-                    </li>
-                    <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Oppo
-                        </a>
-                    </li>
-                    <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Xiaomi
-                        </a>
-                    </li>
-                    <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Vivo
-                        </a>
-                    </li>
-                    <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Realme
-                        </a>
-                    </li>
-                    <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Nokia
-                        </a>
-                    </li>
-                    <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase" href="/views/productlist.html"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Itel
-                        </a>
-                    </li>
-                    <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase"  href="#"><i class="fa-solid fa-mobile-screen mr-2"></i></i></i>Asus
-                        </a>
-                    </li>
 
+                     <c:forEach var="brand" items="${param.brandList}" >
+
+                    <li class="nav-item ol-md-4 hvr-grow_color">
+                        <a class="nav-link text-white text-uppercase"  href="#">
+                            <i class="fa-solid fa-mobile-screen mr-2"></i>
+                            </i></i>${brand.name}
+                        </a>
+                    </li>
+                     </c:forEach>
                 </ul>
             </div>
         </div>
