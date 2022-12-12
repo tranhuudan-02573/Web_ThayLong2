@@ -13,4 +13,12 @@ public class SpecType implements Serializable {
     private Timestamp updated_at;
     private String name;
 
+    public SpecType(String name) {
+        this.name = name;
+    }
+
+    public SpecType(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

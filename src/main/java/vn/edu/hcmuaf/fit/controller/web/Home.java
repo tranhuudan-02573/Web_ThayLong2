@@ -3,9 +3,11 @@ package vn.edu.hcmuaf.fit.controller.web;
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
 import vn.edu.hcmuaf.fit.dao.impl.phone.BrandDAO;
 import vn.edu.hcmuaf.fit.dao.impl.phone.PhoneDAO;
+import vn.edu.hcmuaf.fit.dao.impl.phone.PromotDAO;
 import vn.edu.hcmuaf.fit.dao.impl.phone.SaleDAO;
 import vn.edu.hcmuaf.fit.model.phone.Brand;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
+import vn.edu.hcmuaf.fit.model.phone.Promot;
 import vn.edu.hcmuaf.fit.model.phone.Sale;
 import vn.edu.hcmuaf.fit.service.impl.PhoneService;
 
@@ -27,6 +29,8 @@ public class Home extends HttpServlet {
     BrandDAO brandDAO = new BrandDAO("brands");
 
 
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -36,6 +40,7 @@ public class Home extends HttpServlet {
 List<Sale> saleList = saleDAO.list(" and now() between start_at and end_at",Sale.class,null,6);
 
 List<Brand> brandList =  brandDAO.list("",Brand.class,null,14);
+
 
 
         request.setAttribute("brandList",brandList);

@@ -15,9 +15,9 @@ public class SaleDAO extends AbstractDAO<Sale> {
     }
 
     public int insertSale(Sale pp) {
-        pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
-        pp.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        return insertWithId("insert into sales (name,desc,img,created_at,updated_at,end_at,start_at)" +
+            pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
+            pp.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        return insertWithId("insert into sales (name,`desc`,img,created_at,updated_at,end_at,start_at)" +
                         " values(:t.name,:t.desc,:t.img,:t.created_at,:t.updated_at,:t.end_at,:t.start_at)",
                 pp);
     }
@@ -34,5 +34,10 @@ public class SaleDAO extends AbstractDAO<Sale> {
 
     }
 
+    public static void main(String[] args) {
+        Sale s = new Sale("20/11","ngay nha ","img",null,null, 10);
+
+        System.out.println(new SaleDAO("sales").insertSale(s));
+    }
 
 }

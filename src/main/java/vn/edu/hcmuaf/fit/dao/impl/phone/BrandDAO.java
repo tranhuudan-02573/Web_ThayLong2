@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.dao.impl.phone;
 
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Brand;
+import vn.edu.hcmuaf.fit.model.phone.Cap;
 import vn.edu.hcmuaf.fit.model.phone.Sale;
 
 import java.sql.Timestamp;
@@ -15,8 +16,8 @@ public class BrandDAO extends AbstractDAO<Brand> {
     public int insertBrand(Brand br) {
         br.setCreated_at(new Timestamp(System.currentTimeMillis()));
         br.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        return insertWithId("insert into brands (name,logo,created_at,updated_at)" +
-                        " values(:t.name,:t.logo,:t.created_at,:t.updated_at)",
+        return insertWithId("insert into brands (name,logo,created_at,updated_at, country)" +
+                        " values(:t.name,:t.logo,:t.created_at,:t.updated_at, :t.country)",
                 br);
     }
 
@@ -26,9 +27,12 @@ public class BrandDAO extends AbstractDAO<Brand> {
     }
     public void updateBrand(Brand b) {
         b.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        update("update brands set name = :t.name,logo = :t.logo,updated_at = :t.updated_at where id = :t.id", b);
-
+        update("update brands set name = :t.name,logo = :t.logo,updated_at = :t.updated_at, country = :t.country  where id = :t.id", b);
 
     }
+    public static void main(String[] args) {
+        Brand s = new Brand("xiaomi", "jfdshf", "Viet Nam");
 
+        System.out.println(new BrandDAO("caps").insertBrand(s));
+    }
 }

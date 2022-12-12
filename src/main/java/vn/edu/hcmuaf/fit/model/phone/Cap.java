@@ -14,4 +14,15 @@ public class Cap {
     private int id;
     private String name;
     private Integer cap;
+
+    public Cap(String name, Integer cap) {
+        this.name = name;
+        this.cap = cap;
+    }
+
+    public Cap(int id, String name, Integer cap) {
+        this.id = id;
+        this.name = name;
+        this.cap = cap;
+    }
 }

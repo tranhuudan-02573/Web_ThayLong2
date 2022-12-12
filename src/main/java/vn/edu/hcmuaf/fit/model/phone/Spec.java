@@ -12,4 +12,15 @@ public class Spec implements Serializable {
     private String name;
     private Integer specTypeId;
     private SpecType specType;
+
+    public Spec(String name, Integer specTypeId) {
+        this.name = name;
+        this.specTypeId = specTypeId;
+    }
+
+    public Spec(int id, String name, Integer specTypeId) {
+        this.id = id;
+        this.name = name;
+        this.specTypeId = specTypeId;
+    }
 }

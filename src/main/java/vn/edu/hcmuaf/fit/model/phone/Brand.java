@@ -18,4 +18,16 @@ public class Brand  implements Serializable {
     private String logo;
     private String country;
 
+    public Brand(String name, String logo, String country) {
+        this.name = name;
+        this.logo = logo;
+        this.country = country;
+    }
+
+    public Brand(int id, String name, String logo, String country) {
+        this.id = id;
+        this.name = name;
+        this.logo = logo;
+        this.country = country;
+    }
 }

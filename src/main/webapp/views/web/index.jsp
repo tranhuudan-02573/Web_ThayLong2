@@ -6,6 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp" %>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -3687,10 +3688,14 @@
 
 
 			<div class="owl-carousel owl-theme my-owl-carousel">
-				<a href="" >  <img class="owl-lazy border border-danger  rounded" style="border-width: 2px !important;" data-src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/uu-dai-tt-hp-1.png" data-src-retina="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/uu-dai-tt-hp-1.png" alt=""></a>
-				<a href="" > <img class="owl-lazy border border-danger rounded" style="border-width: 2px !important;" data-src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/evo-690-300-max_189.png" data-src-retina="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/evo-690-300-max_189.png" alt=""></a>
-				<a href="" >    <img class="owl-lazy border border-danger rounded" style="border-width: 2px !important;" data-src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/690x300_uu-dai_JCB.png" data-src-retina="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/690x300_uu-dai_JCB.png" alt=""></a>
-				<a href="" >    <img class="owl-lazy border border-danger rounded" style="border-width: 2px !important;" data-src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/ban-viet-690-300-max.png" data-src-retina="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/ban-viet-690-300-max.png" alt=""></a>
+				<c:forEach items="${requestScope.saleList}" var="i">
+					<a href="" >  <img class="owl-lazy border border-danger  rounded" style="border-width: 2px !important;" data-src="${i.img}" data-src-retina="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/uu-dai-tt-hp-1.png" alt=""></a>
+
+				</c:forEach>
+<%--				<a href="" >  <img class="owl-lazy border border-danger  rounded" style="border-width: 2px !important;" data-src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/uu-dai-tt-hp-1.png" data-src-retina="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/uu-dai-tt-hp-1.png" alt=""></a>--%>
+<%--				<a href="" > <img class="owl-lazy border border-danger rounded" style="border-width: 2px !important;" data-src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/evo-690-300-max_189.png" data-src-retina="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/evo-690-300-max_189.png" alt=""></a>--%>
+<%--				<a href="" >    <img class="owl-lazy border border-danger rounded" style="border-width: 2px !important;" data-src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/690x300_uu-dai_JCB.png" data-src-retina="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/690x300_uu-dai_JCB.png" alt=""></a>--%>
+<%--				<a href="" >    <img class="owl-lazy border border-danger rounded" style="border-width: 2px !important;" data-src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/ban-viet-690-300-max.png" data-src-retina="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/ban-viet-690-300-max.png" alt=""></a>--%>
 
 
 
