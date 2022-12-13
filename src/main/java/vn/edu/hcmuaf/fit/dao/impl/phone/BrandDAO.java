@@ -31,8 +31,11 @@ public class BrandDAO extends AbstractDAO<Brand> {
 
     }
     public static void main(String[] args) {
-        Brand s = new Brand("xiaomi", "jfdshf", "Viet Nam");
-
-        System.out.println(new BrandDAO("caps").insertBrand(s));
+//        Brand s = new Brand(11,"xiaomi", "jfdshf", "Viet Nam");
+//
+//        System.out.println(new BrandDAO("brands").insertBrand(s));
+//        new BrandDAO("brands").deleteBrand(s);
+        Brand s1 = new Brand(13,"xiaomi", "anhhhiu", "Viet Nam");
+        new BrandDAO("brands").updateBrand(s1);
     }
 }

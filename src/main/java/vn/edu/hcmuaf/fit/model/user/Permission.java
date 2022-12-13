@@ -34,8 +34,8 @@ public class Permission implements Serializable {
         this.licensed = licensed;
     }
 
-    public Permission(Timestamp updated_at, String name, boolean licensed) {
-        this.updated_at = updated_at;
+    public Permission(int id, String name, boolean licensed) {
+        this.id = id;
         this.name = name;
         this.licensed = licensed;
     }

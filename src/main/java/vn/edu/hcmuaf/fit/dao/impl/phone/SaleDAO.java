@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.dao.impl.phone;
 
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.model.phone.Promot;
 import vn.edu.hcmuaf.fit.model.phone.Sale;
 import vn.edu.hcmuaf.fit.model.phone.Type;
 
@@ -29,15 +30,20 @@ public class SaleDAO extends AbstractDAO<Sale> {
 
     public void updateSale(Sale c) {
         c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        update("update sales set name = :t.name,updated_at = :t.updated_at where id = :t.id", c);
+        update("update sales set name = :t.name,`desc`=:t.desc,img=:t.img,  updated_at = :t.updated_at, end_at = :t.end_at, start_at =:t.start_at  where id = :t.id", c);
 
 
     }
 
     public static void main(String[] args) {
-        Sale s = new Sale("20/11","ngay nha ","img",null,null, 10);
+        Sale s = new Sale(9,"20/10","sale lớn ","img",null,null, 10);
 
-        System.out.println(new SaleDAO("sales").insertSale(s));
+//        System.out.println(new SaleDAO("sales").insertSale(s));
+
+
+//        new SaleDAO("sales").deleteSale(s);
+
+        new SaleDAO("sales").updateSale(s);
     }
 
 }

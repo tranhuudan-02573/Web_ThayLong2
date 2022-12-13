@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.dao.impl.phone;
 
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.model.phone.Color;
 import vn.edu.hcmuaf.fit.model.phone.Promot;
 import vn.edu.hcmuaf.fit.model.user.Permission;
 
@@ -32,14 +33,18 @@ public class PermissionDAO extends AbstractDAO<Permission> {
 
     public void updatePermission(Permission c) {
         c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        update("update permissions set name = :t.name,updated_at = :t.updated_at, licensed= t:.licensed where id = :t.id", c);
+        update("update permissions set name = :t.name,updated_at = :t.updated_at, licensed= :t.licensed where id = :t.id", c);
 
 
     }
     public static void main(String[] args) {
-        Permission s = new Permission("khuyến mãi 12/12", true);
+        Permission s = new Permission(10,"khuyến mãi 13/13", true);
 
-        System.out.println(new PermissionDAO("permissions").insertPermission(s));
+//        System.out.println(new PermissionDAO("permissions").insertPermission(s));
+
+//        new PermissionDAO("permissions").deletePermission(s);
+//
+//        new PermissionDAO("permissions").updatePermission(s);
     }
 
 }

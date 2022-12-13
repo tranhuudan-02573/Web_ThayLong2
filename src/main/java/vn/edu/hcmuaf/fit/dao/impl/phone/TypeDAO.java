@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.dao.impl.phone;
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Promot;
 import vn.edu.hcmuaf.fit.model.phone.Sale;
+import vn.edu.hcmuaf.fit.model.phone.Spec;
 import vn.edu.hcmuaf.fit.model.phone.Type;
 
 import javax.annotation.ManagedBean;
@@ -35,6 +36,12 @@ public class TypeDAO extends AbstractDAO<Type> {
 
 
     }
-
+    public static void main(String[] args) {
+        Type s = new Type(4,"Ipone1");
+//
+//        System.out.println(new TypeDAO("types").insertType(s));
+        new TypeDAO("types").deleteType(s);
+//        new TypeDAO("types").updateType(s);
+    }
 
 }

@@ -36,9 +36,11 @@ public class SpecDAO extends AbstractDAO<Spec> {
 
     }
     public static void main(String[] args) {
-        Spec s = new Spec("so kĩ thuật", 1);
-
-        System.out.println(new SpecDAO("specs").insertSpec(s));
+        Spec s = new Spec(4,"so kĩ thuật1", 1);
+//
+//        System.out.println(new SpecDAO("specs").insertSpec(s));
+        new SpecDAO("specs").deleteSpec(s);
+//        new SpecDAO("specs").updateSpec(s);
     }
 
 }

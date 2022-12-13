@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.dao.impl.phone;
 
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.model.phone.Brand;
 import vn.edu.hcmuaf.fit.model.phone.Cap;
 import vn.edu.hcmuaf.fit.model.phone.Color;
 
@@ -25,7 +26,7 @@ public class CapDAO extends AbstractDAO<Cap> {
     }
 
     public void deleteCap(Cap c) {
-        delete("delete from caps  where id = " + c.getId(), c);
+        delete("delete from caps  where id = :t.id", c);
 
     }
 
@@ -37,8 +38,11 @@ public class CapDAO extends AbstractDAO<Cap> {
     }
 
     public static void main(String[] args) {
-        Cap s = new Cap("257GB", 2);
+        Cap s = new Cap(6,"258GB", 2);
 
-        System.out.println(new CapDAO("caps").insertCap(s));
+//        System.out.println(new CapDAO("caps").insertCap(s));
+//        new CapDAO("caps").deleteCap(s);
+//        Cap s1 = new Cap("257GB", 2);
+        new CapDAO("caps").updateCap(s);
     }
 }

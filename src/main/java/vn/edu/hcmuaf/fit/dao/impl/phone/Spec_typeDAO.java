@@ -38,8 +38,12 @@ public class Spec_typeDAO extends AbstractDAO<SpecType> {
     }
     public static void main(String[] args) {
         SpecType s = new SpecType("kĩ thuật");
-
-        System.out.println(new Spec_typeDAO("spec_types").insertSpecType(s));
+//
+//        System.out.println(new Spec_typeDAO("spec_types").insertSpecType(s));
+//
+        SpecType s1 = new SpecType(2,"kĩ thuật1");
+        new Spec_typeDAO("spec_types").deleteSpecType(s1);
+//        new Spec_typeDAO("spec_types").updateSpecType(s1);
     }
 
 }

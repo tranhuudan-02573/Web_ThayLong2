@@ -26,7 +26,8 @@ public class ColorDAO extends AbstractDAO<Color> {
     }
 
     public void deleteColor(Color c) {
-        delete("delete from colors  where id = " + c.getId(), c);
+        delete("delete from colors  where id =:t.id "
+                 , c);
 
     }
 
@@ -38,8 +39,15 @@ public class ColorDAO extends AbstractDAO<Color> {
     }
 
     public static void main(String[] args) {
-        Color s = new Color("đỏ");
+//
+//
+//        System.out.println(new ColorDAO("colors").insertColor(s));
 
-        System.out.println(new ColorDAO("colors").insertColor(s));
+;
+//        new ColorDAO("colors").deleteColor(s1);
+//        Color s1 = new Color(5,"đỏ" );
+        Color s1 = new Color(1,"đen" );
+        new ColorDAO("colors").updateColor(s1);
+
     }
 }

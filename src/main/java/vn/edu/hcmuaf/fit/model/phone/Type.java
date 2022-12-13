@@ -16,4 +16,12 @@ public class Type implements Serializable {
     private Timestamp updated_at;
     private String name;
 
+    public Type(String name) {
+        this.name = name;
+    }
+
+    public Type(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

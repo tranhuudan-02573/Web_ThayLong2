@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.dao.impl.phone;
 
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.model.phone.Color;
 import vn.edu.hcmuaf.fit.model.phone.Model;
 import vn.edu.hcmuaf.fit.model.phone.SpecType;
 import vn.edu.hcmuaf.fit.model.phone.Type;
@@ -35,9 +36,12 @@ public class ModelDAO extends AbstractDAO<Model> {
     }
 
     public static void main(String[] args) {
-        Model s = new Model("samsung", "jdfhhjd", 2);
+        Model s = new Model(6, "samsung", "anh nhỏ", 2);
 
-        System.out.println(new ModelDAO("models").insertModel(s));
+//
+//        new ModelDAO("models").updateModel(s);
+        new ModelDAO("models").deleteModel(s);
+//        System.out.println(new ModelDAO("models").insertModel(s));
     }
 
 }
