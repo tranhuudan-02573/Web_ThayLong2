@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.dao.impl.phone;
 
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+<<<<<<< Updated upstream
 import vn.edu.hcmuaf.fit.model.phone.Color;
 import vn.edu.hcmuaf.fit.model.phone.Model;
 import vn.edu.hcmuaf.fit.model.phone.SpecType;
@@ -10,6 +11,10 @@ import javax.annotation.ManagedBean;
 import java.sql.Timestamp;
 
 @ManagedBean
+=======
+import vn.edu.hcmuaf.fit.model.phone.Model;
+
+>>>>>>> Stashed changes
 public class ModelDAO extends AbstractDAO<Model> {
 
 
@@ -17,6 +22,7 @@ public class ModelDAO extends AbstractDAO<Model> {
         super(table);
     }
 
+<<<<<<< Updated upstream
     public int insertModel(Model pp) {
 
         pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
@@ -43,5 +49,11 @@ public class ModelDAO extends AbstractDAO<Model> {
         new ModelDAO("models").deleteModel(s);
 //        System.out.println(new ModelDAO("models").insertModel(s));
     }
+=======
+
+
+
+
+>>>>>>> Stashed changes
 
 }
