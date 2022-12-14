@@ -4,6 +4,7 @@ import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Color;
 import vn.edu.hcmuaf.fit.model.phone.PhonePromot;
 import vn.edu.hcmuaf.fit.model.phone.Promot;
+import vn.edu.hcmuaf.fit.model.phone.Spec;
 
 import javax.annotation.ManagedBean;
 import java.sql.Timestamp;
@@ -37,6 +38,15 @@ public class PromotDAO extends AbstractDAO<Promot> {
 
 
     }
+    public static void main(String[] args) {
+//        Promot s = new Promot("khuyến mãi 12/12");
+//
+//        System.out.println(new PromotDAO("promots").insertPromot(s));
+        Promot s1 = new Promot(3,"khuyến mãi lớn");
 
+        new PromotDAO("promots").deletePromot(s1);
+
+//        new PromotDAO("promots").updatePromot(s1);
+    }
 
 }

@@ -29,5 +29,14 @@ public class Permission implements Serializable {
         permissionDetails.add(pd);
     }
 
+    public Permission(String name, boolean licensed) {
+        this.name = name;
+        this.licensed = licensed;
+    }
 
+    public Permission(int id, String name, boolean licensed) {
+        this.id = id;
+        this.name = name;
+        this.licensed = licensed;
+    }
 }

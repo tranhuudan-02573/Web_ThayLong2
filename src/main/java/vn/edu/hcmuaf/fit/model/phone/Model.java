@@ -18,4 +18,16 @@ public class Model  implements Serializable {
     private String img;
     private int brandId;
 
+    public Model(String name, String img, int brandId) {
+        this.name = name;
+        this.img = img;
+        this.brandId = brandId;
+    }
+
+    public Model(int id, String name, String img, int brandId) {
+        this.id = id;
+        this.name = name;
+        this.img = img;
+        this.brandId = brandId;
+    }
 }

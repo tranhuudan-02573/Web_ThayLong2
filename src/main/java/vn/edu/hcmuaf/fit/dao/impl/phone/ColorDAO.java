@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.dao.impl.phone;
 
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.model.phone.Model;
 import vn.edu.hcmuaf.fit.model.phone.PhoneColor;
 import vn.edu.hcmuaf.fit.model.phone.Color;
 
@@ -25,7 +26,8 @@ public class ColorDAO extends AbstractDAO<Color> {
     }
 
     public void deleteColor(Color c) {
-        delete("delete from colors  where id = " + c.getId(), c);
+        delete("delete from colors  where id =:t.id "
+                 , c);
 
     }
 
@@ -33,6 +35,19 @@ public class ColorDAO extends AbstractDAO<Color> {
         c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
         update("update colors set name = :t.name,updated_at = :t.updated_at where id = :t.id", c);
 
+
+    }
+
+    public static void main(String[] args) {
+//
+//
+//        System.out.println(new ColorDAO("colors").insertColor(s));
+
+;
+//        new ColorDAO("colors").deleteColor(s1);
+//        Color s1 = new Color(5,"đỏ" );
+        Color s1 = new Color(1,"đen" );
+        new ColorDAO("colors").updateColor(s1);
 
     }
 }

@@ -12,10 +12,13 @@ public class Promot implements Serializable {
     private Timestamp updated_at;
 
     private String name;
-    private String desc;
-    private String img;
 
-    public Promot() {
+    public Promot(String name) {
+        this.name = name;
+    }
 
+    public Promot(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 }
