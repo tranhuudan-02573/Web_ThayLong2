@@ -1,7 +1,5 @@
-<%@ page import="java.util.Set" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.phone.*" %>
+<%@ page import="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
@@ -176,7 +174,6 @@
 </head>
 
 
-
 <body class="">
 
 
@@ -290,11 +287,22 @@
                                     <div class="carousel-inner">
                                         <%
                                             Phone p = (Phone) request.getAttribute("phone");
-                                            List<Image> images =new ArrayList<>(p.getImageList());
-                                            List<PhoneColor> colors =new ArrayList<>(p.getColorList());
-                                            List<PhoneCap> caps =new ArrayList<>(p.getCapList());
-                                            List<PhonePromot> promots =new ArrayList<>(p.getPromotList());
-                                            List<PhoneSpec> specs =new ArrayList<>(p.getSpecList());
+                                            List<Image> images = new ArrayList<>(p.getImageList());
+                                            List<PhoneColor> colors = new ArrayList<>(p.getColorList());
+                                            List<PhoneCap> caps = new ArrayList<>(p.getCapList());
+                                            List<PhonePromot> promots = new ArrayList<>(p.getPromotList());
+                                            List<PhoneSpec> specs = new ArrayList<>(p.getSpecList());
+
+
+                                            Set<SpecType> spt = new HashSet<>();
+
+                                            for (PhoneSpec st : specs
+                                            ) {
+
+                                                spt.add(st.getSpec().getSpecType());
+                                            }
+
+
                                         %>
                                         <c:forEach var="image" items="<%=images %>">
                                             <div class="carousel-item text-center ">
@@ -396,9 +404,10 @@
                                     <c:forEach var="cap" items="<%=caps %>">
                                         <div class="p-1  col-4 ">
                                             <div class="form-check p-0   rounded">
-                                                <input type="radio" class="form-check-input" id="cap1"
-                                                       name="cap" checked>
-                                                <label class="form-check-label  px-3 " for="cap1" style="width: 96.5%; height: 100%; ">
+                                                <input type="radio" class="form-check-input" id="cap-${cap.capId}"
+                                                       name="cap" >
+                                                <label class="form-check-label  px-3 " for="cap-${cap.capId}"
+                                                       style="width: 96.5%; height: 100%; ">
                                                     <div class="text-center">
                                                         <div class=" text-center">
                                                             <strong class="font-weight-bold  "
@@ -418,15 +427,17 @@
                                     <c:forEach var="color" items="<%=colors %>">
                                         <div class="p-1  col-4 ">
                                             <div class="form-check p-0   rounded">
-                                                <input type="radio" class="form-check-input" id="color1"
-                                                       name="color" checked>
-                                                <label class="form-check-label  px-1 " style=" height: 100%; " for="color1">
+                                                <input type="radio" class="form-check-input" id="color-${color.colorId}"
+                                                       name="color" >
+                                                <label class="form-check-label  px-1 " style=" height: 100%; "
+                                                       for="color-${color.colorId}">
                                                     <div class="d-flex justify-content-center align-items-center  ">
                                                         <img src="${color.img}"
                                                              alt="" class="img-fluid">
                                                         <div class="">
                                                             <div class="d-block text-start">
-                                                                <strong class="font-weight-bold  " style="font-size: 12px;">${color.color.name}</strong>
+                                                                <strong class="font-weight-bold  "
+                                                                        style="font-size: 12px;">${color.color.name}</strong>
                                                             </div>
                                                             <span class="font-weight-light" style="font-size: 12px;">270.990.000đ</span>
                                                         </div>
@@ -502,14 +513,14 @@
 
                                             <c:forEach var="promot" items="<%=promots %>">
 
-                                            <li class="nav-item">
-                                                <a class="nav-link active text-dark" href="#">
-                                                    <i class="fa fa-circle text-success" aria-hidden="true"></i>
-                                                    <span class="font-text">${promot.promot.name}</span>
-                                                </a>
+                                                <li class="nav-item">
+                                                    <a class="nav-link active text-dark" href="#">
+                                                        <i class="fa fa-circle text-success" aria-hidden="true"></i>
+                                                        <span class="font-text">${promot.promot.name}</span>
+                                                    </a>
 
 
-                                            </li>
+                                                </li>
                                             </c:forEach>
 
                                         </ul>
@@ -1569,10 +1580,10 @@
 
                                                 <tbody>
                                                 <c:forEach var="spec" items="<%=specs %>">
-                                                <tr>
-                                                    <th scope="row">${spec.spec.name}</th>
-                                                    <td>${spec.value}</td>
-                                                </tr>
+                                                    <tr>
+                                                        <th scope="row">${spec.spec.name}</th>
+                                                        <td>${spec.value}</td>
+                                                    </tr>
                                                 </c:forEach>
                                                 </tbody>
                                             </table>
@@ -1612,137 +1623,34 @@
                                                     <table class="table table-bordered mb-0">
 
                                                         <tbody>
+                                                        <%
+                                                            for (SpecType st : spt
+                                                            ) {
+                                                        %>
                                                         <tr>
-                                                            <th class="p-2 bg-light">Thiết kế & Trọng lượng</th>
+                                                            <th class="p-2 bg-light"><%=st.getName() %>
+                                                            </th>
                                                         </tr>
-                                                        <tr>
-                                                            <td class="p-1">
-                                                                <div class="row ml-2 mr-2 pt-2 pb-2"
-                                                                     style="border-bottom: 1px solid #edeeef;">
-                                                                    <div class="col-sm-5 pl-1">
-                                                                        Trọng lượng sản phẩm
-                                                                    </div>
-                                                                    <div class="col-sm-7" s><span
-                                                                            style="color: #495057; font-weight:400"> 40
-																			g</span></div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th class="p-2 bg-light">Thiết kế & Trọng lượng</th>
-                                                        </tr>
+                                                        <% for (PhoneSpec sp : specs
+                                                        ) {
+                                                            if (sp.getSpec().getSpecType().getId() == st.getId()) {
+                                                        %>
                                                         <tr>
                                                             <td class="p-1">
                                                                 <div class="row ml-2 mr-2 pt-2 pb-2"
                                                                      style="border-bottom: 1px solid #edeeef;">
                                                                     <div class="col-sm-5 pl-1">
-                                                                        Trọng
+                                                                        <%=sp.getSpec().getName()%>
                                                                     </div>
                                                                     <div class="col-sm-7" s><span
-                                                                            style="color: #495057; font-weight:400"> 40
-																			g</span></div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <th class="p-2 bg-light">Bộ xử lý</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="p-1">
-                                                                <div class="row ml-2 mr-2 pt-2 pb-2"
-                                                                     style="border-bottom: 1px solid #edeeef;">
-                                                                    <div class="col-sm-5 pl-1">
-                                                                        Phiên bản CPU
-                                                                    </div>
-                                                                    <div class="col-sm-7" s><span
-                                                                            style="color: #495057; font-weight:400">Apple
-																			A16 Bionic</span></div>
-                                                                </div>
-                                                                <div class="row ml-2 mr-2 pt-2 pb-2"
-                                                                     style="border-bottom: 1px solid #edeeef;">
-                                                                    <div class="col-sm-5 pl-1">
-                                                                        Số nhân
-                                                                    </div>
-                                                                    <div class="col-sm-7" s><span
-                                                                            style="color: #495057; font-weight:400">6</span>
+                                                                            style="color: #495057; font-weight:400"> <%=sp.getValue() %></span>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr>
-                                                            <th class="p-2 bg-light">Màn hình</th>
-                                                        </tr>
-                                                        <td class="p-1">
-                                                            <div class="row ml-2 mr-2 pt-2 pb-2"
-                                                                 style="border-bottom: 1px solid #edeeef;">
-                                                                <div class="col-sm-5 pl-1">
-                                                                    Kích thước màn hình
-                                                                </div>
-                                                                <div class="col-sm-7" s=""><span
-                                                                        style="color: #495057; font-weight:400">6.7
-																		inch</span></div>
-                                                            </div>
-                                                            <div class="row ml-2 mr-2 pt-2 pb-2"
-                                                                 style="border-bottom: 1px solid #edeeef;">
-                                                                <div class="col-sm-5 pl-1">
-                                                                    Độ phân giải
-                                                                </div>
-                                                                <div class="col-sm-7" s=""><span
-                                                                        style="color: #495057; font-weight:400">2796 x
-																		1290 Pixels</span></div>
-                                                            </div>
-                                                            <div class="row ml-2 mr-2 pt-2 pb-2"
-                                                                 style="border-bottom: 1px solid #edeeef;">
-                                                                <div class="col-sm-5 pl-1">
-                                                                    Chuẩn màn hình
-                                                                </div>
-                                                                <div class="col-sm-7" s=""><span
-                                                                        style="color: #495057; font-weight:400">Super
-																		Retina XDR</span></div>
-                                                            </div>
-                                                            <div class="row ml-2 mr-2 pt-2 pb-2"
-                                                                 style="border-bottom: 1px solid #edeeef;">
-                                                                <div class="col-sm-5 pl-1">
-                                                                    Loại cảm ứng
-                                                                </div>
-                                                                <div class="col-sm-7" s=""><span
-                                                                        style="color: #495057; font-weight:400">Điện
-																		dung đa điểm</span></div>
-                                                            </div>
-                                                            <div class="row ml-2 mr-2 pt-2 pb-2"
-                                                                 style="border-bottom: 1px solid #edeeef;">
-                                                                <div class="col-sm-5 pl-1">
-                                                                    Độ sáng tối đa
-                                                                </div>
-                                                                <div class="col-sm-7" s=""><span
-                                                                        style="color: #495057; font-weight:400">2000
-																		nits</span></div>
-                                                            </div>
-                                                        </td>
-                                                        <tr>
-                                                            <th class="p-2 bg-light">Lưu trữ</th>
-                                                        </tr>
-                                                        <td class="p-1">
-                                                            <div class="row ml-2 mr-2 pt-2 pb-2"
-                                                                 style="border-bottom: 1px solid #edeeef;">
-                                                                <div class="col-sm-5 pl-1">
-                                                                    Bộ nhớ trong
-                                                                </div>
-                                                                <div class="col-sm-7" s><span
-                                                                        style="color: #495057; font-weight:400">128
-																		GB</span></div>
-                                                            </div>
-                                                            <div class="row ml-2 mr-2 pt-2 pb-2"
-                                                                 style="border-bottom: 1px solid #edeeef;">
-                                                                <div class="col-sm-5 pl-1">
-                                                                    Thẻ nhớ ngoài
-                                                                </div>
-                                                                <div class="col-sm-7" s><span
-                                                                        style="color: #495057; font-weight:400">Không</span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
+                                                        <%}%>
+                                                        <%}%>
+                                                        <%}%>
                                                         </tbody>
                                                     </table>
 
@@ -2007,25 +1915,44 @@
 
                         <div class="card-header ">
                             <ul class="nav nav-tabs" id="myTabProduct" style="border:0;" role="tablist">
-                                <li class="nav-item ">
-                                    <a class="nav-link active" style="font-size: 15px;" id="home-tab"
-                                       data-toggle="tab" href="#pills-home" role="tab" aria-controls="home"
-                                       aria-selected="true">Điện thoại tương tự</a>
-                                </li>
+
+                                <%
+                                Map<String,List<Phone>> map = ( Map<String,List<Phone>>)request.getAttribute("map");
+
+                                List<String> key = new ArrayList<>(map.keySet());
+                                for (int i =0;i<key.size();i++){
+
+                                %>
 
                                 <li class="nav-item ">
-                                    <a class="nav-link " style="font-size: 15px;" id="contact-tab"
-                                       data-toggle="tab" href="#pills-profile" role="tab"
-                                       aria-controls="contact" aria-selected="false">Điện thoại cùng hãng</a>
+                                    <a class="nav-link <%=(i==0)?"active" :""%>" style="font-size: 15px;" id="<%=key.get(i).replaceAll(" ","-")%>-tab"
+                                       data-toggle="tab" href="#phone-<%=key.get(i).replaceAll(" ","-")%>" role="tab" aria-controls="home"
+                                       aria-selected="true"><%=key.get(i) %></a>
                                 </li>
+
+                             <%}%>
                             </ul>
                         </div>
 
                         <div class="card-body bg-light bg-gradient ">
                             <div class="tab-content p-0" style="padding: 0 !important;" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-home" style="" role="tabpanel"
+
+<%     for (int j =0;j<key.size();j++){
+
+
+%>
+
+                                <div class="tab-pane fade <%=(j==0)?"show active" :""%>" id="phone-<%=key.get(j).replaceAll(" ","-")%>" style="" role="tabpanel"
                                      aria-labelledby="pills-home-tab">
                                     <div class="owl-carousel owl-theme ">
+
+                                        <%
+                                            for (Phone phone: map.get(key.get(j))
+                                                 ) {
+
+                                        %>
+
+
                                         <div class="item">
 
                                             <div class="card   ">
@@ -2049,29 +1976,29 @@
                                                         </style>
                                                         <div class="d-flex flex-column h-100 w-100  ">
 
-                                                            <div class=" align-items-start">
-																		<span class="badge badge-danger mr-1">Trả góp
-																			0%</span>
+                                                            <div class=" align-items-start" style="height: 18px;" >
+                                                                <% for (vn.edu.hcmuaf.fit.model.phone.PhonePromot promot : phone.getPromotList()
+                                                                ) {
+                                                                %>
+                                                                <span class="badge badge-danger mr-1"><%=(promot.getPromotId() == 1) ? promot.getPromot().getName() : ""%></span>
+                                                                <%
+                                                                    }%>
                                                             </div>
 
-                                                            <a href="/views/product.html" class="text-dark">
+                                                            <a href="/phone-detail?id=<%=phone.getId()%>" class="text-dark">
                                                                 <div
                                                                         class="align-items-start cart-content  h-100">
                                                                     <div
                                                                             class="my-2 d-block overflow-hidden item hvr-float ">
                                                                         <img class="object-cover mw-100 "
-                                                                             src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
+                                                                             src="<%=phone.getThumbnail()%>"
                                                                              alt="">
                                                                     </div>
                                                                     <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
                                                                         style="display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;font-size: 14px;">
-                                                                        iPhone 14 Pro Max 256GB Lorem ipsum
-                                                                        dolor
-                                                                        sit amet
-                                                                        consectetur
-                                                                        adipisicing elit. Iste, maiores.
+                                                                      <%=phone.getName()%>
                                                                     </h3>
                                                                     <div class="mb-1">
 																				<span class="mr-2 badge badge-light">6.7
@@ -2083,11 +2010,14 @@
                                                                     </div>
 
                                                                     <div class="mb-1">
-                                                                        <i class=" d-inline-block text-decoration-line-through price-old"
-                                                                           style="text-decoration: line-through">
-                                                                            40.000.000đ</i>
-                                                                        <b
-                                                                                class="d-inline-block price-new ">-25%</b>
+                                                                        <%
+                                                                            for (PhoneSpec spec : phone.getSpecList()
+                                                                            ) {
+                                                                        %>
+                                                                        <span class="mr-2 badge badge-light mb-1">
+																				<%=(spec.getSpecId() == 1 || spec.getSpecId() == 2) ? spec.getValue() : ""%>
+																			</span>
+                                                                        <%}%>
                                                                     </div>
                                                                     <strong
                                                                             class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
@@ -2129,749 +2059,16 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="item">
-
-                                            <div class="card   ">
-                                                <div class="card-body rounded-0" style="padding: 0.75rem; ">
-                                                    <div class=" d-block overflow-hidden   ">
-                                                        <style>
-                                                            p {
-                                                                margin: 0;
-
-                                                            }
-
-                                                            .quote::before {
-                                                                content: '●';
-                                                                margin-right: 2px;
-                                                                left: 0;
-                                                                top: 0;
-                                                                color: #333;
-                                                                font-size: 10px;
-                                                            }
-
-                                                        </style>
-                                                        <div class="d-flex flex-column h-100 w-100  ">
-
-                                                            <div class=" align-items-start">
-																		<span class="badge badge-danger mr-1">Trả góp
-																			0%</span>
-                                                            </div>
-
-                                                            <a href="/views/product.html" class="text-dark">
-                                                                <div
-                                                                        class="align-items-start cart-content  h-100">
-                                                                    <div
-                                                                            class="my-2 d-block overflow-hidden item hvr-float ">
-                                                                        <img class="object-cover mw-100 "
-                                                                             src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-                                                                             alt="">
-                                                                    </div>
-                                                                    <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-                                                                        style="display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;font-size: 14px;">
-                                                                        iPhone 14 Pro Max 256GB Lorem ipsum
-                                                                        dolor
-                                                                        sit amet
-                                                                        consectetur
-                                                                        adipisicing elit. Iste, maiores.
-                                                                    </h3>
-                                                                    <div class="mb-1">
-																				<span class="mr-2 badge badge-light">6.7
-																					incheslor
-																				</span>
-
-                                                                        <span class="mr-2 badge badge-light">128
-																					GB</span>
-                                                                    </div>
-
-                                                                    <div class="mb-1">
-                                                                        <i class=" d-inline-block text-decoration-line-through price-old"
-                                                                           style="text-decoration: line-through">
-                                                                            40.000.000đ</i>
-                                                                        <b
-                                                                                class="d-inline-block price-new ">-25%</b>
-                                                                    </div>
-                                                                    <strong
-                                                                            class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-                                                                    <div class=" mb-1 d-flex flex-end">
-                                                                        <p class=" text-warning "
-                                                                           style="font-size: 12px;">
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i
-                                                                                    class="fa-solid fa-star-half-stroke "></i>
-                                                                            <i class="fa-regular fa-star "></i>
-                                                                        </p>
-                                                                        <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                           style="font-size: 12px;">54</p>
-                                                                    </div>
-
-                                                                </div>
-                                                            </a>
-                                                            <div
-                                                                    class="mt-2  d-flex justify-content-between align-items-end">
-                                                                <a href="" class=" d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i
-                                                                            class="fa-regular fa-square-plus fa-sm"></i>
-                                                                    so sánh
-                                                                </a>
-
-                                                                <a href="" class="d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i class="fa-regular fa-heart fa-sm"></i>
-                                                                    yêu
-                                                                    thích
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-
-                                            <div class="card   ">
-                                                <div class="card-body rounded-0" style="padding: 0.75rem; ">
-                                                    <div class=" d-block overflow-hidden   ">
-                                                        <style>
-                                                            p {
-                                                                margin: 0;
-
-                                                            }
-
-                                                            .quote::before {
-                                                                content: '●';
-                                                                margin-right: 2px;
-                                                                left: 0;
-                                                                top: 0;
-                                                                color: #333;
-                                                                font-size: 10px;
-                                                            }
-
-                                                        </style>
-                                                        <div class="d-flex flex-column h-100 w-100  ">
-
-                                                            <div class=" align-items-start">
-																		<span class="badge badge-danger mr-1">Trả góp
-																			0%</span>
-                                                            </div>
-
-                                                            <a href="/views/product.html" class="text-dark">
-                                                                <div
-                                                                        class="align-items-start cart-content  h-100">
-                                                                    <div
-                                                                            class="my-2 d-block overflow-hidden item hvr-float ">
-                                                                        <img class="object-cover mw-100 "
-                                                                             src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-                                                                             alt="">
-                                                                    </div>
-                                                                    <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-                                                                        style="display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;font-size: 14px;">
-                                                                        iPhone 14 Pro Max 256GB Lorem ipsum
-                                                                        dolor
-                                                                        sit amet
-                                                                        consectetur
-                                                                        adipisicing elit. Iste, maiores.
-                                                                    </h3>
-                                                                    <div class="mb-1">
-																				<span class="mr-2 badge badge-light">6.7
-																					incheslor
-																				</span>
-
-                                                                        <span class="mr-2 badge badge-light">128
-																					GB</span>
-                                                                    </div>
-
-                                                                    <div class="mb-1">
-                                                                        <i class=" d-inline-block text-decoration-line-through price-old"
-                                                                           style="text-decoration: line-through">
-                                                                            40.000.000đ</i>
-                                                                        <b
-                                                                                class="d-inline-block price-new ">-25%</b>
-                                                                    </div>
-                                                                    <strong
-                                                                            class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-                                                                    <div class=" mb-1 d-flex flex-end">
-                                                                        <p class=" text-warning "
-                                                                           style="font-size: 12px;">
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i
-                                                                                    class="fa-solid fa-star-half-stroke "></i>
-                                                                            <i class="fa-regular fa-star "></i>
-                                                                        </p>
-                                                                        <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                           style="font-size: 12px;">54</p>
-                                                                    </div>
-
-                                                                </div>
-                                                            </a>
-                                                            <div
-                                                                    class="mt-2  d-flex justify-content-between align-items-end">
-                                                                <a href="" class=" d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i
-                                                                            class="fa-regular fa-square-plus fa-sm"></i>
-                                                                    so sánh
-                                                                </a>
-
-                                                                <a href="" class="d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i class="fa-regular fa-heart fa-sm"></i>
-                                                                    yêu
-                                                                    thích
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-
-                                            <div class="card   ">
-                                                <div class="card-body rounded-0" style="padding: 0.75rem; ">
-                                                    <div class=" d-block overflow-hidden   ">
-                                                        <style>
-                                                            p {
-                                                                margin: 0;
-
-                                                            }
-
-                                                            .quote::before {
-                                                                content: '●';
-                                                                margin-right: 2px;
-                                                                left: 0;
-                                                                top: 0;
-                                                                color: #333;
-                                                                font-size: 10px;
-                                                            }
-
-                                                        </style>
-                                                        <div class="d-flex flex-column h-100 w-100  ">
-
-                                                            <div class=" align-items-start">
-																		<span class="badge badge-danger mr-1">Trả góp
-																			0%</span>
-                                                            </div>
-
-                                                            <a href="/views/product.html" class="text-dark">
-                                                                <div
-                                                                        class="align-items-start cart-content  h-100">
-                                                                    <div
-                                                                            class="my-2 d-block overflow-hidden item hvr-float ">
-                                                                        <img class="object-cover mw-100 "
-                                                                             src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-                                                                             alt="">
-                                                                    </div>
-                                                                    <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-                                                                        style="display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;font-size: 14px;">
-                                                                        iPhone 14 Pro Max 256GB Lorem ipsum
-                                                                        dolor
-                                                                        sit amet
-                                                                        consectetur
-                                                                        adipisicing elit. Iste, maiores.
-                                                                    </h3>
-                                                                    <div class="mb-1">
-																				<span class="mr-2 badge badge-light">6.7
-																					incheslor
-																				</span>
-
-                                                                        <span class="mr-2 badge badge-light">128
-																					GB</span>
-                                                                    </div>
-
-                                                                    <div class="mb-1">
-                                                                        <i class=" d-inline-block text-decoration-line-through price-old"
-                                                                           style="text-decoration: line-through">
-                                                                            40.000.000đ</i>
-                                                                        <b
-                                                                                class="d-inline-block price-new ">-25%</b>
-                                                                    </div>
-                                                                    <strong
-                                                                            class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-                                                                    <div class=" mb-1 d-flex flex-end">
-                                                                        <p class=" text-warning "
-                                                                           style="font-size: 12px;">
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i
-                                                                                    class="fa-solid fa-star-half-stroke "></i>
-                                                                            <i class="fa-regular fa-star "></i>
-                                                                        </p>
-                                                                        <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                           style="font-size: 12px;">54</p>
-                                                                    </div>
-
-                                                                </div>
-                                                            </a>
-                                                            <div
-                                                                    class="mt-2  d-flex justify-content-between align-items-end">
-                                                                <a href="" class=" d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i
-                                                                            class="fa-regular fa-square-plus fa-sm"></i>
-                                                                    so sánh
-                                                                </a>
-
-                                                                <a href="" class="d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i class="fa-regular fa-heart fa-sm"></i>
-                                                                    yêu
-                                                                    thích
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-
-                                            <div class="card   ">
-                                                <div class="card-body rounded-0" style="padding: 0.75rem; ">
-                                                    <div class=" d-block overflow-hidden   ">
-                                                        <style>
-                                                            p {
-                                                                margin: 0;
-
-                                                            }
-
-                                                            .quote::before {
-                                                                content: '●';
-                                                                margin-right: 2px;
-                                                                left: 0;
-                                                                top: 0;
-                                                                color: #333;
-                                                                font-size: 10px;
-                                                            }
-
-                                                        </style>
-                                                        <div class="d-flex flex-column h-100 w-100  ">
-
-                                                            <div class=" align-items-start">
-																		<span class="badge badge-danger mr-1">Trả góp
-																			0%</span>
-                                                            </div>
-
-                                                            <a href="/views/product.html" class="text-dark">
-                                                                <div
-                                                                        class="align-items-start cart-content  h-100">
-                                                                    <div
-                                                                            class="my-2 d-block overflow-hidden item hvr-float ">
-                                                                        <img class="object-cover mw-100 "
-                                                                             src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-                                                                             alt="">
-                                                                    </div>
-                                                                    <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-                                                                        style="display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;font-size: 14px;">
-                                                                        iPhone 14 Pro Max 256GB Lorem ipsum
-                                                                        dolor
-                                                                        sit amet
-                                                                        consectetur
-                                                                        adipisicing elit. Iste, maiores.
-                                                                    </h3>
-                                                                    <div class="mb-1">
-																				<span class="mr-2 badge badge-light">6.7
-																					incheslor
-																				</span>
-
-                                                                        <span class="mr-2 badge badge-light">128
-																					GB</span>
-                                                                    </div>
-
-                                                                    <div class="mb-1">
-                                                                        <i class=" d-inline-block text-decoration-line-through price-old"
-                                                                           style="text-decoration: line-through">
-                                                                            40.000.000đ</i>
-                                                                        <b
-                                                                                class="d-inline-block price-new ">-25%</b>
-                                                                    </div>
-                                                                    <strong
-                                                                            class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-                                                                    <div class=" mb-1 d-flex flex-end">
-                                                                        <p class=" text-warning "
-                                                                           style="font-size: 12px;">
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i
-                                                                                    class="fa-solid fa-star-half-stroke "></i>
-                                                                            <i class="fa-regular fa-star "></i>
-                                                                        </p>
-                                                                        <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                           style="font-size: 12px;">54</p>
-                                                                    </div>
-
-                                                                </div>
-                                                            </a>
-                                                            <div
-                                                                    class="mt-2  d-flex justify-content-between align-items-end">
-                                                                <a href="" class=" d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i
-                                                                            class="fa-regular fa-square-plus fa-sm"></i>
-                                                                    so sánh
-                                                                </a>
-
-                                                                <a href="" class="d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i class="fa-regular fa-heart fa-sm"></i>
-                                                                    yêu
-                                                                    thích
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-
-                                            <div class="card   ">
-                                                <div class="card-body rounded-0" style="padding: 0.75rem; ">
-                                                    <div class=" d-block overflow-hidden   ">
-                                                        <style>
-                                                            p {
-                                                                margin: 0;
-
-                                                            }
-
-                                                            .quote::before {
-                                                                content: '●';
-                                                                margin-right: 2px;
-                                                                left: 0;
-                                                                top: 0;
-                                                                color: #333;
-                                                                font-size: 10px;
-                                                            }
-
-                                                        </style>
-                                                        <div class="d-flex flex-column h-100 w-100  ">
-
-                                                            <div class=" align-items-start">
-																		<span class="badge badge-danger mr-1">Trả góp
-																			0%</span>
-                                                            </div>
-
-                                                            <a href="/views/product.html" class="text-dark">
-                                                                <div
-                                                                        class="align-items-start cart-content  h-100">
-                                                                    <div
-                                                                            class="my-2 d-block overflow-hidden item hvr-float ">
-                                                                        <img class="object-cover mw-100 "
-                                                                             src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-                                                                             alt="">
-                                                                    </div>
-                                                                    <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-                                                                        style="display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;font-size: 14px;">
-                                                                        iPhone 14 Pro Max 256GB Lorem ipsum
-                                                                        dolor
-                                                                        sit amet
-                                                                        consectetur
-                                                                        adipisicing elit. Iste, maiores.
-                                                                    </h3>
-                                                                    <div class="mb-1">
-																				<span class="mr-2 badge badge-light">6.7
-																					incheslor
-																				</span>
-
-                                                                        <span class="mr-2 badge badge-light">128
-																					GB</span>
-                                                                    </div>
-
-                                                                    <div class="mb-1">
-                                                                        <i class=" d-inline-block text-decoration-line-through price-old"
-                                                                           style="text-decoration: line-through">
-                                                                            40.000.000đ</i>
-                                                                        <b
-                                                                                class="d-inline-block price-new ">-25%</b>
-                                                                    </div>
-                                                                    <strong
-                                                                            class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-                                                                    <div class=" mb-1 d-flex flex-end">
-                                                                        <p class=" text-warning "
-                                                                           style="font-size: 12px;">
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i
-                                                                                    class="fa-solid fa-star-half-stroke "></i>
-                                                                            <i class="fa-regular fa-star "></i>
-                                                                        </p>
-                                                                        <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                           style="font-size: 12px;">54</p>
-                                                                    </div>
-
-                                                                </div>
-                                                            </a>
-                                                            <div
-                                                                    class="mt-2  d-flex justify-content-between align-items-end">
-                                                                <a href="" class=" d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i
-                                                                            class="fa-regular fa-square-plus fa-sm"></i>
-                                                                    so sánh
-                                                                </a>
-
-                                                                <a href="" class="d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i class="fa-regular fa-heart fa-sm"></i>
-                                                                    yêu
-                                                                    thích
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-
-                                            <div class="card   ">
-                                                <div class="card-body rounded-0" style="padding: 0.75rem; ">
-                                                    <div class=" d-block overflow-hidden   ">
-                                                        <style>
-                                                            p {
-                                                                margin: 0;
-
-                                                            }
-
-                                                            .quote::before {
-                                                                content: '●';
-                                                                margin-right: 2px;
-                                                                left: 0;
-                                                                top: 0;
-                                                                color: #333;
-                                                                font-size: 10px;
-                                                            }
-
-                                                        </style>
-                                                        <div class="d-flex flex-column h-100 w-100  ">
-
-                                                            <div class=" align-items-start">
-																		<span class="badge badge-danger mr-1">Trả góp
-																			0%</span>
-                                                            </div>
-
-                                                            <a href="/views/product.html" class="text-dark">
-                                                                <div
-                                                                        class="align-items-start cart-content  h-100">
-                                                                    <div
-                                                                            class="my-2 d-block overflow-hidden item hvr-float ">
-                                                                        <img class="object-cover mw-100 "
-                                                                             src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-                                                                             alt="">
-                                                                    </div>
-                                                                    <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-                                                                        style="display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;font-size: 14px;">
-                                                                        iPhone 14 Pro Max 256GB Lorem ipsum
-                                                                        dolor
-                                                                        sit amet
-                                                                        consectetur
-                                                                        adipisicing elit. Iste, maiores.
-                                                                    </h3>
-                                                                    <div class="mb-1">
-																				<span class="mr-2 badge badge-light">6.7
-																					incheslor
-																				</span>
-
-                                                                        <span class="mr-2 badge badge-light">128
-																					GB</span>
-                                                                    </div>
-
-                                                                    <div class="mb-1">
-                                                                        <i class=" d-inline-block text-decoration-line-through price-old"
-                                                                           style="text-decoration: line-through">
-                                                                            40.000.000đ</i>
-                                                                        <b
-                                                                                class="d-inline-block price-new ">-25%</b>
-                                                                    </div>
-                                                                    <strong
-                                                                            class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-                                                                    <div class=" mb-1 d-flex flex-end">
-                                                                        <p class=" text-warning "
-                                                                           style="font-size: 12px;">
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i
-                                                                                    class="fa-solid fa-star-half-stroke "></i>
-                                                                            <i class="fa-regular fa-star "></i>
-                                                                        </p>
-                                                                        <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                           style="font-size: 12px;">54</p>
-                                                                    </div>
-
-                                                                </div>
-                                                            </a>
-                                                            <div
-                                                                    class="mt-2  d-flex justify-content-between align-items-end">
-                                                                <a href="" class=" d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i
-                                                                            class="fa-regular fa-square-plus fa-sm"></i>
-                                                                    so sánh
-                                                                </a>
-
-                                                                <a href="" class="d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i class="fa-regular fa-heart fa-sm"></i>
-                                                                    yêu
-                                                                    thích
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+<%}%>
                                     </div>
+                                </div>
+                                <%}%>
 
                                     <div class="text-center my-2 ">
                                         <button class="btn btn-danger px-5 text-white hvr-grow btn-md">Xem tất
                                             cả
                                         </button>
                                     </div>
-                                </div>
-                                <div class="tab-pane fade  " id="pills-profile" role="tabpanel"
-                                     aria-labelledby="pills-profile-tab">
-
-                                    <div class="owl-carousel owl-theme ">
-                                        <div class="item">
-
-                                            <div class="card  rounded-2 ">
-                                                <div class="card-body "
-                                                     style="padding: 0.75rem; box-shadow: unset;">
-                                                    <div class=" d-block overflow-hidden   ">
-                                                        <style>
-                                                            p {
-                                                                margin: 0;
-
-                                                            }
-
-                                                            .quote::before {
-                                                                content: '●';
-                                                                margin-right: 2px;
-                                                                left: 0;
-                                                                top: 0;
-                                                                color: #333;
-                                                                font-size: 10px;
-                                                            }
-
-                                                        </style>
-                                                        <div class="d-flex flex-column h-100 w-100  ">
-
-                                                            <div class=" align-items-start">
-																		<span class="badge badge-danger mr-1">Trả góp
-																			0%</span>
-                                                            </div>
-
-                                                            <a href="/views/product.html" class="text-dark">
-                                                                <div
-                                                                        class="align-items-start cart-content  h-100">
-                                                                    <div
-                                                                            class="my-2 d-block overflow-hidden item hvr-float ">
-                                                                        <img class="object-cover mw-100 "
-                                                                             src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-                                                                             alt="">
-                                                                    </div>
-                                                                    <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-                                                                        style="display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;font-size: 14px;">
-                                                                        iPhone 14 Pro Max 256GB Lorem ipsum
-                                                                        dolor
-                                                                        sit amet
-                                                                        consectetur
-                                                                        adipisicing elit. Iste, maiores.
-                                                                    </h3>
-                                                                    <div class="mb-1">
-																				<span class="mr-2 badge badge-light">6.7
-																					incheslor
-																				</span>
-
-                                                                        <span class="mr-2 badge badge-light">128
-																					GB</span>
-                                                                    </div>
-
-                                                                    <div class="mb-1">
-                                                                        <i class=" d-inline-block text-decoration-line-through price-old"
-                                                                           style="text-decoration: line-through">
-                                                                            40.000.000đ</i>
-                                                                        <b
-                                                                                class="d-inline-block price-new ">-25%</b>
-                                                                    </div>
-                                                                    <strong
-                                                                            class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-                                                                    <div class=" mb-1 d-flex flex-end">
-                                                                        <p class=" text-warning "
-                                                                           style="font-size: 12px;">
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i
-                                                                                    class="fa-solid fa-star-half-stroke "></i>
-                                                                            <i class="fa-regular fa-star "></i>
-                                                                        </p>
-                                                                        <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                           style="font-size: 12px;">54</p>
-                                                                    </div>
-
-                                                                </div>
-                                                            </a>
-                                                            <div
-                                                                    class="mt-2  d-flex justify-content-between align-items-end">
-                                                                <a href="" class=" d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i
-                                                                            class="fa-regular fa-square-plus fa-sm"></i>
-                                                                    so sánh
-                                                                </a>
-
-                                                                <a href="" class="d-block  align-middle"
-                                                                   style="font-size:14px ;">
-                                                                    <i class="fa-regular fa-heart fa-sm"></i>
-                                                                    yêu
-                                                                    thích
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="text-center my-2">
-                                        <button class="btn btn-danger px-5 text-white hvr-grow btn-md">Xem tất
-                                            cả
-                                        </button>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>

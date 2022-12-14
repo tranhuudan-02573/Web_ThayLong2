@@ -23,6 +23,7 @@ import vn.edu.hcmuaf.fit.model.phone.Spec;
 import vn.edu.hcmuaf.fit.model.phone.SpecType;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +53,25 @@ public class AbstractDAO<T> implements GenericDAO<T> {
                     "left join phone_spec ps on p.id = ps.phoneId\n" +
                     "left join specs sp on ps.specId = sp.id\n" +
                     "left join spec_types spt on sp.spec_typeId = spt.id\n" +
+                    "left join phone_cap pca on p.id = pca.phoneId\n" +
+                    "left join caps c on pca.capId = c.id\n" +
+                    "where 1=1 ";
+
+    protected final String PHONE_CARD =
+            "select  p.deleted_at p_deleted_at,p.deleted_by p_delete_by,p.capId p_capId,p.id p_id, p.name p_name, p.typeId p_typeId," +
+                    " p.price p_price, p.content p_content, p.total p_total, p.thumbnail p_thumbnail, " +
+                    "p.desc p_desc , p.brandId p_brandId, p.modelId p_modelId, p.saleId p_saleId," +
+                    " pp.promotId pp_promotId, pp.phoneId pp_phoneId, pp.end_at pp_end_at,pp.start_at pp_start_at," +
+                    "pr.id pr_id, pr.name pr_name," +
+                    "ps.value ps_value, ps.specId ps_specId, ps.phoneId ps_phoneId," +
+                    "sp.id sp_id,sp.name sp_name, sp.spec_typeId sp_spec_typeId," +
+                    "pca.capId pca_capId ,pca.phoneId pca_phoneId," +
+                    "c.id c_id,c.cap c_cap,c.name c_name" +
+                    " from phones p " +
+                    "LEFT JOIN phone_promot pp on p.id = pp.phoneId\n" +
+                    "left join promots pr on pp.promotId = pr.id\n" +
+                    "left join phone_spec ps on p.id = ps.phoneId\n" +
+                    "left join specs sp on ps.specId = sp.id\n" +
                     "left join phone_cap pca on p.id = pca.phoneId\n" +
                     "left join caps c on pca.capId = c.id\n" +
                     "where 1=1 ";
@@ -88,6 +108,14 @@ public class AbstractDAO<T> implements GenericDAO<T> {
         });
     }
 
+    public int countById(String sql) {
+        String q = "select count(id)" + "from <TABLE>" + " where 0 =0" + sql;
+
+        return (int) JDBiConnector.get().withHandle(handle -> {
+            return handle.createQuery(q).define("TABLE", this.table).mapTo(int.class).one();
+        });
+    }
+
     public List<Order> joinOrder(String sql, Class<T> t, Map<String, Object> o) {
         return JDBiConnector.get().withHandle(handle -> {
             return handle.createQuery(SELECT_ALL_ORDER + sql)
@@ -114,8 +142,9 @@ public class AbstractDAO<T> implements GenericDAO<T> {
 
     public List<User> joinUser(String sql, Class<T> t, Map<String, Object> o) {
         return JDBiConnector.get().withHandle(handle -> {
-            return handle.createQuery(SELECT_ALL_USER + sql)
-                    .bindMap(o)
+            Query query = handle.createQuery(SELECT_ALL_USER + sql);
+            if (o != null) query.bindMap(o);
+            return query
                     .registerRowMapper(BeanMapper.factory(User.class, "u"))
                     .registerRowMapper(BeanMapper.factory(Permission.class, "p"))
                     .registerRowMapper(BeanMapper.factory(PermissionDetail.class, "pd"))
@@ -137,8 +166,9 @@ public class AbstractDAO<T> implements GenericDAO<T> {
 
     public List<Phone> joinPhone(String sql, Class<T> t, Map<String, Object> o) {
         return JDBiConnector.get().withHandle(handle -> {
-            return handle.createQuery(SELECT_ALL_PHONE + sql)
-                    .bindMap(o)
+            Query query = handle.createQuery(SELECT_ALL_PHONE + sql);
+            if (o != null) query.bindMap(o);
+            return query
                     .registerRowMapper(BeanMapper.factory(Sale.class, "sl"))
                     .registerRowMapper(BeanMapper.factory(Type.class, "t"))
                     .registerRowMapper(BeanMapper.factory(Model.class, "m"))
@@ -206,11 +236,60 @@ public class AbstractDAO<T> implements GenericDAO<T> {
         });
     }
 
+    public List<Phone> joinPhoneCard(String sql, Class<T> t, Map<String, Object> o, Map<String, List<String>> m) {
+
+
+        return JDBiConnector.get().withHandle(handle -> {
+            Query query = handle.createQuery(PHONE_CARD + sql);
+            if (o != null) query.bindMap(o);
+            if (m != null) {
+                List<String> key = new ArrayList<>(m.keySet());
+                for (String k : key
+                ) {
+                    query.bindList(k, m.get(k));
+                }
+            }
+            return query
+                    .registerRowMapper(BeanMapper.factory(Phone.class, "p"))
+                    .registerRowMapper(BeanMapper.factory(PhonePromot.class, "pp"))
+                    .registerRowMapper(BeanMapper.factory(Promot.class, "pr"))
+                    .registerRowMapper(BeanMapper.factory(Spec.class, "sp"))
+                    .registerRowMapper(BeanMapper.factory(PhoneSpec.class, "ps"))
+                    .registerRowMapper(BeanMapper.factory(PhoneCap.class, "pca"))
+                    .registerRowMapper(BeanMapper.factory(Cap.class, "c"))
+                    .reduceRows((Map<Long, Phone> map, RowView rowView) -> {
+                        Phone phone = map.computeIfAbsent(
+                                rowView.getColumn("p_id", Long.class),
+                                id -> rowView.getRow(Phone.class));
+                        if (rowView.getColumn("p_capId", Long.class) != null) {
+                            phone.setCap(rowView.getRow(Cap.class));
+                        }
+
+                        if (rowView.getColumn("pp_promotId", Integer.class) != null && rowView.getColumn("pr_id", Integer.class) != null) {
+                            PhonePromot pp = rowView.getRow(PhonePromot.class);
+                            pp.setPromot(rowView.getRow(Promot.class));
+                            phone.addPromot(pp);
+                        }
+                        if (rowView.getColumn("ps_specId", Integer.class) != null && rowView.getColumn("sp_id", Integer.class) != null) {
+                            PhoneSpec ps = rowView.getRow(PhoneSpec.class);
+                            ps.setSpec(rowView.getRow(Spec.class));
+                            phone.addSpec(ps);
+                        }
+                        if (rowView.getColumn("pca_capId", Integer.class) != null && rowView.getColumn("c_id", Integer.class) != null) {
+                            PhoneCap pc = rowView.getRow(PhoneCap.class);
+                            pc.setCap(rowView.getRow(Cap.class));
+                            phone.addCap(pc);
+                        }
+
+                    }).collect(toList());
+        });
+    }
+
 
     @Override
     public T get(String sql, Class<T> t, T t2) {
 
-        List<T> l = list(sql, t, t2,null);
+        List<T> l = list(sql, t, t2, null);
 
         if (l.size() > 1 || l.isEmpty()) return null;
 
@@ -257,6 +336,8 @@ public class AbstractDAO<T> implements GenericDAO<T> {
     }
 
     public static void main(String[] args) {
+
+        System.out.println(new AbstractDAO<User>("users").joinUser("",User.class,null));
 
 //        System.out.println(new AbstractDAO<Order>().joinOrder("", Order.class, null).get(0));
 //        System.out.println(new AbstractDAO<User>().list("","users",User.class,null));

@@ -1,12 +1,15 @@
 package vn.edu.hcmuaf.fit.dao.impl.phone;
 
+import org.jdbi.v3.core.statement.Query;
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.db.JDBiConnector;
 import vn.edu.hcmuaf.fit.model.phone.*;
 import vn.edu.hcmuaf.fit.model.review.Review;
 
 import javax.annotation.ManagedBean;
 import java.sql.Timestamp;
 import java.util.*;
+
 @ManagedBean
 public class PhoneDAO extends AbstractDAO<Phone> {
 
@@ -32,9 +35,19 @@ public class PhoneDAO extends AbstractDAO<Phone> {
         return phones.get(0);
     }
 
-    public List<Phone> getAll(){
-        return joinPhone("", Phone.class,null);
+    public Phone getPhoneJoinById(int id) {
+
+        List<Phone> phone = joinPhone(" and p.id = " + id, Phone.class, null);
+
+        if (phone.size() != 1) return null;
+        return phone.get(0);
+
     }
+
+    public List<Phone> getAll() {
+        return joinPhone("", Phone.class, null);
+    }
+
 
     public void updatePhone(Phone phone) {
         phone.setUpdated_at(new Timestamp(System.currentTimeMillis()));
@@ -153,7 +166,7 @@ public class PhoneDAO extends AbstractDAO<Phone> {
         o.put("price", 2000);
         Phone p = new Phone();
         p.setId(2);
-        new PhoneDAO("phones").deleteSoftPhone(p);
+//        new PhoneDAO("phones").deleteSoftPhone(p);
 //        o.put("dnas", "djsad");
 
 
@@ -191,6 +204,17 @@ public class PhoneDAO extends AbstractDAO<Phone> {
         Phone pp = new Phone();
         pp.setName("kkk123123");
 
+
+        Map<String, List<String>> m = new HashMap<>();
+        List<String> a = new ArrayList<String>();
+        a.add("4");
+        a.add("7");
+        m.put("id", a);
+
+
+        System.out.println(new PhoneDAO("phones").joinPhoneCard(" and p.id in (<id>)", Phone.class, null, m));
+
+
 //        System.out.println( new PhoneDAO("phones").savePhone(pp));
 //        new PhoneDAO().updatePhone(p);
 //        System.out.println(new PhoneDAO().getAll());
@@ -199,9 +223,10 @@ public class PhoneDAO extends AbstractDAO<Phone> {
 //        System.out.println(new PhoneDAO().getByPrice(2000));
 //        System.out.println(new PhoneDAO().getByName("dt"));
     }
+
     public void deleteSoftPhone(Phone phone) {
-    phone.setDeleted_at(new Timestamp(System.currentTimeMillis()));
-        update("update phones set status = 'da xoa' , deleted_at =:t.deleted_at where id = :t.id ",phone);
+        phone.setDeleted_at(new Timestamp(System.currentTimeMillis()));
+        update("update phones set status = 'da xoa' , deleted_at =:t.deleted_at where id = :t.id ", phone);
 
     }
 

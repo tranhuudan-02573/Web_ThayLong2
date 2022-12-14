@@ -13,13 +13,12 @@ public class Sale  implements Serializable {
     private String name;
     private String desc;
     private String img;
-
-
+    private Integer value;
+    private String unit;
     private Timestamp end_at;
     private Timestamp start_at;
-    private int value;
 
-    public Sale(String name, String desc, String img, Timestamp end_at, Timestamp start_at, int value) {
+    public Sale(String name, String desc, String img, Timestamp end_at, Timestamp start_at, Integer value) {
         this.name = name;
         this.desc = desc;
         this.img = img;
@@ -28,7 +27,7 @@ public class Sale  implements Serializable {
         this.value = value;
     }
 
-    public Sale(int id, String name, String desc, String img, Timestamp end_at, Timestamp start_at, int value) {
+    public Sale(int id, String name, String desc, String img, Timestamp end_at, Timestamp start_at, Integer value) {
         this.id = id;
         this.name = name;
         this.desc = desc;

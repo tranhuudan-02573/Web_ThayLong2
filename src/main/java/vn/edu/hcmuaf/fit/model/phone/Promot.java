@@ -13,6 +13,7 @@ public class Promot implements Serializable {
 
     private String name;
 
+<<<<<<< Updated upstream
     public Promot(String name) {
         this.name = name;
     }
@@ -21,4 +22,6 @@ public class Promot implements Serializable {
         this.id = id;
         this.name = name;
     }
+=======
+>>>>>>> Stashed changes
 }

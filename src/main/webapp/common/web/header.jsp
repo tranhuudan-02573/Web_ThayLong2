@@ -7,7 +7,6 @@ To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <header>
-
     <div class="modal fade show" id="modalStarRating" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel" aria-modal="true"
          style="padding-right: 17px; display: none;">
@@ -89,7 +88,7 @@ To change this template use File | Settings | File Templates.
                     <div class="col-9 position-absolute p-2 menu-multi-mobile">
                         <div class="row row-md">
                             <div class="col-8">
-                                <a href="#" title="" class=""><img src="/images/fptshop-logo.png" class="img-fluid"></a>
+                                <a href="${pageContext.request.contextPath}/home" title="" class=""><img src="/images/fptshop-logo.png" class="img-fluid"></a>
                             </div>
                             <div class="col-4 d-flex justify-content-end">
                                 <i class="fa fa-times text-white" aria-hidden="true"></i>
@@ -334,11 +333,10 @@ To change this template use File | Settings | File Templates.
                     <!--end col-9-->
                     <div class="col-2 position-absolute overplay"></div>
                     <div class="col-xl-2 col-lg-2 col-md-2 col-4 p-0 ">
-                        <a href="/index.html" title=""><img src="/images/fptshop-logo.png" class="img-fluid"></a>
+                        <a href="${pageContext.request.contextPath}/home" title=""><img src="/images/fptshop-logo.png" class="img-fluid"></a>
                     </div>
                     <div class="col-7 pull-right d-flex justify-content-end align-items-center d-sm-none text-white"><i class="fa fa-shopping-cart"></i></div>
                     <div class="col-1" >
-
                         <a class="nav-link p-0 text-center text-white " href="/views/user.html" data-toggle="modal" data-target="#modalStarRating">  <i class="fa-solid fa-location-dot fa-lg mr-2 "></i>xem giá tại</a>
                     </div>
 
@@ -364,7 +362,7 @@ To change this template use File | Settings | File Templates.
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-center text-white " href="/views/cart.html"> <div> <i class="fa fa-shopping-cart fa-lg" style="line-height: 1;" aria-hidden="true"></i></div>Giỏ hàng</a>
+                                <a class="nav-link text-center text-white " href="/CartServlet"> <div> <i class="fa fa-shopping-cart fa-lg" style="line-height: 1;" aria-hidden="true"></i></div>Giỏ hàng</a>
                             </li>
 
                             <li class="nav-item">
@@ -422,11 +420,9 @@ To change this template use File | Settings | File Templates.
         <div class="head-menu bg-dark nav-scroller">
             <div class="container">
                 <ul class="nav row row-sm">
-
                      <c:forEach var="brand" items="${requestScope.brandList}" >
-
                     <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase"  href="#">
+                        <a class="nav-link text-white text-uppercase"  href="${pageContext.request.contextPath}/phone-filter?name=brand&id=${brand.id}">
                             <i class="fa-solid fa-mobile-screen mr-2"></i>
                             </i></i>${brand.name}
                         </a>
