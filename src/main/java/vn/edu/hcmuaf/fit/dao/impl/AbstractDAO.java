@@ -7,18 +7,13 @@ import org.jdbi.v3.core.statement.Query;
 import org.jdbi.v3.core.statement.Update;
 import vn.edu.hcmuaf.fit.dao.GenericDAO;
 import vn.edu.hcmuaf.fit.dao.impl.phone.*;
-import vn.edu.hcmuaf.fit.dao.impl.review.ReviewDAO;
-import vn.edu.hcmuaf.fit.dao.impl.user.UserDAO;
 import vn.edu.hcmuaf.fit.db.JDBiConnector;
 import vn.edu.hcmuaf.fit.model.user.*;
 import vn.edu.hcmuaf.fit.model.phone.Cap;
-import vn.edu.hcmuaf.fit.model.phone.PhoneCap;
 import vn.edu.hcmuaf.fit.model.order.Code;
 import vn.edu.hcmuaf.fit.model.order.Order;
 import vn.edu.hcmuaf.fit.model.order.OrderDetail;
 import vn.edu.hcmuaf.fit.model.phone.*;
-import vn.edu.hcmuaf.fit.model.review.Review;
-import vn.edu.hcmuaf.fit.model.phone.PhoneSpec;
 import vn.edu.hcmuaf.fit.model.phone.Spec;
 import vn.edu.hcmuaf.fit.model.phone.SpecType;
 
@@ -153,16 +148,16 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             if (o != null) query.bindMap(o);
             return query
                     .registerRowMapper(BeanMapper.factory(User.class, "u"))
-                    .registerRowMapper(BeanMapper.factory(Permission.class, "p"))
-                    .registerRowMapper(BeanMapper.factory(PermissionDetail.class, "pd"))
+                    .registerRowMapper(BeanMapper.factory(Action.class, "p"))
+                    .registerRowMapper(BeanMapper.factory(PermissionAction.class, "pd"))
                     .reduceRows((Map<Long, User> map, RowView rowView) -> {
                         User user = map.computeIfAbsent(
                                 rowView.getColumn("u_id", Long.class),
                                 id -> rowView.getRow(User.class));
                         if (rowView.getColumn("p_id", Long.class) != null) {
-                            Permission p = rowView.getRow(Permission.class);
+                            Action p = rowView.getRow(Action.class);
                             if (rowView.getColumn("pd_permissionId", Long.class) != null) {
-                                p.addAction(rowView.getRow(PermissionDetail.class));
+                                p.addAction(rowView.getRow(PermissionAction.class));
                             }
                             user.setPermission(p);
                         }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
 import vn.edu.hcmuaf.fit.dao.impl.phone.CapDAO;
 import vn.edu.hcmuaf.fit.model.review.Review;
 
@@ -17,10 +18,7 @@ import java.util.*;
 @Data
 @Getter
 @Setter
-public class Phone implements Serializable {
-    private int id;
-    private Timestamp created_at;
-    private Timestamp updated_at;
+public class Phone extends Base<Phone> implements Serializable {
     private String name;
     private Integer price;
     private Integer typeId;
@@ -30,50 +28,53 @@ public class Phone implements Serializable {
     private Integer total;
     private String thumbnail;
     private Integer saleId;
-    private Sale sale;
     private Integer capId;
-    private Cap cap;
     private String status;
-    private Set<PhoneSpec> specList = new HashSet<>();
-    private Set<PhoneColor> colorList = new HashSet<>();
-    private Type type;
     private Integer updated_by;
-    private Set<PhoneCap> capList = new HashSet<>();
-    private Set<PhonePromot> promotList = new HashSet<>();
     private Integer brandId;
     private Integer modelId;
-    private Brand brand;
-    private Model model;
     private Integer created_by;
     private Integer deleted_by;
     private Timestamp deleted_at;
-    private Set<Image> imageList = new HashSet<>();
 
-    public void addCap(PhoneCap pc) {
-        capList.add(pc);
+    public List<Image> _images() {
+        return new AbstractDAO<Image>("images").list(" and phoneId =" + this.id, Image.class, null, null);
     }
 
-    public void addImage(Image img) {
-        imageList.add(img);
+    public List<Spec> _specs() {
+        return new AbstractDAO<Spec>("phone_spec").list(" and phoneId =" + this.id, Spec.class, null, null);
     }
 
-    public void addColor(PhoneColor color) {
-        colorList.add(color);
+    public List<Color> _colors() {
+        return new AbstractDAO<Color>("phone_color").list(" and phoneId =" + this.id, Color.class, null, null);
     }
 
-    public void addPromot(PhonePromot promot) {
-        promotList.add(promot);
+    public List<Promot> _promots() {
+        return new AbstractDAO<Promot>("phone_promot").list(" and phoneId =" + this.id, Promot.class, null, null);
     }
 
-    public void addSpec(PhoneSpec spec) {
-        specList.add(spec);
+    public List<Cap> _caps() {
+        return new AbstractDAO<Cap>("phone_cap").list(" and phoneId =" + this.id, Cap.class, null, null);
+    }
+
+    public Sale _sale() {
+        return new AbstractDAO<Sale>("sales").get(" and id=" + this.saleId, Sale.class, null);
+    }
+
+    public Brand _brand() {
+        return new AbstractDAO<Brand>("brands").get(" and id=" + this.brandId, Brand.class, null);
+    }
+
+    public Model _model() {
+        return new AbstractDAO<Model>("models").get(" and id=" + this.modelId, Model.class, null);
+    }
+
+    public Type _type() {
+        return new AbstractDAO<Type>("types").get(" and id=" + this.typeId, Type.class, null);
     }
 
     public Cap _cap() {
         return new CapDAO("caps").get(" and id = " + this.capId, Cap.class, null);
     }
 
-    public static void main(String[] args) {
-        System.out.println(new CapDAO("caps").get(" and id = 1", Cap.class, null));
-    }
 }

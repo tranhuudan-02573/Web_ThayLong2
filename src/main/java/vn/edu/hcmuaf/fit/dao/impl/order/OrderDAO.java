@@ -1,11 +1,9 @@
 package vn.edu.hcmuaf.fit.dao.impl.order;
 
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
-import vn.edu.hcmuaf.fit.dao.impl.user.PermissionDetailDAO;
 import vn.edu.hcmuaf.fit.db.JDBiConnector;
 import vn.edu.hcmuaf.fit.model.order.Order;
 import vn.edu.hcmuaf.fit.model.order.OrderDetail;
-import vn.edu.hcmuaf.fit.model.user.PermissionDetail;
 
 import java.math.BigInteger;
 import java.util.Set;

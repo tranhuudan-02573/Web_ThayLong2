@@ -1,13 +1,11 @@
 package vn.edu.hcmuaf.fit.dao.impl.phone;
 
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
-import vn.edu.hcmuaf.fit.model.phone.Model;
-import vn.edu.hcmuaf.fit.model.phone.PhoneColor;
 import vn.edu.hcmuaf.fit.model.phone.Color;
 
 import javax.annotation.ManagedBean;
 import java.sql.Timestamp;
-import java.util.Set;
+
 @ManagedBean
 
 public class ColorDAO extends AbstractDAO<Color> {

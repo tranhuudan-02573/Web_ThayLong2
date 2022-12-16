@@ -1,11 +1,8 @@
 package vn.edu.hcmuaf.fit.dao.impl.phone;
 
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
-import vn.edu.hcmuaf.fit.model.phone.Image;
-import vn.edu.hcmuaf.fit.model.phone.PhoneCap;
 
 import javax.annotation.ManagedBean;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;

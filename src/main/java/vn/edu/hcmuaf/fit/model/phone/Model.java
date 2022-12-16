@@ -13,10 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Model implements Serializable {
-    private int id;
-    private Timestamp created_at;
-    private Timestamp updated_at;
+public class Model extends Base<Model> implements Serializable {
     private String name;
     private String img;
     private int brandId;
@@ -29,16 +26,4 @@ public class Model implements Serializable {
         return new PhoneDAO("phones").list(" and modelId = " + this.id, Phone.class, null, null);
     }
 
-    public Model(String name, String img, int brandId) {
-        this.name = name;
-        this.img = img;
-        this.brandId = brandId;
-    }
-
-    public Model(int id, String name, String img, int brandId) {
-        this.id = id;
-        this.name = name;
-        this.img = img;
-        this.brandId = brandId;
-    }
 }

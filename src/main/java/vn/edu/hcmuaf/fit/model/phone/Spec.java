@@ -2,27 +2,26 @@ package vn.edu.hcmuaf.fit.model.phone;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
-public class Spec implements Serializable {
-    private int id;
-    private Timestamp created_at;
-    private Timestamp updated_at;
+public class Spec extends Base<Spec> implements Serializable {
     private String name;
     private Integer specTypeId;
-    private SpecType specType;
 
-    public Spec(String name, Integer specTypeId) {
-        this.name = name;
-        this.specTypeId = specTypeId;
+    public SpecType _specType() {
+        return new AbstractDAO<SpecType>("spec_types").get(" and id=" + this.specTypeId, SpecType.class, null);
     }
 
-    public Spec(int id, String name, Integer specTypeId) {
-        this.id = id;
-        this.name = name;
-        this.specTypeId = specTypeId;
+
+    public List<Phone> _phones() {
+        return new AbstractDAO<Phone>("phone_spec").list(" and specId =" + this.id, Phone.class, null, null);
     }
+
+
 }
