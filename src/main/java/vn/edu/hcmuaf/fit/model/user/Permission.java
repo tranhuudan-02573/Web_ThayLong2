@@ -8,10 +8,12 @@ package vn.edu.hcmuaf.fit.model.user;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -24,6 +26,12 @@ public class Permission implements Serializable {
     private String name;
     private Set<PermissionDetail> permissionDetails = new HashSet<>();
     private boolean licensed;
+
+    public List<PermissionDetail> _perPermissionDetails() {
+
+        return new AbstractDAO<PermissionDetail>("permission_detail").list(" and permissionId =" + this.id, PermissionDetail.class, null, null);
+    }
+
 
     public void addAction(PermissionDetail pd) {
         permissionDetails.add(pd);
