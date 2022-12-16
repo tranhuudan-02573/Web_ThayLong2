@@ -9,6 +9,7 @@ package vn.edu.hcmuaf.fit.model.phone;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vn.edu.hcmuaf.fit.dao.impl.phone.SpecDAO;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -23,5 +24,7 @@ public class PhoneSpec implements Serializable {
     private Integer specId;
     private Integer phoneId;
     private Spec spec;
-
+    public Spec _spec() {
+        return new SpecDAO("specs").get(" id = " + this.getSpecId(), Spec.class, null);
+    }
 }

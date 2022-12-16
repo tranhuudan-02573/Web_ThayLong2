@@ -7,19 +7,25 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "Home", value = "/admin/admin")
+@WebServlet(urlPatterns = {"/admin/home"})
 public class Home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User auth = (User) session.getAttribute("auth");
-        if (auth == null || !(auth.getPermissionId() < 2)) response.sendRedirect("../login.jsp");
+
+
+        request.getRequestDispatcher("/views/admin/index.jsp").forward(request, response);
 
     }
 
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+
+
+
+
 
     }
 }

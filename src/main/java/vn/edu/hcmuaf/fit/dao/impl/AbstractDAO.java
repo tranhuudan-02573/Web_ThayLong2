@@ -115,6 +115,13 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             return handle.createQuery(q).define("TABLE", this.table).mapTo(int.class).one();
         });
     }
+    public int count(String count,String sql) {
+        String q = "select count("+count+")" + "from <TABLE>" + " where 0 =0" + sql;
+
+        return (int) JDBiConnector.get().withHandle(handle -> {
+            return handle.createQuery(q).define("TABLE", this.table).mapTo(int.class).one();
+        });
+    }
 
     public List<Order> joinOrder(String sql, Class<T> t, Map<String, Object> o) {
         return JDBiConnector.get().withHandle(handle -> {
@@ -291,7 +298,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
 
         List<T> l = list(sql, t, t2, null);
 
-        if (l.size() > 1 || l.isEmpty()) return null;
+        if (l.size() != 1) return null;
 
         return l.get(0);
 
@@ -337,7 +344,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
 
     public static void main(String[] args) {
 
-        System.out.println(new AbstractDAO<User>("users").joinUser("",User.class,null));
+        System.out.println(new AbstractDAO<User>("users").joinUser("", User.class, null));
 
 //        System.out.println(new AbstractDAO<Order>().joinOrder("", Order.class, null).get(0));
 //        System.out.println(new AbstractDAO<User>().list("","users",User.class,null));

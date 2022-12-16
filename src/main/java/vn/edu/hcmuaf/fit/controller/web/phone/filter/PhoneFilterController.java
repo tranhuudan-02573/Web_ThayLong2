@@ -1,13 +1,7 @@
 package vn.edu.hcmuaf.fit.controller.web.phone.filter;
 
-import vn.edu.hcmuaf.fit.dao.impl.phone.BrandDAO;
-import vn.edu.hcmuaf.fit.dao.impl.phone.ModelDAO;
-import vn.edu.hcmuaf.fit.dao.impl.phone.PhoneDAO;
-import vn.edu.hcmuaf.fit.dao.impl.phone.SaleDAO;
-import vn.edu.hcmuaf.fit.model.phone.Brand;
-import vn.edu.hcmuaf.fit.model.phone.Model;
-import vn.edu.hcmuaf.fit.model.phone.Phone;
-import vn.edu.hcmuaf.fit.model.phone.Sale;
+import vn.edu.hcmuaf.fit.dao.impl.phone.*;
+import vn.edu.hcmuaf.fit.model.phone.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -25,6 +19,7 @@ public class PhoneFilterController extends HttpServlet {
     ModelDAO modelDAO = new ModelDAO("models");
     SaleDAO saleDAO = new SaleDAO("sales");
 
+    PromotDAO promotDAO = new PromotDAO("promots");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,9 +27,9 @@ public class PhoneFilterController extends HttpServlet {
         int id = 0;
         Model model = null;
         Brand brand = null;
-        Map<Sale, List<Phone>> phones = new HashMap<>();
+        Map<String, List<Phone>> phones = new HashMap<>();
         int total = phoneDAO.countById("");
-        List<Sale> saleList = saleDAO.list("", Sale.class, null, 4);
+        List<Promot> promotList = promotDAO.list("", Promot.class, null, 4);
         List<Model> modelList = new ArrayList<>();
         String sql = "";
         List<Brand> brandList = brandDAO.list("", Brand.class, null, null);
@@ -51,18 +46,18 @@ public class PhoneFilterController extends HttpServlet {
                 brand = brandDAO.get(" and id = " + id, Brand.class, null);
                 sql = " and brandId =" + id;
                 modelList = modelDAO.list(" and brandId =" + id, Model.class, null, null);
-
             }
-            if (!"".equals(name) &&"model".equals(name)) {
+            if (!"".equals(name) && "model".equals(name)) {
                 total = phoneDAO.countById(" and modelId = " + id);
-                model = modelDAO.get(" and id ="+id,Model.class,null);
+                model = modelDAO.get(" and id =" + id, Model.class, null);
                 sql = " and modelId =" + id;
             }
         }
+        phones.put("tất cả", phoneDAO.joinPhoneCard(sql, Phone.class, null, null));
 
-        for (Sale b : saleList
+        for (Promot b : promotList
         ) {
-            phones.put(b, phoneDAO.joinPhoneCard(sql + "  and p.saleId = " + b.getId(), Phone.class, null,null));
+            phones.put(b.getName(), phoneDAO.joinPhoneCard(sql + "  and pp.promotId = " + b.getId(), Phone.class, null, null));
         }
         request.setAttribute("model", model);
         request.setAttribute("brands", brandList);

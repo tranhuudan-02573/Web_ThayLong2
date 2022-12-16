@@ -1,3 +1,7 @@
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@include file="/common/taglib.jsp" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -202,11 +206,12 @@
 
     </div>
   </main>
+<content tag="local_script">
 
 
   <script src="/src/js/admin/form.js"></script>
   <script>
-        // Data
+    // Data
     const usersChrome = 243;
     const usersFirefox = 70;
     const usersOpera = 100;
@@ -326,6 +331,7 @@
 
     })
   </script>
+</content>
 </body>
 
 </html>

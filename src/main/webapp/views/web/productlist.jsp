@@ -351,17 +351,17 @@
                     <div class="d-flex  justify-content-between align-items-center">
                         <ul class="nav nav-tabs " id="myTabProductList" role="tablist">
                             <%
-                                Map<Sale, List<Phone>> sales = (Map<Sale, List<Phone>>) request.getAttribute("phones");
-                                List<Sale> key = new ArrayList<>(sales.keySet());
+                                Map<String, List<Phone>> sales = (Map<String, List<Phone>>) request.getAttribute("phones");
+                                List<String> key = new ArrayList<>(sales.keySet());
 
                                 for (int j = 0; j < key.size(); j++) {
                             %>
                             <li class="nav-item mr-2">
                                 <a class="nav-link <%=(j==0)?"active":""%> text-dark bg-light"
-                                   id="<%= key.get(j).getName() %>"
+                                   id="<%=j%>-tab"
                                    data-toggle="tab"
-                                   href="#tabpane-<%=key.get(j).getId()  %>" role="tab" aria-controls="home"
-                                   aria-selected="true"><%= key.get(j).getName() %>
+                                   href="#tabpane-<%=j  %>" role="tab" aria-controls="home"
+                                   aria-selected="true"><%= key.get(j)%>
                                 </a>
                             </li>
 
@@ -390,9 +390,9 @@
                         <%
                             for (int i = 0; i < key.size(); i++) {
                         %>
-                        <div class="tab-pane fade show <%=(i==0)?"active":""%>" id="tabpane-<%=key.get(i).getId()  %>"
+                        <div class="tab-pane fade show <%=(i==0)?"active":""%>" id="tabpane-<%=i  %>"
                              role="tabpanel"
-                             aria-labelledby="<%= key.get(i).getName()  %>">
+                             aria-labelledby="<%=i%>-tab">
                             <div class="products-mobile mt-3 w-100">
                                 <div class="row w-100 mx-auto row-cols-4  ">
                                     <%

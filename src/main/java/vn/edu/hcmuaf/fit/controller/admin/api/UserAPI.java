@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "UserAPI", value = "/UserAPI")
+@WebServlet(name = "UserAPI", urlPatterns = {"/api/user"})
 public class UserAPI extends HttpServlet {
 
     @Inject
