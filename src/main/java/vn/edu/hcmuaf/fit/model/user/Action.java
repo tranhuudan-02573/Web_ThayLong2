@@ -18,10 +18,10 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class Action extends Base<Action> implements Serializable {
-    private String name;
+    private String code;
+    private String group;
 
-
-
-
-
+    public List<User> _users() {
+        return new AbstractDAO<User>("permission_action").list(" and userId=" + this.id, User.class, null, null);
+    }
 }

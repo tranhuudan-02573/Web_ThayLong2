@@ -1,15 +1,9 @@
 package vn.edu.hcmuaf.fit.controller.web;
 
-import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
-import vn.edu.hcmuaf.fit.dao.impl.phone.BrandDAO;
-import vn.edu.hcmuaf.fit.dao.impl.phone.PhoneDAO;
-import vn.edu.hcmuaf.fit.dao.impl.phone.PromotDAO;
-import vn.edu.hcmuaf.fit.dao.impl.phone.SaleDAO;
 import vn.edu.hcmuaf.fit.model.phone.Brand;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 import vn.edu.hcmuaf.fit.model.phone.Promot;
 import vn.edu.hcmuaf.fit.model.phone.Sale;
-import vn.edu.hcmuaf.fit.dao.impl.phone.*;
 import vn.edu.hcmuaf.fit.model.phone.*;
 import vn.edu.hcmuaf.fit.service.impl.PhoneService;
 

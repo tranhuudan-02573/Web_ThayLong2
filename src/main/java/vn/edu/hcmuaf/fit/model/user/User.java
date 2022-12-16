@@ -28,6 +28,10 @@ public class User extends Base<User> implements Serializable {
 
     private String permission;
 
+    public UserState _userState() {
+        return new AbstractDAO<UserState>("user_states").get(" and id=" + this.user_stateId, UserState.class, null);
+    }
+
 
     public List<Action> _actions() {
         return new AbstractDAO<Action>("permission_action").list(" and userId =" + this.id, Action.class, null, null);
