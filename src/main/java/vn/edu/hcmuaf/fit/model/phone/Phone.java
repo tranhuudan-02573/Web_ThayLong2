@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import vn.edu.hcmuaf.fit.dao.impl.phone.CapDAO;
 import vn.edu.hcmuaf.fit.model.review.Review;
 
 import java.io.Serializable;
@@ -33,7 +34,7 @@ public class Phone implements Serializable {
     private Integer capId;
     private Cap cap;
     private String status;
-    private  Set<PhoneSpec> specList = new HashSet<>();
+    private Set<PhoneSpec> specList = new HashSet<>();
     private Set<PhoneColor> colorList = new HashSet<>();
     private Type type;
     private Integer updated_by;
@@ -45,8 +46,9 @@ public class Phone implements Serializable {
     private Model model;
     private Integer created_by;
     private Integer deleted_by;
-    private Timestamp   deleted_at;
+    private Timestamp deleted_at;
     private Set<Image> imageList = new HashSet<>();
+
     public void addCap(PhoneCap pc) {
         capList.add(pc);
     }
@@ -67,10 +69,11 @@ public class Phone implements Serializable {
         specList.add(spec);
     }
 
-    public static void main(String[] args) {
-        Phone p =new Phone();
-        p.setName("hdkajs");
-        System.out.println(p.getImageList().isEmpty());
+    public Cap _cap() {
+        return new CapDAO("caps").get(" and id = " + this.capId, Cap.class, null);
     }
 
+    public static void main(String[] args) {
+        System.out.println(new CapDAO("caps").get(" and id = 1", Cap.class, null));
+    }
 }

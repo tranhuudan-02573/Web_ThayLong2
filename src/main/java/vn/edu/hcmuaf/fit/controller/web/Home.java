@@ -1,7 +1,6 @@
 package vn.edu.hcmuaf.fit.controller.web;
 
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
-<<<<<<< Updated upstream
 import vn.edu.hcmuaf.fit.dao.impl.phone.BrandDAO;
 import vn.edu.hcmuaf.fit.dao.impl.phone.PhoneDAO;
 import vn.edu.hcmuaf.fit.dao.impl.phone.PromotDAO;
@@ -10,10 +9,8 @@ import vn.edu.hcmuaf.fit.model.phone.Brand;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 import vn.edu.hcmuaf.fit.model.phone.Promot;
 import vn.edu.hcmuaf.fit.model.phone.Sale;
-=======
 import vn.edu.hcmuaf.fit.dao.impl.phone.*;
 import vn.edu.hcmuaf.fit.model.phone.*;
->>>>>>> Stashed changes
 import vn.edu.hcmuaf.fit.service.impl.PhoneService;
 
 import javax.servlet.ServletException;
@@ -61,13 +58,6 @@ public class Home extends HttpServlet {
         List<Promot> promotList = promotDAO.list("", Promot.class, null, 4);
 
 
-<<<<<<< Updated upstream
-
-        request.setAttribute("brandList",brandList);
-        request.setAttribute("phoneList",phoneList);
-        request.setAttribute("saleList",saleList);
-        request.getRequestDispatcher("/views/web/index.jsp").forward(request,response);
-=======
         Map<Sale, List<Phone>> saleListMap = new HashMap<>();
         Map<Promot, List<Phone>> promotListmap = new HashMap<>();
         for (Promot p : promotList
@@ -108,7 +98,6 @@ public class Home extends HttpServlet {
         request.setAttribute("saleListMap", saleListMap);
         request.setAttribute("saleList", saleList2);
         request.getRequestDispatcher("/views/web/index.jsp").forward(request, response);
->>>>>>> Stashed changes
     }
 
     @Override

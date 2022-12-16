@@ -77,7 +77,7 @@
                   <div class="collapsible-body">
                     <ul class="">
                       <li>
-                        <a href="/views/admin/manausers/index.html"
+                        <a href="/admin/manage/user"
                            class="waves-effect ">
 
                                                                 <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>danh sách người dùng
@@ -96,7 +96,7 @@
                   <div class="collapsible-body">
                     <ul class="">
                       <li>
-                        <a href="/views/admin/manaorders/index.html"
+                        <a href="/admin/manage/order"
                            class="waves-effect ">
                           <span class="sv-slim"> SL </span>
                           <span class="sv-normal"
@@ -116,7 +116,7 @@
                   <div class="collapsible-body">
                     <ul class=" ">
                       <li>
-                        <a href="/views/admin/manaphones/index.html"
+                        <a href="/admin/manage/phone"
                            class="waves-effect ">
                           <span class="sv-slim"> SL </span>
                           <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>
@@ -125,14 +125,14 @@
 
 
                       <li>
-                        <a href="/views/admin/manacolor/index.html"
+                        <a href="/admin/manage/phonecolor"
                            class="waves-effect ">
                           <span class="sv-slim"> SL </span>
                           <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>
                                                                     Màu</span></a>
                       </li>
                       <li>
-                        <a href="/views/admin/manacap/index.html"
+                        <a href="/admin/manage/phonecap"
                            class="waves-effect ">
                           <span class="sv-slim"> SL </span>
                           <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>
@@ -140,7 +140,7 @@
                       </li>
 
                       <li>
-                        <a href="/views/admin/manaspec/index.html"
+                        <a href="/admin/manage/phonespec"
                            class="waves-effect ">
                           <span class="sv-slim"> SL </span>
                           <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>
@@ -149,7 +149,7 @@
 
 
                       <li>
-                        <a href="/views/admin/manapromot/index.html"
+                        <a href="/admin/manage/phonepromot"
                            class="waves-effect ">
                           <span class="sv-slim"> SL </span>
                           <span class="sv-normal"
@@ -166,9 +166,114 @@
                   <div class="collapsible-body">
                     <ul class=" ">
                       <li>
-                        <a href="/views/admin/manareview/index.html" class="waves-effect">
+                        <a href="/admin/manage/phonereview" class="waves-effect">
                           <span class="sv-slim"> RF </span>
                           <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>review</span></a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+                </li>
+                <li>
+                  <a class="collapsible-header active text-white waves-effect arrow-r "
+                     style="font-size: 16px;"><i
+                          class="sv-slim-icon fas fa-brands fa-opencart"></i>color<i
+                          class="fas fa-angle-down rotate-icon"></i></a>
+                  <div class="collapsible-body">
+                    <ul class=" ">
+                      <li>
+                        <a href="/admin/manage/color" class="waves-effect">
+                          <span class="sv-slim"> RF </span>
+                          <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>color</span></a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li>
+                  <a class="collapsible-header active text-white waves-effect arrow-r "
+                     style="font-size: 16px;"><i
+                          class="sv-slim-icon fas fa-brands fa-opencart"></i>spec<i
+                          class="fas fa-angle-down rotate-icon"></i></a>
+                  <div class="collapsible-body">
+                    <ul class=" ">
+                      <li>
+                        <a href="/admin/manage/spec" class="waves-effect">
+                          <span class="sv-slim"> RF </span>
+                          <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>spec</span></a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+                </li>
+                <li>
+                  <a class="collapsible-header active text-white waves-effect arrow-r "
+                     style="font-size: 16px;"><i
+                          class="sv-slim-icon fas fa-brands fa-opencart"></i>cap<i
+                          class="fas fa-angle-down rotate-icon"></i></a>
+                  <div class="collapsible-body">
+                    <ul class=" ">
+                      <li>
+                        <a href="/admin/manage/cap" class="waves-effect">
+                          <span class="sv-slim"> RF </span>
+                          <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>cap</span></a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+                </li>
+                <li>
+                  <a class="collapsible-header active text-white waves-effect arrow-r "
+                     style="font-size: 16px;"><i
+                          class="sv-slim-icon fas fa-brands fa-opencart"></i>sale<i
+                          class="fas fa-angle-down rotate-icon"></i></a>
+                  <div class="collapsible-body">
+                    <ul class=" ">
+                      <li>
+                        <a href="/admin/manage/sale" class="waves-effect">
+                          <span class="sv-slim"> RF </span>
+                          <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>sale</span></a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+                </li>
+                <li>
+                  <a class="collapsible-header active text-white waves-effect arrow-r "
+                     style="font-size: 16px;"><i
+                          class="sv-slim-icon fas fa-brands fa-opencart"></i>model<i
+                          class="fas fa-angle-down rotate-icon"></i></a>
+                  <div class="collapsible-body">
+                    <ul class=" ">
+                      <li>
+                        <a href="/admin/manage/model" class="waves-effect">
+                          <span class="sv-slim"> RF </span>
+                          <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>model</span></a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+                </li>
+                <li>
+                  <a class="collapsible-header active text-white waves-effect arrow-r "
+                     style="font-size: 16px;"><i
+                          class="sv-slim-icon fas fa-brands fa-opencart"></i>brand<i
+                          class="fas fa-angle-down rotate-icon"></i></a>
+                  <div class="collapsible-body">
+                    <ul class=" ">
+                      <li>
+                        <a href="/admin/manage/brand" class="waves-effect">
+                          <span class="sv-slim"> RF </span>
+                          <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>brand</span></a>
 
                       </li>
 
@@ -211,13 +316,13 @@
     <ul class="nav navbar-nav nav-flex-icons ml-auto">
 
       <li class="nav-item">
-        <a class="nav-link" href="/views/admin/index.html"><i class="fa-solid fa-house-user mr-1 fa-lg"></i><span class="clearfix d-none d-sm-inline-block">Trang chủ</span></a>
+        <a class="nav-link" href="/admin/home"><i class="fa-solid fa-house-user mr-1 fa-lg"></i><span class="clearfix d-none d-sm-inline-block">Trang chủ</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" data-target="#modal" data-toggle="modal"><i class="fa-solid fa-key"></i> <span class="clearfix d-none d-sm-inline-block">Đổi mật khẩu</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/views/admin/profile.html"><i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">Thông tin cá nhân</span></a>
+        <a class="nav-link" href="/admin/info"><i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">Thông tin cá nhân</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link"><i class="fa-solid fa-right-from-bracket"></i> <span class="clearfix d-none d-sm-inline-block">Thoát</span></a>

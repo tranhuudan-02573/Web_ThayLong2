@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "PhoneAPI", value = "/PhoneAPI")
+@WebServlet(name = "PhoneAPI", urlPatterns = {"/api/phone"})
 public class PhoneAPI extends HttpServlet {
     @Inject
     PhoneService phoneService;

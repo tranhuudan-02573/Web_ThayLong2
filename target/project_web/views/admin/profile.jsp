@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@include file="/common/taglib.jsp" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -137,22 +140,24 @@
 
     </div>
   </main>
+<content tag="local_script">
 
 
-  <script src="/src/js/admin/form.js"></script>
- <script>
-    $(document).ready(function() {
+    <script src="/src/js/admin/form.js"></script>
+    <script>
+        $(document).ready(function() {
 
-  // SideNav Initialization
-  $(".button-collapse").sideNav({
-		slim: true});
-  new WOW().init();
+            // SideNav Initialization
+            $(".button-collapse").sideNav({
+                slim: true});
+            new WOW().init();
 
-   $('#tableData').DataTable();
+            $('#tableData').DataTable();
 
 
-})
-  </script>
+        })
+    </script>
+</content>
 </body>
 
 </html>
