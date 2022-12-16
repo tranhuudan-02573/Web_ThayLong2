@@ -1,8 +1,6 @@
 package vn.edu.hcmuaf.fit.dao.impl.phone;
 
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
-import vn.edu.hcmuaf.fit.model.phone.PhoneCap;
-import vn.edu.hcmuaf.fit.model.phone.PhoneColor;
 
 import javax.annotation.ManagedBean;
 import java.sql.Timestamp;
