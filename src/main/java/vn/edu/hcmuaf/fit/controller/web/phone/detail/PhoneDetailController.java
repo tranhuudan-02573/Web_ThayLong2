@@ -1,6 +1,5 @@
 package vn.edu.hcmuaf.fit.controller.web.phone.detail;
 
-import vn.edu.hcmuaf.fit.dao.impl.phone.PhoneDAO;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 
 import javax.servlet.ServletException;

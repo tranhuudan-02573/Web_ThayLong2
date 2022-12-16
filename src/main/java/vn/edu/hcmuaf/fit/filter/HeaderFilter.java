@@ -1,6 +1,5 @@
 package vn.edu.hcmuaf.fit.filter;
 
-import vn.edu.hcmuaf.fit.dao.impl.phone.BrandDAO;
 import vn.edu.hcmuaf.fit.model.phone.Brand;
 
 import javax.servlet.*;

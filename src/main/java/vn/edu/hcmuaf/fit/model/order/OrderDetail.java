@@ -8,6 +8,8 @@ package vn.edu.hcmuaf.fit.model.order;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.model.phone.Base;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 
 import java.io.Serializable;
@@ -17,16 +19,20 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class OrderDetail implements Serializable {
-    private Timestamp created_at;
-    private Timestamp updated_at;
+public class OrderDetail extends Base<OrderDetail> implements Serializable {
     private int orderId;
     private int phoneId;
     private int quantity;
     private double price;
     private int discount;
 
-private Phone phone;
+    public Phone _phone() {
+        return new AbstractDAO<Phone>("phones").get(" and id =" + this.phoneId, Phone.class, null);
+    }
+
+    public Order _order() {
+        return new AbstractDAO<Order>("orders").get(" and id =" + this.orderId, Order.class, null);
+    }
 
 
     public BigDecimal getTotal() {

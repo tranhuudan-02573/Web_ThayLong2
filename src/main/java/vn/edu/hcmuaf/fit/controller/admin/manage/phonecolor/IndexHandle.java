@@ -1,7 +1,5 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.phonecolor;
 
-import vn.edu.hcmuaf.fit.dao.impl.phone.PhoneColorDAO;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

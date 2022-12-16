@@ -1,16 +1,22 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.model.phone.Brand;
 import vn.edu.hcmuaf.fit.model.phone.Color;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "ColorAPI", value = "/api/color")
-public class ColorAPI extends HttpServlet {
+public class BrandAPI extends HttpServlet {
+
+    AbstractDAO<Brand> brandAbstractDAO = new AbstractDAO<>("brands");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,12 +33,12 @@ public class ColorAPI extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        Color color = HttpUtil.of(request.getReader()).toModel(Color.class);
-//        pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
-//        pp.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-//        return insertWithId("insert into colors (name,created_at,updated_at)" +
-//                        " values(:t.name,:t.created_at,:t.updated_at)",
-//                pp);
+        Brand newModel = HttpUtil.of(request.getReader()).toModel(Brand.class);
+//        br.setCreated_at(new Timestamp(System.currentTimeMillis()));
+//        br.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+//        return insertWithId("insert into brands (name,logo,created_at,updated_at, country)" +
+//                        " values(:t.name,:t.logo,:t.created_at,:t.updated_at, :t.country)",
+//                br);
     }
 
     @Override
@@ -40,9 +46,9 @@ public class ColorAPI extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        Color color = HttpUtil.of(request.getReader()).toModel(Color.class);
-//        c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-//        update("update colors set name = :t.name,updated_at = :t.updated_at where id = :t.id", c);
+        Brand newModel = HttpUtil.of(request.getReader()).toModel(Brand.class);
+//        b.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+//        update("update brands set name = :t.name,logo = :t.logo,updated_at = :t.updated_at, country = :t.country  where id = :t.id", b);
 
     }
 
@@ -51,9 +57,12 @@ public class ColorAPI extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        Color color = HttpUtil.of(request.getReader()).toModel(Color.class);
-//        delete("delete from colors  where id =:t.id "
-//                , c);
+        Brand newModel = HttpUtil.of(request.getReader()).toModel(Brand.class);
+//        brandAbstractDAO.delete("delete from brands  where id = :t.id", b);
+
     }
 
+    public static void main(String[] args) {
+        System.out.println(new ColorDAO("colors").get(" and id =1 ", Color.class, null));
+    }
 }

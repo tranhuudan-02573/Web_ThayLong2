@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
-import vn.edu.hcmuaf.fit.dao.impl.phone.PhoneDAO;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,8 +19,8 @@ public class Cap extends Base<Cap> {
         return new PhoneDAO("phones").get(" and id = " + this.phoneId, Phone.class, null);
     }
 
-    public List<Phone> _phones() {
-        return new AbstractDAO<Phone>("phone_cap").list(" and capId=" + this.id, Phone.class, null, null);
+    public List<PhoneCap> _phones() {
+        return new AbstractDAO<PhoneCap>("phone_cap").list(" and capId=" + this.id, PhoneCap.class, null, null);
     }
 
 }

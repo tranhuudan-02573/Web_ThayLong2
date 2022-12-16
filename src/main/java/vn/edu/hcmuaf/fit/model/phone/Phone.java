@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
-import vn.edu.hcmuaf.fit.dao.impl.phone.CapDAO;
-import vn.edu.hcmuaf.fit.model.review.Review;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -26,6 +24,7 @@ public class Phone extends Base<Phone> implements Serializable {
     private Integer specId;
     private String desc;
     private Integer total;
+    private Integer phone_stateId;
     private String thumbnail;
     private Integer saleId;
     private Integer capId;
@@ -37,24 +36,28 @@ public class Phone extends Base<Phone> implements Serializable {
     private Integer deleted_by;
     private Timestamp deleted_at;
 
+    public PhoneState _phoneState() {
+        return new AbstractDAO<PhoneState>("phone_states").get(" and id=" + this.phone_stateId, PhoneState.class, null);
+    }
+
     public List<Image> _images() {
         return new AbstractDAO<Image>("images").list(" and phoneId =" + this.id, Image.class, null, null);
     }
 
-    public List<Spec> _specs() {
-        return new AbstractDAO<Spec>("phone_spec").list(" and phoneId =" + this.id, Spec.class, null, null);
+    public List<PhoneSpec> _specs() {
+        return new AbstractDAO<PhoneSpec>("phone_spec").list(" and phoneId =" + this.id, PhoneSpec.class, null, null);
     }
 
-    public List<Color> _colors() {
-        return new AbstractDAO<Color>("phone_color").list(" and phoneId =" + this.id, Color.class, null, null);
+    public List<PhoneColor> _colors() {
+        return new AbstractDAO<PhoneColor>("phone_color").list(" and phoneId =" + this.id, PhoneColor.class, null, null);
     }
 
-    public List<Promot> _promots() {
-        return new AbstractDAO<Promot>("phone_promot").list(" and phoneId =" + this.id, Promot.class, null, null);
+    public List<PhonePromot> _promots() {
+        return new AbstractDAO<PhonePromot>("phone_promot").list(" and phoneId =" + this.id, PhonePromot.class, null, null);
     }
 
-    public List<Cap> _caps() {
-        return new AbstractDAO<Cap>("phone_cap").list(" and phoneId =" + this.id, Cap.class, null, null);
+    public List<PhoneCap> _caps() {
+        return new AbstractDAO<PhoneCap>("phone_cap").list(" and phoneId =" + this.id, PhoneCap.class, null, null);
     }
 
     public Sale _sale() {

@@ -11,13 +11,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Color extends Base<Color> implements Serializable {
-
+public class PhoneState extends Base<PhoneState> implements Serializable {
     private String name;
 
-    public List<PhoneCap> _phones() {
-        return new AbstractDAO<PhoneCap>("phone_color").list(" and colorId =" + this.id, PhoneCap.class, null, null);
+    public List<Phone> _phones() {
+        return new AbstractDAO<Phone>("phones").list(" and phone_stateId=" + this.id, Phone.class, null, null);
     }
-
 
 }

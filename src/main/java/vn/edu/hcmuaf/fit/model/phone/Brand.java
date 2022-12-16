@@ -3,11 +3,8 @@ package vn.edu.hcmuaf.fit.model.phone;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import vn.edu.hcmuaf.fit.dao.impl.phone.ModelDAO;
-import vn.edu.hcmuaf.fit.dao.impl.phone.PhoneDAO;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.List;
 
 @AllArgsConstructor
