@@ -9,6 +9,8 @@ import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.review.Review;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -39,31 +41,38 @@ public class Phone extends Base<Phone> implements Serializable {
     private Timestamp deleted_at;
 
     public List<Review> _reviews() {
-        return new AbstractDAO<Review>("reviews").list(" and phoneId =" + this.id, Review.class, null, null);
+        return new AbstractDAO<Review>("reviews").list(" and isReply =false and star is not null and isQuestion=false and phoneId =" + this.id, Review.class, null, null);
+    }
+
+    public List<Review> _question() {
+        return new AbstractDAO<Review>("reviews").list(" and isReply =false and star is null  and isQuestion=true and phoneId =" + this.id, Review.class, null, null);
     }
 
     public int count(int i) {
 
-        return new AbstractDAO<Review>("reviews").countById(" and question=false and star=" + i + " and phoneId=" + this.id);
+        return new AbstractDAO<Review>("reviews").countById(" and isReply =false and isQuestion=false and star=" + i + " and phoneId=" + this.id);
     }
 
     public int count() {
-        return new AbstractDAO<Review>("reviews").countById(" and question=false and phoneId=" + this.id);
+        return new AbstractDAO<Review>("reviews").countById(" and isReply =false and isQuestion=false and phoneId=" + this.id);
     }
 
     public double avg(int i) {
-        DecimalFormat df = new DecimalFormat("#.00");
         double rs = ((double) count(i) / (double) count());
-        return Double.parseDouble(df.format(rs).trim());
+        BigDecimal bd = new BigDecimal(rs);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     public double avg() {
-        DecimalFormat df = new DecimalFormat("#.000");
+
         double rs = 0;
         for (int i = 1; i <= 5; i++) {
             rs += i * ((double) count(i) / (double) count());
         }
-        return Double.parseDouble(df.format(rs).trim());
+        BigDecimal bd = new BigDecimal(rs);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
 
@@ -125,4 +134,9 @@ public class Phone extends Base<Phone> implements Serializable {
         return new AbstractDAO<Cap>("caps").get(" and id = " + this.capId, Cap.class, null);
     }
 
+    public static void main(String[] args) {
+        Phone p = new Phone();
+        p.setId(2);
+        System.out.println(p.avg());
+    }
 }

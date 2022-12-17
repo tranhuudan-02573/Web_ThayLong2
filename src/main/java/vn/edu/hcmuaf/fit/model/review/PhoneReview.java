@@ -16,11 +16,11 @@ public class PhoneReview extends Base<PhoneReview> implements Serializable {
     private Integer replyId;
 
     public Review _comment() {
-        return new AbstractDAO<Review>("phone_review").get(" and commentId=" + this.commentId, Review.class, null);
+        return new AbstractDAO<Review>("reviews").get(" and star is not null  and id=" + this.commentId, Review.class, null);
     }
 
     public Review _reply() {
-        return new AbstractDAO<Review>("phone_review").get(" and replyId=" + this.replyId, Review.class, null);
+        return new AbstractDAO<Review>("reviews").get(" and star is null  and id= " + this.replyId, Review.class, null);
     }
 
 }
