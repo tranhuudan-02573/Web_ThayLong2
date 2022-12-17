@@ -52,8 +52,7 @@ public class Phone extends Base<Phone> implements Serializable {
     }
 
     public double avg(int i) {
-        DecimalFormat df = new DecimalFormat("#.000");
-
+        DecimalFormat df = new DecimalFormat("#.00");
         double rs = ((double) count(i) / (double) count());
         return Double.parseDouble(df.format(rs).trim());
     }

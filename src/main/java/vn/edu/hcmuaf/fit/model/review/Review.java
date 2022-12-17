@@ -35,8 +35,12 @@ public class Review extends Base<Review> implements Serializable {
         return new AbstractDAO<PhoneReview>("phone_review").list(" and commentId =" + this.id, PhoneReview.class, null, null);
     }
 
-    public List<Vote> _votes() {
-        return new AbstractDAO<Vote>("votes").list(" and commentId=" + this.id, Vote.class, null, null);
+    public List<Vote> _like() {
+        return new AbstractDAO<Vote>("votes").list(" and `like`=true and commentId=" + this.id, Vote.class, null, null);
+    }
+
+    public List<Vote> _dislike() {
+        return new AbstractDAO<Vote>("votes").list(" and `like`=false and commentId=" + this.id, Vote.class, null, null);
     }
 
 

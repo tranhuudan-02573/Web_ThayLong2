@@ -1238,10 +1238,17 @@
                                                         }
 
                                                     </style>
-                                                    <span class="text-light text-weight-500 "><%=r.getCreated_at()%><a
+                                                    <span class="text-light text-weight-500 "><%=r.getCreated_at()%>
+                                                        <a
                                                             class="like pr-2 pl-2" href="">thích
-																	<span>(<%=r._votes().size()%>)</span>
-																</a> <a class="rep" href="">trả lời</a></span>
+																	<span>(<%=r._like().size()%>)</span>
+																</a>
+                                                         <a
+                                                                 class="like pr-2 pl-2" href="">khong thich
+																	<span>(<%=r._dislike().size()%>)</span>
+																</a>
+                                                        <a class="rep" href="">trả lời</a>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <%}%>
