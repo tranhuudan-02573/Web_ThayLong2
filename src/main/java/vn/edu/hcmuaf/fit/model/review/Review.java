@@ -20,7 +20,8 @@ public class Review extends Base<Review> implements Serializable {
     private Integer userId;
     private Integer phoneId;
     private Integer customerId;
-    private boolean question;
+    private boolean isReply;
+    private boolean isQuestion;
     private String status;
 
     public User _user() {
@@ -32,7 +33,7 @@ public class Review extends Base<Review> implements Serializable {
     }
 
     public List<PhoneReview> _reply() {
-        return new AbstractDAO<PhoneReview>("phone_review").list(" and commentId =" + this.id, PhoneReview.class, null, null);
+        return new AbstractDAO<PhoneReview>("phone_review").list("  and commentId =" + this.id, PhoneReview.class, null, null);
     }
 
     public List<Vote> _like() {

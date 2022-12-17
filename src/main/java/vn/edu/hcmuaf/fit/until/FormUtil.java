@@ -1,10 +1,11 @@
 package vn.edu.hcmuaf.fit.until;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.beanutils.BeanUtils;
 
 public class FormUtil {
 

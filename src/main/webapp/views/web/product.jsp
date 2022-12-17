@@ -1,6 +1,7 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.phone.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.review.Review" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.review.PhoneReview" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
@@ -1141,7 +1142,7 @@
                                                         <ul class="nav flex-column">
 
                                                             <%
-                                                                for (int i = 5; i >=1; i--) {
+                                                                for (int i = 5; i >= 1; i--) {
                                                             %>
                                                             <li class="nav-item mt-4 position-relative">
                                                                 <span class="stars font-text"><%=i%> sao</span>
@@ -1240,7 +1241,7 @@
                                                     </style>
                                                     <span class="text-light text-weight-500 "><%=r.getCreated_at()%>
                                                         <a
-                                                            class="like pr-2 pl-2" href="">thích
+                                                                class="like pr-2 pl-2" href="">thích
 																	<span>(<%=r._like().size()%>)</span>
 																</a>
                                                          <a
@@ -1438,8 +1439,7 @@
                                            class="w-100 text-comment">
 
                                     <div class="d-flex justify-content-between  align-items-center mt-4  ">
-												<span class="bg-light px-2">536 hỏi đáp về “Xiaomi Redmi Note 11S 6GB -
-													128GB”</span>
+                                        <span class="bg-light px-2"><%=p._question().size()%> hỏi đáp về “<%=p.getName()%>”</span>
 
 
                                         <a href="" class="badge badge-danger p-2">Gửi câu hỏi của bạn</a>
@@ -1447,15 +1447,25 @@
 
 
                                     <div class="cmt mt-4">
+
+                                        <%
+                                            List<Review> reviews1 = p._question();
+                                            for (Review r : reviews1
+                                            ) {
+
+                                        %>
+
                                         <div class="d-flex  flex-row p-2 ">
                                             <div class=" d-flex justify-content-center align-items-center  rounded-circle mr-3"
                                                  style="background-color: #cbd1d6; color: #fff; width: 48px; height: 48px; align-items: center; justify-content: center; display: inline-block;">
 														<span
-                                                                style="font-weight: 500; font-size: 20px; line-height: 47px;">NTN</span>
+                                                                style="font-weight: 500; font-size: 20px; line-height: 47px;"><%=r._user().avatar()%></span>
                                             </div>
                                             <div>
-                                                <h6 class="font-weight-bold">Nguyễn Thị Ngọc Nghi</h6>
-                                                <p>Tuyệt vời</p>
+                                                <h6 class="font-weight-bold"><%=r._user().getName()%>
+                                                </h6>
+                                                <p><%=r.getContent() %>
+                                                </p>
                                                 <style>
                                                     .like::before,
                                                     .rep::before {
@@ -1468,28 +1478,38 @@
                                                     }
 
                                                 </style>
-                                                <span class="text-light text-weight-500 ">1 giờ trước <a
-                                                        class="like pr-2 pl-2" href="">thích <span>(12)</span>
+                                                <span class="text-light text-weight-500 "><%=r.getCreated_at()%> <a
+                                                        class="like pr-2 pl-2"
+                                                        href="">thích <span>(<%=r._like().size()%>)</span>
+															</a>
+                                                     <a
+                                                             class="like pr-2 pl-2"
+                                                             href="">khong thich <span>(<%=r._dislike().size()%>)</span>
 															</a> <a class="rep" href="">trả lời</a></span>
                                             </div>
                                         </div>
+                                        <%
+                                            List<PhoneReview> reps = r._reply();
+                                            for (PhoneReview reply : reps) {
+
+
+                                        %>
                                         <div class="d-flex  flex-row  ml-5">
                                             <div class="d-flex justify-content-center align-items-center  rounded-circle mr-3"
                                                  style="background-color: #cbd1d6; color: #fff; width:7%; height: 7%; align-items: center; justify-content: center; display: inline-block;">
-														<span
-                                                                style="font-weight: 500; font-size: 20px; line-height: 47px; margin-left: 3px;">NT</span>
+														<span style="font-weight: 500; font-size: 20px; line-height: 47px; margin-left: 3px;">
+                                                            <%=reply._reply()._user().avatar()%>
+                                                        </span>
                                             </div>
 
                                             <div class="  rounded p-3 w-100 border border-danger">
-                                                <h6 class="font-weight-bold">Nguyễn Thị Ngọc Huyền</h6>
+                                                <h6 class="font-weight-bold"><%=reply._reply()._user().getName()%>
+                                                </h6>
 
-                                                <p>Chào Nghi,</p>
+                                                <p>Chào <%=reply._comment()._user().getName()%>
+                                                </p>
                                                 <p>
-
-                                                    Dạ bạn quan tâm cụ thể dung lượng bao nhiêu ạ. Để được tư
-                                                    vấn cụ thể hơn về sản phẩm, chương trình khuyến mãi. Bạn vui
-                                                    lòng để lại số điện thoại, Shop xin phép chuyển thông tin
-                                                    sang bộ phận tư vấn hỗ trợ mình nhanh nhất.
+                                                    <%=reply._reply().getContent()%>
                                                     Thân mến!</p>
                                                 <style>
                                                     .like::before,
@@ -1503,12 +1523,20 @@
                                                     }
 
                                                 </style>
-                                                <span class="text-light text-weight-500 ">1 giờ trước <a
-                                                        class="like pr-2 pl-2" href="">thích <span>(12)</span>
-															</a> <a class="rep" href="">trả lời</a></span>
+                                                <span class="text-light text-weight-500 "><%=reply.getCreated_at()%><a
+                                                        class="like pr-2 pl-2"
+                                                        href="">thích <span>(<%=reply._reply()._like().size()%>)</span>
+															</a>
+                                                    <a
+                                                            class="like pr-2 pl-2"
+                                                            href="">khong thich <span>(<%=reply._reply()._dislike().size()%>)</span>
+															</a><a class="rep" href="">trả lời</a></span>
                                             </div>
                                         </div>
-
+                                        <%
+                                            }
+                                            }
+                                        %>
                                         <div class="d-flex justify-content-center align-items-center mt-4">
                                             <nav>
                                                 <ul class="pagination pg-red m-0">
