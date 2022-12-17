@@ -17,7 +17,6 @@ import java.util.List;
 public class Review extends Base<Review> implements Serializable {
     private String content;
     private Integer star;
-    private String title;
     private Integer userId;
     private Integer phoneId;
     private Integer customerId;

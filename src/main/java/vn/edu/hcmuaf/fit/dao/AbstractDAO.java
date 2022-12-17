@@ -45,7 +45,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
     }
 
     public int countById(String sql) {
-        String q = "select count(id)" + "from <TABLE>" + " where 0 =0" + sql;
+        String q = "select count(id) " + "from <TABLE>" + " where 0 =0 " + sql;
         return (int) JDBiConnector.get().withHandle(handle -> {
             return handle.createQuery(q).define("TABLE", this.table).mapTo(int.class).one();
         });
