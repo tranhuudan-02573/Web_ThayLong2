@@ -55,9 +55,8 @@
                 <div class="col-xl-8 col-lg-8 col-md-7">
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
-                            <% List<Sale> sales = (List<Sale>) request.getAttribute("saleList");
+                            <% List<Sale> sales = (List<Sale>) request.getAttribute("saleListCarousel");
 
-                                int size = sales.size();
 
                             %>
                             <% for (int i = 0; i < sales.size(); i++) { %>
@@ -220,10 +219,9 @@
 
         <%
 
-            Map<Sale, List<Phone>> saleListMap = (Map<Sale, List<Phone>>) request.getAttribute("saleListMap");
-            List<Sale> keys = new ArrayList<>(saleListMap.keySet());
+            List<Sale> saleList = (List<Sale>) request.getAttribute("saleList");
 
-            for (Sale s : keys
+            for (Sale s : saleList
             ) {
         %>
 
@@ -261,8 +259,8 @@
                         <div class="owl-carousel owl-theme ">
 
                             <%
-
-                                for (Phone phone : saleListMap.get(s)) {
+                                List<Phone> phones = s._phones();
+                                for (Phone phone : phones) {
 
 
                             %>
@@ -289,12 +287,14 @@
                                             </style>
                                             <div class="d-flex flex-column align-items-strech w-100  ">
                                                 <div class=" align-self-start" style="height:18px;">
-                                                    <% for (vn.edu.hcmuaf.fit.model.phone.PhonePromot promot : phone.getPromotList()
-                                                    ) {
+                                                    <%
+                                                        List<PhonePromot> promots = phone._promots();
+                                                        for (PhonePromot promot : promots
+                                                        ) {
                                                     %>
 
 
-                                                    <span class="badge badge-danger mr-1"><%=(promot.getPromotId() == 1) ? promot.getPromot().getName() : ""%></span>
+                                                    <span class="badge badge-danger mr-1"><%=(promot.getPromotId() == 1) ? promot._promot().getName() : ""%></span>
                                                     <%
                                                         }%>
                                                 </div>
@@ -317,7 +317,8 @@
 
                                                         <div class="mb-1">
                                                             <%
-                                                                for (PhoneSpec spec : phone.getSpecList()
+                                                                List<PhoneSpec> phoneSpecs = phone._specs();
+                                                                for (PhoneSpec spec : phoneSpecs
                                                                 ) {
 
                                                             %>
@@ -888,11 +889,10 @@
                 <ul class="nav w-75 nav-tabs row " id="myTab" role="tablist" style="border: 0;">
 
                     <%
-                        Map<Promot, List<Phone>> promotListmap = (Map<Promot, List<Phone>>) request.getAttribute("promotListmap");
 
-                        List<Promot> keyPromot = new ArrayList<>(promotListmap.keySet());
+                        List<Promot> promots = (List<Promot>) request.getAttribute("promotList");
 
-                        for (int z = 0; z < keyPromot.size(); z++) {
+                        for (int z = 0; z < promots.size(); z++) {
 
 
                     %>
@@ -900,12 +900,12 @@
 
                     <li class="nav-item col-3 text-center ">
                         <a class="nav-link bg-light text-dark text-uppercase	 <%=(z==0)?"active":""%> "
-                           id="<%=keyPromot.get(z).getId()%>"
-                           data-toggle="tab" href="#tab-<%=keyPromot.get(z).getId()%>" role="tab" aria-controls="home"
+                           id="<%=promots.get(z).getId()%>"
+                           data-toggle="tab" href="#tab-<%=promots.get(z).getId()%>" role="tab" aria-controls="home"
                            aria-selected="true"> <span class="btn-floating btn-md  btn-default m-0 mr-2"
                                                        style="box-shadow: none;"><i
                                 class="fas fa-bolt"></i></span><strong>
-                            <%=keyPromot.get(z).getName()%>
+                            <%=promots.get(z).getName()%>
                         </strong></a>
 
 
@@ -919,19 +919,22 @@
                 <div class="tab-content    pl-0 pr-0 " id="myTabContent">
 
                     <%
-                        for (int k = 0; k < keyPromot.size(); k++) {
-                            List<Phone> phones = promotListmap.get(keyPromot.get(k));
+                        for (int k = 0; k < promots.size(); k++) {
+
+
                     %>
 
-                    <div class="tab-pane fade show <%= (k==0)?"active":""%>" id="tab-<%=keyPromot.get(k).getId()%>"
+                    <div class="tab-pane fade show <%= (k==0)?"active":""%>" id="tab-<%=promots.get(k).getId()%>"
                          role="tabpanel"
-                         aria-labelledby="tab-<%=keyPromot.get(k).getId()%>">
+                         aria-labelledby="tab-<%=promots.get(k).getId()%>">
                         <div class="products-mobile mt-3 w-100 " style="margin-top: 0 !important;">
                             <div class="row w-100 mx-auto  ">
 
                                 <%
 
-                                    for (Phone phone : phones) {
+                                    List<PhonePromot> phones = promots.get(k)._phones();
+                                    for (PhonePromot phone : phones
+                                    ) {
 
 
                                 %>
@@ -959,13 +962,13 @@
                                                 <div class="d-flex flex-column align-items-strech w-100  ">
 
                                                     <div class=" align-self-start" style="height:18px">
-                                                        <% for (vn.edu.hcmuaf.fit.model.phone.PhonePromot promot : phone.getPromotList()
+                                                        <% for (PhonePromot promot : phone._phone()._promots()
                                                         ) {
-                                                            if (promot.getPromotId() == 1) {
+                                                            if ("TG0".equalsIgnoreCase(promot._promot().getKey())) {
                                                         %>
 
 
-                                                        <span class="badge badge-danger mr-1"><%=promot.getPromot().getName()%></span>
+                                                        <span class="badge badge-danger mr-1"><%=promot._promot().getName()%></span>
                                                         <%
                                                                 }
                                                             }
@@ -978,25 +981,31 @@
                                                         <div class=" cart-content  h-100">
                                                             <div class="my-2 d-block overflow-hidden item hvr-float ">
                                                                 <img class="object-cover mw-100 "
-                                                                     src="<%=phone.getThumbnail()%>" alt="">
+                                                                     src="<%=phone._phone().getThumbnail()%>" alt="">
                                                             </div>
                                                             <h3 class=" product-title overflow-hidden   mb-1 " style="display: -webkit-box;
 -webkit-box-orient: vertical;
 -webkit-line-clamp: 2;font-size: 14px;">
-                                                                <%=phone.getName()%>
+                                                                <%=phone._phone().getName()%>
                                                             </h3>
 
                                                             <div class="mb-1">
-                                                                <c:forEach var="spec"
-                                                                           items="<%=phone.getSpecList()%>">
-                                                                    <c:if test="${spec.specId == 1 ||spec.specId == 2}">
-                                                                            <span class="mr-2 badge badge-light mb-1">
-                                                                                    ${spec.value}
+                                                                <%
+                                                                    List<PhoneSpec> specs = phone._phone()._specs();
+                                                                    for (PhoneSpec spec : specs
+                                                                    ) {
+                                                                        if ("LR".equalsIgnoreCase(spec._spec().getKey()) || "TDR".equalsIgnoreCase(spec._spec().getKey())) {
+                                                                %>
+
+                                                                <span class="mr-2 badge badge-light mb-1">
+                                                                                    <%=spec.getValue()%>
                                                                             </span>
-                                                                    </c:if>
+                                                                <%
+                                                                        }
+                                                                    }
+                                                                %>
 
 
-                                                                </c:forEach>
                                                             </div>
 
                                                             <div class="mb-1">
@@ -1038,7 +1047,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <%}%>
+                                <%
+                                    }
+                                %>
                             </div>
                         </div>
                         <div class="text-center mt-2">
@@ -1057,13 +1068,11 @@
 
 
         <%
-            Map<Brand, List<Model>> models = (Map<Brand, List<Model>>) request.getAttribute("models");
-            Map<Brand, List<Phone>> phoneL = (Map<Brand, List<Phone>>) request.getAttribute("phones");
 
-            List<Brand> key = new ArrayList<>(models.keySet());
-
-            for (Brand b : key
+            List<Brand> brands = (List<Brand>) request.getAttribute("brandList");
+            for (Brand b : brands
             ) {
+                if(b._models().size()>2){
 
 
         %>
@@ -1072,20 +1081,26 @@
         <section class="homecate d-none d-sm-block my-5 section-hot">
             <div class="card">
                 <div class="card-header white-text danger-color d-flex justify-content-between align-items-center">
-                    <h5 class="mt-2 text-uppercase font-weight-bold"><%=b.getName()%>
+                    <h5 class="mt-2 text-uppercase font-weight-bold"><%=b
+                            .
+                            getName
+                                    (
+                                    )%>
                     </h5>
                     <div>
                         <%
-                            for (Model s : models.get(b)
-                            ) {
-
+                            List<Model> models = b._models();
+                                for (Model model : models
+                                ) {
 
                         %>
 
-                        <a href="/phone-filter?name=model&id=<%=s.getId()%>"
+                        <a href="/phone-filter?name=model&id=<%=model.getId()%>"
                            class="btn btn-white text-danger btn-sm m-0 btn-rounded  waves-effect waves-light"><span
-                                class="h6"><%=s.getName()%></span></a>
-                        <%}%>
+                                class="h6"><%=model.getName()%></span></a>
+                        <%
+                            }
+                        %>
                     </div>
                 </div>
                 <div class="card-body hot-body">
@@ -1093,7 +1108,8 @@
                         <div class="owl-carousel owl-theme ">
 
                             <%
-                                for (Phone phone : phoneL.get(b)
+                                List<Phone> phones = b._phones();
+                                for (Phone phone : phones
                                 ) {
 
                             %>
@@ -1121,18 +1137,19 @@
                                             </style>
                                             <div class="d-flex flex-column align-items-strech w-100  ">
 
-                                                <div class=" align-self-start" style="height: 18px;">
-                                                    <% for (vn.edu.hcmuaf.fit.model.phone.PhonePromot promot : phone.getPromotList()
+                                                <div class=" align-self-start" style="height:18px">
+                                                    <% for (PhonePromot promot : phone._promots()
                                                     ) {
-                                                        if (promot.getPromotId() == 1) {
+                                                        if ("TG0".equalsIgnoreCase(promot._promot().getKey())) {
                                                     %>
 
 
-                                                    <span class="badge badge-danger mr-1"><%=promot.getPromot().getName()%></span>
+                                                    <span class="badge badge-danger mr-1"><%=promot._promot().getName()%></span>
                                                     <%
                                                             }
                                                         }
                                                     %>
+
                                                 </div>
 
                                                 <a href="${pageContext.request.contextPath}/phone-detail?id=<%=phone.getId()%> "
@@ -1145,26 +1162,37 @@
                                                         <h3 class=" product-title overflow-hidden   mb-1 " style="display: -webkit-box;
 -webkit-box-orient: vertical;
 -webkit-line-clamp: 2;font-size: 14px;">
-                                                            <%=phone.getName()%>>
+                                                            <%=phone
+                                                                    .
+                                                                    getName
+                                                                            (
+                                                                            )%>>
                                                         </h3>
 
                                                         <div class="mb-1">
-                                                            <c:forEach var="spec"
-                                                                       items="<%=phone.getSpecList()%>">
-                                                                <c:if test="${spec.specId == 1 ||spec.specId == 2}">
-																			<span class="mr-2 badge badge-light mb-1">
-                                                                                    ${spec.value}
+                                                            <%
+                                                                for (PhoneSpec spec : phone._specs()
+                                                                ) {
+                                                                    if ("LR".equalsIgnoreCase(spec._spec().getKey()) || "TDR".equalsIgnoreCase(spec._spec().getKey())) {
+                                                            %>
+
+                                                            <span class="mr-2 badge badge-light mb-1">
+                                                                                    <%=spec.getValue()%>
                                                                             </span>
-                                                                </c:if>
+                                                            <%}%>
 
 
-                                                            </c:forEach>
+                                                            <%}%>
                                                         </div>
 
                                                         <div class="mb-1">
                                                             <i class=" d-inline-block text-decoration-line-through price-old"
                                                                style="text-decoration: line-through">
-                                                                <%=phone.getPrice()%>đ</i>
+                                                                <%=phone
+                                                                        .
+                                                                        getPrice
+                                                                                (
+                                                                                )%>đ</i>
                                                             <span class="badge badge-default peach-gradient">-25%</span>
                                                             <b class="d-inline-block price-new "></b>
                                                         </div>
@@ -1208,7 +1236,8 @@
 
         </section>
 
-        <%}%>
+        <%}
+        }%>
 
         <section class="my-5 brand">
 

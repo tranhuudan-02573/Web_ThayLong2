@@ -1,5 +1,8 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.phonecolor;
 
+import vn.edu.hcmuaf.fit.dao.AbstractDAO;
+import vn.edu.hcmuaf.fit.model.phone.PhoneColor;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,14 +14,13 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/admin/manage/phonecolor"})
 public class IndexHandle extends HttpServlet {
 
-    PhoneColorDAO phoneColor = new PhoneColorDAO("phone_color");
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-        List<PhoneColor> colors = phoneColor.list(" GROUP BY phoneId", PhoneColor.class, null, null);
+        List<PhoneColor> colors = new AbstractDAO<PhoneColor>("phone_color").list(" GROUP BY phoneId", PhoneColor.class, null, null);
         request.setAttribute("colors", colors);
 
         request.getRequestDispatcher("/views/admin/manage/phonecolor/index.jsp").forward(request, response);
@@ -30,8 +32,4 @@ public class IndexHandle extends HttpServlet {
 
     }
 
-    public static void main(String[] args) {
-        List<PhoneColor> colors = new PhoneColorDAO("phone_color").list(" GROUP BY phoneId", PhoneColor.class, null, null);
-        System.out.println(colors.get(0).total());
-    }
 }

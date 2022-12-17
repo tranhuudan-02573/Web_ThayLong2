@@ -3,7 +3,7 @@ package vn.edu.hcmuaf.fit.model.phone;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class Cap extends Base<Cap> {
     private Integer phoneId;
 
     public Phone _phone() {
-        return new PhoneDAO("phones").get(" and id = " + this.phoneId, Phone.class, null);
+        return new AbstractDAO<Phone>("phones").get(" and id = " + this.phoneId, Phone.class, null);
     }
 
     public List<PhoneCap> _phones() {

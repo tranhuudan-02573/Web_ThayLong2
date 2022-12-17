@@ -1,7 +1,6 @@
 package vn.edu.hcmuaf.fit.controller.auth;
 
 import vn.edu.hcmuaf.fit.model.user.User;
-import vn.edu.hcmuaf.fit.service.impl.UserService;
 import vn.edu.hcmuaf.fit.until.CookieUntil;
 import vn.edu.hcmuaf.fit.until.SessionUntil;
 
@@ -33,7 +32,7 @@ public class Login extends HttpServlet {
         String name = request.getParameter("name");
         String pass = request.getParameter("pass");
 
-        User user = new UserService().checkLogin(name, pass);
+        User user =null;
         if (user == null) {
             request.setAttribute("error", "");
             request.getRequestDispatcher("login.jsp").forward(request, response);

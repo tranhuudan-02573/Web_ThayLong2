@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.filter;
 
+import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Brand;
 
 import javax.servlet.*;
@@ -9,7 +10,6 @@ import java.util.List;
 
 @WebFilter(filterName = "/*")
 public class HeaderFilter implements Filter {
-    BrandDAO brandDAO = new BrandDAO("brands");
     public void init(FilterConfig config) throws ServletException {
     }
 
@@ -19,7 +19,7 @@ public class HeaderFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
 
-        List<Brand> brandList =  brandDAO.list("",Brand.class,null,10);
+        List<Brand> brandList =  new AbstractDAO<Brand>("brands").list("",Brand.class,null,10);
 
         request.setAttribute("brandList", brandList);
 

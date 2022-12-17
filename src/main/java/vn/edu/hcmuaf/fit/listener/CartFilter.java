@@ -1,6 +1,5 @@
 package vn.edu.hcmuaf.fit.listener;
 
-import vn.edu.hcmuaf.fit.dao.impl.cart.CartDAO;
 import vn.edu.hcmuaf.fit.model.cart.Cart;
 import vn.edu.hcmuaf.fit.model.user.User;
 
@@ -18,7 +17,6 @@ public class CartFilter implements HttpSessionListener, ServletContextListener {
 
 
 //    @Inject
-    CartDAO cartDAO = new CartDAO("cart");
 
     ServletContext application;
     @Override
@@ -27,7 +25,7 @@ public class CartFilter implements HttpSessionListener, ServletContextListener {
 
         if(user!=null){
             List<Cart> cart =(List<Cart>) application.getAttribute("Cart");
-            List<Cart> cartUser =cartDAO.getAllByUser(user.getId());
+//            List<Cart> cartUser =cartDAO.getAllByUser(user.getId());
         }else{
 
         }

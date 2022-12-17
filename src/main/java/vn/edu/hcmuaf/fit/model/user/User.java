@@ -2,13 +2,11 @@ package vn.edu.hcmuaf.fit.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Base;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Data

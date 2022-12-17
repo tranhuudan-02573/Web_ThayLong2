@@ -287,24 +287,13 @@
                                     <div class="carousel-inner">
                                         <%
                                             Phone p = (Phone) request.getAttribute("phone");
-                                            List<Image> images = new ArrayList<>(p.getImageList());
-                                            List<PhoneColor> colors = new ArrayList<>(p.getColorList());
-                                            List<PhoneCap> caps = new ArrayList<>(p.getCapList());
-                                            List<PhonePromot> promots = new ArrayList<>(p.getPromotList());
-                                            List<PhoneSpec> specs = new ArrayList<>(p.getSpecList());
-
-
-                                            Set<SpecType> spt = new HashSet<>();
-
-                                            for (PhoneSpec st : specs
-                                            ) {
-
-                                                spt.add(st.getSpec().getSpecType());
-                                            }
-
-
+//                                            Set<SpecType> spt = new HashSet<>();
+//                                            for (PhoneSpec st : specs
+//                                            ) {
+//                                                spt.add(st.getSpec().getSpecType());
+//                                            }
                                         %>
-                                        <c:forEach var="image" items="<%=images %>">
+                                        <c:forEach var="image" items="<%=p._images() %>">
                                             <div class="carousel-item text-center ">
                                                 <img src="${image.link}" alt="" class="img-fluid"
                                                      style="width: 300px;height:300px;">
@@ -323,7 +312,7 @@
                                     </a>
                                     <ol class="carousel-indicators m-0   " style="bottom: -100px !important;">
 
-                                        <c:forEach var="image" items="<%=images %>">
+                                        <c:forEach var="image" items="<%=p._images() %>">
                                             <li data-target="#carouselSlideImg" data-slide-to="0"
                                                 class="w-100 h-100 text-center" style="background-color: transparent;">
                                                 <div class="d-sm-block ">
@@ -396,57 +385,68 @@
                                 </div>
 
                                 <div class="d-flex align-items-center mb-2">
-                                    <strong class="prices text-danger">${phone.price} <sup>đ</sup></strong>
+                                    <strong class="prices text-danger"><%=p.getPrice()%> <sup>đ</sup></strong>
                                     <strong class="pl-2" style="text-decoration: line-through;">34.500.000đ</strong>
                                 </div>
 
                                 <div class="style-product mb-3 w-100 mx-auto row  ">
-                                    <c:forEach var="cap" items="<%=caps %>">
-                                        <div class="p-1  col-4 ">
-                                            <div class="form-check p-0   rounded">
-                                                <input type="radio" class="form-check-input" id="cap-${cap.capId}"
-                                                       name="cap" >
-                                                <label class="form-check-label  px-3 " for="cap-${cap.capId}"
-                                                       style="width: 96.5%; height: 100%; ">
-                                                    <div class="text-center">
-                                                        <div class=" text-center">
-                                                            <strong class="font-weight-bold  "
-                                                                    style="font-size: 12px;">${cap.cap.name}</strong>
-                                                        </div>
-                                                        <span class="font-weight-light" style="font-size: 12px;">270.990.000đ</span>
-                                                    </div>
-                                                </label>
-                                            </div>
+                                    <%
+                                        for (PhoneCap pc : p._caps()
+                                        ) {
 
+                                    %>
+                                    <div class="p-1  col-4 ">
+                                        <div class="form-check p-0   rounded">
+                                            <input type="radio" class="form-check-input" id="cap-<%=pc._cap().getId()%>"
+                                                   name="cap">
+                                            <label class="form-check-label  px-3 " for="cap-<%=pc._cap().getId()%>"
+                                                   style="width: 96.5%; height: 100%; ">
+                                                <div class="text-center">
+                                                    <div class=" text-center">
+                                                        <strong class="font-weight-bold  "
+                                                                style="font-size: 12px;"><%=pc._cap().getCap()%>
+                                                        </strong>
+                                                    </div>
+                                                    <span class="font-weight-light" style="font-size: 12px;">270.990.000đ</span>
+                                                </div>
+                                            </label>
                                         </div>
-                                    </c:forEach>
+
+                                    </div>
+                                    <%}%>
                                 </div>
 
                                 <strong class="font-weight-bold">Chọn màu để xem giá và chi nhánh có hàng</strong>
                                 <div class="style-product mb-3 w-100 mx-auto row  ">
-                                    <c:forEach var="color" items="<%=colors %>">
-                                        <div class="p-1  col-4 ">
-                                            <div class="form-check p-0   rounded">
-                                                <input type="radio" class="form-check-input" id="color-${color.colorId}"
-                                                       name="color" >
-                                                <label class="form-check-label  px-1 " style=" height: 100%; "
-                                                       for="color-${color.colorId}">
-                                                    <div class="d-flex justify-content-center align-items-center  ">
-                                                        <img src="${color.img}"
-                                                             alt="" class="img-fluid">
-                                                        <div class="">
-                                                            <div class="d-block text-start">
-                                                                <strong class="font-weight-bold  "
-                                                                        style="font-size: 12px;">${color.color.name}</strong>
-                                                            </div>
-                                                            <span class="font-weight-light" style="font-size: 12px;">270.990.000đ</span>
-                                                        </div>
-                                                    </div>
+                                    <%
+                                        for (PhoneColor pc : p._colors()
+                                        ) {
 
-                                                </label>
-                                            </div>
+                                    %>
+                                    <div class="p-1  col-4 ">
+                                        <div class="form-check p-0   rounded">
+                                            <input type="radio" class="form-check-input"
+                                                   id="color-<%=pc._color().getId()%>"
+                                                   name="color">
+                                            <label class="form-check-label  px-1 " style=" height: 100%; "
+                                                   for="color-<%=pc._color().getId()%>">
+                                                <div class="d-flex justify-content-center align-items-center  ">
+                                                    <img src="<%=pc.getImg()%>"
+                                                         alt="" class="img-fluid">
+                                                    <div class="">
+                                                        <div class="d-block text-start">
+                                                            <strong class="font-weight-bold  "
+                                                                    style="font-size: 12px;"><%=pc._color().getName()%>
+                                                            </strong>
+                                                        </div>
+                                                        <span class="font-weight-light" style="font-size: 12px;">270.990.000đ</span>
+                                                    </div>
+                                                </div>
+
+                                            </label>
                                         </div>
-                                    </c:forEach>
+                                    </div>
+                                    <%}%>
 
                                 </div>
                                 <div class="mb-4  ">
@@ -468,7 +468,7 @@
                                         Thông tin sản phẩm
                                     </div>
                                     <div class="card-body">
-                                        ${phone.desc}
+                                        <%=p.getDesc()%>
                                     </div>
                                 </div>
                                 <ul class="nav text-center mt-2 ">
@@ -511,17 +511,21 @@
                                             style="border: 1px dashed #d7d7d7;">Khuyến mại đặc biệt </h5>
                                         <ul class="nav flex-column">
 
-                                            <c:forEach var="promot" items="<%=promots %>">
+                                            <%
+                                                for (PhonePromot pp : p._promots()
+                                                ) {
 
-                                                <li class="nav-item">
-                                                    <a class="nav-link active text-dark" href="#">
-                                                        <i class="fa fa-circle text-success" aria-hidden="true"></i>
-                                                        <span class="font-text">${promot.promot.name}</span>
-                                                    </a>
+                                            %>
+
+                                            <li class="nav-item">
+                                                <a class="nav-link active text-dark" href="#">
+                                                    <i class="fa fa-circle text-success" aria-hidden="true"></i>
+                                                    <span class="font-text"><%=pp._promot().getName()%></span>
+                                                </a>
 
 
-                                                </li>
-                                            </c:forEach>
+                                            </li>
+                                            <%}%>
 
                                         </ul>
                                     </div>
@@ -1579,12 +1583,16 @@
                                             <table class="table table-bordered table-striped mb-0">
 
                                                 <tbody>
-                                                <c:forEach var="spec" items="<%=specs %>">
+                                                <%
+                                                    for (PhoneSpec ps:p._specs()
+                                                         ) {
+
+                                                    %>
                                                     <tr>
-                                                        <th scope="row">${spec.spec.name}</th>
-                                                        <td>${spec.value}</td>
+                                                        <th scope="row"><%=ps._spec().getName()%></th>
+                                                        <td><%=ps.getValue()%></td>
                                                     </tr>
-                                                </c:forEach>
+                                              <%}%>
                                                 </tbody>
                                             </table>
 
@@ -1624,25 +1632,25 @@
 
                                                         <tbody>
                                                         <%
-                                                            for (SpecType st : spt
+                                                            for (SpecType st : p._specTypes()
                                                             ) {
                                                         %>
                                                         <tr>
                                                             <th class="p-2 bg-light"><%=st.getName() %>
                                                             </th>
                                                         </tr>
-                                                        <% for (PhoneSpec sp : specs
+                                                        <% for (PhoneSpec sp : p._specs()
                                                         ) {
-                                                            if (sp.getSpec().getSpecType().getId() == st.getId()) {
+                                                            if (sp._spec()._specType().getId() == st.getId()) {
                                                         %>
                                                         <tr>
                                                             <td class="p-1">
                                                                 <div class="row ml-2 mr-2 pt-2 pb-2"
                                                                      style="border-bottom: 1px solid #edeeef;">
                                                                     <div class="col-sm-5 pl-1">
-                                                                        <%=sp.getSpec().getName()%>
+                                                                        <%=sp._spec().getName()%>
                                                                     </div>
-                                                                    <div class="col-sm-7" s><span
+                                                                    <div class="col-sm-7"><span
                                                                             style="color: #495057; font-weight:400"> <%=sp.getValue() %></span>
                                                                     </div>
                                                                 </div>
@@ -1916,39 +1924,42 @@
                         <div class="card-header ">
                             <ul class="nav nav-tabs" id="myTabProduct" style="border:0;" role="tablist">
 
-                                <%
-                                Map<String,List<Phone>> map = ( Map<String,List<Phone>>)request.getAttribute("map");
-
-                                List<String> key = new ArrayList<>(map.keySet());
-                                for (int i =0;i<key.size();i++){
-
-                                %>
-
                                 <li class="nav-item ">
-                                    <a class="nav-link <%=(i==0)?"active" :""%>" style="font-size: 15px;" id="<%=key.get(i).replaceAll(" ","-")%>-tab"
-                                       data-toggle="tab" href="#phone-<%=key.get(i).replaceAll(" ","-")%>" role="tab" aria-controls="home"
-                                       aria-selected="true"><%=key.get(i) %></a>
+                                    <a class="nav-link active " style="font-size: 15px;"
+                                       id="brand-tab"
+                                       data-toggle="tab" href="#phone-brand" role="tab"
+                                       aria-controls="home"
+                                       aria-selected="true">san pham cung hang
+                                    </a>
                                 </li>
+                                <%
+                                if(p.getModelId()!=null&&p.getModelId()!=0){
+                                %>
+                                <li class="nav-item ">
+                                    <a class="nav-link active " style="font-size: 15px;"
+                                       id="model-tab"
+                                       data-toggle="tab" href="#phone-model" role="tab"
+                                       aria-controls="home"
+                                       aria-selected="true">san pham cung dong
+                                    </a>
+                                </li>
+                                <%}%>
 
-                             <%}%>
                             </ul>
                         </div>
 
                         <div class="card-body bg-light bg-gradient ">
                             <div class="tab-content p-0" style="padding: 0 !important;" id="pills-tabContent">
 
-<%     for (int j =0;j<key.size();j++){
 
-
-%>
-
-                                <div class="tab-pane fade <%=(j==0)?"show active" :""%>" id="phone-<%=key.get(j).replaceAll(" ","-")%>" style="" role="tabpanel"
+                                <div class="tab-pane fade show active"
+                                     id="phone-brand" style="" role="tabpanel"
                                      aria-labelledby="pills-home-tab">
                                     <div class="owl-carousel owl-theme ">
 
                                         <%
-                                            for (Phone phone: map.get(key.get(j))
-                                                 ) {
+                                            for (Phone phone : p._brand()._phones()
+                                            ) {
 
                                         %>
 
@@ -1976,16 +1987,18 @@
                                                         </style>
                                                         <div class="d-flex flex-column h-100 w-100  ">
 
-                                                            <div class=" align-items-start" style="height: 18px;" >
-                                                                <% for (vn.edu.hcmuaf.fit.model.phone.PhonePromot promot : phone.getPromotList()
+                                                            <div class=" align-items-start" style="height: 18px;">
+                                                                <% for (PhonePromot promot : phone._promots()
                                                                 ) {
+                                                                    if("TG0".equalsIgnoreCase(promot._promot().getKey())){
                                                                 %>
-                                                                <span class="badge badge-danger mr-1"><%=(promot.getPromotId() == 1) ? promot.getPromot().getName() : ""%></span>
-                                                                <%
+                                                                <span class="badge badge-danger mr-1"><%=promot._promot().getName()%></span>
+                                                                <%}
                                                                     }%>
                                                             </div>
 
-                                                            <a href="/phone-detail?id=<%=phone.getId()%>" class="text-dark">
+                                                            <a href="/phone-detail?id=<%=phone.getId()%>"
+                                                               class="text-dark">
                                                                 <div
                                                                         class="align-items-start cart-content  h-100">
                                                                     <div
@@ -1998,7 +2011,7 @@
                                                                         style="display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;font-size: 14px;">
-                                                                      <%=phone.getName()%>
+                                                                        <%=phone.getName()%>
                                                                     </h3>
                                                                     <div class="mb-1">
 																				<span class="mr-2 badge badge-light">6.7
@@ -2011,13 +2024,15 @@
 
                                                                     <div class="mb-1">
                                                                         <%
-                                                                            for (PhoneSpec spec : phone.getSpecList()
+                                                                            for (PhoneSpec spec : phone._specs()
                                                                             ) {
+                                                                            if("LR".equalsIgnoreCase(spec._spec().getKey())||"TDR".equalsIgnoreCase(spec._spec().getKey())){
                                                                         %>
                                                                         <span class="mr-2 badge badge-light mb-1">
-																				<%=(spec.getSpecId() == 1 || spec.getSpecId() == 2) ? spec.getValue() : ""%>
+																				<%=spec.getValue()%>
 																			</span>
-                                                                        <%}%>
+                                                                        <%}
+                                                                        }%>
                                                                     </div>
                                                                     <strong
                                                                             class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
@@ -2059,16 +2074,143 @@
                                                 </div>
                                             </div>
                                         </div>
-<%}%>
+                                        <%}%>
+                                    </div>
+                                </div>
+                                <%
+                                    if(p.getModelId()!=null&&p.getModelId()!=0){
+                                %>
+                                <div class="tab-pane fade "
+                                     id="phone-brand" style="" role="tabpanel"
+                                     aria-labelledby="pills-home-tab">
+                                    <div class="owl-carousel owl-theme ">
+
+                                        <%
+                                            for (Phone phone : p._model()._phones()
+                                            ) {
+
+                                        %>
+
+
+                                        <div class="item">
+
+                                            <div class="card   ">
+                                                <div class="card-body rounded-0" style="padding: 0.75rem; ">
+                                                    <div class=" d-block overflow-hidden   ">
+                                                        <style>
+                                                            p {
+                                                                margin: 0;
+
+                                                            }
+
+                                                            .quote::before {
+                                                                content: '●';
+                                                                margin-right: 2px;
+                                                                left: 0;
+                                                                top: 0;
+                                                                color: #333;
+                                                                font-size: 10px;
+                                                            }
+
+                                                        </style>
+                                                        <div class="d-flex flex-column h-100 w-100  ">
+
+                                                            <div class=" align-items-start" style="height: 18px;">
+                                                                <% for (PhonePromot promot : phone._promots()
+                                                                ) {
+                                                                    if("TG0".equalsIgnoreCase(promot._promot().getKey())){
+                                                                %>
+                                                                <span class="badge badge-danger mr-1"><%=promot._promot().getName()%></span>
+                                                                <%}
+                                                                    }%>
+                                                            </div>
+
+                                                            <a href="/phone-detail?id=<%=phone.getId()%>"
+                                                               class="text-dark">
+                                                                <div
+                                                                        class="align-items-start cart-content  h-100">
+                                                                    <div
+                                                                            class="my-2 d-block overflow-hidden item hvr-float ">
+                                                                        <img class="object-cover mw-100 "
+                                                                             src="<%=phone.getThumbnail()%>"
+                                                                             alt="">
+                                                                    </div>
+                                                                    <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
+                                                                        style="display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;font-size: 14px;">
+                                                                        <%=phone.getName()%>
+                                                                    </h3>
+                                                                    <div class="mb-1">
+																				<span class="mr-2 badge badge-light">6.7
+																					incheslor
+																				</span>
+
+                                                                        <span class="mr-2 badge badge-light">128
+																					GB</span>
+                                                                    </div>
+
+                                                                    <div class="mb-1">
+                                                                        <%
+                                                                            for (PhoneSpec spec : phone._specs()
+                                                                            ) {
+                                                                                if("LR".equalsIgnoreCase(spec._spec().getKey())||"TDR".equalsIgnoreCase(spec._spec().getKey())){
+                                                                        %>
+                                                                        <span class="mr-2 badge badge-light mb-1">
+																				<%=spec.getValue()%>
+																			</span>
+                                                                        <%}
+                                                                        }%>
+                                                                    </div>
+                                                                    <strong
+                                                                            class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
+
+                                                                    <div class=" mb-1 d-flex flex-end">
+                                                                        <p class=" text-warning "
+                                                                           style="font-size: 12px;">
+                                                                            <i class=" fa-solid fa-star "></i>
+                                                                            <i class=" fa-solid fa-star "></i>
+                                                                            <i class=" fa-solid fa-star "></i>
+                                                                            <i
+                                                                                    class="fa-solid fa-star-half-stroke "></i>
+                                                                            <i class="fa-regular fa-star "></i>
+                                                                        </p>
+                                                                        <p class="ms-1 fw-light d-inline-block align-middle "
+                                                                           style="font-size: 12px;">54</p>
+                                                                    </div>
+
+                                                                </div>
+                                                            </a>
+                                                            <div
+                                                                    class="mt-2  d-flex justify-content-between align-items-end">
+                                                                <a href="" class=" d-block  align-middle"
+                                                                   style="font-size:14px ;">
+                                                                    <i
+                                                                            class="fa-regular fa-square-plus fa-sm"></i>
+                                                                    so sánh
+                                                                </a>
+
+                                                                <a href="" class="d-block  align-middle"
+                                                                   style="font-size:14px ;">
+                                                                    <i class="fa-regular fa-heart fa-sm"></i>
+                                                                    yêu
+                                                                    thích
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <%}%>
                                     </div>
                                 </div>
                                 <%}%>
 
-                                    <div class="text-center my-2 ">
-                                        <button class="btn btn-danger px-5 text-white hvr-grow btn-md">Xem tất
-                                            cả
-                                        </button>
-                                    </div>
+                                <div class="text-center my-2 ">
+                                    <button class="btn btn-danger px-5 text-white hvr-grow btn-md">Xem tất
+                                        cả
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -2076,10 +2218,11 @@
                 </div>
             </div>
 
-        </section>
+
+    </section>
 
 
-    </div>
+</div>
 </div>
 <!--homeContent-->
 

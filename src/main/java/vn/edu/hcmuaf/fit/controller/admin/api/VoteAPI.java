@@ -12,7 +12,6 @@ import java.io.IOException;
 
 @WebServlet(name = "ColorAPI", value = "/api/color")
 public class VoteAPI extends HttpServlet {
-    ColorDAO colorDAO = new ColorDAO("colors");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -20,8 +19,8 @@ public class VoteAPI extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id").trim());
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-       Color color = colorDAO.get(" and id = " + id, Color.class, null);
-        mapper.writeValue(response.getOutputStream(), color);
+//       Color color = colorDAO.get(" and id = " + id, Color.class, null);
+//        mapper.writeValue(response.getOutputStream(), color);
     }
 
     @Override
@@ -39,7 +38,4 @@ public class VoteAPI extends HttpServlet {
         super.doDelete(req, resp);
     }
 
-    public static void main(String[] args) {
-        System.out.println(new ColorDAO("colors").get(" and id =1 "  , Color.class, null));
-    }
 }

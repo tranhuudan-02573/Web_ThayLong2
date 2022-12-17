@@ -3,10 +3,9 @@ package vn.edu.hcmuaf.fit.model.phone;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -15,9 +14,10 @@ import java.util.List;
 public class Promot extends Base<Promot> implements Serializable {
 
     private String name;
+    private String key;
 
-    public List<Phone> _phones() {
-        return new AbstractDAO<Phone>("phone_promot").list(" and promotId =" + this.id, Phone.class, null, null);
+    public List<PhonePromot> _phones() {
+        return new AbstractDAO<PhonePromot>("phone_promot").list(" and promotId =" + this.id, PhonePromot.class, null, null);
     }
 
 

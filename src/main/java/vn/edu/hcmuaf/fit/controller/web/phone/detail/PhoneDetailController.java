@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.controller.web.phone.detail;
 
+import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 
 import javax.servlet.ServletException;
@@ -13,24 +14,11 @@ import java.util.*;
 @WebServlet(urlPatterns = {"/phone-detail"})
 public class PhoneDetailController extends HttpServlet {
 
-    PhoneDAO phoneDAO = new PhoneDAO("phones");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id").trim());
-
-        Phone phone = phoneDAO.getPhoneJoinById(id);
-
-        List<Phone> phoneBrand = phoneDAO.joinPhoneCard(" and p.brandId =" + phone.getBrandId(), Phone.class, null, null);
-
-        Map<String, List<Phone>> map = new HashMap<>();
-
-        List<Phone> phoneModel = phoneDAO.joinPhoneCard(" and p.modelId =" + phone.getModelId(), Phone.class, null, null);
-
-        if (!phoneBrand.isEmpty()) map.put("Điện Thoại Cùng Hãng", phoneBrand);
-        if (!phoneModel.isEmpty()) map.put("Điện Thoại Cùng Dòng", phoneModel);
-
-        request.setAttribute("map", map);
+        Phone phone = new AbstractDAO<Phone>("phones").get(" and id = " + id, Phone.class, null);
         request.setAttribute("phone", phone);
 
         request.getRequestDispatcher("/views/web/product.jsp").forward(request, response);
