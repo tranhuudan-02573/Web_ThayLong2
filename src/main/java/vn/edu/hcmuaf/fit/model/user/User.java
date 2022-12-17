@@ -8,6 +8,7 @@ import vn.edu.hcmuaf.fit.model.phone.Base;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.StringTokenizer;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +20,6 @@ public class User extends Base<User> implements Serializable {
     private String address;
     private boolean gender;
     private boolean active;
-    private String avatar;
     private Integer user_stateId;
     private String status;
     private String email;
@@ -28,6 +28,25 @@ public class User extends Base<User> implements Serializable {
 
     public UserState _userState() {
         return new AbstractDAO<UserState>("user_states").get(" and id=" + this.user_stateId, UserState.class, null);
+    }
+
+    public String avatar() {
+        StringBuilder rs = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(this.name);
+
+        String[] sts = this.name.trim().toUpperCase().split(" ");
+
+        int start = 0;
+        if (sts.length > 2) start = sts.length - 3;
+
+        for (int i = start; i < sts.length; i++) {
+            rs.append(sts[i].charAt(0));
+        }
+
+
+        return rs.toString();
+
+
     }
 
 

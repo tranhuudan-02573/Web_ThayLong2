@@ -6,9 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
+import vn.edu.hcmuaf.fit.model.review.Review;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.*;
 
 @AllArgsConstructor
@@ -35,6 +37,36 @@ public class Phone extends Base<Phone> implements Serializable {
     private Integer created_by;
     private Integer deleted_by;
     private Timestamp deleted_at;
+
+    public List<Review> _reviews() {
+        return new AbstractDAO<Review>("reviews").list(" and phoneId =" + this.id, Review.class, null, null);
+    }
+
+    public int count(int i) {
+
+        return new AbstractDAO<Review>("reviews").countById(" and question=false and star=" + i + " and phoneId=" + this.id);
+    }
+
+    public int count() {
+        return new AbstractDAO<Review>("reviews").countById(" and question=false and phoneId=" + this.id);
+    }
+
+    public double avg(int i) {
+        DecimalFormat df = new DecimalFormat("#.000");
+
+        double rs = ((double) count(i) / (double) count());
+        return Double.parseDouble(df.format(rs).trim());
+    }
+
+    public double avg() {
+        DecimalFormat df = new DecimalFormat("#.000");
+        double rs = 0;
+        for (int i = 1; i <= 5; i++) {
+            rs += i * ((double) count(i) / (double) count());
+        }
+        return Double.parseDouble(df.format(rs).trim());
+    }
+
 
     public PhoneState _phoneState() {
         return new AbstractDAO<PhoneState>("phone_states").get(" and id=" + this.phone_stateId, PhoneState.class, null);

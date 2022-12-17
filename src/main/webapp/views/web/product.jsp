@@ -1,5 +1,6 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.phone.*" %>
 <%@ page import="java.util.*" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.review.Review" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
@@ -391,23 +392,26 @@
 
                                 <div class="style-product mb-3 w-100 mx-auto row  ">
                                     <%
-                                        for (PhoneCap pc : p._caps()
-                                        ) {
+                                        List<PhoneCap> pcs = p._caps();
+                                        for (int i = 0; i < pcs.size(); i++) {
 
                                     %>
                                     <div class="p-1  col-4 ">
                                         <div class="form-check p-0   rounded">
-                                            <input type="radio" class="form-check-input" id="cap-<%=pc._cap().getId()%>"
-                                                   name="cap">
-                                            <label class="form-check-label  px-3 " for="cap-<%=pc._cap().getId()%>"
+                                            <input type="radio" class="form-check-input"
+                                                   id="cap-<%=pcs.get(i)._cap().getId()%>"
+                                                   name="cap" <%=(i==0)?"checked":""%>>
+                                            <label class="form-check-label  px-3 "
+                                                   for="cap-<%=pcs.get(i)._cap().getId()%>"
                                                    style="width: 96.5%; height: 100%; ">
                                                 <div class="text-center">
                                                     <div class=" text-center">
                                                         <strong class="font-weight-bold  "
-                                                                style="font-size: 12px;"><%=pc._cap().getCap()%>
+                                                                style="font-size: 12px;"><%=pcs.get(i)._cap().getCap()%>
                                                         </strong>
                                                     </div>
-                                                    <span class="font-weight-light" style="font-size: 12px;">270.990.000đ</span>
+                                                    <span class="font-weight-light"
+                                                          style="font-size: 12px;"><%=pcs.get(i)._cap()._phone().getPrice()%>đ</span>
                                                 </div>
                                             </label>
                                         </div>
@@ -419,27 +423,27 @@
                                 <strong class="font-weight-bold">Chọn màu để xem giá và chi nhánh có hàng</strong>
                                 <div class="style-product mb-3 w-100 mx-auto row  ">
                                     <%
-                                        for (PhoneColor pc : p._colors()
-                                        ) {
-
+                                        List<PhoneColor> colors = p._colors();
+                                        for (int i = 0; i < colors.size(); i++) {
                                     %>
                                     <div class="p-1  col-4 ">
-                                        <div class="form-check p-0   rounded">
+                                        <div class="form-check p-0 rounded">
                                             <input type="radio" class="form-check-input"
-                                                   id="color-<%=pc._color().getId()%>"
-                                                   name="color">
+                                                   id="color-<%=colors.get(i)._color().getId()%>"
+                                                   name="color" <%=(i==0)?"checked":""%>  >
                                             <label class="form-check-label  px-1 " style=" height: 100%; "
-                                                   for="color-<%=pc._color().getId()%>">
+                                                   for="color-<%=colors.get(i)._color().getId()%>">
                                                 <div class="d-flex justify-content-center align-items-center  ">
-                                                    <img src="<%=pc.getImg()%>"
+                                                    <img src="<%=colors.get(i).getImg()%>"
                                                          alt="" class="img-fluid">
                                                     <div class="">
                                                         <div class="d-block text-start">
                                                             <strong class="font-weight-bold  "
-                                                                    style="font-size: 12px;"><%=pc._color().getName()%>
+                                                                    style="font-size: 12px;"><%=colors.get(i)._color().getName()%>
                                                             </strong>
                                                         </div>
-                                                        <span class="font-weight-light" style="font-size: 12px;">270.990.000đ</span>
+                                                        <span class="font-weight-light"
+                                                              style="font-size: 12px;"><%=p.getPrice()%>đ</span>
                                                     </div>
                                                 </div>
 
@@ -1104,7 +1108,8 @@
                                             <div class="col-xl-3">
                                                 <div class="card text-center border-0 rounded-0">
                                                     <div class="card-body mt-4">
-                                                        <p class="card-text mb-0 size-text">3.7/5</p>
+                                                        <p class="card-text mb-0 size-text"><%=p.avg()%>
+                                                        </p>
                                                         <ul class="nav justify-content-center">
                                                             <li class="nav-item">
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -1123,7 +1128,8 @@
                                                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                                                             </li>
                                                         </ul>
-                                                        <p class="card-text"><small class="text-muted">161 đánh
+                                                        <p class="card-text"><small class="text-muted"><%=p.count()%>
+                                                            đánh
                                                             giá
                                                             và nhận xét</small></p>
                                                     </div>
@@ -1133,60 +1139,23 @@
                                                 <div class="card border-0 rounded-0">
                                                     <div class="card-body">
                                                         <ul class="nav flex-column">
-                                                            <li class="nav-item mt-2 position-relative">
-                                                                <span class="stars font-text">5 sao</span>
-                                                                <div class="progress">
-                                                                    <div class="progress-bar bg-success"
-                                                                         style="width: 25%" aria-valuenow="25"
-                                                                         aria-valuemin="0" aria-valuemax="100">
-                                                                    </div>
-                                                                </div>
-                                                                <span
-                                                                        class="number-evaluate font-text">74</span>
-                                                            </li>
+
+                                                            <%
+                                                                for (int i = 5; i >=1; i--) {
+                                                            %>
                                                             <li class="nav-item mt-4 position-relative">
-                                                                <span class="stars font-text">4 sao</span>
+                                                                <span class="stars font-text"><%=i%> sao</span>
                                                                 <div class="progress">
-                                                                    <div class="progress-bar bg-success"
-                                                                         style="width: 15%" aria-valuenow="25"
+                                                                    <div class="progress-bar <%=(i==1)?"bg-danger":""%><%=(i==2)?"bg-warning":""%> <%=(i==3)?"bg-info":""%> <%=(i==4)?"bg-primary":""%> <%=(i==5)?"bg-success":""%> "
+                                                                         style="width: <%=(int)(p.avg(i)*100)%>%"
+                                                                         aria-valuenow="<%= (int)(p.avg(i)*100)%>"
                                                                          aria-valuemin="0" aria-valuemax="100">
                                                                     </div>
                                                                 </div>
-                                                                <span
-                                                                        class="number-evaluate font-text">17</span>
-                                                            </li>
-                                                            <li class="nav-item mt-4 position-relative">
-                                                                <span class="stars font-text">3 sao</span>
-                                                                <div class="progress">
-                                                                    <div class="progress-bar bg-success"
-                                                                         style="width: 18%" aria-valuenow="25"
-                                                                         aria-valuemin="0" aria-valuemax="100">
-                                                                    </div>
-                                                                </div>
-                                                                <span class="number-evaluate font-text">3</span>
-                                                            </li>
-                                                            <li class="nav-item mt-4 position-relative">
-                                                                <span class="stars font-text">2 sao</span>
-                                                                <div class="progress">
-                                                                    <div class="progress-bar bg-warning"
-                                                                         style="width: 3%" aria-valuenow="25"
-                                                                         aria-valuemin="0" aria-valuemax="100">
-                                                                    </div>
-                                                                </div>
-                                                                <span class="number-evaluate font-text">3</span>
-                                                            </li>
-                                                            <li class="nav-item mt-4 position-relative">
-                                                                <span class="stars font-text">1 sao</span>
-                                                                <div class="progress">
-                                                                    <div class="progress-bar bg-danger"
-                                                                         style="width: 12%" aria-valuenow="25"
-                                                                         aria-valuemin="0" aria-valuemax="100">
-                                                                    </div>
-                                                                </div>
-                                                                <span
-                                                                        class="number-evaluate font-text">28</span>
+                                                                <span class="number-evaluate font-text"><%=p.count(i)%></span>
                                                             </li>
 
+                                                            <%}%>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -1209,61 +1178,54 @@
                                         <div class=" my-3 border  p-2">
                                             <span>lọc xem theo: </span>
                                             <!-- Material inline 1 -->
+                                            <%
+                                                for (int i = 1; i <= 5; i++) {
+                                            %>
                                             <div class="form-check form-check-inline">
                                                 <input type="checkbox" class="form-check-input"
-                                                       id="materialInline1">
-                                                <label class="form-check-label" for="materialInline1">1
+                                                       id="star-<%=i%>">
+                                                <label class="form-check-label" for="star-<%=i%>"><%=i %>
                                                     sao</label>
                                             </div>
+                                            <%}%>
 
-                                            <!-- Material inline 2 -->
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" class="form-check-input"
-                                                       id="materialInline2">
-                                                <label class="form-check-label" for="materialInline2">2
-                                                    sao</label>
-                                            </div>
-
-                                            <!-- Material inline 3 -->
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" class="form-check-input"
-                                                       id="materialInline3">
-                                                <label class="form-check-label" for="materialInline3">3
-                                                    sao</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" class="form-check-input"
-                                                       id="materialInline4">
-                                                <label class="form-check-label" for="materialInline4">4
-                                                    sao</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" class="form-check-input"
-                                                       id="materialInline5">
-                                                <label class="form-check-label" for="materialInline5">5
-                                                    sao</label>
-                                            </div>
 
                                         </div>
 
 
                                         <div class="cmt ">
+
+                                            <%
+                                                List<Review> reviews = p._reviews();
+                                                for (Review r : reviews
+                                                ) {
+
+                                            %>
+
                                             <div class="d-flex  flex-row p-2 ">
                                                 <div class="d-flex justify-content-center align-items-center rounded-circle mr-3"
                                                      style="background-color: #cbd1d6; color: #fff; width: 6%; height: 7%; align-items: center; justify-content: center; display: inline-block;">
 															<span
-                                                                    style="font-weight: 500; font-size: 20px; line-height: 47px; margin: 0 auto;">NTN</span>
+                                                                    style="font-weight: 500; font-size: 20px; line-height: 47px; margin: 0 auto;"><%=r._user().avatar()%></span>
                                                 </div>
                                                 <div>
-                                                    <h6 class="font-weight-bold">Nguyễn Thị Ngọc Nghi</h6>
+                                                    <h6 class="font-weight-bold"><%=r._user().getName()%>
+                                                    </h6>
                                                     <p class=" text-warning " style="font-size: 12px;">
+                                                        <%
+                                                            for (int i = 1; i <= 5; i++) {
+                                                                if (i <= r.getStar()) {
+                                                        %>
                                                         <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class="fa-solid fa-star-half-stroke "></i>
+                                                        <%} else {%>
                                                         <i class="fa-regular fa-star "></i>
+                                                        <%
+                                                                }
+                                                            }
+                                                        %>
                                                     </p>
-                                                    <p>Tuyệt vời</p>
+                                                    <p><%=r.getContent()%>
+                                                    </p>
                                                     <style>
                                                         .like::before,
                                                         .rep::before {
@@ -1276,13 +1238,13 @@
                                                         }
 
                                                     </style>
-                                                    <span class="text-light text-weight-500 ">1 giờ trước <a
+                                                    <span class="text-light text-weight-500 "><%=r.getCreated_at()%><a
                                                             class="like pr-2 pl-2" href="">thích
-																	<span>(12)</span>
+																	<span>(<%=r._votes().size()%>)</span>
 																</a> <a class="rep" href="">trả lời</a></span>
                                                 </div>
                                             </div>
-
+                                            <%}%>
 
                                         </div>
 
@@ -1584,15 +1546,17 @@
 
                                                 <tbody>
                                                 <%
-                                                    for (PhoneSpec ps:p._specs()
-                                                         ) {
+                                                    for (PhoneSpec ps : p._specs()
+                                                    ) {
 
-                                                    %>
-                                                    <tr>
-                                                        <th scope="row"><%=ps._spec().getName()%></th>
-                                                        <td><%=ps.getValue()%></td>
-                                                    </tr>
-                                              <%}%>
+                                                %>
+                                                <tr>
+                                                    <th scope="row"><%=ps._spec().getName()%>
+                                                    </th>
+                                                    <td><%=ps.getValue()%>
+                                                    </td>
+                                                </tr>
+                                                <%}%>
                                                 </tbody>
                                             </table>
 
@@ -1933,7 +1897,7 @@
                                     </a>
                                 </li>
                                 <%
-                                if(p.getModelId()!=null&&p.getModelId()!=0){
+                                    if (p.getModelId() != null && p.getModelId() != 0) {
                                 %>
                                 <li class="nav-item ">
                                     <a class="nav-link active " style="font-size: 15px;"
@@ -1990,11 +1954,13 @@
                                                             <div class=" align-items-start" style="height: 18px;">
                                                                 <% for (PhonePromot promot : phone._promots()
                                                                 ) {
-                                                                    if("TG0".equalsIgnoreCase(promot._promot().getKey())){
+                                                                    if ("TG0".equalsIgnoreCase(promot._promot().getKey())) {
                                                                 %>
                                                                 <span class="badge badge-danger mr-1"><%=promot._promot().getName()%></span>
-                                                                <%}
-                                                                    }%>
+                                                                <%
+                                                                        }
+                                                                    }
+                                                                %>
                                                             </div>
 
                                                             <a href="/phone-detail?id=<%=phone.getId()%>"
@@ -2026,13 +1992,15 @@
                                                                         <%
                                                                             for (PhoneSpec spec : phone._specs()
                                                                             ) {
-                                                                            if("LR".equalsIgnoreCase(spec._spec().getKey())||"TDR".equalsIgnoreCase(spec._spec().getKey())){
+                                                                                if ("LR".equalsIgnoreCase(spec._spec().getKey()) || "TDR".equalsIgnoreCase(spec._spec().getKey())) {
                                                                         %>
                                                                         <span class="mr-2 badge badge-light mb-1">
 																				<%=spec.getValue()%>
 																			</span>
-                                                                        <%}
-                                                                        }%>
+                                                                        <%
+                                                                                }
+                                                                            }
+                                                                        %>
                                                                     </div>
                                                                     <strong
                                                                             class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
@@ -2078,7 +2046,7 @@
                                     </div>
                                 </div>
                                 <%
-                                    if(p.getModelId()!=null&&p.getModelId()!=0){
+                                    if (p.getModelId() != null && p.getModelId() != 0) {
                                 %>
                                 <div class="tab-pane fade "
                                      id="phone-brand" style="" role="tabpanel"
@@ -2118,11 +2086,13 @@
                                                             <div class=" align-items-start" style="height: 18px;">
                                                                 <% for (PhonePromot promot : phone._promots()
                                                                 ) {
-                                                                    if("TG0".equalsIgnoreCase(promot._promot().getKey())){
+                                                                    if ("TG0".equalsIgnoreCase(promot._promot().getKey())) {
                                                                 %>
                                                                 <span class="badge badge-danger mr-1"><%=promot._promot().getName()%></span>
-                                                                <%}
-                                                                    }%>
+                                                                <%
+                                                                        }
+                                                                    }
+                                                                %>
                                                             </div>
 
                                                             <a href="/phone-detail?id=<%=phone.getId()%>"
@@ -2154,13 +2124,15 @@
                                                                         <%
                                                                             for (PhoneSpec spec : phone._specs()
                                                                             ) {
-                                                                                if("LR".equalsIgnoreCase(spec._spec().getKey())||"TDR".equalsIgnoreCase(spec._spec().getKey())){
+                                                                                if ("LR".equalsIgnoreCase(spec._spec().getKey()) || "TDR".equalsIgnoreCase(spec._spec().getKey())) {
                                                                         %>
                                                                         <span class="mr-2 badge badge-light mb-1">
 																				<%=spec.getValue()%>
 																			</span>
-                                                                        <%}
-                                                                        }%>
+                                                                        <%
+                                                                                }
+                                                                            }
+                                                                        %>
                                                                     </div>
                                                                     <strong
                                                                             class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
@@ -2219,10 +2191,10 @@
             </div>
 
 
-    </section>
+        </section>
 
 
-</div>
+    </div>
 </div>
 <!--homeContent-->
 
