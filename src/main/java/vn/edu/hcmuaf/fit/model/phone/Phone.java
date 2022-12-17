@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -60,6 +60,20 @@ public class Phone extends Base<Phone> implements Serializable {
         return new AbstractDAO<PhoneCap>("phone_cap").list(" and phoneId =" + this.id, PhoneCap.class, null, null);
     }
 
+    public List<SpecType> _specTypes() {
+
+        Set<SpecType> rs = new HashSet<>();
+
+        List<PhoneSpec> pss = _specs();
+
+        for (PhoneSpec ps : pss
+        ) {
+            rs.add(ps._spec()._specType());
+
+        }
+        return new ArrayList<>(rs);
+    }
+
     public Sale _sale() {
         return new AbstractDAO<Sale>("sales").get(" and id=" + this.saleId, Sale.class, null);
     }
@@ -77,7 +91,7 @@ public class Phone extends Base<Phone> implements Serializable {
     }
 
     public Cap _cap() {
-        return new CapDAO("caps").get(" and id = " + this.capId, Cap.class, null);
+        return new AbstractDAO<Cap>("caps").get(" and id = " + this.capId, Cap.class, null);
     }
 
 }

@@ -1,7 +1,7 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Brand;
 import vn.edu.hcmuaf.fit.model.phone.Color;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
@@ -62,7 +62,4 @@ public class BrandAPI extends HttpServlet {
 
     }
 
-    public static void main(String[] args) {
-        System.out.println(new ColorDAO("colors").get(" and id =1 ", Color.class, null));
-    }
 }

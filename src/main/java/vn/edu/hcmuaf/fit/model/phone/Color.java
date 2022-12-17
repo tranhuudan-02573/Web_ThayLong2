@@ -3,7 +3,7 @@ package vn.edu.hcmuaf.fit.model.phone;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import vn.edu.hcmuaf.fit.dao.impl.AbstractDAO;
+import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,8 +15,8 @@ public class Color extends Base<Color> implements Serializable {
 
     private String name;
 
-    public List<PhoneCap> _phones() {
-        return new AbstractDAO<PhoneCap>("phone_color").list(" and colorId =" + this.id, PhoneCap.class, null, null);
+    public List<PhoneColor> _phones() {
+        return new AbstractDAO<PhoneColor>("phone_color").list(" and colorId =" + this.id, PhoneColor.class, null, null);
     }
 
 

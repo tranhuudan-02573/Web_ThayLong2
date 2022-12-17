@@ -3,7 +3,6 @@ package vn.edu.hcmuaf.fit.controller.admin.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 import vn.edu.hcmuaf.fit.model.user.User;
-import vn.edu.hcmuaf.fit.service.impl.UserService;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
 import javax.inject.Inject;
@@ -18,17 +17,14 @@ import java.util.List;
 @WebServlet(name = "UserAPI", urlPatterns = {"/api/user"})
 public class UserAPI extends HttpServlet {
 
-    @Inject
-    UserService userService;
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ObjectMapper mapper = new ObjectMapper();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         List<User> ps = HttpUtil.of(request.getReader()).listModel(User.class);
-        ps = userService.getAll();
-        mapper.writeValue(response.getOutputStream(), ps);
+//        ps = userService.getAll();
+//        mapper.writeValue(response.getOutputStream(), ps);
     }
 
     @Override
@@ -37,8 +33,8 @@ public class UserAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         User user = HttpUtil.of(request.getReader()).toModel(User.class);
-        user = userService.save(user);
-        mapper.writeValue(response.getOutputStream(), user);
+//        user = userService.save(user);
+//        mapper.writeValue(response.getOutputStream(), user);
     }
 
     @Override
@@ -47,8 +43,8 @@ public class UserAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         User user = HttpUtil.of(request.getReader()).toModel(User.class);
-        user = userService.update(user);
-        mapper.writeValue(response.getOutputStream(), user);
+//        user = userService.update(user);
+//        mapper.writeValue(response.getOutputStream(), user);
     }
 
     @Override
@@ -57,7 +53,7 @@ public class UserAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         User user = HttpUtil.of(request.getReader()).toModel(User.class);
-        userService.delete(user);
-        mapper.writeValue(response.getOutputStream(), "{}");
+//        userService.delete(user);
+//        mapper.writeValue(response.getOutputStream(), "{}");
     }
 }

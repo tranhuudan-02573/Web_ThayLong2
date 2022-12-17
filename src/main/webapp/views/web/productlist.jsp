@@ -225,90 +225,82 @@
 
                 </div>
                 <div class="col-xl-9 bg-white p-0 ">
-                    <c:choose>
-                        <c:when test="${requestScope.brand!=null && requestScope.model ==null}">
-                            <div class="card border  mb-4" style="box-shadow: unset;">
-                                <div class="card-header">
-                                    <div class="d-flex bd-highlight">
-                                        <div class=" w-100 bd-highlight d-none d-sm-block">
-                                            <h3 class="m-0">
-                                                <a href="" title="" class="text-dark h4  " style="font-size: 22px">
-                                                        ${requestScope.brand.name}
-                                                    <span style="font-size: 14px ; opacity: 0.7">(${requestScope.total} sản phẩm)</span>
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
+                    <%
+                        Brand brand = (Brand) request.getAttribute("brand");
+                        Model model = (Model) request.getAttribute("model");
+                        List<Phone> phones = (List<Phone>) request.getAttribute("phones");
+                        if (brand != null && model == null) {
+                    %>
+                    <div class="card border  mb-4" style="box-shadow: unset;">
+                        <div class="card-header">
+                            <div class="d-flex bd-highlight">
+                                <div class=" w-100 bd-highlight d-none d-sm-block">
+                                    <h3 class="m-0">
+                                        <a href="" title="" class="text-dark h4  " style="font-size: 22px">
+                                            <%=brand.getName()%>
+                                            <span style="font-size: 14px ; opacity: 0.7">(<%=brand._phones().size()%> sản phẩm)</span>
+                                        </a>
+                                    </h3>
                                 </div>
+                            </div>
+                        </div>
 
+
+                    </div>
+                    <%
+                    } else if (brand == null && model != null) {
+                    %>
+                    <div class="card border  mb-4" style="box-shadow: unset;">
+                        <div class="card-header">
+                            <div class="d-flex bd-highlight">
+                                <div class=" w-100 bd-highlight d-none d-sm-block">
+                                    <h3 class="m-0">
+                                        <a href="" title="" class="text-dark h4  " style="font-size: 22px">
+                                          <%=model.getName()%>
+                                            <span style="font-size: 14px ; opacity: 0.7">(<%=model._phones().size()%> sản phẩm)</span>
+                                        </a>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%} else {%>
+                    <div class="card border  mb-4" style="box-shadow: unset;">
+                        <div class="card-header">
+                            <div class="d-flex bd-highlight">
+                                <div class=" w-100 bd-highlight d-none d-sm-block">
+                                    <h3 class="m-0">
+                                        <a href="#" title="" class="text-dark h4  " style="font-size: 22px">
+                                            ĐIỆN THOẠI
+                                            <span style="font-size: 14px ; opacity: 0.7">(<%=phones.size()%>+ sản phẩm)</span>
+                                        </a>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-body p-4">
+                            <div class="owl-carousel owl-theme my-owl-carousel">
+
+                                <c:forEach var="brand" items="${requestScope.brands}">
+
+                                    <a href="${pageContext.request.contextPath}/phone-filter?name=brand&id=${brand.id}"
+                                       class="w-100 hvr-grow mx-2">
+                                        <img class="owl-lazy "
+                                             style="max-width: 108px !important; max-height: 40px !important;"
+                                             data-src="${brand.logo}" alt="">
+                                    </a>
+                                </c:forEach>
 
                             </div>
-                        </c:when>
-
-                        <c:when test="${requestScope.brand ==null&& requestScope.model !=null}">
-                            <div class="card border  mb-4" style="box-shadow: unset;">
-                                <div class="card-header">
-                                    <div class="d-flex bd-highlight">
-                                        <div class=" w-100 bd-highlight d-none d-sm-block">
-                                            <h3 class="m-0">
-                                                <a href="" title="" class="text-dark h4  " style="font-size: 22px">
-                                                        ${requestScope.model.name}
-                                                    <span style="font-size: 14px ; opacity: 0.7">(${requestScope.total} sản phẩm)</span>
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
 
 
-                            </div>
-
-                        </c:when>
-                        <c:otherwise>
-
-                            <div class="card border  mb-4" style="box-shadow: unset;">
-                                <div class="card-header">
-                                    <div class="d-flex bd-highlight">
-                                        <div class=" w-100 bd-highlight d-none d-sm-block">
-                                            <h3 class="m-0">
-
-                                                <a href="#" title="" class="text-dark h4  " style="font-size: 22px">
-                                                    ĐIỆN THOẠI
-
-
-                                                    <span style="font-size: 14px ; opacity: 0.7">(${requestScope.total}+ sản phẩm)</span>
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="cart-body p-4">
-                                    <div class="owl-carousel owl-theme my-owl-carousel">
-
-                                        <c:forEach var="brand" items="${requestScope.brands}">
-
-                                            <a href="${pageContext.request.contextPath}/phone-filter?name=brand&id=${brand.id}"
-                                               class="w-100 hvr-grow mx-2">
-                                                <img class="owl-lazy "
-                                                     style="max-width: 108px !important; max-height: 40px !important;"
-                                                     data-src="${brand.logo}" alt="">
-                                            </a>
-                                        </c:forEach>
-
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-
-                        </c:otherwise>
-                    </c:choose>
+                    </div>
+                    <%}%>
 
 
                     <%
-                        List<Model> models = (List<Model>) request.getAttribute("models");
-                        if (!models.isEmpty()) { %>
+                        if (brand != null && !brand._models().isEmpty()) { %>
 
                     <div class="card  border  mb-4" style="box-shadow: unset;">
                         <div class="card-header">
@@ -321,7 +313,7 @@
                             <div class="model-owl">
                                 <div class="owl-carousel owl-theme ">
 
-                                    <c:forEach var="model" items="<%=models %>">
+                                    <c:forEach var="model" items="<%=brand._models() %>">
 
                                         <div class="item  ">
                                             <div class="cdt-product text-center w-100 p-2">
@@ -350,23 +342,29 @@
                     <%}%>
                     <div class="d-flex  justify-content-between align-items-center">
                         <ul class="nav nav-tabs " id="myTabProductList" role="tablist">
-                            <%
-                                Map<String, List<Phone>> sales = (Map<String, List<Phone>>) request.getAttribute("phones");
-                                List<String> key = new ArrayList<>(sales.keySet());
-
-                                for (int j = 0; j < key.size(); j++) {
-                            %>
                             <li class="nav-item mr-2">
-                                <a class="nav-link <%=(j==0)?"active":""%> text-dark bg-light"
-                                   id="<%=j%>-tab"
+                                <a class="nav-link active text-dark bg-light"
+                                   id="all-tab"
                                    data-toggle="tab"
-                                   href="#tabpane-<%=j  %>" role="tab" aria-controls="home"
-                                   aria-selected="true"><%= key.get(j)%>
+                                   href="#tabpane-all" role="tab" aria-controls="home"
+                                   aria-selected="true">tat ca
                                 </a>
                             </li>
-
-
+                            <%
+                                List<Promot> prs = (List<Promot>) request.getAttribute("promotList");
+                                for (Promot pr : prs
+                                ) {
+                            %>
+                            <li class="nav-item mr-2">
+                                <a class="nav-link  text-dark bg-light"
+                                   id="<%=pr.getKey()%>-tab"
+                                   data-toggle="tab"
+                                   href="#tabpane-<%=pr.getKey()%>" role="tab" aria-controls="home"
+                                   aria-selected="true"><%=pr.getName()%>
+                                </a>
+                            </li>
                             <%}%>
+
 
                         </ul>
                         <div class="sort float-right ml-auto ">
@@ -387,17 +385,14 @@
                         </div>
                     </div>
                     <div class="tab-content pl-0 pr-0" id="myTabContent">
-                        <%
-                            for (int i = 0; i < key.size(); i++) {
-                        %>
-                        <div class="tab-pane fade show <%=(i==0)?"active":""%>" id="tabpane-<%=i  %>"
-                             role="tabpanel"
-                             aria-labelledby="<%=i%>-tab">
+                        <div class="tab-pane fade show active" id="tabpane-all" role="tabpanel"
+                             aria-labelledby="all-tab">
                             <div class="products-mobile mt-3 w-100">
                                 <div class="row w-100 mx-auto row-cols-4  ">
-                                    <%
 
-                                        for (Phone phone : sales.get(key.get(i))
+                                    <%
+                                        List<Phone> phones1 = (List<Phone>) request.getAttribute("phones");
+                                        for (Phone phone : phones1
                                         ) {
 
 
@@ -433,14 +428,15 @@
                                                     </style>
                                                     <div class="d-flex flex-column align-items-strech w-100  ">
                                                         <div class=" align-self-start" style="height:18px;">
-                                                            <% for (vn.edu.hcmuaf.fit.model.phone.PhonePromot promot : phone.getPromotList()
+                                                            <% for (PhonePromot promot : phone._promots()
                                                             ) {
+                                                                if ("TG0".equalsIgnoreCase(promot._promot().getKey())) {
                                                             %>
 
 
-                                                            <span class="badge badge-danger mr-1"><%=(promot.getPromotId() == 1) ? promot.getPromot().getName() : ""%></span>
+                                                            <span class="badge badge-danger mr-1"><%=promot._promot().getName()%></span>
                                                             <%
-
+                                                                    }
                                                                 }
                                                             %>
                                                         </div>
@@ -463,16 +459,21 @@
 
                                                                 <div class="mb-1">
                                                                     <%
-                                                                        for (PhoneSpec spec : phone.getSpecList()
+                                                                        for (PhoneSpec spec : phone._specs()
                                                                         ) {
+                                                                            if ("LR".equalsIgnoreCase(spec._spec().getKey()) || "TDR".equalsIgnoreCase(spec._spec().getKey())) {
 
                                                                     %>
+
                                                                     <span class="mr-2 badge badge-light mb-1">
-																				<%=(spec.getSpecId() == 1 || spec.getSpecId() == 2) ? spec.getValue() : ""%>
+																				<%=spec._spec().getName()%>
 																			</span>
 
 
-                                                                    <%}%>
+                                                                    <%
+                                                                            }
+                                                                        }
+                                                                    %>
                                                                 </div>
 
                                                                 <div class="mb-1">
@@ -503,17 +504,15 @@
                                                                 <div class="mt-2 text-ellipsis overflow-hidden text-break  d-none d-sm-block"
                                                                      style="font-size:12px ;">
                                                                     <%
-                                                                        java.util.Set<PhoneSpec> specs = phone.getSpecList();
-                                                                        List<PhoneSpec> specList = new ArrayList<>(specs);
-
-                                                                        for (int j = 2; j < specList.size(); j++) {
+                                                                        for (PhoneSpec ps : phone._specs()
+                                                                        ) {
 
 
                                                                     %>
                                                                     <p
                                                                             class="d-flex quote  text-ellipsis overflow-hidden text-break">
-                                                                        <%=specList.get(j).getSpec().getName() %>
-                                                                        : <%=specList.get(j).getValue() %>
+                                                                        <%=ps._spec().getName() %>
+                                                                        : <%=ps.getValue() %>
 
                                                                     </p>
                                                                     <%}%>
@@ -540,6 +539,175 @@
                                         </div>
                                     </div>
                                     <% }%>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <%
+
+                            for (Promot pr : prs
+                        ) {%>
+                        <div class="tab-pane fade  " id="tabpane-<%=pr.getKey()%>"
+                             role="tabpanel"
+                             aria-labelledby="<%=pr.getKey()%>-tab">
+                            <div class="products-mobile mt-3 w-100">
+                                <div class="row w-100 mx-auto row-cols-4  ">
+                                    <%
+
+                                        for (Phone phone:phones
+                                        ) {
+                                            for (PhonePromot pp:phone._promots()
+                                                 ) {
+
+                                                if(pp._promot().getId()==pr.getId()){
+
+                                    %>
+                                    <div class="col-6 col-sm-3 p-0">
+                                        <div class="card border rounded-0" style="box-shadow: unset;">
+                                            <div class="card-body " style="padding: 0.75rem;">
+
+                                                <%--
+                                                  Created by IntelliJ IDEA.
+                                                  User: dell
+                                                  Date: 12/10/2022
+                                                  Time: 6:26 PM
+                                                  To change this template use File | Settings | File Templates.
+                                                --%>
+
+                                                <div class=" d-block  overflow-hidden ">
+                                                    <style>
+                                                        p {
+                                                            margin: 0;
+
+                                                        }
+
+                                                        .quote::before {
+                                                            content: '●';
+                                                            margin-right: 2px;
+                                                            left: 0;
+                                                            top: 0;
+                                                            color: #333;
+                                                            font-size: 10px;
+                                                        }
+
+                                                    </style>
+                                                    <div class="d-flex flex-column align-items-strech w-100  ">
+                                                        <div class=" align-self-start" style="height:18px;">
+                                                            <% for (PhonePromot promot : phone._promots()
+                                                            ) {
+                                                                if ("TG0".equalsIgnoreCase(promot._promot().getKey())) {
+                                                            %>
+
+
+                                                            <span class="badge badge-danger mr-1"><%=promot._promot().getName()%></span>
+                                                            <%
+                                                                    }
+                                                                }
+                                                            %>
+                                                        </div>
+                                                        <a href="${pageContext.request.contextPath}phone-detail?id=<%=phone.getId()%> "
+                                                           class="text-dark align-self-stretch"
+                                                           style="height: 525px;">
+                                                            <div class=" cart-content  h-100">
+                                                                <div
+                                                                        class="my-2 d-block overflow-hidden item hvr-float ">
+                                                                    <img class="object-cover mw-100 "
+                                                                         src="<%=phone.getThumbnail()%>"
+                                                                         alt="">
+                                                                </div>
+                                                                <h3 class=" product-title overflow-hidden   mb-1 "
+                                                                    style="display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 2;font-size: 14px;">
+                                                                    <%=phone.getName()%>
+                                                                </h3>
+
+                                                                <div class="mb-1">
+                                                                    <%
+                                                                        for (PhoneSpec spec : phone._specs()
+                                                                        ) {
+                                                                            if ("LR".equalsIgnoreCase(spec._spec().getKey()) || "TDR".equalsIgnoreCase(spec._spec().getKey())) {
+
+                                                                    %>
+
+                                                                    <span class="mr-2 badge badge-light mb-1">
+																				<%=spec._spec().getName()%>
+																			</span>
+
+
+                                                                    <%
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </div>
+
+                                                                <div class="mb-1">
+                                                                    <i class=" d-inline-block text-decoration-line-through price-old"
+                                                                       style="text-decoration: line-through">
+                                                                        243242đ</i>
+                                                                    <span
+                                                                            class="badge badge-default peach-gradient">-25%</span>
+                                                                    <b class="d-inline-block price-new "></b>
+                                                                </div>
+                                                                <strong
+                                                                        class="fw-bold d-block mb-1 text-danger"><%=phone.getPrice()%>
+                                                                    đ</strong>
+
+                                                                <div class=" mb-1 d-flex flex-end">
+                                                                    <p class=" text-warning "
+                                                                       style="font-size: 12px;">
+                                                                        <i class=" fa-solid fa-star "></i>
+                                                                        <i class=" fa-solid fa-star "></i>
+                                                                        <i class=" fa-solid fa-star "></i>
+                                                                        <i
+                                                                                class="fa-solid fa-star-half-stroke "></i>
+                                                                        <i class="fa-regular fa-star "></i>
+                                                                    </p>
+                                                                    <p class="ms-1 fw-light d-inline-block align-middle "
+                                                                       style="font-size: 12px;">54</p>
+                                                                </div>
+                                                                <div class="mt-2 text-ellipsis overflow-hidden text-break  d-none d-sm-block"
+                                                                     style="font-size:12px ;">
+                                                                    <%
+                                                                        for (PhoneSpec ps : phone._specs()
+                                                                        ) {
+
+
+                                                                    %>
+                                                                    <p
+                                                                            class="d-flex quote  text-ellipsis overflow-hidden text-break">
+                                                                        <%=ps._spec().getName() %>
+                                                                        : <%=ps.getValue() %>
+
+                                                                    </p>
+                                                                    <%}%>
+                                                                </div>
+
+                                                            </div>
+                                                        </a>
+                                                        <div class="mt-2  d-flex justify-content-between ">
+                                                            <a href="" class=" d-block  align-middle"
+                                                               style="font-size:14px ;">
+                                                                <i class="fa-regular fa-square-plus fa-sm"></i>
+                                                                so sánh
+                                                            </a>
+
+                                                            <a href="" class="d-block  align-middle"
+                                                               style="font-size:14px ;">
+                                                                <i class="fa-regular fa-heart fa-sm"></i> yêu
+                                                                thích
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }
+                                    }
+                                    }
+                                    %>
                                 </div>
                             </div>
                         </div>

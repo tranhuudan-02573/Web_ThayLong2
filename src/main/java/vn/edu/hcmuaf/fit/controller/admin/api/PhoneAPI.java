@@ -2,7 +2,6 @@ package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
-import vn.edu.hcmuaf.fit.service.impl.PhoneService;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
 import javax.inject.Inject;
@@ -15,8 +14,6 @@ import java.util.List;
 
 @WebServlet(name = "PhoneAPI", urlPatterns = {"/api/phone"})
 public class PhoneAPI extends HttpServlet {
-    @Inject
-    PhoneService phoneService;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,8 +21,8 @@ public class PhoneAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Phone phone = HttpUtil.of(request.getReader()).toModel(Phone.class);
-        phone = phoneService.get(phone);
-        mapper.writeValue(response.getOutputStream(), phone);
+//        phone = phoneService.get(phone);
+//        mapper.writeValue(response.getOutputStream(), phone);
     }
 
     @Override
@@ -34,8 +31,8 @@ public class PhoneAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Phone phone = HttpUtil.of(request.getReader()).toModel(Phone.class);
-        phone = phoneService.save(phone);
-        mapper.writeValue(response.getOutputStream(), phone);
+//        phone = phoneService.save(phone);
+//        mapper.writeValue(response.getOutputStream(), phone);
     }
 
     @Override
@@ -44,8 +41,8 @@ public class PhoneAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Phone phone = HttpUtil.of(request.getReader()).toModel(Phone.class);
-        phone = phoneService.update(phone);
-        mapper.writeValue(response.getOutputStream(), phone);
+//        phone = phoneService.update(phone);
+//        mapper.writeValue(response.getOutputStream(), phone);
     }
 
     @Override
@@ -54,7 +51,7 @@ public class PhoneAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Phone phone = HttpUtil.of(request.getReader()).toModel(Phone.class);
-        phoneService.delete(phone);
-        mapper.writeValue(response.getOutputStream(), "{}");
+//        phoneService.delete(phone);
+//        mapper.writeValue(response.getOutputStream(), "{}");
     }
 }

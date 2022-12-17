@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.dao.impl;
+package vn.edu.hcmuaf.fit.dao;
 
 import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 import org.jdbi.v3.core.result.ResultBearing;
