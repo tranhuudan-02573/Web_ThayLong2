@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,11 +18,11 @@ public class PhoneCap extends Base<PhoneCap> implements Serializable {
     private Integer capId;
 
     public Cap _cap() {
-        return new AbstractDAO<Cap>("caps").get(" and id = " + this.getCapId(), Cap.class, null);
+        return new AbstractDAO<Cap>("caps").get(" and id = " + this.getCapId(), Cap.class, null).get();
     }
 
     public Phone _phone() {
-        return new AbstractDAO<Phone>("phones").get(" and id = " + this.getPhoneId(), Phone.class, null);
+        return new AbstractDAO<Phone>("phones").get(" and id = " + this.getPhoneId(), Phone.class, null).get();
     }
 
 

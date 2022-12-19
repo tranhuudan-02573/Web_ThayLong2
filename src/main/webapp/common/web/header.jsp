@@ -1,11 +1,11 @@
-<%--
+<%@ page import="vn.edu.hcmuaf.fit.model.user.User" %><%--
 Created by IntelliJ IDEA.
 User: dell
 Date: 11/14/2022
 Time: 3:39 PM
 To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <header>
     <div class="modal fade show" id="modalStarRating" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel" aria-modal="true"
@@ -88,7 +88,8 @@ To change this template use File | Settings | File Templates.
                     <div class="col-9 position-absolute p-2 menu-multi-mobile">
                         <div class="row row-md">
                             <div class="col-8">
-                                <a href="${pageContext.request.contextPath}/home" title="" class=""><img src="/images/fptshop-logo.png" class="img-fluid"></a>
+                                <a href="${pageContext.request.contextPath}/home" title="" class=""><img
+                                        src="/images/fptshop-logo.png" class="img-fluid"></a>
                             </div>
                             <div class="col-4 d-flex justify-content-end">
                                 <i class="fa fa-times text-white" aria-hidden="true"></i>
@@ -106,12 +107,15 @@ To change this template use File | Settings | File Templates.
                                                 Điện thoại
                                             </a>
                                             <h2 class="mb-0 pull-right">
-                                                <button class="btn p-0" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                <button class="btn p-0" type="button" data-toggle="collapse"
+                                                        data-target="#collapseOne" aria-expanded="true"
+                                                        aria-controls="collapseOne">
                                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                                 </button>
                                             </h2>
                                         </div>
-                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                             data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="row row-md">
                                                     <div class="col-6">
@@ -138,7 +142,7 @@ To change this template use File | Settings | File Templates.
                                                     <div class="col-6">
                                                         <a href="#" title="" class="nav-link text-dark">HONOR</a>
                                                     </div>
-                                                    <div class="col-12 text-center" >
+                                                    <div class="col-12 text-center">
                                                         <a href="#" title="" class="nav-link text-dark">Mobiistar</a>
                                                     </div>
                                                 </div>
@@ -152,12 +156,15 @@ To change this template use File | Settings | File Templates.
                                                 Laptop
                                             </a>
                                             <h2 class="mb-0 pull-right">
-                                                <button class="btn p-0  collapsed " type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                <button class="btn p-0  collapsed " type="button" data-toggle="collapse"
+                                                        data-target="#collapseTwo" aria-expanded="false"
+                                                        aria-controls="collapseTwo">
                                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                                 </button>
                                             </h2>
                                         </div>
-                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                             data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="row row-md">
                                                     <div class="col-6">
@@ -184,7 +191,7 @@ To change this template use File | Settings | File Templates.
                                                     <div class="col-6">
                                                         <a href="#" title="" class="nav-link text-dark">HONOR</a>
                                                     </div>
-                                                    <div class="col-12 text-center" >
+                                                    <div class="col-12 text-center">
                                                         <a href="#" title="" class="nav-link text-dark">Mobiistar</a>
                                                     </div>
                                                 </div>
@@ -198,12 +205,15 @@ To change this template use File | Settings | File Templates.
                                                 Tablet
                                             </a>
                                             <h2 class="mb-0 pull-right">
-                                                <button class="btn p-0 collapsed " type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                <button class="btn p-0 collapsed " type="button" data-toggle="collapse"
+                                                        data-target="#collapseThree" aria-expanded="false"
+                                                        aria-controls="collapseThree">
                                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                                 </button>
                                             </h2>
                                         </div>
-                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                             data-parent="#accordionExample">
                                             <div class="row row-md">
                                                 <div class="col-6">
                                                     <a href="#" title="" class="nav-link text-dark">Iphone</a>
@@ -229,7 +239,7 @@ To change this template use File | Settings | File Templates.
                                                 <div class="col-6">
                                                     <a href="#" title="" class="nav-link text-dark">HONOR</a>
                                                 </div>
-                                                <div class="col-12 text-center" >
+                                                <div class="col-12 text-center">
                                                     <a href="#" title="" class="nav-link text-dark">Mobiistar</a>
                                                 </div>
                                             </div>
@@ -242,12 +252,15 @@ To change this template use File | Settings | File Templates.
                                                 Apple
                                             </a>
                                             <h2 class="mb-0 pull-right">
-                                                <button class="btn p-0  collapsed " type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                <button class="btn p-0  collapsed " type="button" data-toggle="collapse"
+                                                        data-target="#collapseFour" aria-expanded="false"
+                                                        aria-controls="collapseFour">
                                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                                 </button>
                                             </h2>
                                         </div>
-                                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+                                             data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="row row-md">
                                                     <div class="col-6">
@@ -274,7 +287,7 @@ To change this template use File | Settings | File Templates.
                                                     <div class="col-6">
                                                         <a href="#" title="" class="nav-link text-dark">HONOR</a>
                                                     </div>
-                                                    <div class="col-12 text-center" >
+                                                    <div class="col-12 text-center">
                                                         <a href="#" title="" class="nav-link text-dark">Mobiistar</a>
                                                     </div>
                                                 </div>
@@ -330,21 +343,30 @@ To change this template use File | Settings | File Templates.
                         </div>
                         <!--end-row-->
                     </div>
+                    <%
+                        User user = (User) session.getAttribute("USER");
+                    %>
                     <!--end col-9-->
                     <div class="col-2 position-absolute overplay"></div>
                     <div class="col-xl-2 col-lg-2 col-md-2 col-4 p-0 ">
-                        <a href="${pageContext.request.contextPath}/home" title=""><img src="/images/fptshop-logo.png" class="img-fluid"></a>
+                        <a href="${pageContext.request.contextPath}/home" title=""><img src="/images/fptshop-logo.png"
+                                                                                        class="img-fluid"></a>
                     </div>
-                    <div class="col-7 pull-right d-flex justify-content-end align-items-center d-sm-none text-white"><i class="fa fa-shopping-cart"></i></div>
-                    <div class="col-1" >
-                        <a class="nav-link p-0 text-center text-white " href="/views/user.html" data-toggle="modal" data-target="#modalStarRating">  <i class="fa-solid fa-location-dot fa-lg mr-2 "></i>xem giá tại</a>
+                    <div class="col-7 pull-right d-flex justify-content-end align-items-center d-sm-none text-white"><i
+                            class="fa fa-shopping-cart"></i></div>
+                    <div class="col-1">
+                        <a class="nav-link p-0 text-center text-white " href="/views/user.html" data-toggle="modal"
+                           data-target="#modalStarRating"> <i class="fa-solid fa-location-dot fa-lg mr-2 "></i>xem giá
+                            tại</a>
                     </div>
 
                     <div class="col-xl-4 col-lg-4 col-md-4 col-12 p-0 ">
                         <div class="input-group ">
-                            <input type="text" class="form-control " placeholder="Tìm kiếm sản phẩm" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <div class="input-group-append " >
-                                <a class="input-group-text bg-dark text-white  border-0 " id="basic-addon2"><i class="fa fa-search"></i></a>
+                            <input type="text" class="form-control " placeholder="Tìm kiếm sản phẩm"
+                                   aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append ">
+                                <a class="input-group-text bg-dark text-white  border-0 " id="basic-addon2"><i
+                                        class="fa fa-search"></i></a>
                             </div>
                         </div>
                     </div>
@@ -353,24 +375,33 @@ To change this template use File | Settings | File Templates.
                         <ul class="nav justify-content-end">
 
                             <li class="nav-item ">
-                                <a class="nav-link text-center text-white " href="/views/user.html"><div>
-                                    <i class="fa-solid fa-clock-rotate-left fa-lg "style="line-height: 1;"></i>
-                                </div>
+                                <a class="nav-link text-center text-white " href="/user-profile">
+                                    <div>
+                                        <i class="fa-solid fa-clock-rotate-left fa-lg " style="line-height: 1;"></i>
+                                    </div>
 
                                     lịch sử mua hàng
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-center text-white " href="/CartServlet"> <div> <i class="fa fa-shopping-cart fa-lg" style="line-height: 1;" aria-hidden="true"></i></div>Giỏ hàng</a>
+                                <a class="nav-link text-center text-white " href="/carts">
+                                    <div><i class="fa fa-shopping-cart fa-lg" style="line-height: 1;"
+                                            aria-hidden="true"></i></div>
+                                    Giỏ hàng</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-center text-white " href="/views/user.html"><div><i class="fa fa-heart fa-lg" style="line-height: 1;" aria-hidden="true"></i></div> Sản phẩm đã thích</a>
+                                <a class="nav-link text-center text-white " href="/user-profile">
+                                    <div><i class="fa fa-heart fa-lg" style="line-height: 1;" aria-hidden="true"></i>
+                                    </div>
+                                    Sản phẩm đã thích</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-center text-white " href="/views/user.html" data-toggle="modal" data-target="#modalLoginForm">
-                                    <div><i class="fa fa-user fa-lg"aria-hidden="true" style="line-height: 1;"></i></div>
+                                <a class="nav-link text-center text-white " href="/views/user.html" data-toggle="modal"
+                                   data-target="#modalLoginForm">
+                                    <div><i class="fa fa-user fa-lg" aria-hidden="true" style="line-height: 1;"></i>
+                                    </div>
                                     Tài khoản
                                 </a>
                             </li>
@@ -420,14 +451,15 @@ To change this template use File | Settings | File Templates.
         <div class="head-menu bg-dark nav-scroller">
             <div class="container">
                 <ul class="nav row row-sm">
-                     <c:forEach var="brand" items="${requestScope.brandList}" >
-                    <li class="nav-item ol-md-4 hvr-grow_color">
-                        <a class="nav-link text-white text-uppercase"  href="${pageContext.request.contextPath}/phone-filter?name=brand&id=${brand.id}">
-                            <i class="fa-solid fa-mobile-screen mr-2"></i>
-                            </i></i>${brand.name}
-                        </a>
-                    </li>
-                     </c:forEach>
+                    <c:forEach var="brand" items="${requestScope.brandList}">
+                        <li class="nav-item ol-md-4 hvr-grow_color">
+                            <a class="nav-link text-white text-uppercase"
+                               href="${pageContext.request.contextPath}/phone-filter?name=brand&id=${brand.id}">
+                                <i class="fa-solid fa-mobile-screen mr-2"></i>
+                                </i></i>${brand.name}
+                            </a>
+                        </li>
+                    </c:forEach>
                 </ul>
             </div>
         </div>

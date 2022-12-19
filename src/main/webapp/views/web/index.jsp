@@ -1,5 +1,6 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.phone.*" %>
 <%@ page import="java.util.*" %>
+<%@ page import="java.sql.Timestamp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 
@@ -238,17 +239,21 @@
                             <div class="box-countdown ">
                                 <p class="title">Kết thúc sau: </p>
                                 <ul class="box-time  m-0 p-0">
-                                    <li><p class="time"><%= s.getEnd_at().getDate() %>
-                                    </p>
+                                    <li>
+                                        <p class="time"><%= s.getEnd_at().getDate() - new Timestamp(System.currentTimeMillis()).getDate()  %>
+                                        </p>
                                         <p class="separate">:</p></li>
-                                    <li><p class="time hourse"><%= s.getEnd_at().getHours() %>
-                                    </p>
+                                    <li>
+                                        <p class="time hourse"><%= s.getEnd_at().getHours() - new Timestamp(System.currentTimeMillis()).getMonth()  %>
+                                        </p>
                                         <p class="separate">:</p></li>
-                                    <li><p class="time minutes"><%= s.getEnd_at().getMinutes() %>
-                                    </p>
+                                    <li>
+                                        <p class="time minutes"><%=  s.getEnd_at().getMinutes() - new Timestamp(System.currentTimeMillis()).getMinutes() %>
+                                        </p>
                                         <p class="separate">:</p></li>
-                                    <li><p class="time second"><%= s.getEnd_at().getSeconds() %>
-                                    </p>
+                                    <li>
+                                        <p class="time second"><%=  s.getEnd_at().getSeconds() - new Timestamp(System.currentTimeMillis()).getSeconds()  %>
+                                        </p>
                                         <p class="separate" style="margin: unset;"></p></li>
                                 </ul>
                             </div>
@@ -292,8 +297,6 @@
                                                         for (PhonePromot promot : promots
                                                         ) {
                                                     %>
-
-
                                                     <span class="badge badge-danger mr-1"><%=(promot.getPromotId() == 1) ? promot._promot().getName() : ""%></span>
                                                     <%
                                                         }%>
@@ -345,15 +348,29 @@
                                                         <div class=" mb-1 d-flex flex-end">
                                                             <p class=" text-warning "
                                                                style="font-size: 12px;">
+                                                                <%
+                                                                    double avg = phone.avg();
+                                                                    for (int i = 1; i <= 5; i++) {
+                                                                        if (i <= avg) {
+                                                                %>
                                                                 <i class=" fa-solid fa-star "></i>
-                                                                <i class=" fa-solid fa-star "></i>
-                                                                <i class=" fa-solid fa-star "></i>
-                                                                <i
-                                                                        class="fa-solid fa-star-half-stroke "></i>
-                                                                <i class="fa-regular fa-star "></i>
+                                                                <%
+                                                                } else if (Math.ceil(avg) != Math.floor(avg)) {
+                                                                    avg = Math.ceil(avg);
+                                                                %>
+                                                                <i class="fa-solid fa-star-half-stroke "></i>
+                                                                <%
+                                                                } else {
+                                                                %>
+                                                                <i class=" fa-regular fa-star"></i>
+                                                                <%
+                                                                        }
+                                                                    }
+                                                                %>
                                                             </p>
                                                             <p class="ms-1 fw-light d-inline-block align-middle "
-                                                               style="font-size: 12px;">54</p>
+                                                               style="font-size: 12px;"><%=phone.count()%>
+                                                            </p>
                                                         </div>
 
 
@@ -366,7 +383,8 @@
                                                         so sánh
                                                     </a>
 
-                                                    <a href="" class="d-block  align-middle"
+                                                    <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=phone.getId()%>"
+                                                       class="d-block  align-middle"
                                                        style="font-size:14px ;">
                                                         <i class="fa-regular fa-heart fa-sm"></i> yêu
                                                         thích
@@ -966,8 +984,6 @@
                                                         ) {
                                                             if ("TG0".equalsIgnoreCase(promot._promot().getKey())) {
                                                         %>
-
-
                                                         <span class="badge badge-danger mr-1"><%=promot._promot().getName()%></span>
                                                         <%
                                                                 }
@@ -976,7 +992,7 @@
 
                                                     </div>
 
-                                                    <a href="${pageContext.request.contextPath}/phone-detail?id=<%=phone.getId()%>"
+                                                    <a href="${pageContext.request.contextPath}/phone-detail?id=<%=phone._phone().getId()%>"
                                                        class="text-dark align-self-stretch" style="height: 375px;">
                                                         <div class=" cart-content  h-100">
                                                             <div class="my-2 d-block overflow-hidden item hvr-float ">
@@ -1018,15 +1034,31 @@
                                                             <strong class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
 
                                                             <div class=" mb-1 d-flex flex-end">
-                                                                <p class=" text-warning " style="font-size: 12px;">
+                                                                <p class=" text-warning "
+                                                                   style="font-size: 12px;">
+                                                                    <%
+                                                                        double avg = phone._phone().avg();
+                                                                        for (int i = 1; i <= 5; i++) {
+                                                                            if (i <= avg) {
+                                                                    %>
                                                                     <i class=" fa-solid fa-star "></i>
-                                                                    <i class=" fa-solid fa-star "></i>
-                                                                    <i class=" fa-solid fa-star "></i>
+                                                                    <%
+                                                                    } else if (Math.ceil(avg) != Math.floor(avg)) {
+                                                                        avg = Math.ceil(avg);
+                                                                    %>
                                                                     <i class="fa-solid fa-star-half-stroke "></i>
-                                                                    <i class="fa-regular fa-star "></i>
+                                                                    <%
+                                                                    } else {
+                                                                    %>
+                                                                    <i class=" fa-regular fa-star"></i>
+                                                                    <%
+                                                                            }
+                                                                        }
+                                                                    %>
                                                                 </p>
                                                                 <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                   style="font-size: 12px;">54</p>
+                                                                   style="font-size: 12px;"><%=phone._phone().count()%>
+                                                                </p>
                                                             </div>
 
                                                         </div>
@@ -1036,8 +1068,8 @@
                                                            style="font-size:14px ;">
                                                             <i class="fa-regular fa-square-plus fa-sm"></i> so sánh
                                                         </a>
-
-                                                        <a href="" class="d-block  align-middle"
+                                                        <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=phone._phone().getId()%>"
+                                                           class="d-block  align-middle"
                                                            style="font-size:14px ;">
                                                             <i class="fa-regular fa-heart fa-sm"></i> yêu thích
                                                         </a>
@@ -1072,7 +1104,7 @@
             List<Brand> brands = (List<Brand>) request.getAttribute("brandList");
             for (Brand b : brands
             ) {
-                if(b._models().size()>2){
+                if (b._models().size() > 2) {
 
 
         %>
@@ -1090,8 +1122,8 @@
                     <div>
                         <%
                             List<Model> models = b._models();
-                                for (Model model : models
-                                ) {
+                            for (Model model : models
+                            ) {
 
                         %>
 
@@ -1184,7 +1216,6 @@
 
                                                             <%}%>
                                                         </div>
-
                                                         <div class="mb-1">
                                                             <i class=" d-inline-block text-decoration-line-through price-old"
                                                                style="text-decoration: line-through">
@@ -1199,17 +1230,33 @@
                                                         <strong class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
 
                                                         <div class=" mb-1 d-flex flex-end">
-                                                            <p class=" text-warning " style="font-size: 12px;">
+                                                            <p class=" text-warning "
+                                                               style="font-size: 12px;">
+                                                                <%
+                                                                    double avg = phone.avg();
+                                                                    for (int i = 1; i <= 5; i++) {
+                                                                        if (i <= avg) {
+                                                                %>
                                                                 <i class=" fa-solid fa-star "></i>
-                                                                <i class=" fa-solid fa-star "></i>
-                                                                <i class=" fa-solid fa-star "></i>
+                                                                <%
+                                                                } else if (Math.ceil(avg) != Math.floor(avg)) {
+                                                                    avg = Math.ceil(avg);
+                                                                %>
                                                                 <i class="fa-solid fa-star-half-stroke "></i>
-                                                                <i class="fa-regular fa-star "></i>
+                                                                <%
+                                                                } else {
+                                                                %>
+                                                                <i class=" fa-regular fa-star"></i>
+                                                                <%
+                                                                        }
+                                                                    }
+                                                                %>
                                                             </p>
-                                                            <p class="ms-1 fw-light d-inline-block align-middle "
-                                                               style="font-size: 12px;">54</p>
-                                                        </div>
 
+                                                            <p class="ms-1 fw-light d-inline-block align-middle "
+                                                               style="font-size: 12px;"><%=phone.count()%>
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </a>
                                                 <div class="mt-2  d-flex justify-content-between ">
@@ -1217,7 +1264,8 @@
                                                         <i class="fa-regular fa-square-plus fa-sm"></i> so sánh
                                                     </a>
 
-                                                    <a href="" class="d-block  align-middle" style="font-size:14px ;">
+                                                    <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=phone.getId()%>"
+                                                       class="d-block  align-middle" style="font-size:14px ;">
                                                         <i class="fa-regular fa-heart fa-sm"></i> yêu thích
                                                     </a>
                                                 </div>
@@ -1236,8 +1284,10 @@
 
         </section>
 
-        <%}
-        }%>
+        <%
+                }
+            }
+        %>
 
         <section class="my-5 brand">
 

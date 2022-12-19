@@ -14,6 +14,8 @@ import java.util.List;
 public class PhoneState extends Base<PhoneState> implements Serializable {
     private String name;
 
+    private String key;
+
     public List<Phone> _phones() {
         return new AbstractDAO<Phone>("phones").list(" and phone_stateId=" + this.id, Phone.class, null, null);
     }

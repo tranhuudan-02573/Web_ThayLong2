@@ -14,6 +14,7 @@ import java.util.List;
 @Data
 public class UserState extends Base<UserState> implements Serializable {
     private String name;
+    private String key;
 
     public List<User> _users() {
         return new AbstractDAO<User>("users").list(" and user_stateId=" + this.id, User.class, null, null);

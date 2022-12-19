@@ -14,6 +14,7 @@ import java.util.List;
 public class Color extends Base<Color> implements Serializable {
 
     private String name;
+    private String key;
 
     public List<PhoneColor> _phones() {
         return new AbstractDAO<PhoneColor>("phone_color").list(" and colorId =" + this.id, PhoneColor.class, null, null);

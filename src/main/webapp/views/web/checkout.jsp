@@ -1,188 +1,198 @@
+<%@ page import="vn.edu.hcmuaf.fit.model.user.User" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.wish.Wish" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 
-	<body>
-
-
-		<main>
-			<div class="container mx-auto">
-				<div id="breadcrumb"></div>
-				<section class="my-5 dark-grey-text">
+<body>
 
 
+<main>
 
-					<!--Grid row-->
-					<div class="row">
+    <%
+        User user = (User) session.getAttribute("USER");
 
-						<!--Grid column-->
-						<div class="col-lg-8">
-							<div class="card">
-								<div class="card-header red-text  text-center">
-                <h5 class="font-weight-500 my-1 text-uppercase">Thông tin khách hàng</h5>
-              </div>
-								<div class="card-body">
+    %>
 
-
-									<!-- Pills panels -->
+    <div class="container mx-auto">
+        <div id="breadcrumb"></div>
+        <section class="my-5 dark-grey-text">
 
 
+            <!--Grid row-->
+            <div class="row">
 
-											<!--Card content-->
-											<form>
-												<div class="mb-2">
+                <!--Grid column-->
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header red-text  text-center">
+                            <h5 class="font-weight-500 my-1 text-uppercase">Thông tin khách hàng</h5>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="mb-2">
 
-													<div class="my-2">
-														<div class="form-check form-check-inline ">
-															<input type="radio" class="form-check-input"
-																id="materialInline1" checked name="inlineMaterialRadiosExample">
-															<label class="form-check-label"
-																for="materialInline1">nam</label>
-															<!-- Material inline 2 -->
-														</div>
-														<div class="form-check form-check-inline ">
-															<input type="radio" class="form-check-input"
-																id="materialInline2" name="inlineMaterialRadiosExample">
-															<label class="form-check-label"
-																for="materialInline2">nữ</label>
-														</div>
-													</div>
-												</div>
-												<!--Grid row-->
-												<div class="row my-4">
-													<div class="col-6 m-0">
-														<!-- Material input -->
-														<div class="md-form m-0">
-															<i class="fas fa-user prefix text-danger"></i>
+                                    <div class="my-2">
+                                        <div class="form-check form-check-inline ">
+                                            <input type="radio" class="form-check-input"
+                                                   id="nam"
+                                                   name="gender"  <%=(!user.isGender())?"checked":""%>>
+                                            <label class="form-check-label"
+                                                   for="nam">nam</label>
+                                            <!-- Material inline 2 -->
+                                        </div>
+                                        <div class="form-check form-check-inline ">
+                                            <input type="radio" class="form-check-input"
+                                                   id="nu"
+                                                   name="gender" <%=(!user.isGender())?"checked":""%>>
+                                            <label class="form-check-label"
+                                                   for="nu">nữ</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Grid row-->
+                                <div class="row my-4">
+                                    <div class="col-6 m-0">
+                                        <!-- Material input -->
+                                        <div class="md-form m-0">
+                                            <i class="fas fa-user prefix text-danger"></i>
 
-															<input type="text" id="name" class="form-control">
-															<label for="email">Tên khách hàng</label>
-														</div>
-													</div>
-													<div class="col-6 m-0">
-														<!-- Material input -->
-														<div class="md-form  m-0">
-															<i class="fa-solid fa-phone prefix text-danger"></i>
-															<input type="text" id="phone" class="form-control">
-															<label for="phone">Số điện thoại</label>
-														</div>
-													</div>
-												</div>
-												<!--Grid row-->
+                                            <input type="text" id="name" class="form-control"
+                                                   value="<%=(user.getId()!=0)?user.getName():""%>">
+                                            <label for="name">Tên khách hàng</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 m-0">
+                                        <!-- Material input -->
+                                        <div class="md-form  m-0">
+                                            <i class="fa-solid fa-phone prefix text-danger"></i>
+                                            <input type="text" id="phone" class="form-control"
+                                                   value="<%=(user.getId()!=0)?user.getPhone():""%>">
+                                            <label for="phone">Số điện thoại</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Grid row-->
 
-												<!--Username-->
-												<div class="md-form">
-													<i class="fa-solid fa-address-card prefix text-danger"></i>
-													<input type="text" id="address" class="form-control">
-													<label for="address">Địa chỉ</label>
-												</div>
-													<div class="md-form">
-		<i class="fa-solid fa-envelope prefix text-danger"></i>
-													<input type="text" id="email" class="form-control">
-													<label for="email">Email</label>
-												</div>
-
-
-												<div class="my-2">
-													<input type="checkbox" class="form-check-input "
-														id="chekboxRules">
-
-													<label class="form-check-label" for="chekboxRules">Tôi đã đồng ý với các điều khoản và điều kiện</label>
-												</div>
-												<div class="my-2">
-													<input type="checkbox" class="form-check-input "
-														id="safeTheInfo">
-													<label class="form-check-label" for="safeTheInfo">Lưu thông tin đơn hàng</label>
-												</div>
-
-
-											</form>
-
-								</div>
-							</div>
-						</div>
-						<!--Grid column-->
-
-						<!--Grid column-->
-						<div class="col-lg-4 mb-4">
-
-								<div class="input-group input-group-md mb-4 input-group-lg">
-									<input type="text" class="form-control " placeholder="Nhập mã giảm giá" aria-label="code"
-										aria-describedby="button-addon2">
-									<div class="input-group-append">
-										<button
-											class="btn btn-md btn-outline-default m-0 px-3 py-2 z-depth-0 waves-effect"
-											type="button" id="button-addon2">Áp dụng</button>
-									</div>
-								</div>
-
-							<!--Card-->
-							<div class="card ">
-	<div class="card-header red-text r text-center">
-										<h5 class="font-weight-500 my-1 text-uppercase">Tóm tắt đơn hàng</h5>
-									</div>
-								<!--Card content-->
-								<div class="card-body">
+                                <!--Username-->
+                                <div class="md-form">
+                                    <i class="fa-solid fa-address-card prefix text-danger"></i>
+                                    <input type="text" id="address"
+                                           class="form-control" value="<%=(user.getId()!=0)?user.getAddress():""%>">
+                                    <label for="address">Địa chỉ</label>
+                                </div>
+                                <div class="md-form">
+                                    <i class="fa-solid fa-envelope prefix text-danger"></i>
+                                    <input type="text" id="email"
+                                           class="form-control" value="<%=(user.getId()!=0)?user.getEmail():""%>">
+                                    <label for="email">Email</label>
+                                </div>
 
 
-									<dl class="row">
-										<dd class="col-sm-8">
-											MDBootstrap UI KIT (jQuery version) - License 6-10 poeple +
-											unlimited projects
-										</dd>
-										<dd class="col-sm-4">
-											$ 2000
-										</dd>
-									</dl>
+                                <div class="my-2">
+                                    <input type="checkbox" class="form-check-input "
+                                           id="chekboxRules">
 
-									<hr>
-
-
-
-									<dl class="row">
-										<dt class="col-sm-8">
-											Tổng
-										</dt>
-										<dt class="col-sm-4">
-											$ 2000
-										</dt>
-									</dl>
-									<button class="btn btn-danger waves-effect btn-lg btn-block" type="submit">Thanh toán</button>
-								</div>
-
-							</div>
-							<!--/.Card-->
+                                    <label class="form-check-label" for="chekboxRules">Tôi đã đồng ý với các điều khoản
+                                        và điều kiện</label>
+                                </div>
+                                <div class="my-2">
+                                    <input type="checkbox" class="form-check-input "
+                                           id="safeTheInfo">
+                                    <label class="form-check-label" for="safeTheInfo">Lưu thông tin đơn hàng</label>
+                                </div>
 
 
+                            </form>
 
-						</div>
-						<!--Grid column-->
+                        </div>
+                    </div>
+                </div>
+                <!--Grid column-->
 
-					</div>
-					<!--Grid row-->
+                <!--Grid column-->
+                <div class="col-lg-4 mb-4">
+
+                    <div class="input-group input-group-md mb-4 input-group-lg">
+                        <input type="text" class="form-control " placeholder="Nhập mã giảm giá" aria-label="code"
+                               aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button
+                                    class="btn btn-md btn-outline-default m-0 px-3 py-2 z-depth-0 waves-effect"
+                                    type="button" id="button-addon2">Áp dụng
+                            </button>
+                        </div>
+                    </div>
+
+                    <!--Card-->
+                    <div class="card ">
+                        <div class="card-header red-text r text-center">
+                            <h5 class="font-weight-500 my-1 text-uppercase">Tóm tắt đơn hàng</h5>
+                        </div>
+                        <!--Card content-->
+                        <div class="card-body">
+
+                            <%
+                                for (Wish c : user.getCarts()
+                                ) {
+
+                            %>
+
+                            <dl class="row">
+                                <dd class="col-sm-8">
+                                    <%=c._phone().getName()%>
+                                </dd>
+                                <dd class="col-sm-4">
+                                    <%=c._phone().getPrice()%>
+                                </dd>
+                            </dl>
+                            <%}%>
+
+                            <hr>
 
 
+                            <dl class="row">
+                                <dt class="col-sm-8">
+                                    Tổng
+                                </dt>
+                                <dt class="col-sm-4">
+                                    <%=user.total()%>
+                                </dt>
+                            </dl>
+                            <button class="btn btn-danger waves-effect btn-lg btn-block" type="submit">Thanh toán
+                            </button>
+                        </div>
 
-				</section>
+                    </div>
+                    <!--/.Card-->
 
 
-			</div>
+                </div>
+                <!--Grid column-->
 
-		</main>
+            </div>
+            <!--Grid row-->
 
 
+        </section>
 
-		<script>$(document).ready(function () {
-				$('.mdb-select').material_select();
-			});</script>
-	</body>
+
+    </div>
+
+</main>
+
+
+<script>$(document).ready(function () {
+    $('.mdb-select').material_select();
+});</script>
+</body>
 
 </html>

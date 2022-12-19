@@ -10,6 +10,7 @@ import vn.edu.hcmuaf.fit.model.user.User;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @NoArgsConstructor
@@ -25,11 +26,11 @@ public class Review extends Base<Review> implements Serializable {
     private String status;
 
     public User _user() {
-        return new AbstractDAO<User>("users").get(" and id =" + this.userId, User.class, null);
+        return new AbstractDAO<User>("users").get(" and id =" + this.userId, User.class, null).get();
     }
 
     public Phone _phone() {
-        return new AbstractDAO<Phone>("phones").get(" and id =" + this.phoneId, Phone.class, null);
+        return new AbstractDAO<Phone>("phones").get(" and id =" + this.phoneId, Phone.class, null).get();
     }
 
     public List<PhoneReview> _reply() {

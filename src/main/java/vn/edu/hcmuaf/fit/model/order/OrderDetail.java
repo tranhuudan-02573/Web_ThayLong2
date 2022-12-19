@@ -10,10 +10,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Base;
+import vn.edu.hcmuaf.fit.model.phone.Color;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,13 +26,18 @@ public class OrderDetail extends Base<OrderDetail> implements Serializable {
     private int quantity;
     private double price;
     private int discount;
+    private int colorId;
+
+    public Color _color() {
+        return new AbstractDAO<Color>("colors").get(" and id=" + this.colorId, Color.class, null).get();
+    }
 
     public Phone _phone() {
-        return new AbstractDAO<Phone>("phones").get(" and id =" + this.phoneId, Phone.class, null);
+        return new AbstractDAO<Phone>("phones").get(" and id =" + this.phoneId, Phone.class, null).get();
     }
 
     public Order _order() {
-        return new AbstractDAO<Order>("orders").get(" and id =" + this.orderId, Order.class, null);
+        return new AbstractDAO<Order>("orders").get(" and id =" + this.orderId, Order.class, null).get();
     }
 
 

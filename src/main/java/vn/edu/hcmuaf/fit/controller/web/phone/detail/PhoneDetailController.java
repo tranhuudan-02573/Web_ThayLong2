@@ -18,7 +18,7 @@ public class PhoneDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id").trim());
-        Phone phone = new AbstractDAO<Phone>("phones").get(" and id = " + id, Phone.class, null);
+        Phone phone = new AbstractDAO<Phone>("phones").get(" and id = " + id, Phone.class, null).get();
         request.setAttribute("phone", phone);
 
         request.getRequestDispatcher("/views/web/product.jsp").forward(request, response);

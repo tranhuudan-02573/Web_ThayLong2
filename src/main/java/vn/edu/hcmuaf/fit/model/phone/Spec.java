@@ -7,6 +7,7 @@ import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class Spec extends Base<Spec> implements Serializable {
     private String key;
 
     public SpecType _specType() {
-        return new AbstractDAO<SpecType>("spec_types").get(" and id=" + this.specTypeId, SpecType.class, null);
+        return new AbstractDAO<SpecType>("spec_types").get(" and id=" + this.specTypeId, SpecType.class, null).get();
     }
 
 

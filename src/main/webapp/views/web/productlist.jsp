@@ -256,7 +256,7 @@
                                 <div class=" w-100 bd-highlight d-none d-sm-block">
                                     <h3 class="m-0">
                                         <a href="" title="" class="text-dark h4  " style="font-size: 22px">
-                                          <%=model.getName()%>
+                                            <%=model.getName()%>
                                             <span style="font-size: 14px ; opacity: 0.7">(<%=model._phones().size()%> sản phẩm)</span>
                                         </a>
                                     </h3>
@@ -527,7 +527,8 @@
                                                                 so sánh
                                                             </a>
 
-                                                            <a href="" class="d-block  align-middle"
+                                                            <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=phone.getId()%>"
+                                                               class="d-block  align-middle"
                                                                style="font-size:14px ;">
                                                                 <i class="fa-regular fa-heart fa-sm"></i> yêu
                                                                 thích
@@ -547,7 +548,7 @@
                         <%
 
                             for (Promot pr : prs
-                        ) {%>
+                            ) {%>
                         <div class="tab-pane fade  " id="tabpane-<%=pr.getKey()%>"
                              role="tabpanel"
                              aria-labelledby="<%=pr.getKey()%>-tab">
@@ -555,12 +556,12 @@
                                 <div class="row w-100 mx-auto row-cols-4  ">
                                     <%
 
-                                        for (Phone phone:phones
+                                        for (Phone phone : phones
                                         ) {
-                                            for (PhonePromot pp:phone._promots()
-                                                 ) {
+                                            for (PhonePromot pp : phone._promots()
+                                            ) {
 
-                                                if(pp._promot().getId()==pr.getId()){
+                                                if (pp._promot().getId() == pr.getId()) {
 
                                     %>
                                     <div class="col-6 col-sm-3 p-0">
@@ -693,7 +694,8 @@
                                                                 so sánh
                                                             </a>
 
-                                                            <a href="" class="d-block  align-middle"
+                                                            <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=phone.getId()%>"
+                                                               class="d-block  align-middle"
                                                                style="font-size:14px ;">
                                                                 <i class="fa-regular fa-heart fa-sm"></i> yêu
                                                                 thích
@@ -835,7 +837,6 @@
                                                         <i class="fa-regular fa-square-plus fa-sm"></i>
                                                         so sánh
                                                     </a>
-
                                                     <a href="" class="d-block  align-middle"
                                                        style="font-size:14px ;">
                                                         <i class="fa-regular fa-heart fa-sm"></i>

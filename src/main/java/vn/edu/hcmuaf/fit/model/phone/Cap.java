@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +17,7 @@ public class Cap extends Base<Cap> {
     private Integer phoneId;
 
     public Phone _phone() {
-        return new AbstractDAO<Phone>("phones").get(" and id = " + this.phoneId, Phone.class, null);
+        return new AbstractDAO<Phone>("phones").get(" and id = " + this.phoneId, Phone.class, null).get();
     }
 
     public List<PhoneCap> _phones() {
