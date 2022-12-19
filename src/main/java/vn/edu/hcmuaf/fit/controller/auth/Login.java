@@ -19,7 +19,7 @@ public class Login extends HttpServlet {
             request.getRequestDispatcher("/login").forward(request, response);
             return;
         }
-        SessionUntil.add(request, "username", username);
+        SessionUntil.set(request, "username", username);
         request.getRequestDispatcher("/home").forward(request, response);
 
 

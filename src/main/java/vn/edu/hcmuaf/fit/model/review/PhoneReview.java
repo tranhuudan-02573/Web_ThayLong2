@@ -7,6 +7,7 @@ import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Base;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -16,11 +17,11 @@ public class PhoneReview extends Base<PhoneReview> implements Serializable {
     private Integer replyId;
 
     public Review _comment() {
-        return new AbstractDAO<Review>("reviews").get(" and star is not null  and id=" + this.commentId, Review.class, null);
+        return new AbstractDAO<Review>("reviews").get(" and isReply=false   and id=" + this.commentId, Review.class, null).get();
     }
 
     public Review _reply() {
-        return new AbstractDAO<Review>("reviews").get(" and star is null  and id= " + this.replyId, Review.class, null);
+        return new AbstractDAO<Review>("reviews").get(" and isReply=true and star is null  and id= " + this.replyId, Review.class, null).get();
     }
 
 }

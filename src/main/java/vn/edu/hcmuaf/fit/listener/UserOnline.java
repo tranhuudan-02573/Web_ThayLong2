@@ -14,12 +14,12 @@ public class UserOnline implements HttpSessionListener, ServletContextListener {
     ServletContext application;
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        User user =(User) application.getAttribute("User");
+//        User user =(User) application.getAttribute("User");
 
 
 
 
-        application.setAttribute("Cart",user);
+//        application.setAttribute("Cart",user);
 
 
     }

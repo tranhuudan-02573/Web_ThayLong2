@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/phone-filter")
+@WebServlet(urlPatterns = {"/phone-filter"})
 public class PhoneFilterController extends HttpServlet {
 
     @Override
@@ -30,12 +30,12 @@ public class PhoneFilterController extends HttpServlet {
         if (id != 0) {
             if (!"".equals(name) && "brand".equals(name)) {
                 phones = new AbstractDAO<Phone>("phones").list(" and brandId="+id, Phone.class, null, null);
-                Brand brand = new AbstractDAO<Brand>("brands").get(" and id = " + id, Brand.class, null);
+                Brand brand = new AbstractDAO<Brand>("brands").get(" and id = " + id, Brand.class, null).get();
                 request.setAttribute("brand", brand);
             }
             if (!"".equals(name) && "model".equals(name)) {
                 phones = new AbstractDAO<Phone>("phones").list(" and modelId="+id, Phone.class, null, null);
-                Model model = new AbstractDAO<Model>("models").get(" and id =" + id, Model.class, null);
+                Model model = new AbstractDAO<Model>("models").get(" and id =" + id, Model.class, null).get();
                 request.setAttribute("model", model);
             }
         }

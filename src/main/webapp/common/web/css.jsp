@@ -9,3 +9,4 @@
 <link rel="stylesheet"  type="text/css" href="<c:url value='/lib/mdb4/css/mdb.min.css'/>">
 <link rel="stylesheet"  type="text/css" href="<c:url value='/lib/fa6/fontawesome-free-6.2.0-web/css/fontawesome.min.css'/>">
 <link rel="stylesheet"  type="text/css" href="<c:url value='/lib/fa6/fontawesome-free-6.2.0-web/css/all.css'/>">
+<link rel="stylesheet"  type="text/css" href="<c:url value='/lib/sweetAlert2/sweetalert2.min.css'/>">

@@ -7,6 +7,7 @@ import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,11 +23,11 @@ public class PhonePromot extends Base<PhonePromot> implements Serializable {
 
 
     public Promot _promot() {
-        return new AbstractDAO<Promot>("promots").get(" and id = " + this.getPromotId(), Promot.class, null);
+        return new AbstractDAO<Promot>("promots").get(" and id = " + this.getPromotId(), Promot.class, null).get();
     }
 
     public Phone _phone() {
-        return new AbstractDAO<Phone>("phones").get(" and id = " + this.getPhoneId(), Phone.class, null);
+        return new AbstractDAO<Phone>("phones").get(" and id = " + this.getPhoneId(), Phone.class, null).get();
     }
 
 }

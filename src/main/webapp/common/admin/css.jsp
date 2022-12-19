@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="<c:url value='/lib/mdb4/css/bootstrap.css'/>">
 <link rel="stylesheet" href="<c:url value='/lib/mdb4/css/mdb.css'/>">
 <link rel="stylesheet" href="<c:url value='/lib/mdb4/css/addons/datatables.min.css'/>">
+<link rel="stylesheet"  type="text/css" href="<c:url value='/lib/sweetAlert2/sweetalert2.min.css'/>">
 <style>
     .double-nav .breadcrumb-dn {
         color: #fff;

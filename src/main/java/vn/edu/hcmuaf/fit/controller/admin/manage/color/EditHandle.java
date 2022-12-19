@@ -20,7 +20,7 @@ public class EditHandle extends HttpServlet {
         Color color = new Color();
         if (id != null) {
             ids = Integer.parseInt(id.trim());
-            if (ids != 0) color = new AbstractDAO<Color>("colors").get(" and id = " + ids, Color.class, null);
+            if (ids != 0) color = new AbstractDAO<Color>("colors").get(" and id = " + ids, Color.class, null).get();
         }
         request.setAttribute("color", color);
         request.getRequestDispatcher("/views/admin/manage/color/edit.jsp").forward(request, response);

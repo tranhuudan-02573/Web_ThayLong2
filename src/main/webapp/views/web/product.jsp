@@ -2,6 +2,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.review.Review" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.review.PhoneReview" %>
+<%@ page import="vn.edu.hcmuaf.fit.helper.FormatTime" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
@@ -178,8 +179,9 @@
 
 <body class="">
 
-
-<header id="header"></header>
+<%
+    Phone p = (Phone) request.getAttribute("phone");
+%>
 <div class="homeContent  mb-5">
     <div class="container">
         <div class="row w-100 mx-auto mb-2">
@@ -233,35 +235,39 @@
                 <div class="col-12">
                     <div class="row w-100 mx-auto name-product  bg-white ">
                         <h3 class="mb-0 col-12 col-sm-8 pl-0">
-                            <a href="#" title="" class="text-dark name-products mb-0">${phone.name}
-                                <span class="note border-left-0">${phone.id}</span>
+                            <a href="#" title="" class="text-dark name-products mb-0"><%=p.getName()%>
+                                <span class="note border-left-0"><%=p.getId()%></span>
 
                             </a>
                         </h3>
 
                         <div class="media align-items-center col-12 col-sm-4 pl-0">
                             <ul class="nav mr-2">
+                                <%
+                                    for (int i = 1; i <= p.avg(); i++) {
+                                %>
                                 <li class="nav-item">
-                                    <i class="fa fa-star font-text" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-star font-text" aria-hidden="true"></i>
                                 </li>
+                                <%
+                                    }
+                                    if (p.avg() % 2 != 0 || p.avg() % 2 != 1) {
+                                %>
                                 <li class="nav-item">
-                                    <i class="fa fa-star font-text" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-star-half-stroke font-text"
+                                       style="color: #ff7500;"></i>
                                 </li>
-                                <li class="nav-item ">
-                                    <i class="fa fa-star font-text" aria-hidden="true"></i>
-                                </li>
-                                <li class="nav-item">
-                                    <i class="fa fa-star-half-o font-text" aria-hidden="true"></i>
-                                </li>
-                                <li class="nav-item">
-                                    <i class="fa fa-star-o font-text" aria-hidden="true"></i>
-                                </li>
+                                <%}%>
+
                             </ul>
                             <div class="media-body">
 										<span>
-											<a href="#" title="" class="text-dark font-text">73 khách hàng đánh giá|</a>
-											<a href="#" title="" class="text-dark font-text">769 câu hỏi được trả
-												lời</a>
+											<a href="#review" title=""
+                                               class="text-dark font-text"><%=p._reviews().size()%> khách hàng đánh giá|</a>
+											<a href="#question" title=""
+                                               class="text-dark font-text"><%=p.questionHasReply()%> câu hỏi được trả
+												lời
+                                            </a>
 										</span>
                             </div>
                         </div>
@@ -287,20 +293,17 @@
                                 <div id="carouselSlideImg" class="carousel slide pointer-event mb-4"
                                      data-ride="carousel">
                                     <div class="carousel-inner">
+
                                         <%
-                                            Phone p = (Phone) request.getAttribute("phone");
-//                                            Set<SpecType> spt = new HashSet<>();
-//                                            for (PhoneSpec st : specs
-//                                            ) {
-//                                                spt.add(st.getSpec().getSpecType());
-//                                            }
+                                            List<Image> images = p._images();
+                                            for (int i = 0; i < images.size(); i++) {
+
                                         %>
-                                        <c:forEach var="image" items="<%=p._images() %>">
-                                            <div class="carousel-item text-center ">
-                                                <img src="${image.link}" alt="" class="img-fluid"
-                                                     style="width: 300px;height:300px;">
-                                            </div>
-                                        </c:forEach>
+                                        <div class="carousel-item text-center <%=(i==0)?"active":""%> ">
+                                            <img src="<%=images.get(i).getLink()%>" alt="" class="img-fluid"
+                                                 style="width: 300px;height:300px;">
+                                        </div>
+                                        <%}%>
                                     </div>
                                     <a class="carousel-control-prev" href="#carouselSlideImg" role="button"
                                        data-slide="prev">
@@ -314,17 +317,18 @@
                                     </a>
                                     <ol class="carousel-indicators m-0   " style="bottom: -100px !important;">
 
-                                        <c:forEach var="image" items="<%=p._images() %>">
-                                            <li data-target="#carouselSlideImg" data-slide-to="0"
-                                                class="w-100 h-100 text-center" style="background-color: transparent;">
-                                                <div class="d-sm-block ">
-                                                    <br>
-                                                    <img class="object-fit border border-dark rounded"
-                                                         style="width: 55px;height: auto;"
-                                                         src="${image.link}">
-                                                </div>
-                                            </li>
-                                        </c:forEach>
+                                        <%for (int i = 0; i < images.size(); i++) {%>
+                                        <li data-target="#carouselSlideImg" data-slide-to="<%=i%>"
+                                            class="w-100 h-100 text-center <%=(i==0)?"active":""%> "
+                                            style="background-color: transparent;">
+                                            <div class="d-sm-block ">
+                                                <br>
+                                                <img class="object-fit border border-dark rounded"
+                                                     style="width: 55px;height: auto;"
+                                                     src="<%=images.get(i).getLink()%>">
+                                            </div>
+                                        </li>
+                                        <%}%>
                                     </ol>
                                 </div>
                                 <div style="height: 70px;"></div>
@@ -382,10 +386,20 @@
 
                             </div>
                             <div class="col-xl-4 pl-0 bg-white ">
-                                <div class="mb-2">
-                                    <span href="" class="badge badge-danger">Trả góp 0%</span>
-                                </div>
+                                <%
+                                    List<PhonePromot> pps = p._promots();
 
+                                    for (PhonePromot pp : pps
+                                    ) {
+                                        if ("TG0".equalsIgnoreCase(pp._promot().getKey())) {
+                                %>
+                                <div class="mb-2">
+                                    <span href="" class="badge badge-danger"><%=pp._promot().getName()%></span>
+                                </div>
+                                <%
+                                        }
+                                    }
+                                %>
                                 <div class="d-flex align-items-center mb-2">
                                     <strong class="prices text-danger"><%=p.getPrice()%> <sup>đ</sup></strong>
                                     <strong class="pl-2" style="text-decoration: line-through;">34.500.000đ</strong>
@@ -1097,7 +1111,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card mb-4">
+                        <div class="card mb-4" id="review">
                             <div class="card-header text-danger text-center">
                                 <h5 class="font-weight-500 my-1">Đánh giá & Nhận xét iPhone Xs Max 64GB</h5>
                             </div>
@@ -1112,22 +1126,26 @@
                                                         <p class="card-text mb-0 size-text"><%=p.avg()%>
                                                         </p>
                                                         <ul class="nav justify-content-center">
+
+                                                            <%
+
+                                                                for (int i = 1; i <= p.avg(); i++) {
+
+                                                            %>
+
                                                             <li class="nav-item">
-                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa-solid fa-star" aria-hidden="true"></i>
                                                             </li>
+                                                            <%
+                                                                }
+                                                                if (p.avg() % 2 != 0 || p.avg() % 2 != 1) {
+                                                            %>
                                                             <li class="nav-item">
-                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa-solid fa-star-half-stroke"
+                                                                   style="color: #ff7500;"></i>
                                                             </li>
-                                                            <li class="nav-item">
-                                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <i class="fa fa-star-half-o"
-                                                                   aria-hidden="true"></i>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                            </li>
+                                                            <%}%>
+
                                                         </ul>
                                                         <p class="card-text"><small class="text-muted"><%=p.count()%>
                                                             đánh
@@ -1239,7 +1257,7 @@
                                                         }
 
                                                     </style>
-                                                    <span class="text-light text-weight-500 "><%=r.getCreated_at()%>
+                                                    <span class="text-light text-weight-500 "><%=FormatTime.format(r.getCreated_at(), false)%>
                                                         <a
                                                                 class="like pr-2 pl-2" href="">thích
 																	<span>(<%=r._like().size()%>)</span>
@@ -1426,7 +1444,7 @@
                             </div>
 
                         </div>
-                        <div class="card mb-4">
+                        <div class="card mb-4" id="question">
                             <div class="card-header red-text  text-center">
                                 <h5 class="font-weight-500 my-1">Hỏi Đáp về iPhone Xs Max 64GB</h5>
                             </div>
@@ -1478,7 +1496,7 @@
                                                     }
 
                                                 </style>
-                                                <span class="text-light text-weight-500 "><%=r.getCreated_at()%> <a
+                                                <span class="text-light text-weight-500 "><%=FormatTime.format(r.getCreated_at(), false)%> <a
                                                         class="like pr-2 pl-2"
                                                         href="">thích <span>(<%=r._like().size()%>)</span>
 															</a>
@@ -1506,11 +1524,15 @@
                                                 <h6 class="font-weight-bold"><%=reply._reply()._user().getName()%>
                                                 </h6>
 
-                                                <p>Chào <%=reply._comment()._user().getName()%>
+                                                <p>Chào <b><%=reply._comment()._user().getName()%>
+                                                </b>
                                                 </p>
                                                 <p>
                                                     <%=reply._reply().getContent()%>
-                                                    Thân mến!</p>
+                                                    <br/>
+                                                    Thân mến!
+                                                </p>
+
                                                 <style>
                                                     .like::before,
                                                     .rep::before {
@@ -1523,7 +1545,7 @@
                                                     }
 
                                                 </style>
-                                                <span class="text-light text-weight-500 "><%=reply.getCreated_at()%><a
+                                                <span class="text-light text-weight-500 "><%=FormatTime.format(reply.getCreated_at(), false)%><a
                                                         class="like pr-2 pl-2"
                                                         href="">thích <span>(<%=reply._reply()._like().size()%>)</span>
 															</a>
@@ -1534,7 +1556,7 @@
                                             </div>
                                         </div>
                                         <%
-                                            }
+                                                }
                                             }
                                         %>
                                         <div class="d-flex justify-content-center align-items-center mt-4">
@@ -2014,14 +2036,6 @@
 	-webkit-line-clamp: 2;font-size: 14px;">
                                                                         <%=phone.getName()%>
                                                                     </h3>
-                                                                    <div class="mb-1">
-																				<span class="mr-2 badge badge-light">6.7
-																					incheslor
-																				</span>
-
-                                                                        <span class="mr-2 badge badge-light">128
-																					GB</span>
-                                                                    </div>
 
                                                                     <div class="mb-1">
                                                                         <%
@@ -2037,21 +2051,44 @@
                                                                             }
                                                                         %>
                                                                     </div>
+                                                                    <div class="mb-1">
+                                                                        <i class=" d-inline-block text-decoration-line-through price-old"
+                                                                           style="text-decoration: line-through">
+                                                                            243242đ</i>
+                                                                        <span
+                                                                                class="badge badge-default peach-gradient">-25%</span>
+                                                                        <b class="d-inline-block price-new "></b>
+                                                                    </div>
                                                                     <strong
-                                                                            class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
+                                                                            class="fw-bold d-block mb-1 text-danger"><%=phone.getPrice()%>
+                                                                        đ</strong>
 
                                                                     <div class=" mb-1 d-flex flex-end">
                                                                         <p class=" text-warning "
                                                                            style="font-size: 12px;">
+                                                                            <%
+                                                                                double avg = phone.avg();
+                                                                                for (int i = 1; i <= 5; i++) {
+                                                                                    if (i <= avg) {
+                                                                            %>
                                                                             <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i
-                                                                                    class="fa-solid fa-star-half-stroke "></i>
-                                                                            <i class="fa-regular fa-star "></i>
+                                                                            <%
+                                                                            } else if (Math.ceil(avg) != Math.floor(avg)) {
+                                                                                avg = Math.ceil(avg);
+                                                                            %>
+                                                                            <i class="fa-solid fa-star-half-stroke "></i>
+                                                                            <%
+                                                                            } else {
+                                                                            %>
+                                                                            <i class=" fa-regular fa-star"></i>
+                                                                            <%
+                                                                                    }
+                                                                                }
+                                                                            %>
                                                                         </p>
                                                                         <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                           style="font-size: 12px;">54</p>
+                                                                           style="font-size: 12px;"><%=phone.count()%>
+                                                                        </p>
                                                                     </div>
 
                                                                 </div>
@@ -2146,14 +2183,6 @@
 	-webkit-line-clamp: 2;font-size: 14px;">
                                                                         <%=phone.getName()%>
                                                                     </h3>
-                                                                    <div class="mb-1">
-																				<span class="mr-2 badge badge-light">6.7
-																					incheslor
-																				</span>
-
-                                                                        <span class="mr-2 badge badge-light">128
-																					GB</span>
-                                                                    </div>
 
                                                                     <div class="mb-1">
                                                                         <%
@@ -2170,20 +2199,32 @@
                                                                         %>
                                                                     </div>
                                                                     <strong
-                                                                            class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
+                                                                            class="fw-bold d-block mb-1 text-danger"><%=phone.getPrice()%>
+                                                                        đ</strong>
 
                                                                     <div class=" mb-1 d-flex flex-end">
                                                                         <p class=" text-warning "
                                                                            style="font-size: 12px;">
+                                                                            <%
+                                                                                for (int i = 1; i <= p.avg(); i++) {
+                                                                            %>
                                                                             <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i class=" fa-solid fa-star "></i>
-                                                                            <i
-                                                                                    class="fa-solid fa-star-half-stroke "></i>
-                                                                            <i class="fa-regular fa-star "></i>
+                                                                            <%
+                                                                                }
+                                                                                if (p.avg() % 2 != 0 || p.avg() % 2 != 1) {
+                                                                            %>
+
+                                                                            <i class="fa-solid fa-star-half-stroke "></i>
+                                                                            <%
+                                                                                }
+                                                                                if (Math.ceil(p.avg()) < 5) {
+                                                                            %>
+                                                                            <i class=" fa-regular fa-star "></i>
+                                                                            <%}%>
                                                                         </p>
                                                                         <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                           style="font-size: 12px;">54</p>
+                                                                           style="font-size: 12px;"><%=phone.count()%>
+                                                                        </p>
                                                                     </div>
 
                                                                 </div>
