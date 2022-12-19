@@ -20,6 +20,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -30,6 +31,13 @@ public class AbstractDAO<T> implements GenericDAO<T> {
         this.table = table;
     }
 
+    public Optional<T> getCustom(String sql, Class<T> t) {
+        String q = "select * from <TABLE> where 0=0  ";
+        return JDBiConnector.get().withHandle(handle -> {
+            Query query = handle.createQuery(q).define("TABLE", this.table);
+            return query.mapToBean(t).stream().findFirst();
+        });
+    }
 
     @Override
     public List<T> list(String sql, Class<T> t, T t2, Integer num) {
@@ -45,7 +53,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
     }
 
     public int countById(String sql) {
-        String q = "select count(id)" + "from <TABLE>" + " where 0 =0" + sql;
+        String q = "select count(id) " + "from <TABLE>" + " where 0 =0 " + sql;
         return (int) JDBiConnector.get().withHandle(handle -> {
             return handle.createQuery(q).define("TABLE", this.table).mapTo(int.class).one();
         });
@@ -60,10 +68,13 @@ public class AbstractDAO<T> implements GenericDAO<T> {
 
 
     @Override
-    public T get(String sql, Class<T> t, T t2) {
-        List<T> l = list(sql, t, t2, null);
-        if (l.size() != 1) return null;
-        return l.get(0);
+    public Optional<T> get(String sql, Class<T> t, T t2) {
+        String q = "select * from <TABLE> where 0=0 " + sql;
+        return JDBiConnector.get().withHandle(handle -> {
+            Query query = handle.createQuery(q).define("TABLE", this.table);
+            if (t2 == null) return query.mapToBean(t).findOne();
+            else return query.bindBean("t", t2).mapToBean(t).findOne();
+        });
     }
 
 

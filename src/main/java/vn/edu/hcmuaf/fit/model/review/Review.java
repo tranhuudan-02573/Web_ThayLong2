@@ -10,6 +10,7 @@ import vn.edu.hcmuaf.fit.model.user.User;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @NoArgsConstructor
@@ -17,27 +18,31 @@ import java.util.List;
 public class Review extends Base<Review> implements Serializable {
     private String content;
     private Integer star;
-    private String title;
     private Integer userId;
     private Integer phoneId;
     private Integer customerId;
-    private boolean question;
+    private boolean isReply;
+    private boolean isQuestion;
     private String status;
 
     public User _user() {
-        return new AbstractDAO<User>("users").get(" and id =" + this.userId, User.class, null);
+        return new AbstractDAO<User>("users").get(" and id =" + this.userId, User.class, null).get();
     }
 
     public Phone _phone() {
-        return new AbstractDAO<Phone>("phones").get(" and id =" + this.phoneId, Phone.class, null);
+        return new AbstractDAO<Phone>("phones").get(" and id =" + this.phoneId, Phone.class, null).get();
     }
 
     public List<PhoneReview> _reply() {
-        return new AbstractDAO<PhoneReview>("phone_review").list(" and commentId =" + this.id, PhoneReview.class, null, null);
+        return new AbstractDAO<PhoneReview>("phone_review").list("  and commentId =" + this.id, PhoneReview.class, null, null);
     }
 
-    public List<Vote> _votes() {
-        return new AbstractDAO<Vote>("votes").list(" and commentId=" + this.id, Vote.class, null, null);
+    public List<Vote> _like() {
+        return new AbstractDAO<Vote>("votes").list(" and `like`=true and commentId=" + this.id, Vote.class, null, null);
+    }
+
+    public List<Vote> _dislike() {
+        return new AbstractDAO<Vote>("votes").list(" and `like`=false and commentId=" + this.id, Vote.class, null, null);
     }
 
 

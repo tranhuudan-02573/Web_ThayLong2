@@ -13,6 +13,9 @@ import vn.edu.hcmuaf.fit.model.phone.Base;
 import vn.edu.hcmuaf.fit.model.user.User;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,25 +30,33 @@ public class Order extends Base<Order> implements Serializable {
     private Integer codeId;
 
 
+    public List<OrderDetail> _orderDetails() {
+        return new AbstractDAO<OrderDetail>("order_detail").list(" and orderId =" + this.id, OrderDetail.class, null, null);
+    }
+
     public Code _code() {
-        return new AbstractDAO<Code>("codes").get(" and id=" + this.codeId, Code.class, null);
+        return new AbstractDAO<Code>("codes").get(" and id=" + this.codeId, Code.class, null).get();
     }
 
     public OrderState _orderState() {
-        return new AbstractDAO<OrderState>("order_states").get(" and id=" + this.order_stateId, OrderState.class, null);
+        return new AbstractDAO<OrderState>("order_states").get(" and id=" + this.order_stateId, OrderState.class, null).get();
     }
+
 
     public User _user() {
-        return new AbstractDAO<User>("users").get(" and id=" + this.userId, User.class, null);
+        return new AbstractDAO<User>("users").get(" and id=" + this.userId, User.class, null).get();
     }
 
 
-//    public BigDecimal total() {
+    //    public BigDecimal total() {
 //        BigDecimal total = new BigDecimal(0);
 //        for (OrderDetail orderDetail : orderDetails) {
 //            total = total.add(orderDetail.getRealPrice());
 //        }
 //        return total;
 //    }
+    public static void main(String[] args) {
+        System.out.println(new AbstractDAO<Order>("orders").getCustom(" max(created_at) ", Order.class));
+    }
 
 }

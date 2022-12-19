@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,10 +24,10 @@ public class PhoneColor extends Base<PhoneColor> implements Serializable {
 //    }
 
     public Color _color() {
-        return new AbstractDAO<Color>("colors").get(" and id = " + this.getColorId(), Color.class, null);
+        return new AbstractDAO<Color>("colors").get(" and id = " + this.getColorId(), Color.class, null).get();
     }
 
     public Phone _phone() {
-        return new AbstractDAO<Phone>("phones").get(" and id = " + this.getPhoneId(), Phone.class, null);
+        return new AbstractDAO<Phone>("phones").get(" and id = " + this.getPhoneId(), Phone.class, null).get();
     }
 }

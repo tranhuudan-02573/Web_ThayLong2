@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,11 +19,11 @@ public class PhoneSpec extends Base<PhoneSpec> implements Serializable {
     private String value;
 
     public Spec _spec() {
-        return new AbstractDAO<Spec>("specs").get(" and id = " + this.getSpecId(), Spec.class, null);
+        return new AbstractDAO<Spec>("specs").get(" and id = " + this.getSpecId(), Spec.class, null).get();
     }
 
     public Phone _phone() {
-        return new AbstractDAO<Phone>("phones").get(" and id = " + this.getPhoneId(), Phone.class, null);
+        return new AbstractDAO<Phone>("phones").get(" and id = " + this.getPhoneId(), Phone.class, null).get();
     }
 
 

@@ -7,6 +7,7 @@ import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,7 +18,7 @@ public class Model extends Base<Model> implements Serializable {
     private int brandId;
 
     public Brand _brand() {
-        return new AbstractDAO<Brand>("brands").get(" and id = " + this.brandId, Brand.class, null);
+        return new AbstractDAO<Brand>("brands").get(" and id = " + this.brandId, Brand.class, null).get();
     }
 
     public List<Phone> _phones() {
