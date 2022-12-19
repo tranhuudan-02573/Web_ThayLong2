@@ -325,7 +325,7 @@
         <a class="nav-link" href="/admin/info"><i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">Thông tin cá nhân</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"><i class="fa-solid fa-right-from-bracket"></i> <span class="clearfix d-none d-sm-inline-block">Thoát</span></a>
+        <a class="nav-link" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> <span class="clearfix d-none d-sm-inline-block">Thoát</span></a>
       </li>
 
     </ul>

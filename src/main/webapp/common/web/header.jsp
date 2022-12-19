@@ -42,41 +42,52 @@ To change this template use File | Settings | File Templates.
     <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold text-uppercase">đăng nhập tài khoản</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body mx-3">
-                    <div class="md-form mb-5">
-                        <i class="fas fa-envelope prefix grey-text text-danger"></i>
-                        <input type="email" id="defaultForm-email" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="defaultForm-email"> Email</label>
+            <form action="/login" method="post">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold text-uppercase">đăng nhập tài khoản</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-
-                    <div class="md-form mb-4">
-                        <i class="fas fa-lock prefix grey-text text-danger"></i>
-                        <input type="password" id="defaultForm-pass" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="defaultForm-pass">Mật khẩu</label>
-
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <!-- Material checked -->
-                        <!-- Material checked -->
-                        <div class="form-check p-0">
-                            <input type="checkbox" class="form-check-input" id="materialChecked2" checked>
-                            <label class="form-check-label" for="materialChecked2">Nhớ mật khẩu</label>
+                    <div class="modal-body mx-3">
+                        <c:set var="mess" value="${sessionScope.messErr}" scope="page"/>
+                        <c:if test="${mess!=null}">
+                            <p class="text-danger text-center" id="mess-form">${mess}</p>
+                        </c:if>
+                        <div class="md-form mb-3">
+                            <i class="fas fa-envelope prefix grey-text text-danger"></i>
+                            <input type="email" name="fEmail"
+                            <c:if test="${sessionScope.username != null}">
+                                    value="${sessionScope.username}"
+                            </c:if>
+                                   id="defaultForm-email" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="defaultForm-email"> Email</label>
                         </div>
-                        <a href="/views/resetpass.html" class="text-danger">Quên mật khẩu</a>
+
+                        <div class="md-form mb-4">
+                            <i class="fas fa-lock prefix grey-text text-danger"></i>
+                            <input type="password" name="fPass" id="defaultForm-pass" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="defaultForm-pass">Mật khẩu</label>
+
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <!-- Material checked -->
+                            <!-- Material checked -->
+                            <div class="form-check p-0">
+
+                                <input type="checkbox" name="remember" class="form-check-input" id="materialChecked2" checked>
+                                <label class="form-check-label" for="materialChecked2">Nhớ mật khẩu</label>
+                            </div>
+                            <a href="/views/resetpass.html" class="text-danger">Quên mật khẩu</a>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <span>Bạn chưa có tài khoản? <a href="/register" class="text-danger">Đăng ký</a></span>
+                        <button class="btn btn-danger " type="submit">Đăng nhập</button>
                     </div>
                 </div>
-                <div class="modal-footer d-flex justify-content-between">
-                    <span>Bạn chưa có tài khoản? <a href="/views/signup.html" class="text-danger">Đăng ký</a></span>
-                    <button class="btn btn-danger ">Đăng nhập</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
     <div class="d-head ">
@@ -88,7 +99,6 @@ To change this template use File | Settings | File Templates.
                     <div class="col-9 position-absolute p-2 menu-multi-mobile">
                         <div class="row row-md">
                             <div class="col-8">
-                                <a href="${pageContext.request.contextPath}/home" title="" class=""><img src="/images/fptshop-logo.png" class="img-fluid"></a>
                             </div>
                             <div class="col-4 d-flex justify-content-end">
                                 <i class="fa fa-times text-white" aria-hidden="true"></i>
@@ -369,10 +379,17 @@ To change this template use File | Settings | File Templates.
                                 <a class="nav-link text-center text-white " href="/views/user.html"><div><i class="fa fa-heart fa-lg" style="line-height: 1;" aria-hidden="true"></i></div> Sản phẩm đã thích</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-center text-white " href="/views/user.html" data-toggle="modal" data-target="#modalLoginForm">
+                                    <a class="nav-link text-center text-white" id="btn-login"
+                                    <c:if test="${sessionScope.personlogin == null}">
+                                        href="/views/user.html" data-toggle="modal" data-target="#modalLoginForm"
+                                    </c:if>
+                                    <c:if test="${sessionScope.personlogin != null}">
+                                        href="/logout"
+                                    </c:if>>
                                     <div><i class="fa fa-user fa-lg"aria-hidden="true" style="line-height: 1;"></i></div>
-                                    Tài khoản
-                                </a>
+                                        <%= session.getAttribute("personlogin") == null?"Tài khoản":"Đăng xuất"%>
+                                    </a>
+
                             </li>
 
                         </ul>
