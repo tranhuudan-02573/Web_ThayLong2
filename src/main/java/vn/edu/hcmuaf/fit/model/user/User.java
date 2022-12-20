@@ -158,5 +158,40 @@ public class User extends Base<User> implements Serializable {
         return new AbstractDAO<Vote>("votes").list(" and userId =" + this.id, Vote.class, null, null);
     }
 
+    public List<Order> _orders() {
+
+        return new AbstractDAO<Order>("orders").list(" and userId = " + this.id, Order.class, null, null);
+    }
+
+    public Timestamp nearBuy() {
+        return new AbstractDAO<Order>("carts").getCustom(" and save =false and userId =" + this.id + " order by created_at desc ", Order.class).get().getCreated_at();
+    }
+
+    public List<Carts> _carts() {
+        return new AbstractDAO<Carts>("carts").list(" and isSave=false and userId =" + this.id, Carts.class, null, null);
+    }
+
+
+    public List<Carts> _wishs() {
+        return new AbstractDAO<Carts>("carts").list(" and isSave=true and userId =" + this.id, Carts.class, null, null);
+
+    }
+
+    public Timestamp nearWish() {
+        return new AbstractDAO<Order>("carts").getCustom(" and save =true and userId =" + this.id + " order by created_at desc ", Order.class).get().getCreated_at();
+    }
+
+    public List<Review> _reviews() {
+        return new AbstractDAO<Review>("reviews").list(" and userId =" + this.id, Review.class, null, null);
+    }
+
+    public List<Phone> _phones() {
+        return new AbstractDAO<Phone>("phones").list(" and userId =" + this.id, Phone.class, null, null);
+    }
+
+    public List<Vote> _votes() {
+        return new AbstractDAO<Vote>("votes").list(" and userId =" + this.id, Vote.class, null, null);
+    }
+
 
 }
