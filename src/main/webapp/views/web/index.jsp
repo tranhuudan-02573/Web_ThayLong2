@@ -1339,7 +1339,26 @@
             dots: false,
             navText: ["<i class='fa-solid fa-circle-chevron-left fa-lg' style='font-size:40px'></i>", "<i class='fa-solid fa-circle-chevron-right fa-lg' style='font-size:40px'></i>"],
         });
-    });</script>
+        $('#modalLoginForm .modal-footer button').click(function (){
+            const ckFEmail = $('#defaultForm-email').hasClass('invalid')?true:false;
+            const ckFPass =  $('#defaultForm-pass').hasClass('invalid') ||  $('#defaultForm-pass').val().length<1?true:false;
+            if (ckFEmail || ckFPass)
+                $('#modalLoginForm form').attr('onsubmit','return false');
+            else
+                $('#modalLoginForm form').attr('onsubmit','return true');
+        });
+        popUp();
+    })
+
+    function popUp(){
+        if($('#mess-form').val() != undefined){
+            $('#btn-login').trigger('click')
+        }
+        else {
+            $('#btn-login').trigger('')
+        }
+    }
+    ;</script>
 
 </content>
 

@@ -29,6 +29,10 @@ public class SessionUntil {
         return username == null ? null : username.toString();
 
     }
+    public static void delItem(HttpServletRequest request, String name){
+        HttpSession session = request.getSession();
+        session.removeAttribute(name);
+    }
 
 
 }
