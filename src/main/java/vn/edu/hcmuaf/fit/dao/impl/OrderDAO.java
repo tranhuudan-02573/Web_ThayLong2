@@ -9,8 +9,8 @@ import java.sql.Timestamp;
 public class OrderDAO extends AbstractDAO<Order> {
 
 
-    public OrderDAO(String table) {
-        super(table);
+    public OrderDAO() {
+        super("orders");
     }
 
     public int save(Order order) {

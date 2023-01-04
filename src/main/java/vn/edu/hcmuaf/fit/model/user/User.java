@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
+import vn.edu.hcmuaf.fit.model.cart.CartItem;
 import vn.edu.hcmuaf.fit.model.cart.Carts;
 import vn.edu.hcmuaf.fit.model.order.Order;
 import vn.edu.hcmuaf.fit.model.phone.Base;
@@ -14,7 +15,9 @@ import vn.edu.hcmuaf.fit.model.review.Vote;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 @Data
@@ -33,12 +36,25 @@ public class User extends Base<User> implements Serializable {
 
     private String permission;
 
-    private List<Carts> carts = _carts();
-    private List<Carts> wishs = _wishs();
+    private Carts carts = listToCarts();
 
-    private Carts cartList;
+    public Carts listToCarts() {
+        return new Carts(cartItemIntegerMap());
+    }
 
 
+    public Action get(String v) {
+
+        List<PermissionAction> acs = _actions();
+        System.out.println(acs);
+        for (PermissionAction a : acs
+        ) {
+            if (a._action().getCode().equals(v)) return a._action();
+
+        }
+        return null;
+
+    }
 //    public Wish get(Wish cart) {
 //
 //        for (Wish c : carts
@@ -94,9 +110,10 @@ public class User extends Base<User> implements Serializable {
         return rs.toString();
     }
 
-    public List<Action> _actions() {
-        return new AbstractDAO<Action>("permission_action").list(" and userId =" + this.id, Action.class, null, null);
+    public List<PermissionAction> _actions() {
+        return new AbstractDAO<PermissionAction>("permission_action").list(" and userId =" + this.id, PermissionAction.class, null, null, null, null);
     }
+
     public static User findAccount(String email, String pass) {
         User user = getUser(email);
         if (user == null || !(email.equals(user.getEmail()) && BCrypt.checkpw(pass, user.getPassword())))
@@ -104,93 +121,55 @@ public class User extends Base<User> implements Serializable {
         return user;
     }
 
-    public static boolean hasEmail(String email){
-        return getUser(email)!=null;
+    public static boolean hasEmail(String email) {
+        return getUser(email) != null;
     }
 
-    public static User getUser(String email){
-        String sql = " and email = '"+ email +"'";
-        List<User> users = new AbstractDAO<User>("users").list(sql, User.class, null, null);
+    public static User getUser(String email) {
+        String sql = " and email = '" + email + "'";
+        List<User> users = new AbstractDAO<User>("users").list(sql, User.class, null, null, null, null);
         if (users.size() != 1) return null;
         return users.get(0);
     }
-    public static void main(String[] args) {
 
 
-//        System.out.println(new AbstractDAO<User>("users").list(" and email = '' ", User.class, null, null).size());
-        System.out.println(findAccount("camapcon@gmail.com","1"));
+    public Timestamp nearBuy() {
+        return new AbstractDAO<Order>("orders").get("  and userId =" + this.id + " order by created_at desc limit 1", Order.class, null).get().getCreated_at();
+    }
 
 
+    public Timestamp nearWish() {
+        return new AbstractDAO<Order>("carts").get("and cart_items.isSave =true   and carts.userId =" + this.id + " order by carts.created_at desc limit 1", " inner join cart_items on carts.cart_itemId = cart_items.id  ", Order.class, null).get().getCreated_at();
+    }
+
+    public List<Review> _reviews() {
+        return new AbstractDAO<Review>("reviews").list(" and userId =" + this.id, Review.class, null, null, null, null);
+    }
+
+    public List<Phone> _phones() {
+        return new AbstractDAO<Phone>("phones").list(" and userId =" + this.id, Phone.class, null, null, null, null);
+    }
+
+    public List<Vote> _votes() {
+        return new AbstractDAO<Vote>("votes").list(" and userId =" + this.id, Vote.class, null, null, null, null);
     }
 
     public List<Order> _orders() {
 
-        return new AbstractDAO<Order>("orders").list(" and userId = " + this.id, Order.class, null, null);
+        return new AbstractDAO<Order>("orders").list(" and userId = " + this.id, Order.class, null, null, null, null);
     }
 
-    public Timestamp nearBuy() {
-        return new AbstractDAO<Order>("carts").getCustom(" and save =false and userId =" + this.id + " order by created_at desc ", Order.class).get().getCreated_at();
+    public List<CartItem> _carts() {
+        return new AbstractDAO<CartItem>("carts").list("and userId =" + this.id, CartItem.class, null, null, null, null);
     }
 
-    public List<Carts> _carts() {
-        return new AbstractDAO<Carts>("carts").list(" and isSave=false and userId =" + this.id, Carts.class, null, null);
-    }
-
-
-    public List<Carts> _wishs() {
-        return new AbstractDAO<Carts>("carts").list(" and isSave=true and userId =" + this.id, Carts.class, null, null);
-
-    }
-
-    public Timestamp nearWish() {
-        return new AbstractDAO<Order>("carts").getCustom(" and save =true and userId =" + this.id + " order by created_at desc ", Order.class).get().getCreated_at();
-    }
-
-    public List<Review> _reviews() {
-        return new AbstractDAO<Review>("reviews").list(" and userId =" + this.id, Review.class, null, null);
-    }
-
-    public List<Phone> _phones() {
-        return new AbstractDAO<Phone>("phones").list(" and userId =" + this.id, Phone.class, null, null);
-    }
-
-    public List<Vote> _votes() {
-        return new AbstractDAO<Vote>("votes").list(" and userId =" + this.id, Vote.class, null, null);
-    }
-
-    public List<Order> _orders() {
-
-        return new AbstractDAO<Order>("orders").list(" and userId = " + this.id, Order.class, null, null);
-    }
-
-    public Timestamp nearBuy() {
-        return new AbstractDAO<Order>("carts").getCustom(" and save =false and userId =" + this.id + " order by created_at desc ", Order.class).get().getCreated_at();
-    }
-
-    public List<Carts> _carts() {
-        return new AbstractDAO<Carts>("carts").list(" and isSave=false and userId =" + this.id, Carts.class, null, null);
-    }
-
-
-    public List<Carts> _wishs() {
-        return new AbstractDAO<Carts>("carts").list(" and isSave=true and userId =" + this.id, Carts.class, null, null);
-
-    }
-
-    public Timestamp nearWish() {
-        return new AbstractDAO<Order>("carts").getCustom(" and save =true and userId =" + this.id + " order by created_at desc ", Order.class).get().getCreated_at();
-    }
-
-    public List<Review> _reviews() {
-        return new AbstractDAO<Review>("reviews").list(" and userId =" + this.id, Review.class, null, null);
-    }
-
-    public List<Phone> _phones() {
-        return new AbstractDAO<Phone>("phones").list(" and userId =" + this.id, Phone.class, null, null);
-    }
-
-    public List<Vote> _votes() {
-        return new AbstractDAO<Vote>("votes").list(" and userId =" + this.id, Vote.class, null, null);
+    Map<CartItem, Integer> cartItemIntegerMap() {
+        Map<CartItem, Integer> rs = new HashMap<>();
+        for (CartItem c : _carts()
+        ) {
+            rs.put(c, c.getQuantity());
+        }
+        return rs;
     }
 
 

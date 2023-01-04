@@ -141,24 +141,31 @@
 
                     <c:forEach items="${requestScope.brandList}" var="brand">
 
-                        <a class="border border-white  hvr-glow"
-                           href="${pageContext.request.contextPath}/phone-filter?name=brand&id=${brand.id}"
+
+                        <a class="border border-white  hvr-glow brand"
+                           onclick="document.getElementById('form-${brand.id}').submit()"
+
                            style="width:calc(100%/7) ; height: 100%;">
-                            <div class="p-2 ">
-                                <div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
+                            <form action="/phone-filter" id="form-${brand.id}">
+                                <input hidden value="${brand.id}" name="brandCheck">
+                                <input hidden name="sort" value="sap xep theo A - Z">
+                                <input hidden name="page" value="1">
+                                <div class="p-2 ">
+                                    <div class="picture bg-white mb-4 mx-auto " style="position:relative;  justify-content: center; align-items: center;
 						border-radius: 50%;
 					 width: 120px; height: 120px;">
-                                    <img class="mx-auto" src="${brand.logo}" alt=""
-                                         style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
+                                        <img class="mx-auto" src="${brand.logo}" alt=""
+                                             style="position: absolute; right: 0; left: 0; top: 25%; object-fit: contain; max-width: 60px; max-height: 60px;">
+                                    </div>
+                                    <div class="text-center ">
+                                        <h6 class="text-danger text-uppercase ">${brand.name}</h6>
+                                    </div>
                                 </div>
-                                <div class="text-center ">
-                                    <h6 class="text-danger text-uppercase ">${brand.name}</h6>
-                                </div>
-                            </div>
-
+                            </form>
                         </a>
 
                     </c:forEach>
+
                 </div>
             </div>
 
@@ -240,11 +247,11 @@
                                 <p class="title">Kết thúc sau: </p>
                                 <ul class="box-time  m-0 p-0">
                                     <li>
-                                        <p class="time"><%= s.getEnd_at().getDate() - new Timestamp(System.currentTimeMillis()).getDate()  %>
+                                        <p class="time"><%= s.period().getDays()  %>
                                         </p>
                                         <p class="separate">:</p></li>
                                     <li>
-                                        <p class="time hourse"><%= s.getEnd_at().getHours() - new Timestamp(System.currentTimeMillis()).getMonth()  %>
+                                        <p class="time hourse"><%=  s.getEnd_at().getHours() - new Timestamp(System.currentTimeMillis()).getHours()  %>
                                         </p>
                                         <p class="separate">:</p></li>
                                     <li>
@@ -301,7 +308,7 @@
                                                     <%
                                                         }%>
                                                 </div>
-                                                <a href="${pageContext.request.contextPath}phone-detail?id=<%=phone.getId()%> "
+                                                <a href="${pageContext.request.contextPath}phone-detail?id=<%=phone.getId()%> &page=1&page2=1"
                                                    class="text-dark align-self-stretch"
                                                    style="height: 375px;">
                                                     <div class=" cart-content  h-100">
@@ -383,7 +390,7 @@
                                                         so sánh
                                                     </a>
 
-                                                    <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=phone.getId()%>"
+                                                    <a href="${pageContext.request.contextPath}/add-carts?name=home&action=wishes&phoneId=<%=phone.getId()%>"
                                                        class="d-block  align-middle"
                                                        style="font-size:14px ;">
                                                         <i class="fa-regular fa-heart fa-sm"></i> yêu
@@ -400,8 +407,9 @@
 
                         </div>
                     </div>
-
-
+                    <div class="text-center mt-2">
+                        <a href="/phone-filter?page=1&sort=sap+xep+theo+A+-+Z&differentCheck=giam+gia" class="btn btn-warning text-uppercase px-5">xem thêm</a>
+                    </div>
                 </div>
             </div>
 
@@ -907,51 +915,51 @@
                 <ul class="nav w-75 nav-tabs row " id="myTab" role="tablist" style="border: 0;">
 
                     <%
-
-                        List<Promot> promots = (List<Promot>) request.getAttribute("promotList");
-
-                        for (int z = 0; z < promots.size(); z++) {
+                        String diff = (String)request.getAttribute("different");
+                        List<Phone> phoneList = (List<Phone>) request.getAttribute("phones");
+Map<String,String> map = (Map<String, String>) request.getAttribute("differentList");
+List<String> key = new ArrayList<>(map.keySet());
+                        String pagen =(String) request.getAttribute("page");
+                        for (String s: key
+                             ) {
 
 
                     %>
-
-
                     <li class="nav-item col-3 text-center ">
-                        <a class="nav-link bg-light text-dark text-uppercase	 <%=(z==0)?"active":""%> "
-                           id="<%=promots.get(z).getId()%>"
-                           data-toggle="tab" href="#tab-<%=promots.get(z).getId()%>" role="tab" aria-controls="home"
-                           aria-selected="true"> <span class="btn-floating btn-md  btn-default m-0 mr-2"
-                                                       style="box-shadow: none;"><i
+
+                        <a class="nav-link bg-light text-dark text-uppercase	<%=(diff.equals(map.get(s)))?"active":""%> "
+                           href="/home?page=<%=Integer.parseInt(pagen)%>&different=<%=map.get(s)%>"
+                        > <span class="btn-floating btn-md  btn-default m-0 mr-2"
+                                                       style="box-shadow: none;">
+                            <i
                                 class="fas fa-bolt"></i></span><strong>
-                            <%=promots.get(z).getName()%>
+                            <%=map.get(s)%>
                         </strong></a>
 
 
-                    </li>
 
+                    </li>
                     <%}%>
+
 
                 </ul>
             </div>
             <div class="catebody">
+
                 <div class="tab-content    pl-0 pr-0 " id="myTabContent">
 
-                    <%
-                        for (int k = 0; k < promots.size(); k++) {
+
+<%for (String s:key
+) {%>
+                    <div class="tab-pane fade  <%=(  diff.equals(map.get(s)))?"show active":""%>">
 
 
-                    %>
-
-                    <div class="tab-pane fade show <%= (k==0)?"active":""%>" id="tab-<%=promots.get(k).getId()%>"
-                         role="tabpanel"
-                         aria-labelledby="tab-<%=promots.get(k).getId()%>">
                         <div class="products-mobile mt-3 w-100 " style="margin-top: 0 !important;">
                             <div class="row w-100 mx-auto  ">
 
                                 <%
 
-                                    List<PhonePromot> phones = promots.get(k)._phones();
-                                    for (PhonePromot phone : phones
+                                    for (Phone phone : phoneList
                                     ) {
 
 
@@ -980,7 +988,7 @@
                                                 <div class="d-flex flex-column align-items-strech w-100  ">
 
                                                     <div class=" align-self-start" style="height:18px">
-                                                        <% for (PhonePromot promot : phone._phone()._promots()
+                                                        <% for (PhonePromot promot : phone._promots()
                                                         ) {
                                                             if ("TG0".equalsIgnoreCase(promot._promot().getKey())) {
                                                         %>
@@ -992,22 +1000,22 @@
 
                                                     </div>
 
-                                                    <a href="${pageContext.request.contextPath}/phone-detail?id=<%=phone._phone().getId()%>"
+                                                    <a href="${pageContext.request.contextPath}/phone-detail?id=<%=phone.getId()%>&page=1&page2=1"
                                                        class="text-dark align-self-stretch" style="height: 375px;">
                                                         <div class=" cart-content  h-100">
                                                             <div class="my-2 d-block overflow-hidden item hvr-float ">
                                                                 <img class="object-cover mw-100 "
-                                                                     src="<%=phone._phone().getThumbnail()%>" alt="">
+                                                                     src="<%=phone.getThumbnail()%>" alt="">
                                                             </div>
                                                             <h3 class=" product-title overflow-hidden   mb-1 " style="display: -webkit-box;
 -webkit-box-orient: vertical;
 -webkit-line-clamp: 2;font-size: 14px;">
-                                                                <%=phone._phone().getName()%>
+                                                                <%=phone.getName()%>
                                                             </h3>
 
                                                             <div class="mb-1">
                                                                 <%
-                                                                    List<PhoneSpec> specs = phone._phone()._specs();
+                                                                    List<PhoneSpec> specs = phone._specs();
                                                                     for (PhoneSpec spec : specs
                                                                     ) {
                                                                         if ("LR".equalsIgnoreCase(spec._spec().getKey()) || "TDR".equalsIgnoreCase(spec._spec().getKey())) {
@@ -1037,7 +1045,7 @@
                                                                 <p class=" text-warning "
                                                                    style="font-size: 12px;">
                                                                     <%
-                                                                        double avg = phone._phone().avg();
+                                                                        double avg = phone.avg();
                                                                         for (int i = 1; i <= 5; i++) {
                                                                             if (i <= avg) {
                                                                     %>
@@ -1057,7 +1065,7 @@
                                                                     %>
                                                                 </p>
                                                                 <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                   style="font-size: 12px;"><%=phone._phone().count()%>
+                                                                   style="font-size: 12px;"><%=phone.count()%>
                                                                 </p>
                                                             </div>
 
@@ -1068,7 +1076,7 @@
                                                            style="font-size:14px ;">
                                                             <i class="fa-regular fa-square-plus fa-sm"></i> so sánh
                                                         </a>
-                                                        <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=phone._phone().getId()%>"
+                                                        <a href="${pageContext.request.contextPath}/add-carts?name=home&action=wishes&phoneId=<%=phone.getId()%>"
                                                            class="d-block  align-middle"
                                                            style="font-size:14px ;">
                                                             <i class="fa-regular fa-heart fa-sm"></i> yêu thích
@@ -1084,12 +1092,19 @@
                                 %>
                             </div>
                         </div>
-                        <div class="text-center mt-2">
-                            <button class="btn btn-danger text-uppercase px-5">xem thêm</button>
-                        </div>
-                    </div>
-                    <%}%>
 
+                        <%if(pagen!=null){%>
+                        <form action="/home">
+                        <div class="text-center mt-2">
+                            <a class="btn btn-danger text-uppercase px-5" href="/home?page=<%=Integer.parseInt(pagen)+1%>&different=<%=map.get(s)%>" >xem thêm</a>
+
+                        </div>
+                        </form>
+                     <%}%>
+                    </div>
+
+
+<%}%>
                 </div>
 
 
@@ -1113,12 +1128,17 @@
         <section class="homecate d-none d-sm-block my-5 section-hot">
             <div class="card">
                 <div class="card-header white-text danger-color d-flex justify-content-between align-items-center">
-                    <h5 class="mt-2 text-uppercase font-weight-bold"><%=b
+
+                    <h5 class="mt-2 text-uppercase font-weight-bold">
+                        <a href="/phone-filter?page=1&sort=sap+xep+theo+A+-+Z&brandCheck=<%=b.getId()%>">
+                        <%=b
                             .
                             getName
                                     (
                                     )%>
+                        </a>
                     </h5>
+
                     <div>
                         <%
                             List<Model> models = b._models();
@@ -1127,7 +1147,7 @@
 
                         %>
 
-                        <a href="/phone-filter?name=model&id=<%=model.getId()%>"
+                        <a href="/phone-filter?page=1&sort=sap+xep+theo+A+-+Z&modelCheck=<%=model.getId()%>&brandCheck=<%=b.getId()%>"
                            class="btn btn-white text-danger btn-sm m-0 btn-rounded  waves-effect waves-light"><span
                                 class="h6"><%=model.getName()%></span></a>
                         <%
@@ -1184,7 +1204,7 @@
 
                                                 </div>
 
-                                                <a href="${pageContext.request.contextPath}/phone-detail?id=<%=phone.getId()%> "
+                                                <a href="${pageContext.request.contextPath}/phone-detail?id=<%=phone.getId()%>&page=1&page2=1 "
                                                    class="text-dark align-self-stretch" style="height: 375px;">
                                                     <div class=" cart-content  h-100">
                                                         <div class="my-2 d-block overflow-hidden item hvr-float ">
@@ -1260,11 +1280,11 @@
                                                     </div>
                                                 </a>
                                                 <div class="mt-2  d-flex justify-content-between ">
-                                                    <a href="" class=" d-block  align-middle" style="font-size:14px ;">
-                                                        <i class="fa-regular fa-square-plus fa-sm"></i> so sánh
+                                                    <a href="${pageContext.request.contextPath}/add-carts?name=home&action=carts&phoneId=<%=phone.getId()%>" class=" d-block  align-middle" style="font-size:14px ;">
+                                                        <i class="fa-regular fa-square-plus fa-sm"></i> cart
                                                     </a>
 
-                                                    <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=phone.getId()%>"
+                                                    <a href="${pageContext.request.contextPath}/add-carts?name=home&action=wishes&phoneId=<%=phone.getId()%>"
                                                        class="d-block  align-middle" style="font-size:14px ;">
                                                         <i class="fa-regular fa-heart fa-sm"></i> yêu thích
                                                     </a>
@@ -1326,6 +1346,10 @@
 <content tag="local_script">
     <script>// Material Select Initialization
     $(document).ready(function () {
+        // $('.brand').click(function () {
+        //     $(this.form).submit();
+        // });
+
         $('.mdb-select').materialSelect();
         $('.my-owl-carousel').owlCarousel({
             items: 3,
@@ -1339,25 +1363,10 @@
             dots: false,
             navText: ["<i class='fa-solid fa-circle-chevron-left fa-lg' style='font-size:40px'></i>", "<i class='fa-solid fa-circle-chevron-right fa-lg' style='font-size:40px'></i>"],
         });
-        $('#modalLoginForm .modal-footer button').click(function (){
-            const ckFEmail = $('#defaultForm-email').hasClass('invalid')?true:false;
-            const ckFPass =  $('#defaultForm-pass').hasClass('invalid') ||  $('#defaultForm-pass').val().length<1?true:false;
-            if (ckFEmail || ckFPass)
-                $('#modalLoginForm form').attr('onsubmit','return false');
-            else
-                $('#modalLoginForm form').attr('onsubmit','return true');
-        });
-        popUp();
+
     })
 
-    function popUp(){
-        if($('#mess-form').val() != undefined){
-            $('#btn-login').trigger('click')
-        }
-        else {
-            $('#btn-login').trigger('')
-        }
-    }
+
     ;</script>
 
 </content>

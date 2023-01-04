@@ -82,7 +82,13 @@
 
                                                                 <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>danh sách người dùng
                                                                 </span></a>
-                      </li>
+                      </li><li>
+                      <a href="/admin/manage/user"
+                         class="waves-effect ">
+
+                                                                <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>danh sách quyen
+                                                                </span></a>
+                    </li>
 
 
                     </ul>
@@ -171,7 +177,12 @@
                           <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>review</span></a>
 
                       </li>
+                      <li>
+                        <a href="/admin/manage/phonereview" class="waves-effect">
+                          <span class="sv-slim"> RF </span>
+                          <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>question</span></a>
 
+                      </li>
                     </ul>
 
                   </div>
@@ -179,7 +190,7 @@
                 <li>
                   <a class="collapsible-header active text-white waves-effect arrow-r "
                      style="font-size: 16px;"><i
-                          class="sv-slim-icon fas fa-brands fa-opencart"></i>color<i
+                          class="sv-slim-icon fas fa-brands fa-opencart"></i>difference<i
                           class="fas fa-angle-down rotate-icon"></i></a>
                   <div class="collapsible-body">
                     <ul class=" ">
@@ -188,104 +199,72 @@
                           <span class="sv-slim"> RF </span>
                           <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>color</span></a>
                       </li>
-                    </ul>
-                  </div>
-                </li>
-                <li>
-                  <a class="collapsible-header active text-white waves-effect arrow-r "
-                     style="font-size: 16px;"><i
-                          class="sv-slim-icon fas fa-brands fa-opencart"></i>spec<i
-                          class="fas fa-angle-down rotate-icon"></i></a>
-                  <div class="collapsible-body">
-                    <ul class=" ">
                       <li>
                         <a href="/admin/manage/spec" class="waves-effect">
                           <span class="sv-slim"> RF </span>
                           <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>spec</span></a>
-
                       </li>
-
-                    </ul>
-
-                  </div>
-                </li>
-                <li>
-                  <a class="collapsible-header active text-white waves-effect arrow-r "
-                     style="font-size: 16px;"><i
-                          class="sv-slim-icon fas fa-brands fa-opencart"></i>cap<i
-                          class="fas fa-angle-down rotate-icon"></i></a>
-                  <div class="collapsible-body">
-                    <ul class=" ">
                       <li>
                         <a href="/admin/manage/cap" class="waves-effect">
                           <span class="sv-slim"> RF </span>
                           <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>cap</span></a>
-
                       </li>
-
-                    </ul>
-
-                  </div>
-                </li>
-                <li>
-                  <a class="collapsible-header active text-white waves-effect arrow-r "
-                     style="font-size: 16px;"><i
-                          class="sv-slim-icon fas fa-brands fa-opencart"></i>sale<i
-                          class="fas fa-angle-down rotate-icon"></i></a>
-                  <div class="collapsible-body">
-                    <ul class=" ">
                       <li>
                         <a href="/admin/manage/sale" class="waves-effect">
                           <span class="sv-slim"> RF </span>
                           <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>sale</span></a>
-
                       </li>
-
-                    </ul>
-
-                  </div>
-                </li>
-                <li>
-                  <a class="collapsible-header active text-white waves-effect arrow-r "
-                     style="font-size: 16px;"><i
-                          class="sv-slim-icon fas fa-brands fa-opencart"></i>model<i
-                          class="fas fa-angle-down rotate-icon"></i></a>
-                  <div class="collapsible-body">
-                    <ul class=" ">
                       <li>
                         <a href="/admin/manage/model" class="waves-effect">
                           <span class="sv-slim"> RF </span>
                           <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>model</span></a>
-
                       </li>
-
-                    </ul>
-
-                  </div>
-                </li>
-                <li>
-                  <a class="collapsible-header active text-white waves-effect arrow-r "
-                     style="font-size: 16px;"><i
-                          class="sv-slim-icon fas fa-brands fa-opencart"></i>brand<i
-                          class="fas fa-angle-down rotate-icon"></i></a>
-                  <div class="collapsible-body">
-                    <ul class=" ">
                       <li>
                         <a href="/admin/manage/brand" class="waves-effect">
                           <span class="sv-slim"> RF </span>
                           <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>brand</span></a>
-
                       </li>
-
                     </ul>
-
                   </div>
                 </li>
+
+
               </ul>
 
             </div>
           </li>
+          <li>
+            <a class="collapsible-header waves-effect arrow-r " style="font-size: 16px;"><i
+                    class="sv-slim-icon fas fa-chevron-rightfa-chevron-right fa-angle-double-left"></i>bieu do<i class="fas fa-angle-down rotate-icon"></i>
+            </a>
+            <div class="collapsible-body">
 
+              <ul class="collapsible collapsible-accordion">
+                <li>
+                  <a class="collapsible-header  text-white waves-effect arrow-r "
+                     style="font-size: 16px;"><i
+                          class=" fas fa-solid fa-users "></i>Người dùng<i
+                          class="fas fa-angle-down rotate-icon"></i></a>
+                  <div class="collapsible-body">
+                    <ul class="">
+                      <li>
+                        <a href="/admin/manage/user"
+                           class="waves-effect ">
+
+                                                                <span class="sv-normal" style="font-size: 16px;"><i class="fas fa-circle blue-text"></i>danh sách người dùng
+                                                                </span></a>
+                      </li>
+
+
+                    </ul>
+                  </div>
+                </li>
+
+
+              </ul>
+
+            </div>
+          </li>
         </ul>
       </li>
 

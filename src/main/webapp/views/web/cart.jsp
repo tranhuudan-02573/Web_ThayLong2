@@ -1,11 +1,13 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.user.User" %>
 <%@ page import="vn.edu.hcmuaf.fit.helper.FormatTime" %>
 <%@ page import="java.util.List" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.wish.Wish" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.phone.PhoneColor" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.cart.Carts" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.cart.CartItem" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="vn.edu.hcmuaf.fit.constant.Variable" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.Color" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.Phone" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 
@@ -17,9 +19,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/src/lib/mdb4/css/addons/datatables.min.css">
 
     <content tag="local_style">
+        <link rel="stylesheet" href="/lib/mdb4/css/addons/datatables.min.css">
         <style>
             .number-input input[type="number"] {
                 -webkit-appearance: textfield;
@@ -121,48 +123,30 @@
 <!--Main Navigation-->
 
 <%
-    Carts carts = (Carts) session.getAttribute("CARTS");
-    User user = (User) session.getAttribute("USER");
+    Carts carts = (Carts) session.getAttribute(Variable.Global.CART.toString());
+    User user = (User) session.getAttribute(Variable.Global.USER.toString());
 %>
 
 <main class="my-5">
     <div class="container">
         <div id="breadcrumb"></div>
-
-        <%--        <%--%>
-        <%--            if (request.getAttribute("message") != null) {--%>
-        <%--        %>--%>
-        <%--        &lt;%&ndash;        <div class="alert alert-<%=request.getAttribute("type")%>" role="alert">&ndash;%&gt;--%>
-        <%--        &lt;%&ndash;            <%=request.getAttribute("message")%>&ndash;%&gt;--%>
-        <%--        &lt;%&ndash;        </div>&ndash;%&gt;--%>
-
-        <%--        <div class="alert alert-dismissible fade show" role="alert" data-mdb-color="<%=request.getAttribute("type")%>"--%>
-        <%--             data-mdb-delay="5000" data-mdb-autohide="true">--%>
-        <%--            <strong><%=request.getAttribute("type")%>--%>
-        <%--            </strong> <%=request.getAttribute("message")%>--%>
-        <%--            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>--%>
-        <%--        </div>--%>
-        <%--        <%}%>--%>
         <section class="mb-4">
-
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-
                         <div class="card-header text-danger text-uppercase     ">
                             <div class="d-flex justify-content-between   align-items-center  ">
-
                                 <strong>giỏ hàng</strong>
-
-                                <span><%=(user.getId() == 0) ? "so luong trong cart: " + carts.getCartItemIntegerMap().size() : "ngày cuối thêm vào: " + FormatTime.format(user.nearBuy(), false)%></span>
+                                <span><%=(user == null) ? "so luong trong cart: " + carts.cartItems() : "ngày cuối thêm vào: " + FormatTime.format(user.nearBuy(), false)%></span>
                             </div>
                         </div>
 
                         <div class="card-body">
                             <%
                                 List<CartItem> cartItems = new ArrayList<>(carts.getCartItemIntegerMap().keySet());
-                                if (!cartItems.isEmpty()) {
+                                if (carts.cartItems()!=0  ) {
                             %>
+
                             <table id="dtMaterialDesignExample" class="table " cellspacing="0"
                                    width="100%">
                                 <thead>
@@ -184,77 +168,122 @@
 
                                         if (!cartItems.get(i).isSave()) {
                                 %>
-                                <tr>
-                                    <td scope="row" class="align-middle justify-content-center"><%=i%>
-                                    </td>
-                                    <td class="align-middle justify-content-center" style="max-width: 15%;">
-                                        <%=cartItems.get(i).getPhone().getName() %>
-                                    </td>
-                                    <td><img style="width: 70px; height: 70px;"
-                                             src="<%=cartItems.get(i).getPhone().getThumbnail()%>"
-                                             alt=""></td>
-                                    <td class="align-middle justify-content-center">
-                                        <select>
-                                            <%
-                                                List<PhoneColor> colors = cartItems.get(i).getPhone()._colors();
-                                                for (PhoneColor pc : colors
-                                                ) {
-                                            %>
-                                            <option value="<%=pc._color().getKey()%>" <%=(pc.getColorId() == cartItems.get(i).getColor().getId()) ? "selected" : ""%> ><%=pc._color().getName()%>
-                                            </option>
-                                            <%}%>
-                                        </select>
-                                    </td>
-                                    <td class="align-middle justify-content-center"><%= cartItems.get(i).getPrice() %>
-                                        VND
-                                    </td>
-                                    <td class="align-middle justify-content-center">
 
-                                        <div class="def-number-input number-input safari_only">
-                                            <button
-                                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                                                    class="minus btn-sm"></button>
-                                            <input class="quantity form-control-sm" min="0" name="quantity"
-                                                   value="<%=cartItems.get(i).getQuantity()%>"
-                                                   type="number">
-                                            <button
-                                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                                                    class="plus btn-sm"></button>
-                                        </div>
+                                    <tr>
 
-                                    </td>
-                                    <td class="align-middle justify-content-center"><%=cartItems.get(i).getPhone()._phoneState().getName()%>
-                                    </td>
-                                    <td class="justify-content-center align-middle group-selectBTN">
-                                        <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=cartItems.get(i).getPhone().getId()%>&colorId=<%=cartItems.get(i).getColor().getId()%>"
-                                           class="ILB mr-3"
-                                           style="display: inline-block; cursor: pointer;">
-                                            <i class="fa-regular fa-heart mr-1"></i>
-                                            Yêu thích
-                                        </a>
-                                        <div class="ILB" style="display: inline-block; cursor: pointer;">
-                                            <i class="fa-regular fa-trash-can mr-1"></i>
-                                            Xóa
-                                        </div>
-                                    </td>
+                                        <td scope="row" class="align-middle justify-content-center"><%=i%>
+                                        </td>
+                                        <td class="align-middle justify-content-center" style="max-width: 15%;">
+                                            <%=cartItems.get(i)._phone().getName()  %>
+                                        </td>
+                                        <td><img style="width: 70px; height: 70px;"
+                                                 src="<%=cartItems.get(i)._phone().getThumbnail()%>"
+                                                 alt=""></td>
+                                        <td class="align-middle justify-content-center">
+                                            <form action="/add-carts" method="post" id="update2-<%=i%>">
+                                                <input hidden name="name" value="carts" >
+                                                <input hidden name="num" value="<%=carts.getCartItemIntegerMap().get(cartItems.get(i))%>">
+                                                <input hidden name="action" value="updateColor" >
+                                                <input hidden name="colorId" value="<%=cartItems.get(i).getColorId()%>" >
+                                                <input hidden name="phoneId" value="<%=cartItems.get(i).getPhoneId()%>">
+                                            <select onchange="document.getElementById('update2-<%=i%>').submit()" name="colorIdU">
+                                                <%
+                                                    List<Color> colors = carts.colors(cartItems.get(i));
+                                                    for (Color pc : colors
+                                                    ) {
+                                                %>
+                                                <option value="<%=pc.getId()%>" <%=(pc.getId() == cartItems.get(i).getColorId()) ? "selected" : ""%> ><%=pc.getName()%>
+                                                </option>
+                                                <%
+                                                    }
+                                                %>
+                                            </select>
+                                            </form>
+                                        </td>
+                                        <td class="align-middle justify-content-center"><%= cartItems.get(i).getPrice() %>
+                                            VND
+                                        </td>
+                                        <td class="align-middle justify-content-center">
+                                            <form action="/add-carts" method="post" id="update-<%=i%>">
+                                                <input hidden name="name" value="carts" >
+                                                <input hidden name="action" value="updateQuantity" >
+                                                <input hidden name="num" value="<%=carts.getCartItemIntegerMap().get(cartItems.get(i))%>" >
+                                                <input hidden name="colorId" value="<%=cartItems.get(i).getColorId()%>" >
+                                                <input hidden name="phoneId" value="<%=cartItems.get(i).getPhoneId()%>">
+                                            <div class="def-number-input number-input safari_only">
+                                                <button
+                                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                                        class="minus btn-sm"></button>
+                                                <input class="quantity form-control-sm" min="0" name="numN"
+                                                       value="<%=carts.getCartItemIntegerMap().get(cartItems.get(i))%>" onchange="document.getElementById('update-<%=i%>').submit()"
+                                                       type="number">
+                                                <button
+                                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                        class="plus btn-sm"></button>
+                                            </div>
+                                            </form>
+                                        </td>
+                                        <td class="align-middle justify-content-center"><%=cartItems.get(i)._phone()._phoneState().getName()%>
+                                        </td>
+                                        <td class="justify-content-center align-middle group-selectBTN">
+                                            <a onclick="document.getElementById('form-<%=i%>').submit()"
+                                               class="ILB mr-3"
+                                               style="display: inline-block; cursor: pointer;">
+                                                <form action="/add-carts" method="post" id="form-<%=i%>">
+                                                    <input hidden name="phoneId" value="<%=cartItems.get(i).getPhoneId()%>">
+                                                    <input hidden name="name" value="carts">
+                                                    <input hidden name="colorId" value="<%=cartItems.get(i).getColorId()%>">
+                                                    <input hidden name="num" value="<%=carts.getCartItemIntegerMap().get(cartItems.get(i))%>">
+                                                    <input hidden name="action" value="wishes" >
 
-                                </tr>
+                                                </form>
+                                                <i class="fa-regular fa-heart mr-1"></i>
+                                                Yêu thích
+                                            </a>
+                                            <div class="ILB" style="display: inline-block; cursor: pointer;">
+                                                <a onclick="document.getElementById('form2-<%=i%>').submit()"
+                                                   class="ILB mr-3"
+                                                   style="display: inline-block; cursor: pointer;">
+                                                    <form action="/add-carts" method="post" id="form2-<%=i%>">
+                                                        <input hidden name="phoneId" value="<%=cartItems.get(i).getPhoneId()%>">
+                                                        <input hidden name="name" value="carts">
+                                                        <input hidden name="colorId" value="<%=cartItems.get(i).getColorId()%>">
+                                                        <input hidden name="num" value="<%=carts.getCartItemIntegerMap().get(cartItems.get(i))%>">
+                                                        <input hidden name="action"  value="delete">
+                                                    </form>
+                                                    <i class="fa-regular fa-trash-can mr-1"></i>
+                                                    Xóa
+                                                </a>
+                                            </div>
+                                            <div class="ILB" style="display: inline-block; cursor: pointer;">
+                                                <a href="/phone-detail?num=<%=carts.getCartItemIntegerMap().get(cartItems.get(i))%>&colorId=<%=cartItems.get(i).getColorId()%>&id=<%=cartItems.get(i).getPhoneId()%>&page=1&page2=1"
+                                                   class="ILB mr-3"
+                                                   style="display: inline-block; cursor: pointer;">
+                                                    <i class="fa-solid fa-up-right-from-square mr-1"></i>
+                                                    toi
+                                                </a>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+
                                 <%
                                         }
                                     }
                                 %>
                                 </tbody>
                             </table>
+
                             <%
 
                             } else {
+
                             %>
 
                             <div class=" text-center d-flex justify-content-center align-items-center ">
                                 <a href="/" class="btn btn-danger btn-lg px-5">shopping</a>
                             </div>
-
-
                             <%}%>
                         </div>
                     </div>
@@ -264,39 +293,49 @@
             </div>
 
         </section>
-
+        <%
+            if
+            (
+                    !
+                            cartItems
+                                    .
+                                    isEmpty
+                                            (
+                                            )
+            ) {
+        %>
         <section class="mb-5">
             <div class="row">
-
                 <div class="col-4 ml-auto">
                     <div class="card ">
                         <div class="card-header red-text  text-center">
                             <h5 class="font-weight-500 my-1 text-uppercase">tổng giỏ hàng</h5>
                         </div>
                         <div class="card-body ">
-
-
                             <table class="table table-bordered table-striped mb-0">
                                 <tbody>
                                 <tr>
                                     <th scope="row">Tổng số lượng</th>
-                                    <td>543</td>
+                                    <td><%=carts.cartItems2()%>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Tạm tính</th>
-                                    <td>74.670.000 <sup>đ</sup></td>
-                                </tr>
-
-                                <tr>
-                                    <th>Tổng tiền</th>
-                                    <td><%=user
+                                    <td><%=carts
                                             .
                                             total
                                                     (
-                                                    )%>
+                                                    )%> <sup>đ</sup></td>
+                                </tr>
+                                <tr>
+                                    <th>Tổng tiền</th>
+                                    <td><%= carts
+                                            .
+                                            total
+                                                    (
+                                                    ) %>
                                     </td>
                                 </tr>
-
                                 </tbody>
                             </table>
                             <hr>
@@ -307,42 +346,40 @@
                 </div>
             </div>
         </section>
-
-
+        <%}%>
     </div>
-
-
 </main>
 
-
-<script src="/src/lib/mdb4/js/addons/datatables.min.js"></script>
-<script>
-    // Material Design example
-    $(document).ready(function () {
-        $('#dtMaterialDesignExample').DataTable({
-            "paging": true,
-            "pagingType": "full_numbers"
+<content tag="local_script">
+    <script src="/lib/mdb4/js/addons/datatables.min.js"></script>
+    <script>
+        // Material Design example
+        $(document).ready(function () {
+            $('#dtMaterialDesignExample').DataTable({
+                "paging": true,
+                "pagingType": "full_numbers"
+            });
+            $('#dtMaterialDesignExample_wrapper').find('label').each(function () {
+                $(this).parent().append($(this).children());
+            });
+            $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('input').each(function () {
+                const $this = $(this);
+                $this.attr("placeholder", "Search");
+                $this.removeClass('form-control-sm');
+            });
+            $('#dtMaterialDesignExample_wrapper .dataTables_length').addClass('d-flex flex-row');
+            $('#dtMaterialDesignExample_wrapper .dataTables_filter').addClass('md-form');
+            $('#dtMaterialDesignExample_wrapper select').removeClass(
+                'custom-select custom-select-sm form-control form-control-sm');
+            $('#dtMaterialDesignExample_wrapper select').addClass('mdb-select');
+            $('#dtMaterialDesignExample_wrapper .mdb-select').materialSelect();
+            $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('label').remove();
+            $('#dtMaterialDesignExample_paginate .pagination').addClass('pg-red');
         });
-        $('#dtMaterialDesignExample_wrapper').find('label').each(function () {
-            $(this).parent().append($(this).children());
-        });
-        $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('input').each(function () {
-            const $this = $(this);
-            $this.attr("placeholder", "Search");
-            $this.removeClass('form-control-sm');
-        });
-        $('#dtMaterialDesignExample_wrapper .dataTables_length').addClass('d-flex flex-row');
-        $('#dtMaterialDesignExample_wrapper .dataTables_filter').addClass('md-form');
-        $('#dtMaterialDesignExample_wrapper select').removeClass(
-            'custom-select custom-select-sm form-control form-control-sm');
-        $('#dtMaterialDesignExample_wrapper select').addClass('mdb-select');
-        $('#dtMaterialDesignExample_wrapper .mdb-select').materialSelect();
-        $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('label').remove();
-        $('#dtMaterialDesignExample_paginate .pagination').addClass('pg-red');
-    });
 
 
-</script>
+    </script>
+</content>
 </body>
 
 </html>

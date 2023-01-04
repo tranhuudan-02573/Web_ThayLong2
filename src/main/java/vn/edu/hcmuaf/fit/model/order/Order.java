@@ -31,7 +31,7 @@ public class Order extends Base<Order> implements Serializable {
 
 
     public List<OrderDetail> _orderDetails() {
-        return new AbstractDAO<OrderDetail>("order_detail").list(" and orderId =" + this.id, OrderDetail.class, null, null);
+        return  new AbstractDAO<OrderDetail>("order_detail").list(" and orderId =" + this.id, OrderDetail.class, null, null,null,null);
     }
 
     public Code _code() {
@@ -55,8 +55,5 @@ public class Order extends Base<Order> implements Serializable {
 //        }
 //        return total;
 //    }
-    public static void main(String[] args) {
-        System.out.println(new AbstractDAO<Order>("orders").getCustom(" max(created_at) ", Order.class));
-    }
 
 }

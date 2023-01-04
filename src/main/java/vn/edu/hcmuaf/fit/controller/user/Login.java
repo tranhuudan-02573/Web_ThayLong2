@@ -41,7 +41,7 @@ public class Login extends HttpServlet {
         String userPass = (String) request.getParameter("fPass");
         String remember = (String) request.getParameter("remember");
         // save name user  when submit
-        SessionUntil.add(request,"username", userName);
+        SessionUntil.set(request,"username", userName);
 
         System.out.println("User: "+userName+" "+userPass);
         System.out.println("remember: "+remember);
@@ -49,12 +49,12 @@ public class Login extends HttpServlet {
         account =  User.findAccount(userName, userPass);
 
         if (account == null) {
-            SessionUntil.add(request,"messErr","Vui lòng kiểm tra lại thông tin đăng nhập");
+            SessionUntil.set(request,"messErr","Vui lòng kiểm tra lại thông tin đăng nhập");
             response.sendRedirect("/home");
             return;
         }
         if (!account.isActive()) {
-            SessionUntil.add(request,"messErr","Vui lòng xác thực tài khoản trong email của bạn");
+            SessionUntil.set(request,"messErr","Vui lòng xác thực tài khoản trong email của bạn");
             response.sendRedirect("/home");
             return;
         }
@@ -62,7 +62,7 @@ public class Login extends HttpServlet {
         // handle turn-off display popup login
         SessionUntil.delItem(request,"messErr");
         // convert label login <->logout
-        SessionUntil.add(request,"personlogin", account.getPermission());
+        SessionUntil.set(request,"personlogin", account.getPermission());
 
 
         if (remember != null) {

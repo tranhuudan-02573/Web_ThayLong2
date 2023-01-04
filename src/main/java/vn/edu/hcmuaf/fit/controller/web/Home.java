@@ -1,13 +1,10 @@
 package vn.edu.hcmuaf.fit.controller.web;
 
+import vn.edu.hcmuaf.fit.constant.Variable;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Brand;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
-import vn.edu.hcmuaf.fit.model.phone.Promot;
 import vn.edu.hcmuaf.fit.model.phone.Sale;
-import vn.edu.hcmuaf.fit.model.phone.*;
-import vn.edu.hcmuaf.fit.model.user.User;
-import vn.edu.hcmuaf.fit.until.SessionUntil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,20 +23,41 @@ public class Home extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Map<String, String> differentList = new HashMap<>();
+        differentList.put(" and phones.saleId is not null ", "giam gia");
+        differentList.put(" and phone_promot.promotId =1 ", "tra gop");
+        differentList.put(" and phones.isNew is true ", "moi");
+        String different = request.getParameter("different");
+        String sql = "";
+        List<String> keys3 = new ArrayList<>(differentList.keySet());
+        if (different != null) {
+            for (String key : keys3
+            ) {
+                if (differentList.get(key).equals(different)) {
+                    sql += key;
+                }
+
+            }
+        }
+        String page = request.getParameter("page");
+        int pagen = 1;
+
+        if (page != null) {
+            pagen = Integer.parseInt(page);
+            request.setAttribute("page", page);
+        }
 
 
-        List<Sale> saleList = new AbstractDAO<Sale>("sales").list(" and now() between start_at and end_at and unit ='%' and value >40 ", Sale.class, null, null);
-        List<Sale> saleListCarousel = new AbstractDAO<Sale>("sales").list(" and now() between start_at and end_at ", Sale.class, null, 6);
+        List<Sale> saleList = new AbstractDAO<Sale>("sales").list(" and now() between start_at and end_at and unit ='%' and value >40 ", Sale.class, null, null, null, null);
+        List<Sale> saleListCarousel = new AbstractDAO<Sale>("sales").list(" and now() between start_at and end_at ", Sale.class, null, 6, null, null);
+        List<Brand> brandList = new AbstractDAO<Brand>("brands").list("", Brand.class, null, 14, null, null);
+        List<Phone> phones = new AbstractDAO<Phone>("phones").list0(sql, Phone.class, null, null, Variable.Global.JOIN_PHONE, null, 5 * pagen, 0);
 
-        List<Brand> brandList = new AbstractDAO<Brand>("brands").list("", Brand.class, null, 14);
-
-
-        List<Promot> promotList = new AbstractDAO<Promot>("promots").list("", Promot.class, null, 4);
-
-
+        request.setAttribute("differentList", differentList);
+        request.setAttribute("different", different);
+        request.setAttribute("phones", phones);
         request.setAttribute("brandList", brandList);
         request.setAttribute("saleList", saleList);
-        request.setAttribute("promotList", promotList);
         request.setAttribute("saleListCarousel", saleListCarousel);
         request.getRequestDispatcher("/views/web/index.jsp").forward(request, response);
     }
@@ -49,5 +67,8 @@ public class Home extends HttpServlet {
 
     }
 
+    public static void main(String[] args) {
+        System.out.println(new AbstractDAO<Sale>("sales").list(" and now() between start_at and end_at ", Sale.class, null, 6, null, null));
+    }
 
 }

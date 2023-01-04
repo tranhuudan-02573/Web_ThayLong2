@@ -3,6 +3,10 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.review.Review" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.review.PhoneReview" %>
 <%@ page import="vn.edu.hcmuaf.fit.helper.FormatTime" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.user.User" %>
+<%@ page import="vn.edu.hcmuaf.fit.until.SessionUntil" %>
+<%@ page import="vn.edu.hcmuaf.fit.constant.Variable" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.review.QuestionType" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
@@ -26,17 +30,17 @@
                 display: block;
             }
 
-            .form-check:has(.form-check-input[type="radio"]:checked) {
+            .style-product .form-check:has(.form-check-input[type="radio"]:checked) {
                 border: 1px solid #d70018 !important;
 
             }
 
-            .form-check:has(.form-check-input[type="radio"]:not(:checked)) {
+            .style-product .form-check:has(.form-check-input[type="radio"]:not(:checked)) {
                 border: 1px solid #d7d7d7 !important;
 
             }
 
-            .form-check-input[type="radio"]:not(:checked) + label::before {
+            .style-product .form-check-input[type="radio"]:not(:checked) + label::before {
 
                 border-radius: 0;
                 background-color: transparent !important;
@@ -44,7 +48,7 @@
 
             }
 
-            .form-check-input[type="radio"]:checked + label::after {
+            .style-product .form-check-input[type="radio"]:checked + label::after {
                 background-color: transparent !important;
                 border-color: transparent;
                 content: "✓";
@@ -180,7 +184,20 @@
 <body class="">
 
 <%
+    List<QuestionType> qs = (List<QuestionType>) request.getAttribute("qs");
+    User user = (User) SessionUntil.get(request, Variable.Global.USER.toString());
+    Phone phoneP = (Phone) request.getAttribute("phoneP");
+    String num = (String) request.getAttribute("num");
+    String colorId = (String) request.getAttribute("colorId");
     Phone p = (Phone) request.getAttribute("phone");
+    double total = (double) request.getAttribute("total");
+    double total2 = (double) request.getAttribute("total2");
+    int paginationnum = (int) request.getAttribute("paginationnum");
+    int paginationnum2 = (int) request.getAttribute("paginationnum2");
+    int capId = (int) request.getAttribute("capId");
+    List<Review> questions = (List<Review>) request.getAttribute("question");
+    List<Review> reviews = (List<Review>) request.getAttribute("review");
+    String key = (String) request.getAttribute("key");
 %>
 <div class="homeContent  mb-5">
     <div class="container">
@@ -235,7 +252,8 @@
                 <div class="col-12">
                     <div class="row w-100 mx-auto name-product  bg-white ">
                         <h3 class="mb-0 col-12 col-sm-8 pl-0">
-                            <a href="#" title="" class="text-dark name-products mb-0"><%=p.getName()%>
+                            <a href="#" title=""
+                               class="text-dark name-products mb-0"><%=p.getName() + p._cap().getCap() + p._cap().getUnit()%>
                                 <span class="note border-left-0"><%=p.getId()%></span>
 
                             </a>
@@ -274,22 +292,11 @@
 
                     </div>
                     <hr/>
+
                     <div class="products-iphone bg-white  ">
                         <div class="row w-100 mx-auto">
-
                             <!--end col-xl-4-->
                             <div class="col-xl-4 pl-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <a href=""
-                                       class="d-flex justify-content-center align-items-center  hvr-pulse-shrink">
-                                        <i class="fa-regular fa-square-plus fa-sm mr-2"></i> so
-                                        sánh
-                                    </a>
-                                    <a href=""
-                                       class="d-flex justify-content-center align-items-center  hvr-pulse-shrink">
-                                        <i class="fa-regular fa-heart fa-sm mr-2"></i> yêu thích
-                                    </a>
-                                </div>
                                 <div id="carouselSlideImg" class="carousel slide pointer-event mb-4"
                                      data-ride="carousel">
                                     <div class="carousel-inner">
@@ -405,119 +412,130 @@
                                     <strong class="pl-2" style="text-decoration: line-through;">34.500.000đ</strong>
                                 </div>
 
-                                <div class="style-product mb-3 w-100 mx-auto row  ">
-                                    <%
-                                        List<PhoneCap> pcs = p._caps();
-                                        for (int i = 0; i < pcs.size(); i++) {
-
-                                    %>
-                                    <div class="p-1  col-4 ">
-                                        <div class="form-check p-0   rounded">
-                                            <input type="radio" class="form-check-input"
-                                                   id="cap-<%=pcs.get(i)._cap().getId()%>"
-                                                   name="cap" <%=(i==0)?"checked":""%>>
-                                            <label class="form-check-label  px-3 "
-                                                   for="cap-<%=pcs.get(i)._cap().getId()%>"
-                                                   style="width: 96.5%; height: 100%; ">
-                                                <div class="text-center">
-                                                    <div class=" text-center">
-                                                        <strong class="font-weight-bold  "
-                                                                style="font-size: 12px;"><%=pcs.get(i)._cap().getCap()%>
-                                                        </strong>
-                                                    </div>
-                                                    <span class="font-weight-light"
-                                                          style="font-size: 12px;"><%=pcs.get(i)._cap()._phone().getPrice()%>đ</span>
-                                                </div>
-                                            </label>
-                                        </div>
-
-                                    </div>
-                                    <%}%>
-                                </div>
-
-                                <strong class="font-weight-bold">Chọn màu để xem giá và chi nhánh có hàng</strong>
-                                <div class="style-product mb-3 w-100 mx-auto row  ">
-                                    <%
-                                        List<PhoneColor> colors = p._colors();
-                                        for (int i = 0; i < colors.size(); i++) {
-                                    %>
-                                    <div class="p-1  col-4 ">
-                                        <div class="form-check p-0 rounded">
-                                            <input type="radio" class="form-check-input"
-                                                   id="color-<%=colors.get(i)._color().getId()%>"
-                                                   name="color" <%=(i==0)?"checked":""%>  >
-                                            <label class="form-check-label  px-1 " style=" height: 100%; "
-                                                   for="color-<%=colors.get(i)._color().getId()%>">
-                                                <div class="d-flex justify-content-center align-items-center  ">
-                                                    <img src="<%=colors.get(i).getImg()%>"
-                                                         alt="" class="img-fluid">
-                                                    <div class="">
-                                                        <div class="d-block text-start">
+                                <form action="/phone-detail">
+                                    <input hidden name="id" value="<%=phoneP.getId()%>">
+                                    <input hidden name="page" value="<%=paginationnum%>">
+                                    <input hidden name="page2" value="<%=paginationnum2%>">
+                                    <div class="style-product mb-3 w-100 mx-auto row  ">
+                                        <%
+                                            List<PhoneCap> pcs = phoneP._caps();
+                                            for (int i = 0; i < pcs.size(); i++) {
+                                        %>
+                                        <div class="p-1  col-4 ">
+                                            <div class="form-check p-0   rounded">
+                                                <input type="radio" class="form-check-input"
+                                                       id="cap-<%=pcs.get(i)._cap().getId()%>"
+                                                       value="<%=pcs.get(i)._phoneCap().getId()%>"
+                                                       name="capId" <%=(phoneP.getId()!=p.getId())?(pcs.get(i)._cap().getId()==p._cap().getId()?"checked":""):((i==0)?"checked":"")%>
+                                                       onclick="this.form.submit()">
+                                                <label class="form-check-label  px-3 "
+                                                       for="cap-<%=pcs.get(i)._cap().getId()%>"
+                                                       style="width: 96.5%; height: 100%; ">
+                                                    <div class="text-center">
+                                                        <div class=" text-center">
                                                             <strong class="font-weight-bold  "
-                                                                    style="font-size: 12px;"><%=colors.get(i)._color().getName()%>
+                                                                    style="font-size: 12px;"><%=pcs.get(i)._cap().getCap()%>
                                                             </strong>
                                                         </div>
                                                         <span class="font-weight-light"
-                                                              style="font-size: 12px;"><%=p.getPrice()%>đ</span>
+                                                              style="font-size: 12px;"><%=pcs.get(i)._phoneCap().getPrice()%>đ</span>
                                                     </div>
-                                                </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <%}%>
+                                    </div>
+                                </form>
+                                <form action="/add-carts">
+                                    <input hidden name="name" value="detail">
+                                    <input hidden name="phoneId" value="<%=phoneP.getId()%>">
+                                    <input hidden name="capId" value="<%=capId%>">
+                                    <strong class="font-weight-bold">Chọn màu để xem giá và chi nhánh có hàng</strong>
+                                    <div class="style-product mb-3 w-100 mx-auto row  ">
+                                        <%
+                                            List<PhoneColor> colors = p._colors();
+                                            for (int i = 0; i < colors.size(); i++) {
+                                        %>
+                                        <div class="p-1  col-4 ">
+                                            <div class="form-check p-0 rounded">
+                                                <input type="radio" class="form-check-input"
+                                                       id="color-<%=colors.get(i)._color().getId()%>"
+                                                       value="<%=colors.get(i)._color().getId()%>"
+                                                       name="colorId" <%=((colorId!=null)?((Integer.parseInt(colorId)==colors.get(i).getColorId())?"checked":""):(i==0?"checked":""))%>  >
+                                                <label class="form-check-label  px-1 " style=" height: 100%; "
+                                                       for="color-<%=colors.get(i)._color().getId()%>">
+                                                    <div class="d-flex justify-content-center align-items-center  ">
+                                                        <img src="<%=colors.get(i).getImg()%>"
+                                                             alt="" class="img-fluid">
+                                                        <div class="">
+                                                            <div class="d-block text-start">
+                                                                <strong class="font-weight-bold  "
+                                                                        style="font-size: 12px;"><%=colors.get(i)._color().getName()%>
+                                                                </strong>
+                                                            </div>
+                                                            <span class="font-weight-light"
+                                                                  style="font-size: 12px;"><%=p.getPrice()%>đ</span>
+                                                        </div>
+                                                    </div>
 
-                                            </label>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <%}%>
+                                    </div>
+                                    <div class="mb-4  ">
+                                        <strong class=" font-weight-bold  ">Số lượng đặt hàng </strong>
+                                        <div class="def-number-input number-input safari_only">
+                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                                    class="minus"></button>
+                                            <input class="quantity" min="0" name="num" value="<%=(num!=null)?num:1%>"
+                                                   type="number">
+                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                    class="plus"></button>
                                         </div>
                                     </div>
-                                    <%}%>
 
-                                </div>
-                                <div class="mb-4  ">
-
-                                    <strong class=" font-weight-bold  ">Số lượng đặt hàng </strong>
-                                    <div class="def-number-input number-input safari_only ">
-
-                                        <button
-                                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                                                class="minus"></button>
-                                        <input class="quantity" min="0" name="quantity" value="1" type="number">
-                                        <button
-                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                                                class="plus"></button>
+                                    <div class="card mb-4 border  " style="box-shadow: unset;">
+                                        <div class="card-header bg-danger text-start text-white text-uppercase ">
+                                            Thông tin sản phẩm
+                                        </div>
+                                        <div class="card-body">
+                                            <%=p.getDesc()%>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card mb-4 border  " style="box-shadow: unset;">
-                                    <div class="card-header bg-danger text-start text-white text-uppercase ">
-                                        Thông tin sản phẩm
-                                    </div>
-                                    <div class="card-body">
-                                        <%=p.getDesc()%>
-                                    </div>
-                                </div>
-                                <ul class="nav text-center mt-2 ">
-                                    <li class="nav-item w-100 bg-danger mb-2 hvr-round-corners">
-                                        <a class="nav-link text-white " href="#">
-                                            <h6>MUA NGAY</h6>
-                                            <span class="font-text">Giao hàng trong 1 giờ hoặc nhận tại
+                                    <ul class="nav text-center mt-2 ">
+                                        <li class="nav-item w-100 bg-danger mb-2 hvr-round-corners">
+                                            <a class="nav-link text-white " href="#">
+                                                <h6>MUA NGAY</h6>
+                                                <span class="font-text">Giao hàng trong 1 giờ hoặc nhận tại
 														shop</span>
-                                        </a>
-                                    </li>
+                                            </a>
+                                        </li>
 
-                                    <li class="nav-item bg-primary   card-shop hvr-round-corners d-inline-block mr-auto"
-                                        style="width: 49%">
-                                        <a class="nav-link text-white p-2 " href="#">
-                                            <h6>TRẢ GÓP QUA THẺ</h6>
-                                            <span class="font-text">Visa , Master card, JCB</span>
-                                        </a>
-                                    </li>
-
-
-                                    <li class="nav-item bg-primary ml-auto  d-inline-block card-shop hvr-round-corners"
-                                        style="width: 49%">
-                                        <a class="nav-link text-white p-2  " href="" data-toggle="modal"
-                                           data-target="#modalAbandonedCart">
-                                            <h6>THÊM VÀO GIỎ HÀNG</h6>
-                                            <span class="font-text">thanh toán sau</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                                        <li class="nav-item bg-primary   card-shop hvr-round-corners d-inline-block mr-auto"
+                                            style="width: 49%">
+                                            <a class="nav-link text-white p-2 " href="#"
+                                               onclick="document.getElementById('wish-form').click()">
+                                                <input hidden type="radio" name="action" value="wishes"
+                                                       onclick="this.form.submit()" id="wish-form">
+                                                <h6>yeu thich</h6>
+                                                <span class="font-text">Visa , Master card, JCB</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item bg-primary ml-auto  d-inline-block card-shop hvr-round-corners"
+                                            style="width: 49%">
+                                            <a class="nav-link text-white p-2  "
+                                               onclick="document.getElementById('cart-form').click()">
+                                                <input hidden type="radio" name="action" value="carts"
+                                                       onclick="this.form.submit()" id="cart-form">
+                                                <h6>THÊM VÀO GIỎ HÀNG</h6>
+                                                <span class="font-text">thanh toán sau</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </form>
                             </div>
+
                             <!--end col-xl-5-->
                             <div class="col-xl-4 pl-0 bg-white ">
                                 <div class="card border-0 my-4">
@@ -625,7 +643,9 @@
                     <div class="col-xl-8 pl-0">
                         <div class="card mb-4">
                             <div class="card-header red-text r text-center">
-                                <h5 class="font-weight-500 my-1">Đánh giá chi tiết iPhone Xs Max 64GB</h5>
+                                <h5 class="font-weight-500 my-1">Đánh giá chi
+                                    tiết <%=p.getName() + p._cap().getCap() + p._cap().getUnit()%>
+                                </h5>
                             </div>
                             <div class="card-body">
                                 <div class="bg-white">
@@ -1111,9 +1131,13 @@
                                 </div>
                             </div>
                         </div>
+
+
                         <div class="card mb-4" id="review">
                             <div class="card-header text-danger text-center">
-                                <h5 class="font-weight-500 my-1">Đánh giá & Nhận xét iPhone Xs Max 64GB</h5>
+                                <h5 class="font-weight-500 my-1">Đánh giá & Nhận
+                                    xét <%=p.getName() + p._cap().getCap() + p._cap().getUnit()%>
+                                </h5>
                             </div>
                             <div class="card-body">
                                 <div class="bg-white">
@@ -1147,7 +1171,8 @@
                                                             <%}%>
 
                                                         </ul>
-                                                        <p class="card-text"><small class="text-muted"><%=p.count()%>
+                                                        <p class="card-text"><small
+                                                                class="text-muted"><%=p.count()%>
                                                             đánh
                                                             giá
                                                             và nhận xét</small></p>
@@ -1193,29 +1218,52 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <%
+                                            String star = (String) request.getAttribute("star");
+                                        %>
+                                        <form action="/phone-detail">
+                                            <input hidden name="id" value="<%=phoneP.getId()%>">
+                                            <input hidden name="capId" value="<%=capId%>">
+                                            <input hidden name="page2" value="<%=paginationnum2%>">
+                                            <input hidden name="page" value="<%=1%>">
+                                            <input hidden name="key" value="<%=(key!=null)?key:""%>">
+                                            <div class=" my-3 border  p-2">
+                                                <span>lọc xem theo: </span>
+                                                <!-- Material inline 1 -->
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" name="bought"
+                                                           id="buy" onclick="this.form.submit()" value="true">
+                                                    <label class="form-check-label" for="buy">
+                                                        da mua hang</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input name="star" type="radio" class="form-check-input" value="0"
+                                                           onclick="this.form.submit()"
+                                                           id="star-all" <%=(star==null||Integer.parseInt(star)==0)?"checked":""%>  >
+                                                    <label class="form-check-label" for="star-all">all
+                                                        sao</label>
+                                                </div>
+                                                <%
+                                                    for (int i = 1; i <= 5; i++) {
+                                                %>
+                                                <div class="form-check form-check-inline">
+                                                    <input name="star" type="radio" class="form-check-input"
+                                                           value="<%=i%>" onclick="this.form.submit()"
+                                                           id="star-<%=i%>" <%=(star!=null)?((Integer.parseInt(star)==i)?"checked":""):""%>  >
+                                                    <label class="form-check-label" for="star-<%=i%>"><%=i %>
+                                                        sao</label>
+                                                </div>
+                                                <%}%>
 
-                                        <div class=" my-3 border  p-2">
-                                            <span>lọc xem theo: </span>
-                                            <!-- Material inline 1 -->
-                                            <%
-                                                for (int i = 1; i <= 5; i++) {
-                                            %>
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" class="form-check-input"
-                                                       id="star-<%=i%>">
-                                                <label class="form-check-label" for="star-<%=i%>"><%=i %>
-                                                    sao</label>
+
                                             </div>
-                                            <%}%>
-
-
-                                        </div>
+                                        </form>
 
 
                                         <div class="cmt ">
 
                                             <%
-                                                List<Review> reviews = p._reviews();
+
                                                 for (Review r : reviews
                                                 ) {
 
@@ -1225,10 +1273,15 @@
                                                 <div class="d-flex justify-content-center align-items-center rounded-circle mr-3"
                                                      style="background-color: #cbd1d6; color: #fff; width: 6%; height: 7%; align-items: center; justify-content: center; display: inline-block;">
 															<span
-                                                                    style="font-weight: 500; font-size: 20px; line-height: 47px; margin: 0 auto;"><%=r._user().avatar()%></span>
+                                                                    style="font-weight: 500; font-size: 20px; line-height: 47px; margin: 0 auto;">
+
+                                                                <%=((r.getUserId() != null) ? r._user().avatar() : r._customer().avatar())%>
+
+
+                                                            </span>
                                                 </div>
                                                 <div>
-                                                    <h6 class="font-weight-bold"><%=r._user().getName()%>
+                                                    <h6 class="font-weight-bold"><%=((r.getUserId() != null) ? r._user().getName() : r._customer().getName())%>
                                                     </h6>
                                                     <p class=" text-warning " style="font-size: 12px;">
                                                         <%
@@ -1255,53 +1308,147 @@
                                                             color: #333;
                                                             font-size: 10px;
                                                         }
-
                                                     </style>
-                                                    <span class="text-light text-weight-500 "><%=FormatTime.format(r.getCreated_at(), false)%>
-                                                        <a
-                                                                class="like pr-2 pl-2" href="">thích
+                                                    <span class="text-light text-weight-500 "><%=FormatTime.format(r.getCreated_at(), true)%>
+                                                        <button
+                                                                class="like pr-2 pl-2"
+                                                                onclick="document.getElementById('like-<%=r.getId()%>').submit()"
+                                                                href="">thích
+                                                            <form action="/phone-detail" method="post"
+                                                                  id="like-<%=r.getId()%>">
+                                                    <input hidden name="reviewId" value="<%=r.getId()%>">
+                                                    <input hidden name="action" value="like">
+                                                    <input hidden name="phoneId" value="<%=p.getId()%>">
+                                                    </form>
 																	<span>(<%=r._like().size()%>)</span>
-																</a>
-                                                         <a
-                                                                 class="like pr-2 pl-2" href="">khong thich
+																</button>
+                                                         <button
+                                                                 class="like pr-2 pl-2"
+                                                                 onclick="document.getElementById('dislike-<%=r.getId()%>').submit()"
+                                                                 href="">khong thich
+                                                             <form action="/phone-detail" method="post"
+                                                                   id="dislike-<%=r.getId()%>">
+                                                    <input hidden name="reviewId" value="<%=r.getId()%>">
+                                                    <input hidden name="action" value="dislike">
+                                                    <input hidden name="phoneId" value="<%=p.getId()%>">
+
+                                                              </form>
 																	<span>(<%=r._dislike().size()%>)</span>
-																</a>
-                                                        <a class="rep" href="">trả lời</a>
-                                                    </span>
+																</button>
+                                                        <button class="rep pr-2 pl-2" href="">trả lời</button>
+                                                            <%if (user != null && r.getUserId() != null && r.getUserId() == user.getId()) {%>
+                                                               <button class="rep pr-2 pl-2" href="">chinh sua
+<%--                                                                 <div class="modal fade show" id="modalUpdate"--%>
+<%--                                                                      tabindex="-1" role="dialog"--%>
+<%--                                                                      aria-labelledby="myModalLabel" aria-modal="true"--%>
+<%--                                                                      style="padding-right: 17px; display: none;">--%>
+<%--                            <div class="modal-dialog" role="document">--%>
+<%--                                <div class="modal-content">--%>
+<%--                                    <form action="/phone-detail" method="post">--%>
+<%--                                        <div class="modal-header text-center pt-1 pb-1">--%>
+<%--                                            <h4 class="modal-title w-100 font-weight-bold text-uppercase">chinh sua--%>
+<%--                                                sản phẩm</h4>--%>
+<%--                                            <button type="button" class="close" data-dismiss="modal"--%>
+<%--                                                    aria-label="Close">--%>
+<%--                                                <span aria-hidden="true">×</span>--%>
+<%--                                            </button>--%>
+<%--                                        </div>--%>
+<%--                                        <input hidden name="action" value="update">--%>
+<%--                                        <input hidden name="phoneId" value="<%=p.getId()%>">--%>
+<%--                        <div class="modal-body mx-3">--%>
+<%--                            <div class="md-form  pink-textarea active-pink-textarea mb-0">--%>
+<%--													<textarea name="content" --%>
+<%--                                                              class="md-textarea form-control validate mb-0 pb-0"--%>
+<%--                                                              style="padding-top: 30px;" rows="3">--%>
+<%--                                                        --%>
+<%--                                                        --%>
+<%--                                                    </textarea>--%>
+<%--                                                <label for="form18">chinh sua</label>--%>
+<%--                                            </div>--%>
+<%--                        </div>--%>
+<%--                                        <div class="modal-footer d-flex justify-content-center pt-1 pb-1">--%>
+<%--                                            <button type="submit" class="btn btn-danger ">Gửi</button>--%>
+<%--                                        </div>--%>
+<%--                                    </form>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+
+                                                               </button>
+
+                                                              <button class="rep pr-2 pl-2"
+                                                                      onclick="document.getElementById('delete-<%=r.getId()%>').submit()">
+ <form action="/phone-detail" method="post" id="delete-<%=r.getId()%>">
+                                                    <input hidden name="reviewId" value="<%=r.getId()%>">
+                                                    <input hidden name="action" value="delete">
+                                                    <input hidden name="phoneId" value="<%=p.getId()%>">
+
+                        </form>
+                                                                   xoa
+                        </button>
+
+                        <%}%>
+                        </span>
                                                 </div>
+
                                             </div>
+
                                             <%}%>
 
                                         </div>
 
+
                                         <div class="d-flex justify-content-center align-items-center mt-4">
                                             <nav>
-                                                <ul class="pagination pg-red m-0">
-                                                    <li class="page-item">
-                                                        <a class="page-link" aria-label="Previous">
-                                                            <span aria-hidden="true">&laquo;</span>
-                                                            <span class="sr-only">Previous</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="page-item active"><a class="page-link">1</a></li>
-                                                    <li class="page-item"><a class="page-link">2</a></li>
-                                                    <li class="page-item"><a class="page-link">3</a></li>
-                                                    <li class="page-item"><a class="page-link">4</a></li>
-                                                    <li class="page-item"><a class="page-link">5</a></li>
-                                                    <li class="page-item">
-                                                        <a class="page-link" aria-label="Next">
-                                                            <span aria-hidden="true">&raquo;</span>
-                                                            <span class="sr-only">Next</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                                                <form action="/phone-detail">
+                                                    <input hidden name="id" value="<%=phoneP.getId()%>">
+                                                    <input hidden name="capId" value="<%=capId%>">
+                                                    <input hidden name="key" value="<%=(key!=null)?key:""%>">
+                                                    <input hidden name="page2" value="<%=paginationnum2%>">
+                                                    <input hidden name="star" value="<%=(star!=null)?star:0%>">
+                                                    <ul class="pagination pg-red m-0">
+                                                        <%if (total != 0 && paginationnum != 1) {%>
+                                                        <li class="page-item ">
+                                                            <a class="page-link" aria-label="Previous"
+                                                               onclick="document.getElementById('pagination<%=paginationnum-1%>').click()">
+                                                                <span aria-hidden="true">&laquo;</span>
+                                                                <span class="sr-only">Previous</span>
+                                                            </a>
+                                                        </li>
+                                                        <%}%>
+                                                        <%
+                                                            for (int i = 1; i < total + 1; i++) {
+                                                        %>
+                                                        <li class="page-item <%=(paginationnum==i)?"active":""%>">
+                                                            <a class="page-link"
+                                                               onclick="document.getElementById('pagination<%=i%>').click()">
+                                                                <%=i%>
+                                                                <input type="radio" class="form-check-input"
+                                                                       id="pagination<%=i%>"
+                                                                       value="<%=i%>" id="pagination<%=i%>" name="page"
+                                                                       onclick="this.form.submit()" <%=(paginationnum==i)?"checked":""%> >
+                                                            </a></li>
+
+                                                        <%}%>
+                                                        <%if (total != 0 && paginationnum != total) {%>
+                                                        <li class="page-item">
+                                                            <a class="page-link" aria-label="Next"
+                                                               onclick="document.getElementById('pagination<%=paginationnum+1%>').click()">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                                <span class="sr-only">Next</span>
+                                                            </a>
+                                                        </li>
+                                                        <%}%>
+                                                    </ul>
+                                                </form>
                                             </nav>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-
+                        </form>
 
                         <div class="homecate d-none d-sm-block mb-4">
                             <div class="card">
@@ -1313,130 +1460,35 @@
                                     <div class="accordion md-accordion" id="accordionEx" role="tablist"
                                          aria-multiselectable="true">
 
+                                        <%
+                                            for (Review re : p.question()
+                                            ) {
+
+                                        %>
                                         <!-- Accordion card -->
                                         <div class="card">
 
                                             <!-- Card header -->
                                             <div class="card-header" role="tab" id="headingOne1">
                                                 <a data-toggle="collapse" data-parent="#accordionEx"
-                                                   href="#collapseOne1" aria-expanded="true"
+                                                   href="#question-<%=re.getId()%>" aria-expanded="true"
                                                    aria-controls="collapseOne1">
                                                     <h6 class="mb-0">
-                                                        câu hỏi #1 <i class="fas fa-angle-down rotate-icon"></i>
+                                                        #<%=re.getContent()%><i class="fas fa-angle-down rotate-icon"></i>
                                                     </h6>
                                                 </a>
                                             </div>
 
                                             <!-- Card body -->
-                                            <div id="collapseOne1" class="collapse " role="tabpanel"
+                                            <div id="question-<%=re.getId()%>" class="collapse " role="tabpanel"
                                                  aria-labelledby="headingOne1" data-parent="#accordionEx">
                                                 <div class="card-body">
-                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life
-                                                    accusamus terry richardson ad squid. 3
-                                                    wolf moon officia aute, non cupidatat skateboard dolor
-                                                    brunch.
-                                                    Food truck quinoa nesciunt laborum
-                                                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                                                    on it
-                                                    squid single-origin coffee nulla
-                                                    assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                                    craft
-                                                    beer labore wes anderson cred
-                                                    nesciunt sapiente ea proident. Ad vegan excepteur butcher
-                                                    vice
-                                                    lomo. Leggings occaecat craft beer
-                                                    farm-to-table, raw denim aesthetic synth nesciunt you
-                                                    probably
-                                                    haven't heard of them accusamus
-                                                    labore sustainable VHS.
+                                                    <%=re._reply().get(0)._reply().getContent()%>
                                                 </div>
                                             </div>
 
                                         </div>
-                                        <!-- Accordion card -->
-
-                                        <!-- Accordion card -->
-                                        <div class="card">
-
-                                            <!-- Card header -->
-                                            <div class="card-header" role="tab" id="headingTwo2">
-                                                <a class="collapsed" data-toggle="collapse"
-                                                   data-parent="#accordionEx" href="#collapseTwo2"
-                                                   aria-expanded="false" aria-controls="collapseTwo2">
-                                                    <h6 class="mb-0">
-                                                        câu hỏi #2 <i class="fas fa-angle-down rotate-icon"></i>
-                                                    </h6>
-                                                </a>
-                                            </div>
-
-                                            <!-- Card body -->
-                                            <div id="collapseTwo2" class="collapse" role="tabpanel"
-                                                 aria-labelledby="headingTwo2" data-parent="#accordionEx">
-                                                <div class="card-body">
-                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life
-                                                    accusamus terry richardson ad squid. 3
-                                                    wolf moon officia aute, non cupidatat skateboard dolor
-                                                    brunch.
-                                                    Food truck quinoa nesciunt laborum
-                                                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                                                    on it
-                                                    squid single-origin coffee nulla
-                                                    assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                                    craft
-                                                    beer labore wes anderson cred
-                                                    nesciunt sapiente ea proident. Ad vegan excepteur butcher
-                                                    vice
-                                                    lomo. Leggings occaecat craft beer
-                                                    farm-to-table, raw denim aesthetic synth nesciunt you
-                                                    probably
-                                                    haven't heard of them accusamus
-                                                    labore sustainable VHS.
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <!-- Accordion card -->
-
-                                        <!-- Accordion card -->
-                                        <div class="card">
-
-                                            <!-- Card header -->
-                                            <div class="card-header" role="tab" id="headingThree3">
-                                                <a class="collapsed" data-toggle="collapse"
-                                                   data-parent="#accordionEx" href="#collapseThree3"
-                                                   aria-expanded="false" aria-controls="collapseThree3">
-                                                    <h6 class="mb-0">
-                                                        câu hỏi #3 <i class="fas fa-angle-down rotate-icon"></i>
-                                                    </h6>
-                                                </a>
-                                            </div>
-
-                                            <!-- Card body -->
-                                            <div id="collapseThree3" class="collapse" role="tabpanel"
-                                                 aria-labelledby="headingThree3" data-parent="#accordionEx">
-                                                <div class="card-body">
-                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life
-                                                    accusamus terry richardson ad squid. 3
-                                                    wolf moon officia aute, non cupidatat skateboard dolor
-                                                    brunch.
-                                                    Food truck quinoa nesciunt laborum
-                                                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                                                    on it
-                                                    squid single-origin coffee nulla
-                                                    assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                                    craft
-                                                    beer labore wes anderson cred
-                                                    nesciunt sapiente ea proident. Ad vegan excepteur butcher
-                                                    vice
-                                                    lomo. Leggings occaecat craft beer
-                                                    farm-to-table, raw denim aesthetic synth nesciunt you
-                                                    probably
-                                                    haven't heard of them accusamus
-                                                    labore sustainable VHS.
-                                                </div>
-                                            </div>
-
-                                        </div>
+                                        <%}%>
                                         <!-- Accordion card -->
 
                                     </div>
@@ -1444,31 +1496,44 @@
                             </div>
 
                         </div>
+
                         <div class="card mb-4" id="question">
                             <div class="card-header red-text  text-center">
-                                <h5 class="font-weight-500 my-1">Hỏi Đáp về iPhone Xs Max 64GB</h5>
+                                <h5 class="font-weight-500 my-1">Hỏi Đáp
+                                    về <%=p.getName() + p._cap().getCap() + p._cap().getUnit()%>
+                                </h5>
                             </div>
                             <div class="card-body">
                                 <div class="bg-white">
-
-
-                                    <input type="text" name=""
-                                           placeholder="Viết bình luận của bạn (Vui lòng viết tiếng việt có dấu)"
-                                           class="w-100 text-comment">
-
                                     <div class="d-flex justify-content-between  align-items-center mt-4  ">
-                                        <span class="bg-light px-2"><%=p._question().size()%> hỏi đáp về “<%=p.getName()%>”</span>
-
-
-                                        <a href="" class="badge badge-danger p-2">Gửi câu hỏi của bạn</a>
+                                        <input type="text" name=""
+                                               placeholder="Viết bình luận của bạn (Vui lòng viết tiếng việt có dấu)"
+                                               class="w-75 text-comment">
+                                        <form action="/phone-detail">
+                                            <input hidden name="id" value="<%=phoneP.getId()%>">
+                                            <input hidden name="capId" value="<%=capId%>">
+                                            <input hidden name="page" value="<%=paginationnum%>">
+                                            <input hidden name="page2" value="1">
+                                            <input hidden name="star" value="<%=star  %>">
+                                            <input type="text" name="key" oninput="this.form.submit()"
+                                                   placeholder="search" value="<%=(key!=null)?key:""%>"
+                                                   class="w-100 text-comment">
+                                        </form>
                                     </div>
 
+                                    <div class="d-flex justify-content-between  align-items-center mt-4  ">
+                                        <span class="bg-light px-2"><%=questions.size()%> hỏi đáp về “<%=p.getName() + p._cap().getCap() + p._cap().getUnit()%>”</span>
 
+
+                                        <a href="" data-toggle="modal"
+                                           data-target="#modalQuestion" class="badge badge-danger p-2">Gửi câu hỏi
+                                            của bạn</a>
+                                    </div>
                                     <div class="cmt mt-4">
 
                                         <%
-                                            List<Review> reviews1 = p._question();
-                                            for (Review r : reviews1
+
+                                            for (Review r : questions
                                             ) {
 
                                         %>
@@ -1477,10 +1542,10 @@
                                             <div class=" d-flex justify-content-center align-items-center  rounded-circle mr-3"
                                                  style="background-color: #cbd1d6; color: #fff; width: 48px; height: 48px; align-items: center; justify-content: center; display: inline-block;">
 														<span
-                                                                style="font-weight: 500; font-size: 20px; line-height: 47px;"><%=r._user().avatar()%></span>
+                                                                style="font-weight: 500; font-size: 20px; line-height: 47px;"><%=(r.getUserId() != null) ? r._user().avatar() : r._customer().avatar()%></span>
                                             </div>
                                             <div>
-                                                <h6 class="font-weight-bold"><%=r._user().getName()%>
+                                                <h6 class="font-weight-bold"><%=(r.getUserId() != null) ? r._user().getName() : r._customer().getName()%>
                                                 </h6>
                                                 <p><%=r.getContent() %>
                                                 </p>
@@ -1496,14 +1561,44 @@
                                                     }
 
                                                 </style>
-                                                <span class="text-light text-weight-500 "><%=FormatTime.format(r.getCreated_at(), false)%> <a
-                                                        class="like pr-2 pl-2"
-                                                        href="">thích <span>(<%=r._like().size()%>)</span>
-															</a>
-                                                     <a
+                                                <span class="text-light text-weight-500 "><%=FormatTime.format(r.getCreated_at(), false)%>
+                                                    <button
+                                                            class="like pr-2 pl-2"
+                                                            onclick="document.getElementById('like2-<%=r.getId()%>').submit()"
+                                                            href="">thích<form action="/phone-detail" method="post"
+                                                                               id="like2-<%=r.getId()%>">
+                                                    <input hidden name="reviewId" value="<%=r.getId()%>">
+                                                    <input hidden name="action" value="like">
+                                                    <input hidden name="phoneId" value="<%=p.getId()%>">
+                                                    </form>
+                                                    <span>(<%=r._like().size()%>)</span>
+															</button>
+                                                     <button onclick="document.getElementById('dislike2-<%=r.getId()%>').submit()"
                                                              class="like pr-2 pl-2"
-                                                             href="">khong thich <span>(<%=r._dislike().size()%>)</span>
-															</a> <a class="rep" href="">trả lời</a></span>
+                                                             href="">khong thich  <form action="/phone-detail"
+                                                                                        method="post"
+                                                                                        id="dislike2-<%=r.getId()%>">
+                                                    <input hidden name="reviewId" value="<%=r.getId()%>">
+                                                    <input hidden name="action" value="dislike">
+                                                    <input hidden name="phoneId" value="<%=p.getId()%>">
+
+                                                            </form><span>(<%=r._dislike().size()%>)</span>
+															</button> <button class="rep" href="">trả lời</button>
+                                                 <%if (user != null && r.getUserId() != null && r.getUserId() == user.getId()) {%>
+                                                               <a class="rep pr-2 pl-2" href="">chinh sua
+                                                               </a>
+                                                              <button class="rep pr-2 pl-2"
+                                                                      onclick="document.getElementById('delete2-<%=r.getId()%>').submit()">
+ <form action="/phone-detail" method="post" id="delete2-<%=r.getId()%>">
+                                                    <input hidden name="reviewId" value="<%=r.getId()%>">
+                                                    <input hidden name="action" value="delete">
+                                                    <input hidden name="phoneId" value="<%=p.getId()%>">
+
+                        </form>
+                                                                   xoa
+                        </button>
+                                                    <%}%>
+                                                </span>
                                             </div>
                                         </div>
                                         <%
@@ -1545,14 +1640,48 @@
                                                     }
 
                                                 </style>
-                                                <span class="text-light text-weight-500 "><%=FormatTime.format(reply.getCreated_at(), false)%><a
+                                                <span class="text-light text-weight-500 "><%=FormatTime.format(reply.getCreated_at(), false)%>
+                                                    <button
                                                         class="like pr-2 pl-2"
-                                                        href="">thích <span>(<%=reply._reply()._like().size()%>)</span>
-															</a>
-                                                    <a
+                                                        onclick="document.getElementById('like3-<%=reply.getReplyId()%>').submit()">thích
+                                                    <form action="/phone-detail" method="post"
+                                                          id="like3-<%=reply.getReplyId()%>">
+                                                    <input hidden name="reviewId" value="<%=reply.getReplyId()%>">
+                                                    <input hidden name="action" value="dislike">
+                                                    <input hidden name="phoneId" value="<%=p.getId()%>">
+
+                                                            </form>
+                                                    <span>(<%=reply._reply()._like().size()%>)</span>
+															</button>
+                                                    <button
                                                             class="like pr-2 pl-2"
-                                                            href="">khong thich <span>(<%=reply._reply()._dislike().size()%>)</span>
-															</a><a class="rep" href="">trả lời</a></span>
+                                                            onclick="document.getElementById('dislike3-<%=reply.getReplyId()%>').submit()" >khong thich
+                                                        <form action="/phone-detail" method="post"
+                                                              id="dislike3-<%=reply.getReplyId()%>">
+                                                    <input hidden name="reviewId" value="<%=reply.getReplyId()%>">
+                                                    <input hidden name="action" value="dislike">
+                                                    <input hidden name="phoneId" value="<%=p.getId()%>">
+
+                                                            </form>
+                                                        <span>(<%=reply._reply()._dislike().size()%>)</span>
+															</button>
+                                                    <button class="rep"
+                                                                   href="">trả lời</button> <%if (user != null && r.getUserId() != null && r.getUserId() == user.getId()) {%>
+                                                               <a class="rep pr-2 pl-2" href="">chinh sua
+                                                               </a>
+
+                                                              <button
+                                                                      class="rep pr-2 pl-2"
+                                                                 onclick="document.getElementById('delete-<%=r.getId()%>').submit()">
+ <form action="/phone-detail" method="post" id="delete-<%=r.getId()%>">
+                                                    <input hidden name="reviewId" value="<%=reply.getReplyId()%>">
+                                                    <input hidden name="action" value="delete">
+                                                    <input hidden name="phoneId" value="<%=p.getId()%>">
+
+                        </form>
+                                                                   xoa
+                        </button>
+                                                    <%}%></span>
                                             </div>
                                         </div>
                                         <%
@@ -1561,25 +1690,47 @@
                                         %>
                                         <div class="d-flex justify-content-center align-items-center mt-4">
                                             <nav>
-                                                <ul class="pagination pg-red m-0">
-                                                    <li class="page-item">
-                                                        <a class="page-link" aria-label="Previous">
-                                                            <span aria-hidden="true">&laquo;</span>
-                                                            <span class="sr-only">Previous</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="page-item active"><a class="page-link">1</a></li>
-                                                    <li class="page-item"><a class="page-link">2</a></li>
-                                                    <li class="page-item"><a class="page-link">3</a></li>
-                                                    <li class="page-item"><a class="page-link">4</a></li>
-                                                    <li class="page-item"><a class="page-link">5</a></li>
-                                                    <li class="page-item">
-                                                        <a class="page-link" aria-label="Next">
-                                                            <span aria-hidden="true">&raquo;</span>
-                                                            <span class="sr-only">Next</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                                                <form action="/phone-detail">
+                                                    <input hidden name="id" value="<%=phoneP.getId()%>">
+                                                    <input hidden name="capId" value="<%=capId%>">
+                                                    <input hidden name="key" value="<%=(key!=null)?key:""%>">
+                                                    <input hidden name="page" value="<%=paginationnum%>">
+                                                    <input hidden name="star" value="<%=star%>">
+                                                    <ul class="pagination pg-red m-0">
+                                                        <%if (total2 != 0 && paginationnum2 != 1) {%>
+                                                        <li class="page-item ">
+                                                            <a class="page-link" aria-label="Previous"
+                                                               onclick="document.getElementById('pagination2<%=paginationnum2-1%>').click()">
+                                                                <span aria-hidden="true">&laquo;</span>
+                                                                <span class="sr-only">Previous</span>
+                                                            </a>
+                                                        </li>
+                                                        <%}%>
+                                                        <%
+                                                            for (int i = 1; i < total2 + 1; i++) {
+                                                        %>
+                                                        <li class="page-item <%=(i==paginationnum2)?"active":""%>">
+                                                            <a class="page-link"
+                                                               onclick="document.getElementById('pagination2<%=i%>').click()">
+                                                                <%=i%>
+                                                                <input type="radio" class="form-check-input"
+                                                                       value="<%=i%>" id="pagination2<%=i%>"
+                                                                       name="page2"
+                                                                       onclick="this.form.submit()"  <%=(paginationnum2==i)?"checked":""%>>
+                                                            </a>
+                                                        </li>
+                                                        <%}%>
+                                                        <%if (total2 != 0 && paginationnum2 != total2) {%>
+                                                        <li class="page-item">
+                                                            <a class="page-link" aria-label="Next"
+                                                               onclick="document.getElementById('pagination2<%=paginationnum2+1%>').click()">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                                <span class="sr-only">Next</span>
+                                                            </a>
+                                                        </li>
+                                                        <%}%>
+                                                    </ul>
+                                                </form>
                                             </nav>
                                         </div>
                                     </div>
@@ -1824,100 +1975,162 @@
                              style="padding-right: 17px; display: none;">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <div class="modal-header text-center pt-1 pb-1">
-                                        <h4 class="modal-title w-100 font-weight-bold text-uppercase">Đánh giá
-                                            sản phẩm</h4>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body mx-3 ">
-                                        <div class="text-center">
-                                            <img class="form_img-prod"
-                                                 src="https://images.fpt.shop/unsafe/fit-in/96x96/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/4/19/637859778843241685_iphone-13-pro-max-vang-1.jpg"
-                                                 alt="alt">
-                                            <div class="mt-2">
-                                                <span class="font-weight-bold">iPhone 13 Pro Max 512GB</span>
-                                            </div>
-                                            <div class="group-star">
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input"
-                                                           id="defaultInline1" value="1"
-                                                           name="inlineDefaultRadiosExample">
-                                                    <label class="custom-control-label"
-                                                           for="defaultInline1">Tệ</label>
-                                                </div>
-
-                                                <!-- Default inline 2-->
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input"
-                                                           id="defaultInline2" value="2"
-                                                           name="inlineDefaultRadiosExample">
-                                                    <label class="custom-control-label"
-                                                           for="defaultInline2">Trung
-                                                        bình</label>
-                                                </div>
-
-                                                <!-- Default inline 3-->
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input"
-                                                           id="defaultInline3" value="3"
-                                                           name="inlineDefaultRadiosExample">
-                                                    <label class="custom-control-label" for="defaultInline3">Khá
-                                                        Tốt</label>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input"
-                                                           id="defaultInline4" value="4"
-                                                           name="inlineDefaultRadiosExample">
-                                                    <label class="custom-control-label"
-                                                           for="defaultInline4">Tốt</label>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input"
-                                                           id="defaultInline5" value="5"
-                                                           name="inlineDefaultRadiosExample">
-                                                    <label class="custom-control-label"
-                                                           for="defaultInline5">Tuyệt
-                                                        vời</label>
-                                                </div>
-                                            </div>
-                                            <hr>
+                                    <form action="/phone-detail" method="post">
+                                        <div class="modal-header text-center pt-1 pb-1">
+                                            <h4 class="modal-title w-100 font-weight-bold text-uppercase">Đánh giá
+                                                sản phẩm</h4>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
                                         </div>
-                                        <div class="md-form  pink-textarea active-pink-textarea mb-0">
-													<textarea id="form18"
+                                        <input hidden name="action" value="review">
+                                        <input hidden name="phoneId" value="<%=p.getId()%>">
+                                        <div class="modal-body mx-3 ">
+                                            <div class="text-center">
+                                                <img class="form_img-prod"
+                                                     src="<%=p.getThumbnail()%>"
+                                                     alt="alt">
+                                                <div class="mt-2">
+                                                    <span class="font-weight-bold"><%=p.getName() + p._cap().getCap() + p._cap().getUnit()%></span>
+                                                </div>
+                                                <div class="group-star">
+
+                                                    <%
+                                                        for (int i = 1; i <= 5; i++) {
+                                                    %>
+
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" class="form-check-input"
+                                                               id="ratting-<%=i%>" value="<%=i%>"
+                                                               name="star" <%=(i==5)?"checked":""%> >
+                                                        <label class="form-check-label"
+                                                               for="ratting-<%=i%>"><%=i%>
+                                                        </label>
+                                                    </div>
+                                                    <%}%>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div class="md-form  pink-textarea active-pink-textarea mb-0">
+													<textarea id="form18" name="content"
                                                               class="md-textarea form-control validate mb-0 pb-0"
                                                               style="padding-top: 30px;" rows="3"></textarea>
-                                            <label for="form18">Cãm nhận của bạn về sản phẩm</label>
-                                        </div>
-                                        <div class="pr-0">
-                                            <div class="md-form col-12 pl-0 pr-0">
-                                                <input id="name-horizontal" type="text"
-                                                       class="validate form-control m-0" required="">
-                                                <label id="name-label" class="" for="name-horizontal">Nhập họ
-                                                    tên</label>
+                                                <label for="form18">Cãm nhận của bạn về sản phẩm</label>
                                             </div>
-                                        </div>
-                                        <div class=" pr-0">
-                                            <div class="md-form col-12 pl-0 pr-0">
-                                                <input id="phone-horizontal" type="text"
-                                                       class="validate form-control m-0" required="">
-                                                <label id="phone-label" class="" for="phone-horizontal">Nhập số
-                                                    điện thoại</label>
-                                            </div>
-                                        </div>
-                                        <div class="md-form mb-2 mt-2">
-                                            <input type="email" id="email-horizontal"
-                                                   class="form-control validate m-0">
-                                            <label data-error="Vui lòng kiểm tra lại thông tin"
-                                                   data-success="right" for="email-horizontal">Nhập email</label>
-                                        </div>
-                                    </div>
+                                            <%
 
-                                    <div class="modal-footer d-flex justify-content-center pt-1 pb-1">
-                                        <button class="btn btn-danger ">Gửi</button>
-                                    </div>
+
+                                                if (user == null) {%>
+                                            <div class="pr-0">
+                                                <div class="md-form col-12 pl-0 pr-0">
+                                                    <input id="name-horizontal" type="text" name="name"
+                                                           class="validate form-control m-0" required="">
+                                                    <label id="name-label" class="" for="name-horizontal">Nhập họ
+                                                        tên</label>
+                                                </div>
+                                            </div>
+                                            <div class=" pr-0">
+                                                <div class="md-form col-12 pl-0 pr-0">
+                                                    <input id="phone-horizontal" type="text" name="phone"
+                                                           class="validate form-control m-0" required="">
+                                                    <label id="phone-label" class="" for="phone-horizontal">Nhập số
+                                                        điện thoại</label>
+                                                </div>
+                                            </div>
+                                            <div class="md-form mb-2 mt-2">
+                                                <input type="email" id="email-horizontal" name="email"
+                                                       class="form-control validate m-0">
+                                                <label data-error="Vui lòng kiểm tra lại thông tin"
+                                                       data-success="right" for="email-horizontal">Nhập email</label>
+                                            </div>
+                                            <%}%>
+                                        </div>
+
+                                        <div class="modal-footer d-flex justify-content-center pt-1 pb-1">
+                                            <button type="submit" class="btn btn-danger ">Gửi</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade show" id="modalQuestion" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel" aria-modal="true"
+                             style="padding-right: 17px; display: none;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <form action="/phone-detail" method="post">
+                                        <div class="modal-header text-center pt-1 pb-1">
+                                            <h4 class="modal-title w-100 font-weight-bold text-uppercase">dat cau hoi
+                                                sản phẩm</h4>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <input hidden name="action" value="question">
+                                        <input hidden name="phoneId" value="<%=p.getId()%>">
+                                        <div class="modal-body mx-3 ">
+                                            <div class="text-center">
+                                                <img class="form_img-prod"
+                                                     src="<%=p.getThumbnail()%>"
+                                                     alt="alt">
+                                                <div class="mt-2">
+                                                    <span class="font-weight-bold"><%=p.getName() + p._cap().getCap() + p._cap().getUnit()%></span>
+                                                </div>
+                                                <div class="group-star">
+                                                    <select class="mdb-select md-form" name="questionType">
+                                                        <%
+                                                            for (int i = 0; i < qs.size(); i++
+                                                            ) {
+                                                        %>
+                                                        <option value="<%=qs.get(i).getId()%>" <%=(i == 0) ? "selected" : ""%> ><%=qs.get(i).getName()%>
+                                                        </option>
+                                                        <%}%>
+                                                    </select>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div class="md-form  pink-textarea active-pink-textarea mb-0">
+													<textarea name="content"
+                                                              class="md-textarea form-control validate mb-0 pb-0"
+                                                              style="padding-top: 30px;" rows="3"></textarea>
+                                                <label for="form18">dat cau hoi</label>
+                                            </div>
+                                            <%
+
+
+                                                if (user == null) {%>
+                                            <div class="pr-0">
+                                                <div class="md-form col-12 pl-0 pr-0">
+                                                    <input id="name" type="text" name="name"
+                                                           class="validate form-control m-0" required="">
+                                                    <label class="" for="name">Nhập họ
+                                                        tên</label>
+                                                </div>
+                                            </div>
+                                            <div class=" pr-0">
+                                                <div class="md-form col-12 pl-0 pr-0">
+                                                    <input id="phone" type="text" name="phone"
+                                                           class="validate form-control m-0" required="">
+                                                    <label class="" for="phone">Nhập số
+                                                        điện thoại</label>
+                                                </div>
+                                            </div>
+                                            <div class="md-form mb-2 mt-2">
+                                                <input type="email" id="email" name="email"
+                                                       class="form-control validate m-0">
+                                                <label data-error="Vui lòng kiểm tra lại thông tin"
+                                                       data-success="right" for="email">Nhập email</label>
+                                            </div>
+                                            <%}%>
+                                        </div>
+
+                                        <div class="modal-footer d-flex justify-content-center pt-1 pb-1">
+                                            <button type="submit" class="btn btn-danger ">Gửi</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -1937,7 +2150,7 @@
 
 
             <div class="row w-100 mx-auto">
-                <div class="col-12">
+                <div class="col-12 p-0">
 
 
                     <div class="card">
@@ -1954,10 +2167,10 @@
                                     </a>
                                 </li>
                                 <%
-                                    if (p.getModelId() != null && p.getModelId() != 0) {
+                                    if (p.getModelId() != 0 && p.getModelId() != 0) {
                                 %>
                                 <li class="nav-item ">
-                                    <a class="nav-link active " style="font-size: 15px;"
+                                    <a class="nav-link  " style="font-size: 15px;"
                                        id="model-tab"
                                        data-toggle="tab" href="#phone-model" role="tab"
                                        aria-controls="home"
@@ -2118,10 +2331,10 @@
                                     </div>
                                 </div>
                                 <%
-                                    if (p.getModelId() != null && p.getModelId() != 0) {
+                                    if (p.getModelId() != 0 && p.getModelId() != 0) {
                                 %>
                                 <div class="tab-pane fade "
-                                     id="phone-brand" style="" role="tabpanel"
+                                     id="phone-model" style="" role="tabpanel"
                                      aria-labelledby="pills-home-tab">
                                     <div class="owl-carousel owl-theme ">
 
@@ -2273,7 +2486,17 @@
     </div>
 </div>
 <!--homeContent-->
+<content tag="local_script">
 
+    <script>
+        // Material Select Initialization
+        $(document).ready(function () {
+            $('.mdb-select').materialSelect();
+        });
+
+    </script>
+
+</content>
 
 <!--homeContent-->
 

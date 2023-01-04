@@ -17,7 +17,7 @@ public class OrderState extends Base<OrderState> implements Serializable {
     private String key;
 
     public List<Order> _orders() {
-        return new AbstractDAO<Order>("orders").list(" and order_stateId=" + this.id, Order.class, null, null);
+        return new AbstractDAO<Order>("orders").list(" and order_stateId=" + this.id, Order.class, null,null,null,null);
     }
 }
 

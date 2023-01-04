@@ -24,7 +24,7 @@ public class Spec extends Base<Spec> implements Serializable {
 
 
     public List<PhoneSpec> _phones() {
-        return new AbstractDAO<PhoneSpec>("phone_spec").list(" and specId =" + this.id, PhoneSpec.class, null, null);
+        return new AbstractDAO<PhoneSpec>("phone_spec").list(" and specId =" + this.id, PhoneSpec.class, null, null,null, null);
     }
 
 

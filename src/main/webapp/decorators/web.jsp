@@ -1,3 +1,5 @@
+<%@ page import="vn.edu.hcmuaf.fit.until.SessionUntil" %>
+<%@ page import="vn.edu.hcmuaf.fit.constant.Variable" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -22,16 +24,38 @@
 <%@include file="/common/web/js.jsp" %>
 
 <dec:getProperty property="page.local_script"/>
-<%if (request.getAttribute("message") != null) { %>
+<%if (SessionUntil.get(request, Variable.Global.MESSAGE.toString()) != null) { %>
 <script type="text/javascript">
     Swal.fire({
         position: 'top-end',
-        icon: '<%=request.getAttribute("type")%>',
-        title: '<%=request.getAttribute("message")%>',
+        icon: '<%=SessionUntil.get(request,Variable.Global.TYPE.toString())%>',
+        title: '<%=SessionUntil.get(request,Variable.Global.MESSAGE.toString())%>',
         showConfirmButton: false,
         timer: 1500
     })
 </script>
 <%}%>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#modalLoginForm .modal-footer button').click(function () {
+            const ckFEmail = $('#defaultForm-email').hasClass('invalid') ? true : false;
+            const ckFPass = $('#defaultForm-pass').hasClass('invalid') || $('#defaultForm-pass').val().length < 1 ? true : false;
+            if (ckFEmail || ckFPass)
+                $('#modalLoginForm form').attr('onsubmit', 'return false');
+            else
+                $('#modalLoginForm form').attr('onsubmit', 'return true');
+        });
+        popUp();
+
+    })
+
+    function popUp() {
+        if ($('#mess-form').val() != undefined) {
+            $('#btn-login').trigger('click')
+        } else {
+            $('#btn-login').trigger('')
+        }
+    }
+</script>
 </body>
 </html>

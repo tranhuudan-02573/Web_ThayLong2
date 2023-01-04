@@ -22,6 +22,6 @@ public class Action extends Base<Action> implements Serializable {
     private String group;
 
     public List<User> _users() {
-        return new AbstractDAO<User>("permission_action").list(" and userId=" + this.id, User.class, null, null);
+        return new AbstractDAO<User>("permission_action").list(" and userId=" + this.id, User.class, null, null,null, null);
     }
 }

@@ -1,26 +1,60 @@
 package vn.edu.hcmuaf.fit.model.cart;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vn.edu.hcmuaf.fit.dao.AbstractDAO;
+import vn.edu.hcmuaf.fit.model.phone.Base;
 import vn.edu.hcmuaf.fit.model.phone.Color;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class CartItem {
+import java.util.Objects;
 
-    private Phone phone;
-    private Color color;
+@Data
+@NoArgsConstructor
+public class CartItem extends Base<CartItem> {
+    private int phoneId;
+    private int colorId;
     private int quantity;
     private int price;
     private boolean isSave;
 
-    public CartItem(Phone phone, Color color, int price, boolean isSave) {
-        this.phone = phone;
-        this.color = color;
+
+    public CartItem(int phoneId, int colorId, int price, boolean isSave) {
+        this.phoneId = phoneId;
+        this.colorId = colorId;
         this.price = price;
         this.isSave = isSave;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        CartItem cartItem = (CartItem) o;
+        return phoneId == cartItem.phoneId && colorId == cartItem.colorId && quantity == cartItem.quantity && price == cartItem.price && isSave == cartItem.isSave;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), phoneId, colorId, quantity, price, isSave);
+    }
+
+    public CartItem(int phoneId, int colorId, int num, int price, boolean isSave) {
+        this.phoneId = phoneId;
+        this.colorId = colorId;
+        this.price = price;
+        this.quantity = num;
+        this.isSave = isSave;
+    }
+
+
+    public Color _color() {
+        return new AbstractDAO<Color>("colors").get(" and id = " + this.colorId, Color.class, null).get();
+    }
+
+    public Phone _phone() {
+        return new AbstractDAO<Phone>("phones").get(" and id =" + this.phoneId, Phone.class, null).get();
+    }
+
 }

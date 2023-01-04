@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.StringTokenizer;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,5 +26,20 @@ public class Customer implements Serializable {
     private String phone;
     private String email;
     private String address;
+
+    public String avatar() {
+        StringBuilder rs = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(this.name);
+
+        String[] sts = this.name.trim().toUpperCase().split(" ");
+
+        int start = 0;
+        if (sts.length > 2) start = sts.length - 3;
+
+        for (int i = start; i < sts.length; i++) {
+            rs.append(sts[i].charAt(0));
+        }
+        return rs.toString();
+    }
 
 }

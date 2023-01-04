@@ -11,6 +11,8 @@ import java.io.IOException;
 public class EditHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
         request.getRequestDispatcher("/views/admin/manage/sale/edit.jsp").forward(request, response);
     }
 
