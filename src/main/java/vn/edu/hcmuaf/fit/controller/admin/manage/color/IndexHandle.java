@@ -16,7 +16,7 @@ public class IndexHandle extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Color> colors = new AbstractDAO<Color>("colors").list("", Color.class, null, null);
+        List<Color> colors = new AbstractDAO<Color>("colors").list("", Color.class, null, null,null, null);
 
         request.setAttribute("colors", colors);
 

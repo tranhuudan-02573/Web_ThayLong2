@@ -1,5 +1,10 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.user.User" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.wish.Wish" %>
+<%@ page import="java.util.List" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.cart.CartItem" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="vn.edu.hcmuaf.fit.constant.Variable" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.cart.Carts" %>
+<%@ page import="vn.edu.hcmuaf.fit.until.SessionUntil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 
@@ -18,7 +23,7 @@
 <main>
 
     <%
-        User user = (User) session.getAttribute("USER");
+        User user = (User) session.getAttribute(Variable.Global.USER.toString());
 
     %>
 
@@ -44,7 +49,7 @@
                                         <div class="form-check form-check-inline ">
                                             <input type="radio" class="form-check-input"
                                                    id="nam"
-                                                   name="gender"  <%=(!user.isGender())?"checked":""%>>
+                                                   name="gender"  <%=(user!=null)?(!user.isGender()?"checked":""):"checked"%>>
                                             <label class="form-check-label"
                                                    for="nam">nam</label>
                                             <!-- Material inline 2 -->
@@ -52,7 +57,7 @@
                                         <div class="form-check form-check-inline ">
                                             <input type="radio" class="form-check-input"
                                                    id="nu"
-                                                   name="gender" <%=(!user.isGender())?"checked":""%>>
+                                                   name="gender"<%=(user!=null)?(user.isGender()?"checked":""):""%>>
                                             <label class="form-check-label"
                                                    for="nu">nữ</label>
                                         </div>
@@ -66,7 +71,7 @@
                                             <i class="fas fa-user prefix text-danger"></i>
 
                                             <input type="text" id="name" class="form-control"
-                                                   value="<%=(user.getId()!=0)?user.getName():""%>">
+                                                   value="<%=(user!=null)?user.getName():""%>">
                                             <label for="name">Tên khách hàng</label>
                                         </div>
                                     </div>
@@ -75,7 +80,7 @@
                                         <div class="md-form  m-0">
                                             <i class="fa-solid fa-phone prefix text-danger"></i>
                                             <input type="text" id="phone" class="form-control"
-                                                   value="<%=(user.getId()!=0)?user.getPhone():""%>">
+                                                   value="<%=(user!=null)?user.getPhone():""%>">
                                             <label for="phone">Số điện thoại</label>
                                         </div>
                                     </div>
@@ -86,13 +91,13 @@
                                 <div class="md-form">
                                     <i class="fa-solid fa-address-card prefix text-danger"></i>
                                     <input type="text" id="address"
-                                           class="form-control" value="<%=(user.getId()!=0)?user.getAddress():""%>">
+                                           class="form-control" value="<%=(user!=null)?user.getAddress():""%>">
                                     <label for="address">Địa chỉ</label>
                                 </div>
                                 <div class="md-form">
                                     <i class="fa-solid fa-envelope prefix text-danger"></i>
                                     <input type="text" id="email"
-                                           class="form-control" value="<%=(user.getId()!=0)?user.getEmail():""%>">
+                                           class="form-control" value="<%=(user!=null)?user.getEmail():""%>">
                                     <label for="email">Email</label>
                                 </div>
 
@@ -141,20 +146,28 @@
                         <div class="card-body">
 
                             <%
-                                for (Wish c : user.getCarts()
+                                Carts carts = (Carts) SessionUntil.get(request, Variable.Global.CART.toString());
+                                List<CartItem> cartItems = new ArrayList<>(carts.getCartItemIntegerMap().keySet());
+
+                                for (CartItem c : cartItems
                                 ) {
+                                    if(!c.isSave()){
 
                             %>
-
                             <dl class="row">
-                                <dd class="col-sm-8">
+                                <dd class="col-sm-5">
                                     <%=c._phone().getName()%>
                                 </dd>
                                 <dd class="col-sm-4">
                                     <%=c._phone().getPrice()%>
                                 </dd>
+                                <dd class="col-sm-3">
+                                    <%=carts.getCartItemIntegerMap().get(c)%> cai
+                                </dd>
                             </dl>
-                            <%}%>
+
+                            <%}
+                            }%>
 
                             <hr>
 
@@ -164,7 +177,7 @@
                                     Tổng
                                 </dt>
                                 <dt class="col-sm-4">
-                                    <%=user.total()%>
+                                    <%=carts.total()%>
                                 </dt>
                             </dl>
                             <button class="btn btn-danger waves-effect btn-lg btn-block" type="submit">Thanh toán
@@ -183,8 +196,6 @@
 
 
         </section>
-
-
     </div>
 
 </main>

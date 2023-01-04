@@ -1,11 +1,15 @@
 package vn.edu.hcmuaf.fit.model.user;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Base;
 
 import java.io.Serializable;
-import java.util.Optional;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PermissionAction extends Base<PermissionAction> implements Serializable {
 
     private Integer userId;

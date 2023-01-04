@@ -5,8 +5,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.*" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.phone.*" %>
+<%@ page import="java.util.stream.Stream" %>
+<%@ page import="java.util.function.Predicate" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,8 +67,6 @@
 </head>
 
 <body>
-
-
 <div class="content my-5">
     <div class="container">
         <div id="breadcrumb"></div>
@@ -125,622 +124,916 @@
                     <a class="nav-link" href="#" style="width: 100px;"><img src="/images/vivo.png"
                                                                             class="img-fluid"></a>
                 </li>
-
             </ul>
         </section>
         <!--end homeMenuMobile2-->
+        <%
+            List<Brand> brandList = (List<Brand>) request.getAttribute("brandList");
+            List<Brand> brandCheckList = (List<Brand>) request.getAttribute("brandCheckList");
 
-        <section class="homeProducts">
-            <div class="row row-sm">
-                <div class="col-xl-3 bg-white pl-2 pr-2">
-                    <div class="cdt-filter__block mb-3">
-                        <div class="cdt-filter__title fw-bold fs-4 mb-2 h6">Lọc Theo</div>
-                        <div class="d-none d-sm-block">
+            List<Model> modelList = (List<Model>) request.getAttribute("modelList");
+            List<Model> modelCheckList = (List<Model>) request.getAttribute("modelCheckList");
 
-                            <div class="chip pink lighten-4">
-                                Tag 220
-                                <i class="close fas fa-times"></i>
+            List<Cap> capList = (List<Cap>) request.getAttribute("capList");
+            List<Cap> capCheckList = (List<Cap>) request.getAttribute("capCheckList");
+
+            List<Type> typeList = (List<Type>) request.getAttribute("typeList");
+            List<Type> typeCheckList = (List<Type>) request.getAttribute("typeCheckList");
+
+            List<Promot> promotList = (List<Promot>) request.getAttribute("promotList");
+            List<Promot> promotCheckList = (List<Promot>) request.getAttribute("promotCheckList");
+
+            boolean[] brandCheck = (boolean[]) request.getAttribute("brandCheck");
+            boolean[] modelCheck = (boolean[]) request.getAttribute("modelCheck");
+            boolean[] capCheck = (boolean[]) request.getAttribute("capCheck");
+            boolean[] typeCheck = (boolean[]) request.getAttribute("typeCheck");
+            boolean[] promotCheck = (boolean[]) request.getAttribute("promotCheck");
+
+            Map<String, String> priceList = (Map<String, String>) request.getAttribute("priceList");
+            Map<String, String> sortList = (Map<String, String>) request.getAttribute("sortList");
+            Map<String, String> differentList = (Map<String, String>) request.getAttribute("differentList");
+            List<String> keySort = new ArrayList<>(sortList.keySet());
+            List<String> key3 = new ArrayList<>(differentList.keySet());
+            String sort = (String) request.getAttribute("sort");
+            boolean[] priceCheck = (boolean[]) request.getAttribute("priceCheck");
+            boolean[] differentCheck = (boolean[]) request.getAttribute("differentCheck");
+            boolean priceCheck0 = (boolean) request.getAttribute("priceCheck0");
+            List<Phone> phones = (List<Phone>) request.getAttribute("phones");
+            String search = (String)request.getAttribute("search");
+            List<Phone> all = (List<Phone>)request.getAttribute("phoneAll");
+double total = (double)request.getAttribute("total");
+int paginationnum = (int)request.getAttribute("paginationnum");
+        %>
+        <form action="/phone-filter" id="form1">
+            <section class="homeProducts">
+                <div class="row row-sm">
+                    <div class="col-xl-3 bg-white pl-2 pr-2">
+                        <div class="cdt-filter__block mb-3">
+                            <div class="cdt-filter__title fw-bold fs-4 mb-2 h6">Lọc Theo</div>
+                            <div class="d-none d-sm-block">
+
+
+
+                                <%
+                                    if (brandCheckList != null) {
+                                        for (Brand b : brandCheckList
+                                        ) {
+
+                                %>
+
+                                <div class="chip pink lighten-4">
+                                    <%=b.getName()%>
+                                    <i class="close fas fa-times"
+                                       onclick="document.getElementById('brandId-<%=b.getId()%>').click()"></i>
+                                </div>
+
+                                <% }
+                                }%>
+                                <%
+                                    if (capCheckList != null) {
+                                        for (Cap c : capCheckList
+                                        ) {
+
+                                %>
+
+                                <div class="chip pink lighten-4">
+                                    <%=c.getCap() + c.getUnit()%>
+                                    <i class="close fas fa-times"
+                                       onclick="document.getElementById('capId-<%=c.getId()%>').click()"></i>
+                                </div>
+
+                                <% }
+                                }%>
+                                <%
+                                    if (typeCheckList != null) {
+                                        for (Type c : typeCheckList
+                                        ) {
+
+                                %>
+
+                                <div class="chip pink lighten-4">
+                                    <%=c.getName()%>
+                                    <i class="close fas fa-times"
+                                       onclick="document.getElementById('typeId-<%=c.getId()%>').click()"></i>
+                                </div>
+
+                                <% }
+                                }%>
+                                <%
+                                    if (promotCheckList != null) {
+                                        for (Promot c : promotCheckList
+                                        ) {
+                                %>
+                                <div class="chip pink lighten-4">
+                                    <%=c.getName()%>
+                                    <i class="close fas fa-times"
+                                       onclick="document.getElementById('promotId-<%=c.getId()%>').click()"></i>
+                                </div>
+
+                                <% }
+                                }%>
+                                <%
+                                    if (modelCheckList != null) {
+                                        for (Model m : modelCheckList
+                                        ) {
+
+                                %>
+
+                                <div class="chip pink lighten-4">
+                                    <%=m.getName()%>
+                                    <i class="close fas fa-times"
+                                       onclick="document.getElementById('modelId-<%=m.getId()%>').click()"></i>
+                                </div>
+
+                                <% }
+                                }%>
+                                <%
+                                    if (!priceCheck0) {
+                                        List<String> s = new ArrayList<>(priceList.keySet());
+                                        for (int i = 0; i < priceCheck.length; i++
+                                        ) {
+                                            if (priceCheck[i]) {
+                                %>
+
+                                <div class="chip pink lighten-4">
+                                    <%=priceList.get(s.get(i))%>
+                                    <i class="close fas fa-times"
+                                       onclick="document.getElementById('priceName-<%=s.get(i)%>').click()"></i>
+                                </div>
+
+                                <% }
+                                }
+                                }%>
+
                             </div>
-                            <div class="chip pink lighten-4">
-                                Tag 220
-                                <i class="close fas fa-times"></i>
-                            </div>
-                            <div class="chip pink lighten-4">
-                                Tag 220
-                                <i class="close fas fa-times"></i>
-                            </div>
-
-
                         </div>
-                    </div>
-                    <div class="cdt-filter__block mb-3">
-                        <div class="cdt-filter__title fw-bold fs-4 mb-2 h6">Sản phẩm</div>
 
-                        <div class="filter row ml-0">
 
-                            <form method="get" action="/phone-filter" id="form">
+                        <div class="cdt-filter__block mb-3">
+                            <div class="cdt-filter__title fw-bold fs-4 mb-2 h6">Sản phẩm</div>
+                            <div class="filter row ml-0">
+                                <div class="form-check form-check-block mb-2 col-6 pr-0 ">
+                                    <input type="checkbox" class="form-check-input" name=""
+                                           id="brandId-all"
+                                           value=""
+                                        <%=(brandCheckList == null ) ? "checked" : ""%>>
+                                    <label class="form-check-label w-100"
+                                           for="brandId-all">all
+                                    </label>
+                                </div>
+                                <%
+                                    if (brandList != null) {
+                                        for (int i = 0; i < brandList.size(); i++) {
+                                %>
+                                <div class="form-check form-check-block mb-2 col-6 pr-0 ">
+                                    <input type="checkbox" class="form-check-input" name="brandCheck"
+                                           id="brandId-<%=brandList.get(i).getId()%>"
+                                           value="<%=brandList.get(i).getId()%>"
+                                        <%=(brandCheck[i])?"checked":""%> >
+                                    <label class="form-check-label w-100"
+                                           for="brandId-<%=brandList.get(i).getId()%>"><%=brandList.get(i).getName()%>
+                                    </label>
+                                </div>
+                                <%
+                                        }
+                                    }
+                                %>
+                            </div>
+                        </div>
+
+                        <%
+                            if (!modelList.isEmpty() ) {%>
+
+                        <div class="cdt-filter__block mb-3">
+                            <div class="cdt-filter__title fw-bold fs-4 mb-2 h6">model</div>
+                            <div class="filter row ml-0">
+
 
                                 <div class="form-check form-check-block mb-2 col-6 pr-0 ">
-                                    <a class="text-dark"
-                                       href="${pageContext.request.contextPath}/phone-filter?name=brand">
-                                        <input type="checkbox" class="form-check-input" id="materialInline1" value="0">
-                                        <label class="form-check-label w-100" for="materialInline1">Tất cả</label>
+                                    <input type="checkbox" class="form-check-input" name=""
+                                           id="modelId-all"
+                                           value=""
+                                        <%=(modelCheckList == null ) ? "checked" : ""%>>
+                                    <label class="form-check-label w-100"
+                                           for="modelId-all">all
+                                    </label>
+                                </div>
+                                <%
+
+                                        for (int i = 0; i < modelList.size(); i++) {
+                                %>
+                                <div class="form-check form-check-block mb-2 col-6 pr-0 ">
+                                    <input type="checkbox" class="form-check-input" name="modelCheck"
+                                           id="modelId-<%=modelList.get(i).getId()%>"
+                                           value="<%=modelList.get(i).getId()%>"
+
+                                        <%=(modelCheck[i])?"checked":""%> >
+                                    <label class="form-check-label w-100"
+                                           for="modelId-<%=modelList.get(i).getId()%>"><%=modelList.get(i).getName()%>
+                                    </label>
+                                </div>
+                                <%
+                                        }
+
+                                %>
+                            </div>
+                        </div>
+                        <%}%>
+
+                        <div class="cdt-filter__block mb-3">
+                            <div class="cdt-filter__title fw-bold fs-4 mb-2 h6">Mức Giá</div>
+                            <div class="filter">
+                                <div class="form-check form-check-block mb-2 col-6 pr-0 ">
+                                    <input type="checkbox" class="form-check-input" name=""
+                                           id="priceId-all"
+                                           value=""
+                                        <%=(priceCheck0) ? "checked" : ""%>>
+                                    <label class="form-check-label w-100"
+                                           for="priceId-all">all
+                                    </label>
+                                </div>
+                                <%
+                                    if (priceList != null) {
+                                        List<String> keys = new ArrayList<>(priceList.keySet());
+                                        for (int i = 0; i < keys.size(); i++) {
+                                %>
+                                <div class="form-check form-check-block mb-2 pr-0 ">
+                                    <a class="text-dark" href="#">
+                                        <input type="checkbox" name="priceCheck" class="form-check-input"
+                                               value="<%=priceList.get(keys.get(i))%>" onclick="this.form.submit()"
+                                               id="priceName-<%=keys.get(i)%>" <%=(priceCheck[i])?"checked":""%>>
+                                        <label class="form-check-label w-100"
+                                               for="priceName-<%=keys.get(i)%>"><%=priceList.get(keys.get(i))%>
+                                        </label>
                                     </a>
                                 </div>
+                                <%
+                                        }
+                                    }
+                                %>
+                            </div>
+                        </div>
+                        <div class="cdt-filter__block mb-3">
+                            <div class="cdt-filter__title fw-bold fs-4 mb-2 h6">bo nho</div>
+                            <div class="filter row ml-0">
+                                <div class="form-check form-check-block mb-2 col-6 pr-0 ">
+                                    <input type="checkbox" class="form-check-input" name=""
+                                           id="capId-all"
+                                           value=""
+                                        <%=(capCheckList == null ) ? "checked" : ""%>>
+                                    <label class="form-check-label w-100"
+                                           for="capId-all">all
+                                    </label>
+                                </div>
+                                <%
+                                    if (capList != null) {
+                                        for (int i = 0; i < capList.size(); i++) {
+                                %>
+                                <div class="form-check form-check-block mb-2 col-6 pr-0 ">
+                                    <input type="checkbox" class="form-check-input" name="capCheck"
+                                           id="capId-<%=capList.get(i).getId()%>" onclick="this.form.submit()"
+                                           value="<%=capList.get(i).getId()%>"
+                                        <%=(capCheck[i])?"checked":""%> >
+                                    <label class="form-check-label w-100"
+                                           for="capId-<%=capList.get(i).getId()%>"><%=capList.get(i).getCap() + capList.get(i).getUnit()%>
+                                    </label>
+                                </div>
+                                <%
+                                        }
+                                    }
+                                %>
+                            </div>
+                        </div>
+                        <div class="cdt-filter__block mb-3">
+                            <div class="cdt-filter__title fw-bold fs-4 mb-2 h6">loai</div>
+                            <div class="filter row ml-0">
+                                <div class="form-check form-check-block mb-2 col-6 pr-0 ">
+                                    <input type="checkbox" class="form-check-input" name=""
+                                           id="typeId-all"
+                                           value=""
+                                        <%=(typeCheckList == null ) ? "checked" : ""%>>
+                                    <label class="form-check-label w-100"
+                                           for="typeId-all">all
+                                    </label>
+                                </div>
+                                <%
+                                    if (typeList != null) {
+                                        for (int i = 0; i < typeList.size(); i++) {
+                                %>
+                                <div class="form-check form-check-block mb-2 col-6 pr-0 ">
+                                    <input type="checkbox" class="form-check-input" name="typeCheck"
+                                           id="typeId-<%=typeList.get(i).getId()%>" onclick="this.form.submit()"
+                                           value="<%=typeList.get(i).getId()%>"
+                                        <%=(typeCheck[i])?"checked":""%> >
+                                    <label class="form-check-label w-100"
+                                           for="typeId-<%=typeList.get(i).getId()%>"><%=typeList.get(i).getName() %>
+                                    </label>
+                                </div>
+                                <%
+                                        }
+                                    }
+                                %>
+                            </div>
+                        </div>
+                        <div class="cdt-filter__block mb-3">
+                            <div class="cdt-filter__title fw-bold fs-4 mb-2 h6">chuong trinh</div>
+                            <div class="filter row ml-0">
+                                <div class="form-check form-check-block mb-2 col-6 pr-0 ">
+                                    <input type="checkbox" class="form-check-input" name=""
+                                           id="promotId-all"
+                                           value=""
+                                        <%=(promotCheckList == null ) ? "checked" : ""%>>
+                                    <label class="form-check-label w-100"
+                                           for="promotId-all">all
+                                    </label>
+                                </div>
+                                <%
+                                    if (promotList != null) {
+                                        for (int i = 0; i < promotList.size(); i++) {
+                                %>
+                                <div class="form-check form-check-block mb-2 col-6 pr-0 ">
+                                    <input type="checkbox" class="form-check-input" name="promotCheck"
+                                           id="promotId-<%=promotList.get(i).getId()%>" onclick="this.form.submit()"
+                                           value="<%=promotList.get(i).getId()%>"
+                                        <%=(promotCheck[i])?"checked":""%> >
+                                    <label class="form-check-label w-100"
+                                           for="promotId-<%=promotList.get(i).getId()%>"><%=promotList.get(i).getName() %>
+                                    </label>
+                                </div>
+                                <%
+                                        }
+                                    }
+                                %>
+                            </div>
+                        </div>
 
-                                <c:forEach var="brand" items="${requestScope.brands}">
-                                    <div class="form-check form-check-block mb-2 col-6 pr-0 ">
-                                        <a class="text-dark"
-                                           href="${pageContext.request.contextPath}/phone-filter?name=brand&id=${brand.id}">
-                                            <input type="checkbox" class="form-check-input" name="brand"
-                                                   id="brandId${brand.id}">
-                                            <label class="form-check-label w-100"
-                                                   for="brandId${brand.id}">${brand.name}</label>
-                                        </a>
+                    </div>
+                    <div class="col-xl-9 bg-white p-0 ">
+                        <div class="card border  mb-4" style="box-shadow: unset;">
+                            <div class="card-header">
+                                <div class="d-flex bd-highlight">
+                                    <div class=" w-100 bd-highlight d-none d-sm-block">
+                                        <h3 class="m-0">
+                                            <a href="" title="" class="text-dark h4  " style="font-size: 22px">
+
+                                               <%if(search!=null && !search.equals("")){%>
+                                                <%=search%>
+
+                                                <%}else{%>
+                                                dien thoai
+                                                <%
+
+                                                    if (brandCheckList != null) {
+                                                        for (Brand b : brandCheckList
+                                                        ) {
+                                                %>
+                                                <%=b.getName()%>
+                                                <%
+                                                        }
+                                                    }
+                                                %>
+                                                <%
+                                                if (modelCheckList != null) {
+                                                for (Model m : modelCheckList
+                                                ) {
+
+                                                %>
+                                                <%=m.getName()%>
+                                                <%
+                                                    }
+                                                    }
+                                                    }
+                                                %>
+                                                <span style="font-size: 14px ; opacity: 0.7">(<%=all.size()%> sản phẩm)</span>
+                                            </a>
+                                        </h3>
                                     </div>
-                                </c:forEach>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="cdt-filter__block mb-3">
-                        <div class="cdt-filter__title fw-bold fs-4 mb-2 h6">Mức Giá</div>
-                        <div class="filter">
-                            <div class="form-check form-check-block mb-2 pr-0 ">
-                                <a class="text-dark" href="#">
-                                    <input type="checkbox" class="form-check-input" id="materialPriceAll">
-                                    <label class="form-check-label w-100" for="materialPriceAll">Tất cả</label>
-                                </a>
-                            </div>
-
-                            <div class="form-check form-check-block mb-2 pr-0 ">
-                                <a class="text-dark" href="#">
-                                    <input type="checkbox" class="form-check-input" id="material2MPrice">
-                                    <label class="form-check-label w-100" for="material2MPrice">Từ 2
-                                        triệu</label>
-                                </a>
-                            </div>
-                            <div class="form-check form-check-block mb-2 pr-0 ">
-                                <a class="text-dark" href="#">
-                                    <input type="checkbox" class="form-check-input" id="material2T4MPrice">
-                                    <label class="form-check-label w-100" for="material2T4MPrice">Từ 2-4
-                                        triệu</label>
-                                </a>
-                            </div>
-                            <div class="form-check form-check-block mb-2 pr-0 ">
-                                <a class="text-dark" href="#">
-                                    <input type="checkbox" class="form-check-input" id="material2T10MPrice">
-                                    <label class="form-check-label w-100" for="material2T10MPrice">Từ 4-10
-                                        triệu</label>
-                                </a>
-                            </div>
-                            <div class="form-check form-check-block mb-2 pr-0 ">
-                                <a class="text-dark" href="#">
-                                    <input type="checkbox" class="form-check-input" id="materialL10MMPrice">
-                                    <label class="form-check-label w-100" for="materialL10MMPrice">Trên 10
-                                        triệu</label>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-xl-9 bg-white p-0 ">
-                    <%
-                        Brand brand = (Brand) request.getAttribute("brand");
-                        Model model = (Model) request.getAttribute("model");
-                        List<Phone> phones = (List<Phone>) request.getAttribute("phones");
-                        if (brand != null && model == null) {
-                    %>
-                    <div class="card border  mb-4" style="box-shadow: unset;">
-                        <div class="card-header">
-                            <div class="d-flex bd-highlight">
-                                <div class=" w-100 bd-highlight d-none d-sm-block">
-                                    <h3 class="m-0">
-                                        <a href="" title="" class="text-dark h4  " style="font-size: 22px">
-                                            <%=brand.getName()%>
-                                            <span style="font-size: 14px ; opacity: 0.7">(<%=brand._phones().size()%> sản phẩm)</span>
-                                        </a>
-                                    </h3>
                                 </div>
                             </div>
-                        </div>
+                            <%
+
+                                if (brandCheckList == null) {
 
 
-                    </div>
-                    <%
-                    } else if (brand == null && model != null) {
-                    %>
-                    <div class="card border  mb-4" style="box-shadow: unset;">
-                        <div class="card-header">
-                            <div class="d-flex bd-highlight">
-                                <div class=" w-100 bd-highlight d-none d-sm-block">
-                                    <h3 class="m-0">
-                                        <a href="" title="" class="text-dark h4  " style="font-size: 22px">
-                                            <%=model.getName()%>
-                                            <span style="font-size: 14px ; opacity: 0.7">(<%=model._phones().size()%> sản phẩm)</span>
-                                        </a>
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <%} else {%>
-                    <div class="card border  mb-4" style="box-shadow: unset;">
-                        <div class="card-header">
-                            <div class="d-flex bd-highlight">
-                                <div class=" w-100 bd-highlight d-none d-sm-block">
-                                    <h3 class="m-0">
-                                        <a href="#" title="" class="text-dark h4  " style="font-size: 22px">
-                                            ĐIỆN THOẠI
-                                            <span style="font-size: 14px ; opacity: 0.7">(<%=phones.size()%>+ sản phẩm)</span>
-                                        </a>
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cart-body p-4">
-                            <div class="owl-carousel owl-theme my-owl-carousel">
+                            %>
+                            <div class="cart-body p-4">
+                                <div class="owl-carousel owl-theme my-owl-carousel">
 
-                                <c:forEach var="brand" items="${requestScope.brands}">
+                                    <%
+                                        for (Brand brand : brandList
+                                        ) {
 
-                                    <a href="${pageContext.request.contextPath}/phone-filter?name=brand&id=${brand.id}"
-                                       class="w-100 hvr-grow mx-2">
+                                    %>
+                                    <a class="w-100 hvr-grow mx-2 brandform "
+                                       onclick="document.getElementById('brand-<%=brand.getId()%>').click()">
+
+                                        <input hidden type="checkbox" value="<%=brand.getId()%>" name="brandCheck"
+                                               id="brand-<%=brand.getId()%>"
+                                               onclick="this.form.submit()">
                                         <img class="owl-lazy "
                                              style="max-width: 108px !important; max-height: 40px !important;"
-                                             data-src="${brand.logo}" alt="">
+                                             data-src="<%=brand.getLogo()%>" alt="">
                                     </a>
-                                </c:forEach>
 
+                                    <%}%>
+
+                                </div>
                             </div>
+                            <%}%>
                         </div>
 
 
-                    </div>
-                    <%}%>
+                        <%
+                            if (!modelList.isEmpty()&&modelCheckList==null) { %>
 
+                        <div class="card  border  mb-4" style="box-shadow: unset;">
+                            <div class="card-header">
+                                <h5 class=" font-weight-bold   m-0 text-uppercase ">
+                                    dòng sản phẩm
+                                </h5>
+                            </div>
+                            <div class="card-body  ">
+                                <div class="model-owl">
+                                    <div class="owl-carousel owl-theme ">
+                                        <%
+                                            for (int i = 0; i <modelList.size(); i++) {
 
-                    <%
-                        if (brand != null && !brand._models().isEmpty()) { %>
-
-                    <div class="card  border  mb-4" style="box-shadow: unset;">
-                        <div class="card-header">
-                            <h5 class=" font-weight-bold   m-0 text-uppercase ">
-                                dòng sản phẩm
-                            </h5>
-                        </div>
-
-                        <div class="card-body  ">
-                            <div class="model-owl">
-                                <div class="owl-carousel owl-theme ">
-
-                                    <c:forEach var="model" items="<%=brand._models() %>">
-
+                                        %>
                                         <div class="item  ">
                                             <div class="cdt-product text-center w-100 p-2">
-                                                <a href="${pageContext.request.contextPath}/phone-filter?name=model&id=${model.id}"
+                                                <a id="submit"
+                                                   onclick="
+                                                           document.getElementById('modelId-<%= modelList.get(i).getId()%>').click();
+                                                                                                                     "
                                                    title="iPhone 12 Series">
+                                                                                                       <input hidden name="modelCheck"
+                                                                                                                                                                                                                                                                                            value="<%=modelList.get(i).getId()%>"
+                                                           type="checkbox"
+                                                                                                                                                                                                                                  id="modelId-<%=modelList.get(i).getId()%>"
+                                                           onclick="this.form.submit()">
                                                     <div class="cdt-product__img hvr-shrink mb-2">
-                                                        <img src="${model.img}"
-                                                             alt="iPhone 12 Series" title="iPhone 12 Series">
-                                                    </div>
+                                                        <img src="<%=modelList.get(i).getImg()%>"
+                                                                                                                                                                                     alt="iPhone 12 Series" title="iPhone 12 Series">                                                                                                                                                           </div>
                                                     <div class="cdt-product__info text-center ">
-                                                        <div class="cdt-product__name  mb-1">${model.name}</div>
+                                                        <div class="cdt-product__name  mb-1"><%=modelList.get(i).getName()%>
+                                                        </div>
                                                         <div class="cdt-product__show-promo">
-                                                            <div class="strike-price">Chỉ từ 15.999.000đ</div>
+                                                            <div class="strike-price"><%=modelList.get(i)._minPrice()%>
+                                                                đ
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </a>
                                             </div>
                                         </div>
-                                    </c:forEach>
+                                        <%
+                                            }%>
 
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <%}%>
-                    <div class="d-flex  justify-content-between align-items-center">
-                        <ul class="nav nav-tabs " id="myTabProductList" role="tablist">
-                            <li class="nav-item mr-2">
-                                <a class="nav-link active text-dark bg-light"
-                                   id="all-tab"
-                                   data-toggle="tab"
-                                   href="#tabpane-all" role="tab" aria-controls="home"
-                                   aria-selected="true">tat ca
-                                </a>
-                            </li>
-                            <%
-                                List<Promot> prs = (List<Promot>) request.getAttribute("promotList");
-                                for (Promot pr : prs
-                                ) {
-                            %>
-                            <li class="nav-item mr-2">
-                                <a class="nav-link  text-dark bg-light"
-                                   id="<%=pr.getKey()%>-tab"
-                                   data-toggle="tab"
-                                   href="#tabpane-<%=pr.getKey()%>" role="tab" aria-controls="home"
-                                   aria-selected="true"><%=pr.getName()%>
-                                </a>
-                            </li>
-                            <%}%>
-
-
-                        </ul>
-                        <div class="sort float-right ml-auto ">
-
-                            <form action="" method="get">
-
-                                <select class="mdb-select md-form m-0 " style="color:red !important;">
-                                    <option value="1" class="text-danger">Sắp xếp theo A - Z</option>
-                                    <option value="2">Sắp xếp theo Z - A</option>
-                                    <option value="3">Sắp xếp theo giá giảm</option>
-                                    <option value="4">Sắp xếp theo giá tăng</option>
-                                    <option value="5">Sắp xếp theo lượt mua giảm</option>
-                                    <option value="5">Sắp xếp theo lượt mua tăng</option>
-                                </select>
-
-                            </form>
-
-                        </div>
-                    </div>
-                    <div class="tab-content pl-0 pr-0" id="myTabContent">
-                        <div class="tab-pane fade show active" id="tabpane-all" role="tabpanel"
-                             aria-labelledby="all-tab">
-                            <div class="products-mobile mt-3 w-100">
-                                <div class="row w-100 mx-auto row-cols-4  ">
-
-                                    <%
-                                        List<Phone> phones1 = (List<Phone>) request.getAttribute("phones");
-                                        for (Phone phone : phones1
-                                        ) {
-
-
-                                    %>
-                                    <div class="col-6 col-sm-3 p-0">
-                                        <div class="card border rounded-0" style="box-shadow: unset;">
-                                            <div class="card-body " style="padding: 0.75rem;">
-
-                                                <%--
-                                                  Created by IntelliJ IDEA.
-                                                  User: dell
-                                                  Date: 12/10/2022
-                                                  Time: 6:26 PM
-                                                  To change this template use File | Settings | File Templates.
-                                                --%>
-
-                                                <div class=" d-block  overflow-hidden ">
-                                                    <style>
-                                                        p {
-                                                            margin: 0;
-
-                                                        }
-
-                                                        .quote::before {
-                                                            content: '●';
-                                                            margin-right: 2px;
-                                                            left: 0;
-                                                            top: 0;
-                                                            color: #333;
-                                                            font-size: 10px;
-                                                        }
-
-                                                    </style>
-                                                    <div class="d-flex flex-column align-items-strech w-100  ">
-                                                        <div class=" align-self-start" style="height:18px;">
-                                                            <% for (PhonePromot promot : phone._promots()
-                                                            ) {
-                                                                if ("TG0".equalsIgnoreCase(promot._promot().getKey())) {
-                                                            %>
-
-
-                                                            <span class="badge badge-danger mr-1"><%=promot._promot().getName()%></span>
-                                                            <%
-                                                                    }
-                                                                }
-                                                            %>
-                                                        </div>
-                                                        <a href="${pageContext.request.contextPath}phone-detail?id=<%=phone.getId()%> "
-                                                           class="text-dark align-self-stretch"
-                                                           style="height: 525px;">
-                                                            <div class=" cart-content  h-100">
-                                                                <div
-                                                                        class="my-2 d-block overflow-hidden item hvr-float ">
-                                                                    <img class="object-cover mw-100 "
-                                                                         src="<%=phone.getThumbnail()%>"
-                                                                         alt="">
-                                                                </div>
-                                                                <h3 class=" product-title overflow-hidden   mb-1 "
-                                                                    style="display: -webkit-box;
--webkit-box-orient: vertical;
--webkit-line-clamp: 2;font-size: 14px;">
-                                                                    <%=phone.getName()%>
-                                                                </h3>
-
-                                                                <div class="mb-1">
-                                                                    <%
-                                                                        for (PhoneSpec spec : phone._specs()
-                                                                        ) {
-                                                                            if ("LR".equalsIgnoreCase(spec._spec().getKey()) || "TDR".equalsIgnoreCase(spec._spec().getKey())) {
-
-                                                                    %>
-
-                                                                    <span class="mr-2 badge badge-light mb-1">
-																				<%=spec._spec().getName()%>
-																			</span>
-
-
-                                                                    <%
-                                                                            }
-                                                                        }
-                                                                    %>
-                                                                </div>
-
-                                                                <div class="mb-1">
-                                                                    <i class=" d-inline-block text-decoration-line-through price-old"
-                                                                       style="text-decoration: line-through">
-                                                                        243242đ</i>
-                                                                    <span
-                                                                            class="badge badge-default peach-gradient">-25%</span>
-                                                                    <b class="d-inline-block price-new "></b>
-                                                                </div>
-                                                                <strong
-                                                                        class="fw-bold d-block mb-1 text-danger"><%=phone.getPrice()%>
-                                                                    đ</strong>
-
-                                                                <div class=" mb-1 d-flex flex-end">
-                                                                    <p class=" text-warning "
-                                                                       style="font-size: 12px;">
-                                                                        <i class=" fa-solid fa-star "></i>
-                                                                        <i class=" fa-solid fa-star "></i>
-                                                                        <i class=" fa-solid fa-star "></i>
-                                                                        <i
-                                                                                class="fa-solid fa-star-half-stroke "></i>
-                                                                        <i class="fa-regular fa-star "></i>
-                                                                    </p>
-                                                                    <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                       style="font-size: 12px;">54</p>
-                                                                </div>
-                                                                <div class="mt-2 text-ellipsis overflow-hidden text-break  d-none d-sm-block"
-                                                                     style="font-size:12px ;">
-                                                                    <%
-                                                                        for (PhoneSpec ps : phone._specs()
-                                                                        ) {
-
-
-                                                                    %>
-                                                                    <p
-                                                                            class="d-flex quote  text-ellipsis overflow-hidden text-break">
-                                                                        <%=ps._spec().getName() %>
-                                                                        : <%=ps.getValue() %>
-
-                                                                    </p>
-                                                                    <%}%>
-                                                                </div>
-
-                                                            </div>
-                                                        </a>
-                                                        <div class="mt-2  d-flex justify-content-between ">
-                                                            <a href="" class=" d-block  align-middle"
-                                                               style="font-size:14px ;">
-                                                                <i class="fa-regular fa-square-plus fa-sm"></i>
-                                                                so sánh
-                                                            </a>
-
-                                                            <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=phone.getId()%>"
-                                                               class="d-block  align-middle"
-                                                               style="font-size:14px ;">
-                                                                <i class="fa-regular fa-heart fa-sm"></i> yêu
-                                                                thích
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
-                                    <% }%>
                                 </div>
-                            </div>
 
-
-                        </div>
-                        <%
-
-                            for (Promot pr : prs
-                            ) {%>
-                        <div class="tab-pane fade  " id="tabpane-<%=pr.getKey()%>"
-                             role="tabpanel"
-                             aria-labelledby="<%=pr.getKey()%>-tab">
-                            <div class="products-mobile mt-3 w-100">
-                                <div class="row w-100 mx-auto row-cols-4  ">
-                                    <%
-
-                                        for (Phone phone : phones
-                                        ) {
-                                            for (PhonePromot pp : phone._promots()
-                                            ) {
-
-                                                if (pp._promot().getId() == pr.getId()) {
-
-                                    %>
-                                    <div class="col-6 col-sm-3 p-0">
-                                        <div class="card border rounded-0" style="box-shadow: unset;">
-                                            <div class="card-body " style="padding: 0.75rem;">
-
-                                                <%--
-                                                  Created by IntelliJ IDEA.
-                                                  User: dell
-                                                  Date: 12/10/2022
-                                                  Time: 6:26 PM
-                                                  To change this template use File | Settings | File Templates.
-                                                --%>
-
-                                                <div class=" d-block  overflow-hidden ">
-                                                    <style>
-                                                        p {
-                                                            margin: 0;
-
-                                                        }
-
-                                                        .quote::before {
-                                                            content: '●';
-                                                            margin-right: 2px;
-                                                            left: 0;
-                                                            top: 0;
-                                                            color: #333;
-                                                            font-size: 10px;
-                                                        }
-
-                                                    </style>
-                                                    <div class="d-flex flex-column align-items-strech w-100  ">
-                                                        <div class=" align-self-start" style="height:18px;">
-                                                            <% for (PhonePromot promot : phone._promots()
-                                                            ) {
-                                                                if ("TG0".equalsIgnoreCase(promot._promot().getKey())) {
-                                                            %>
-
-
-                                                            <span class="badge badge-danger mr-1"><%=promot._promot().getName()%></span>
-                                                            <%
-                                                                    }
-                                                                }
-                                                            %>
-                                                        </div>
-                                                        <a href="${pageContext.request.contextPath}phone-detail?id=<%=phone.getId()%> "
-                                                           class="text-dark align-self-stretch"
-                                                           style="height: 525px;">
-                                                            <div class=" cart-content  h-100">
-                                                                <div
-                                                                        class="my-2 d-block overflow-hidden item hvr-float ">
-                                                                    <img class="object-cover mw-100 "
-                                                                         src="<%=phone.getThumbnail()%>"
-                                                                         alt="">
-                                                                </div>
-                                                                <h3 class=" product-title overflow-hidden   mb-1 "
-                                                                    style="display: -webkit-box;
--webkit-box-orient: vertical;
--webkit-line-clamp: 2;font-size: 14px;">
-                                                                    <%=phone.getName()%>
-                                                                </h3>
-
-                                                                <div class="mb-1">
-                                                                    <%
-                                                                        for (PhoneSpec spec : phone._specs()
-                                                                        ) {
-                                                                            if ("LR".equalsIgnoreCase(spec._spec().getKey()) || "TDR".equalsIgnoreCase(spec._spec().getKey())) {
-
-                                                                    %>
-
-                                                                    <span class="mr-2 badge badge-light mb-1">
-																				<%=spec._spec().getName()%>
-																			</span>
-
-
-                                                                    <%
-                                                                            }
-                                                                        }
-                                                                    %>
-                                                                </div>
-
-                                                                <div class="mb-1">
-                                                                    <i class=" d-inline-block text-decoration-line-through price-old"
-                                                                       style="text-decoration: line-through">
-                                                                        243242đ</i>
-                                                                    <span
-                                                                            class="badge badge-default peach-gradient">-25%</span>
-                                                                    <b class="d-inline-block price-new "></b>
-                                                                </div>
-                                                                <strong
-                                                                        class="fw-bold d-block mb-1 text-danger"><%=phone.getPrice()%>
-                                                                    đ</strong>
-
-                                                                <div class=" mb-1 d-flex flex-end">
-                                                                    <p class=" text-warning "
-                                                                       style="font-size: 12px;">
-                                                                        <i class=" fa-solid fa-star "></i>
-                                                                        <i class=" fa-solid fa-star "></i>
-                                                                        <i class=" fa-solid fa-star "></i>
-                                                                        <i
-                                                                                class="fa-solid fa-star-half-stroke "></i>
-                                                                        <i class="fa-regular fa-star "></i>
-                                                                    </p>
-                                                                    <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                       style="font-size: 12px;">54</p>
-                                                                </div>
-                                                                <div class="mt-2 text-ellipsis overflow-hidden text-break  d-none d-sm-block"
-                                                                     style="font-size:12px ;">
-                                                                    <%
-                                                                        for (PhoneSpec ps : phone._specs()
-                                                                        ) {
-
-
-                                                                    %>
-                                                                    <p
-                                                                            class="d-flex quote  text-ellipsis overflow-hidden text-break">
-                                                                        <%=ps._spec().getName() %>
-                                                                        : <%=ps.getValue() %>
-
-                                                                    </p>
-                                                                    <%}%>
-                                                                </div>
-
-                                                            </div>
-                                                        </a>
-                                                        <div class="mt-2  d-flex justify-content-between ">
-                                                            <a href="" class=" d-block  align-middle"
-                                                               style="font-size:14px ;">
-                                                                <i class="fa-regular fa-square-plus fa-sm"></i>
-                                                                so sánh
-                                                            </a>
-
-                                                            <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=phone.getId()%>"
-                                                               class="d-block  align-middle"
-                                                               style="font-size:14px ;">
-                                                                <i class="fa-regular fa-heart fa-sm"></i> yêu
-                                                                thích
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <% }
-                                    }
-                                    }
-                                    %>
-                                </div>
                             </div>
                         </div>
                         <%}%>
-                    </div>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <nav>
-                            <ul class="pagination pg-red">
-                                <li class="page-item">
-                                    <a class="page-link" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                                <li class="page-item active"><a class="page-link">1</a></li>
-                                <li class="page-item"><a class="page-link">2</a></li>
-                                <li class="page-item"><a class="page-link">3</a></li>
-                                <li class="page-item"><a class="page-link">4</a></li>
-                                <li class="page-item"><a class="page-link">5</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <div class="d-flex  justify-content-between align-items-center"
+                             style="border-bottom: 1px solid gray;">
+
+                            <div class="  ">
+                                <%
+                                    for
+                                    (
+                                            int
+                                            i
+                                            =
+                                            0
+                                            ;
+                                            i
+                                                    <
+                                                    key3
+                                                            .
+                                                            size
+                                                                    (
+                                                                    )
+                                            ;
+                                            i
+                                                    ++
+                                    ) {
+                                %>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input"
+                                           value="<%=differentList.get(key3.get(i))%>"
+                                           name="differentCheck"
+                                           id="<%=differentList.get(key3.get(i))%>"
+                                           onclick="this.form.submit()" <%=(differentCheck[i])?"checked":""%> >
+                                    <label class="form-check-label"
+                                           for="<%=differentList.get(key3.get(i))%>"><%=differentList
+                                            .
+                                            get
+                                                    (
+                                                            key3
+                                                                    .
+                                                                    get
+                                                                            (
+                                                                                    i
+                                                                            )
+                                                    )%>
+                                    </label>
+                                </div>
+                                <%}%>
+
+                            </div>
+                            <div class="sort float-right ml-auto ">
+                                <select class="mdb-select md-form m-0 " style="color:red !important;" name="sort"
+                                        id="sort"
+                                        onchange="this.form.submit()">
+
+                                    <%
+                                        for
+                                        (
+                                                int
+                                                i
+                                                =
+                                                0
+                                                ;
+                                                i
+                                                        <
+                                                        keySort
+                                                                .
+                                                                size
+                                                                        (
+                                                                        )
+                                                ;
+                                                i
+                                                        ++
+                                        ) {
+                                    %>
+                                    <option value="<%=sortList.get(keySort.get(i)) %>"
+                                            class="text-danger"  <%=(
+                                            sort
+                                                    .
+                                                    equals
+                                                            (
+                                                                    sortList
+                                                                            .
+                                                                            get
+                                                                                    (
+                                                                                            keySort
+                                                                                                    .
+                                                                                                    get
+                                                                                                            (
+                                                                                                                    i
+                                                                                                            )
+                                                                                    )
+                                                            )
+                                    )
+                                            ?
+                                            "selected"
+                                            :
+                                            ""%> ><%=sortList
+                                            .
+                                            get
+                                                    (
+                                                            keySort
+                                                                    .
+                                                                    get
+                                                                            (
+                                                                                    i
+                                                                            )
+                                                    ) %>
+                                    </option>
+
+                                    <% }%>
+                                </select>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="products-mobile mt-3 w-100 mb-4">
+                            <div class="row w-100 mx-auto row-cols-4  ">
+
+                                <%
+                                    List
+                                            <
+                                                    Phone
+                                                    >
+                                            phones1
+                                            =
+                                            (
+                                                    List
+                                                            <
+                                                                    Phone
+                                                                    >
+                                                    )
+                                                    request
+                                                            .
+                                                            getAttribute
+                                                                    (
+                                                                            "phones"
+                                                                    );
+                                    for
+                                    (
+                                            Phone
+                                                    phone
+                                            :
+                                            phones1
+                                    ) {
+                                %>
+                                <div class="col-6 col-sm-3 p-0">
+                                    <div class="card border rounded-0" style="box-shadow: unset;">
+                                        <div class="card-body " style="padding: 0.75rem;">
+
+                                            <%--
+                                              Created by IntelliJ IDEA.
+                                              User: dell
+                                              Date: 12/10/2022
+                                              Time: 6:26 PM
+                                              To change this template use File | Settings | File Templates.
+                                            --%>
+
+                                            <div class=" d-block  overflow-hidden ">
+                                                <style>
+                                                    p {
+                                                        margin: 0;
+
+                                                    }
+
+                                                    .quote::before {
+                                                        content: '●';
+                                                        margin-right: 2px;
+                                                        left: 0;
+                                                        top: 0;
+                                                        color: #333;
+                                                        font-size: 10px;
+                                                    }
+
+                                                </style>
+                                                <div class="d-flex flex-column align-items-strech w-100  ">
+                                                    <div class=" align-self-start" style="height:18px;">
+                                                        <% for
+                                                        (
+                                                                PhonePromot
+                                                                        promot
+                                                                :
+                                                                phone
+                                                                        .
+                                                                        _promots
+                                                                                (
+                                                                                )
+                                                        ) {
+                                                            if
+                                                            (
+                                                                    "TG0"
+                                                                            .
+                                                                            equalsIgnoreCase
+                                                                                    (
+                                                                                            promot
+                                                                                                    .
+                                                                                                    _promot
+                                                                                                            (
+                                                                                                            )
+                                                                                                            .
+                                                                                                    getKey
+                                                                                                            (
+                                                                                                            )
+                                                                                    )
+                                                            ) {
+                                                        %>
+
+
+                                                        <span class="badge badge-danger mr-1"><%=promot
+                                                                .
+                                                                _promot
+                                                                        (
+                                                                        )
+                                                                        .
+                                                                getName
+                                                                        (
+                                                                        )%></span>
+                                                        <%
+                                                                }
+                                                            }
+                                                        %>
+                                                    </div>
+                                                    <a href="${pageContext.request.contextPath}phone-detail?id=<%=phone.getId()%>&page=1&page2=1 "
+                                                       class="text-dark align-self-stretch"
+                                                       style="height: 525px;">
+                                                        <div class=" cart-content  h-100">
+                                                            <div
+                                                                    class="my-2 d-block overflow-hidden item hvr-float ">
+                                                                <img class="object-cover mw-100 "
+                                                                     src="<%=phone.getThumbnail()%>"
+                                                                     alt="">
+                                                            </div>
+                                                            <h3 class=" product-title overflow-hidden   mb-1 "
+                                                                style="display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 2;font-size: 14px;">
+                                                                <%=phone
+                                                                        .
+                                                                        getName
+                                                                                (
+                                                                                )%>
+                                                            </h3>
+
+                                                            <div class="mb-1">
+                                                                <%
+                                                                    for
+                                                                    (
+                                                                            PhoneSpec
+                                                                                    spec
+                                                                            :
+                                                                            phone
+                                                                                    .
+                                                                                    _specs
+                                                                                            (
+                                                                                            )
+                                                                    ) {
+                                                                        if
+                                                                        (
+                                                                                "LR"
+                                                                                        .
+                                                                                        equalsIgnoreCase
+                                                                                                (
+                                                                                                        spec
+                                                                                                                .
+                                                                                                                _spec
+                                                                                                                        (
+                                                                                                                        )
+                                                                                                                        .
+                                                                                                                getKey
+                                                                                                                        (
+                                                                                                                        )
+                                                                                                )
+                                                                                        ||
+                                                                                        "TDR"
+                                                                                                .
+                                                                                                equalsIgnoreCase
+                                                                                                        (
+                                                                                                                spec
+                                                                                                                        .
+                                                                                                                        _spec
+                                                                                                                                (
+                                                                                                                                )
+                                                                                                                                .
+                                                                                                                        getKey
+                                                                                                                                (
+                                                                                                                                )
+                                                                                                        )
+                                                                        ) {
+
+                                                                %>
+
+                                                                <span class="mr-2 badge badge-light mb-1">
+																				<%=spec
+                                                                                        .
+                                                                                        _spec
+                                                                                                (
+                                                                                                )
+                                                                                                .
+                                                                                        getName
+                                                                                                (
+                                                                                                )%>
+																			</span>
+
+
+                                                                <%
+                                                                        }
+                                                                    }
+                                                                %>
+                                                            </div>
+
+                                                            <div class="mb-1">
+                                                                <i class=" d-inline-block text-decoration-line-through price-old"
+                                                                   style="text-decoration: line-through">
+                                                                    243242đ</i>
+                                                                <span
+                                                                        class="badge badge-default peach-gradient">-25%</span>
+                                                                <b class="d-inline-block price-new "></b>
+                                                            </div>
+                                                            <strong
+                                                                    class="fw-bold d-block mb-1 text-danger"><%=phone
+                                                                    .
+                                                                    getPrice
+                                                                            (
+                                                                            )%>
+                                                                đ</strong>
+
+                                                            <div class=" mb-1 d-flex flex-end">
+                                                                <p class=" text-warning "
+                                                                   style="font-size: 12px;">
+                                                                    <i class=" fa-solid fa-star "></i>
+                                                                    <i class=" fa-solid fa-star "></i>
+                                                                    <i class=" fa-solid fa-star "></i>
+                                                                    <i
+                                                                            class="fa-solid fa-star-half-stroke "></i>
+                                                                    <i class="fa-regular fa-star "></i>
+                                                                </p>
+                                                                <p class="ms-1 fw-light d-inline-block align-middle "
+                                                                   style="font-size: 12px;">54</p>
+                                                            </div>
+                                                            <div class="mt-2 text-ellipsis overflow-hidden text-break  d-none d-sm-block"
+                                                                 style="font-size:12px ;">
+                                                                <%
+                                                                    for
+                                                                    (
+                                                                            PhoneSpec
+                                                                                    ps
+                                                                            :
+                                                                            phone
+                                                                                    .
+                                                                                    _specs
+                                                                                            (
+                                                                                            )
+                                                                    ) {
+
+
+                                                                %>
+                                                                <p
+                                                                        class="d-flex quote  text-ellipsis overflow-hidden text-break">
+                                                                    <%=ps
+                                                                            .
+                                                                            _spec
+                                                                                    (
+                                                                                    )
+                                                                                    .
+                                                                            getName
+                                                                                    (
+                                                                                    ) %>
+                                                                    : <%=ps
+                                                                        .
+                                                                        getValue
+                                                                                (
+                                                                                ) %>
+
+                                                                </p>
+                                                                <%}%>
+                                                            </div>
+
+                                                        </div>
+                                                    </a>
+                                                    <div class="mt-2  d-flex justify-content-between ">
+                                                        <a href="${pageContext.request.contextPath}/add-carts?name=home&action=wishes&phoneId=<%=phone.getId()%>" class=" d-block  align-middle"
+                                                           style="font-size:14px ;">
+                                                            <i class="fa-regular fa-square-plus fa-sm"></i>
+                                                           cart
+                                                        </a>
+
+                                                        <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=phone.getId()%>"
+                                                           class="d-block  align-middle"
+                                                           style="font-size:14px ;">
+                                                            <i class="fa-regular fa-heart fa-sm"></i> yêu
+                                                            thích
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }%>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center mt-3">
+                            <nav>
+                                <ul class="pagination pg-red">
+
+<%if(total!=0 && paginationnum!=1){%>
+                                    <li class="page-item ">
+                                        <a class="page-link" aria-label="Previous" onclick="document.getElementById('pagination<%=paginationnum-1%>').click()">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <input type="radio" class="form-check-input" value="<%=paginationnum-1%>" id="pagination<%=paginationnum-1%>" name="page" onclick="this.form.submit()" >
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                    <%}%>
+                                    <%
+                                        for (int i = 1; i < total+1; i++) {
+                                    %>
+                                    <li class="page-item <%=(i==paginationnum)?"active":""%>">
+                                        <a class="page-link" onclick="document.getElementById('pagination<%=i%>').click()" >
+                                            <%=i%>
+                                            <input type="radio" class="form-check-input" value="<%=i%>" id="pagination<%=i%>" name="page" onclick="this.form.submit()"  <%=(paginationnum==i)?"checked":""%>>
+                                        </a>
+                                    </li>
+                                    <%}%>
+                                    <%if(total!=0 && paginationnum!=total){%>
+                                    <li class="page-item">
+                                        <a class="page-link" aria-label="Next" onclick="document.getElementById('pagination<%=paginationnum+1%>').click()">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <input type="radio" class="form-check-input" value="<%=paginationnum-1%>" id="pagination<%=paginationnum+1%>" name="page" onclick="this.form.submit()" >
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                    <%}%>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </form>
         <section class="py-5">
             <div class="card">
                 <div
@@ -1983,13 +2276,79 @@
 <!--end content-->
 <content tag="local_script">
     <script>// Material Select Initialization
+
+
     $(document).ready(function () {
-
-
-        $("input[type=checkbox]").click(function () {
-            $("#form").submit();
+        const inputs = document.querySelectorAll('input[name="brandCheck"]');
+        const inputs3 = document.querySelectorAll('input[name="modelCheck"]');
+        const inputs4 = document.querySelectorAll('input[name="priceCheck"]');
+        const inputs7= document.querySelectorAll('input[name="promotCheck"]');
+        const inputs6 = document.querySelectorAll('input[name="typeCheck"]');
+        const inputs5 = document.querySelectorAll('input[name="capCheck"]');
+        const inputs2 = document.querySelectorAll('input[name="modelCheck"]');
+        $("#brandId-all").click(function (e) {
+            e.preventDefault();
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].checked = false;
+            }
+            $('#brandId-all').checked = true;
+            document.getElementById("form1").submit();
         });
-
+        $("#modelId-all").click(function (e) {
+            e.preventDefault();
+            for (let i = 0; i < inputs3.length; i++) {
+                inputs3[i].checked = false;
+            }
+            $('#modelId-all').checked = true;
+            document.getElementById("form1").submit();
+        });
+        $("#priceId-all").click(function (e) {
+            e.preventDefault();
+            for (let i = 0; i < inputs4.length; i++) {
+                inputs4[i].checked = false;
+            }
+            $('#priceId-all').checked = true;
+            document.getElementById("form1").submit();
+        });
+        $("#capId-all").click(function (e) {
+            e.preventDefault();
+            for (let i = 0; i < inputs5.length; i++) {
+                inputs5[i].checked = false;
+            }
+            $('#capId-all').checked = true;
+            document.getElementById("form1").submit();
+        });
+        $("#typeId-all").click(function (e) {
+            e.preventDefault();
+            for (let i = 0; i < inputs6.length; i++) {
+                inputs6[i].checked = false;
+            }
+            $('#typeId-all').checked = true;
+            document.getElementById("form1").submit();
+        });
+        $("#promotId-all").click(function (e) {
+            e.preventDefault();
+            for (let i = 0; i < inputs7.length; i++) {
+                inputs7[i].checked = false;
+            }
+            $('#promotId-all').checked = true;
+            document.getElementById("form1").submit();
+        });
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].addEventListener('click', function (e) {
+                e.preventDefault();
+                for (let j = 0; j < inputs2.length; j++) {
+                    inputs2[j].checked = false;
+                }
+                document.getElementById("form1").submit();
+            })
+        }
+        for (let i = 0; i < inputs2.length; i++) {
+            inputs2[i].addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById("form1").submit();
+            })
+        }
 
         $('.mdb-select').materialSelect();
 

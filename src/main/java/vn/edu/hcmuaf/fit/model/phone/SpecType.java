@@ -15,7 +15,7 @@ public class SpecType extends Base<SpecType> implements Serializable {
     private String name;
 
     public List<Spec> _specs() {
-        return new AbstractDAO<Spec>("specs").list(" and spec_typeId=" + this.id, Spec.class, null, null);
+        return new AbstractDAO<Spec>("specs").list(" and spec_typeId=" + this.id, Spec.class, null, null,null, null);
     }
 
 

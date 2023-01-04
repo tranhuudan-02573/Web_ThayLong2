@@ -2,9 +2,8 @@ package vn.edu.hcmuaf.fit.model.phone;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import vn.edu.hcmuaf.fit.constant.Variable;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.order.OrderDetail;
 import vn.edu.hcmuaf.fit.model.review.Review;
@@ -13,18 +12,20 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
-import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@Getter
-@Setter
+
 public class Phone extends Base<Phone> implements Serializable {
     private String name;
     private Integer price;
     private Integer typeId;
+    private Integer updated_by;
     private String content;
     private Integer specId;
     private String desc;
@@ -34,19 +35,24 @@ public class Phone extends Base<Phone> implements Serializable {
     private Integer saleId;
     private Integer capId;
     private String status;
-    private Integer updated_by;
     private Integer brandId;
     private Integer modelId;
     private Integer created_by;
     private Integer deleted_by;
     private Timestamp deleted_at;
+    private boolean isNew;
+
+    public List<Review> question() {
+        return new AbstractDAO<Review>("reviews").list1(" count(id) as sl, ", "and isReply =false and star is null and typeId is not null  and isQuestion=true and phoneId =" + this.id + " group by typeId\n", Review.class, null, null, Variable.Global.JOIN_PHONE_REVIEW, "sl desc", 3, 0);
+
+    }
 
     public List<Review> _reviews() {
-        return new AbstractDAO<Review>("reviews").list(" and isReply =false and star is not null and isQuestion=false and phoneId =" + this.id, Review.class, null, null);
+        return new AbstractDAO<Review>("reviews").list(" and isReply =false and star is not null and isQuestion=false and phoneId =" + this.id, Review.class, null, null, null, null);
     }
 
     public List<Review> _question() {
-        return new AbstractDAO<Review>("reviews").list(" and isReply =false and star is null  and isQuestion=true and phoneId =" + this.id, Review.class, null, null);
+        return new AbstractDAO<Review>("reviews").list(" and isReply =false and star is null  and isQuestion=true and phoneId =" + this.id, Review.class, null, null, null, null);
     }
 
     public int questionHasReply() {
@@ -59,20 +65,18 @@ public class Phone extends Base<Phone> implements Serializable {
         return rs;
     }
 
-
     public static void main(String[] args) {
-        Phone p = new Phone();
-        p.setId(2);
-        System.out.println(Math.ceil(3.3));
+        System.out.println(new AbstractDAO<Review>("reviews").list1(" count(id) as sl, ", " and isReply =false and star is null and typeId is not null  and isQuestion=true and phoneId = 2"  + " group by typeId\n"
+                , Review.class, null, null, Variable.Global.JOIN_PHONE_REVIEW, " sl desc ", 3, 0));
     }
 
     public int count(int i) {
 
-        return new AbstractDAO<Review>("reviews").countById(" and isReply =false and isQuestion=false and star=" + i + " and phoneId=" + this.id);
+        return Integer.parseInt(new AbstractDAO<Review>("reviews").getCustom("count(id)", " and isReply =false and isQuestion=false and star=" + i + " and phoneId=" + this.id));
     }
 
     public int count() {
-        return new AbstractDAO<Review>("reviews").countById(" and isReply =false and isQuestion=false and phoneId=" + this.id);
+        return Integer.parseInt(new AbstractDAO<Review>("reviews").getCustom(" count(id) ", " and isReply =false and isQuestion=false and phoneId=" + this.id));
     }
 
     public double avg(int i) {
@@ -97,7 +101,7 @@ public class Phone extends Base<Phone> implements Serializable {
     }
 
     public List<OrderDetail> _orderDetails() {
-        return new AbstractDAO<OrderDetail>("order_detail").list(" and phoneId =" + this.id, OrderDetail.class, null, null);
+        return new AbstractDAO<OrderDetail>("order_detail").list(" and phoneId =" + this.id, OrderDetail.class, null, null, null, null);
     }
 
     public PhoneState _phoneState() {
@@ -105,23 +109,23 @@ public class Phone extends Base<Phone> implements Serializable {
     }
 
     public List<Image> _images() {
-        return new AbstractDAO<Image>("images").list(" and phoneId =" + this.id, Image.class, null, null);
+        return new AbstractDAO<Image>("images").list(" and phoneId =" + this.id, Image.class, null, null, null, null);
     }
 
     public List<PhoneSpec> _specs() {
-        return new AbstractDAO<PhoneSpec>("phone_spec").list(" and phoneId =" + this.id, PhoneSpec.class, null, null);
+        return new AbstractDAO<PhoneSpec>("phone_spec").list(" and phoneId =" + this.id, PhoneSpec.class, null, null, null, null);
     }
 
     public List<PhoneColor> _colors() {
-        return new AbstractDAO<PhoneColor>("phone_color").list(" and phoneId =" + this.id, PhoneColor.class, null, null);
+        return new AbstractDAO<PhoneColor>("phone_color").list(" and phoneId =" + this.id, PhoneColor.class, null, null, null, null);
     }
 
     public List<PhonePromot> _promots() {
-        return new AbstractDAO<PhonePromot>("phone_promot").list(" and phoneId =" + this.id, PhonePromot.class, null, null);
+        return new AbstractDAO<PhonePromot>("phone_promot").list(" and phoneId =" + this.id, PhonePromot.class, null, null, null, null);
     }
 
     public List<PhoneCap> _caps() {
-        return new AbstractDAO<PhoneCap>("phone_cap").list(" and phoneId =" + this.id, PhoneCap.class, null, null);
+        return new AbstractDAO<PhoneCap>("phone_cap").list(" and phoneId =" + this.id, PhoneCap.class, null, null, null, null);
     }
 
     public List<SpecType> _specTypes() {
@@ -157,6 +161,5 @@ public class Phone extends Base<Phone> implements Serializable {
     public Cap _cap() {
         return new AbstractDAO<Cap>("caps").get(" and id = " + this.capId, Cap.class, null).get();
     }
-
 
 }

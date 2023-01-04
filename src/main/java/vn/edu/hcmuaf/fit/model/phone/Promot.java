@@ -17,7 +17,7 @@ public class Promot extends Base<Promot> implements Serializable {
     private String key;
 
     public List<PhonePromot> _phones() {
-        return new AbstractDAO<PhonePromot>("phone_promot").list(" and promotId =" + this.id, PhonePromot.class, null, null);
+        return new AbstractDAO<PhonePromot>("phone_promot").list(" and promotId =" + this.id, PhonePromot.class, null, null,null, null);
     }
 
 

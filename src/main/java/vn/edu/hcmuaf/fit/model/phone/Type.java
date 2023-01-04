@@ -15,7 +15,7 @@ public class Type extends Base<Type> implements Serializable {
     private String name;
 
     public List<Phone> _phones() {
-        return new AbstractDAO<Phone>("phones").list(" and typeId=" + this.id, Phone.class, null, null);
+        return new AbstractDAO<Phone>("phones").list(" and typeId=" + this.id, Phone.class, null, null,null, null);
     }
 
 }

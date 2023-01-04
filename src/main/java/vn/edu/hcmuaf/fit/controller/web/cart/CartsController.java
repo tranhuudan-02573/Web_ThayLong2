@@ -1,31 +1,24 @@
 package vn.edu.hcmuaf.fit.controller.web.cart;
 
+import vn.edu.hcmuaf.fit.constant.Variable;
 import vn.edu.hcmuaf.fit.model.cart.Carts;
-import vn.edu.hcmuaf.fit.model.user.User;
 import vn.edu.hcmuaf.fit.until.SessionUntil;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 @WebServlet(name = "Carts", urlPatterns = {"/carts"})
 public class CartsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        if (SessionUntil.get(request, "USER") == null) {
-            Carts carts = (Carts) SessionUntil.get(request, "CARTS");
-            request.setAttribute("carts", carts);
-        } else {
-            User user =(User) SessionUntil.get(request, "USER");
-
-            Carts carts = user.getCarts()
-
+        if (SessionUntil.get(request, Variable.Global.CART.toString()) == null) {
+            SessionUntil.set(request, Variable.Global.CART.toString(), new Carts());
         }
-
 
         request.getRequestDispatcher("/views/web/cart.jsp").forward(request, response);
     }

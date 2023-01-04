@@ -2,8 +2,11 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.order.Order" %>
 <%@ page import="java.util.List" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.order.OrderDetail" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.wish.Wish" %>
 <%@ page import="vn.edu.hcmuaf.fit.helper.FormatTime" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.cart.Carts" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.cart.CartItem" %>
+<%@ page import="vn.edu.hcmuaf.fit.constant.Variable" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 
@@ -15,6 +18,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <content tag="local_style">
+        <link rel="stylesheet" href="/lib/mdb4/css/addons/datatables.min.css">
+    </content>
+
 </head>
 
 <body>
@@ -66,8 +74,8 @@
 </div>
 
 <%
-    User user = (User) session.getAttribute("USER");
-
+    User user = (User) session.getAttribute(Variable.Global.USER.toString());
+    Carts carts = (Carts) session.getAttribute(Variable.Global.CART.toString());
 %>
 <main>
     <div class="container">
@@ -77,35 +85,33 @@
             <div class="d-flex justify-content-between align-items-center">
                 <ul class="nav nav-tabs" id="myTabProductList" role="tablist">
                     <%
-                        if (user.getId() != 0) {
+                        if (user != null) {
                     %>
                     <li class="nav-item mr-2">
-
                         <a class="nav-link text-dark bg-light active" style="font-size: 15px;" id="" data-toggle="tab"
                            href="#panel21"
                            role="tab" aria-controls="panel21-tab" aria-selected="false">Thông tin người
                             dùng</a>
                     </li>
-
-
-                    <%}%>
                     <li class="nav-item mr-2">
 
-                        <a class="nav-link text-dark bg-light <%=(user.getId() == 0)?"active":""%>"
+                        <a class="nav-link text-dark bg-light "
                            style="font-size: 15px;" id="history" data-toggle="tab"
                            href="#panel22"
                            role="tab" aria-controls="panel22-tab" aria-selected="false">Lịch sử mua hàng</a>
                     </li>
+
+                    <%}%>
+
                     <li class="nav-item mr-2">
-                        <a class="nav-link text-dark bg-light  "
+                        <a class="nav-link text-dark bg-light <%=(user==null)?"active":""%> "
                            style="font-size: 15px;" id="wishlist" data-toggle="tab"
                            href="#panel23"
                            role="tab" aria-controls="panel23-tab" aria-selected="false">Danh sách yêu thích</a>
                     </li>
                 </ul>
                 <%
-
-                    if (user.getId() != 0) {%>
+                    if (user != null) {%>
                 <div class="">
                     <a href="" class="float-right"> | Thoát</a>
                     <a href="#" data-toggle="modal" data-target="#modalChangePass" class="float-right">Đổi mật khẩu
@@ -117,7 +123,7 @@
 
             <div class="tab-content p-0" id="pills-tabContent">
                 <%
-                    if (user.getId() != 0) {
+                    if (user != null) {
                 %>
                 <div class="tab-pane fade show active" id="panel21" aria-labelledby="panel21-tab">
                     <div class="card">
@@ -125,21 +131,21 @@
                             <h5 class="my-2 h5  text-danger d-inline-block"><%=user.getName() + " - " + user.getPhone()%>
                             </h5>
                         </div>
+                    <form action="" method="post">
+                        <input hidden name="id" value="<%=user.getId()%>"  >
                         <div class="card-body">
-
-
                             <div class="my-4 row w-100 mx-auto">
                                 <div class="col-12">
                                     <div class="form-check form-check-inline">
                                         <input type="radio" class="form-check-input" id="nam"
-                                               name="gender" <%=(!user.isGender())?"checked":""%>>
+                                               name="gender" value="1" <%=(!user.isGender())?"checked":""%>>
                                         <label class="form-check-label" for="nam">Nam </label>
                                     </div>
 
                                     <!-- Material inline 2 -->
                                     <div class="form-check form-check-inline">
                                         <input type="radio" class="form-check-input" id="nu"
-                                               name="gender" <%=(user.isGender())?"checked":""%>>
+                                               name="gender" value="0" <%=(user.isGender())?"checked":""%>>
                                         <label class="form-check-label" for="nu">Nữ</label>
                                     </div>
                                 </div>
@@ -149,7 +155,7 @@
                                     <!-- Material input -->
                                     <div class="md-form m-0">
                                         <i class="fas fa-user prefix text-danger"></i>
-                                        <input type="text" id="name" class="form-control" value="<%=user.getName()%>">
+                                        <input type="text" name="name" id="name" class="form-control" value="<%=user.getName()%>">
                                         <label for="name">Tên đầy đủ</label>
                                     </div>
                                 </div>
@@ -157,7 +163,7 @@
                                     <!-- Material input -->
                                     <div class="md-form m-0">
                                         <i class="fa-solid fa-phone prefix text-danger"></i>
-                                        <input type="text" id="phone" class="form-control" value="<%=user.getPhone()%>">
+                                        <input type="text" id="phone" class="form-control" value="<%=user.getPhone()%>" name="phone">
                                         <label for="phone">Số điện thoại</label>
                                     </div>
                                 </div>
@@ -166,7 +172,7 @@
                                 <div class="col-6">
                                     <div class="md-form">
                                         <i class="fa-solid fa-envelope prefix text-danger"></i>
-                                        <input type="email" id="email" class="form-control"
+                                        <input type="email" name="email" id="email" class="form-control"
                                                value="<%=user.getEmail()%>">
                                         <label for="email">Email</label>
                                     </div>
@@ -175,7 +181,7 @@
                                     <div class="md-form">
                                         <i class="fa-solid fa-address-card prefix text-danger"></i>
                                         <input type="text" id="address" class="form-control"
-                                               value="<%=user.getAddress()%>">
+                                               value="<%=user.getAddress()%>" name="address" >
                                         <label for="address">Địa chỉ</label>
                                     </div>
                                 </div>
@@ -183,27 +189,27 @@
                             </div>
 
                             <div class="text-center">
-                                <div class="btn btn-danger waves-effect">Cập nhật</div>
+                                <button type="submit" class="btn btn-danger waves-effect">Cập nhật</button>
                             </div>
                         </div>
+                    </form>
                     </div>
 
                 </div>
-                <%}%>
-                <div class="tab-pane fade  <%=(user.getId() == 0)?"show active":""%>" id="panel22" role="panel22"
+                <div class="tab-pane fade  " id="panel22" role="panel22"
                      aria-labelledby="panel22-tab">
 
                     <div class="card">
                         <div class="card-header">
 
                             <h5 class="my-2 text-danger  h5 d-inline-block">
-                                <%=(user.getId() != 0) ? "Ngày mua cuối cùng: " + FormatTime.format(user.nearBuy(), false) : "ban chua dang nhap" %>
+                                <%=(user != null) ? "Ngày mua cuối cùng: " + FormatTime.format(user.nearBuy(), false) : "ban chua dang nhap" %>
                             </h5>
                         </div>
 
                         <div class="card-body">
                             <%
-                                if (user.getId() != 0) {
+                                if (user != null) {
                             %>
                             <table id="dtMaterialDesignExample" class="table " cellspacing="0" width="100%">
                                 <thead>
@@ -241,7 +247,7 @@
                                                class="text-truncate w-50 text-truncate text-wrap text-break text-ellipsis overflow-hidden"><%=od._phone().getName()%>
                                             </a>
                                             <div class="d-block mb-1 ">
-                                                <a href="${pageContext.request.contextPath}/phone-detail?id=<%=od._phone().getId()%>"
+                                                <a href="${pageContext.request.contextPath}/phone-detail?id=<%=od._phone().getId()%>&page=1&page1=1"
                                                    class="mt-1 pr-2 d-inline-block text-primary">Xem chi
                                                     tiết</a>
                                             </div>
@@ -273,31 +279,44 @@
                     </div>
 
                 </div>
-                <div class="tab-pane fade  " id="panel23" role="panel23"
+                <%}%>
+
+                <div class="tab-pane fade  <%=(user==null)?"show active":""%>" id="panel23" role="panel23"
                      aria-labelledby="panel23-tab">
                     <div>
 
                     </div>
                     <div class="card">
-                        <%List<Wish> wishs = user.getWishs();%>
+
+                        <%
+//                            if (user != null) {
+//                                carts = new Carts(carts.merge(user.listToCarts()));
+//                            }
+                            List<CartItem> keys = new ArrayList<>(carts.getCartItemIntegerMap().keySet());
+
+                        %>
+
                         <div class="card-header d-flex justify-content-between align-items-center ">
-                            <%if (user.getId() != 0) {%>
+                            <%if (user != null) {%>
                             <h5 class="my-2 h5 text-danger d-inline-block">Ngày yêu thích cuối
                                 cùng:<%=FormatTime.format(user.nearWish(), false)%>
                             </h5>
                             <%}%>
-                            <h5 class="my-2 h5 text-danger d-inline-block">so luong yeu thich: <%= wishs.size()%>
+                            <h5 class="my-2 h5 text-danger d-inline-block">so luong yeu thich: <%=carts.wishItems()%>
                             </h5>
                         </div>
                         <div class="card-body">
-                            <%if (!wishs.isEmpty()) {%>
+                            <%if (carts.wishItems()!=0) {%>
+
                             <table id="dtMaterialDesignExample2" class="table " cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Tên</th>
                                     <th scope="col">Hình ảnh</th>
+                                    <th scope="col">Màu sắc</th>
                                     <th scope="col">Giá</th>
+                                    <th scope="col">so luong</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col">Thao tác</th>
 
@@ -306,45 +325,86 @@
                                 <tbody>
                                 <%
 
-                                    for (int i = 0; i < wishs.size(); i++
+                                    for (int i = 0; i < keys.size(); i++
                                     ) {
-
+                                        if (keys.get(i).isSave()) {
 
                                 %>
 
-
                                 <tr>
-                                    <th scope="row"><%=i%>
-                                    </th>
-                                    <td class="align-middle justify-content-center"><%=wishs.get(i)._phone().getName()%>
+                                    <td scope="row"><%=i%>
+                                    </td>
+                                    <td class="align-middle justify-content-center"><%=keys.get(i)._phone().getName()%>
                                     </td>
                                     <td><img style="width: 70px; height: 70px;"
-                                             src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
+                                             src="<%=keys.get(i)._phone().getThumbnail()%>"
                                              alt=""></td>
-                                    <td class="justify-content-center align-middle"><%=wishs.get(i)._phone().getPrice()%>
+                                    <td class="align-middle justify-content-center"><%=keys.get(i)._color().getName()%>
+                                    </td >
+                                    <td class="justify-content-center align-middle"><%=keys.get(i)._phone().getPrice()%>
                                         VND
                                     </td>
-                                    <td class="justify-content-center align-middle"><%=wishs.get(i)._phone()._phoneState().getName()%>
+                                    <td class="justify-content-center align-middle"><%=carts.getCartItemIntegerMap().get(keys.get(i))%>
+
+                                    </td>
+                                    <td class="justify-content-center align-middle"><%=keys.get(i)._phone()._phoneState().getName()%>
                                     </td>
                                     <td class="justify-content-center align-middle group-selectBTN">
                                         <div class="ILB mr-3" style="display: inline-block; cursor: pointer;">
+                                            <a onclick="document.getElementById('form2-<%=i%>').submit()"
+                                               class="ILB mr-3"
+                                               style="display: inline-block; cursor: pointer;">
+                                                <form action="/add-carts" method="post" id="form2-<%=i%>">
+                                                    <input hidden name="phoneId" value="<%=keys.get(i).getPhoneId()%>">
+                                                    <input hidden name="name" value="user">
+                                                    <input hidden name="num" value="<%=carts.getCartItemIntegerMap().get(keys.get(i))%>" >
+                                                    <input hidden name="colorId" value="<%=keys.get(i).getColorId()%>">
+                                                    <input hidden name="action"  value="carts" id="action" >
+
+                                                </form>
+
                                             <i class="fa-solid fa-cart-plus mr-1"></i>
                                             Thêm
+                                            </a>
                                         </div>
                                         <div class="ILB" style="display: inline-block; cursor: pointer;">
+                                            <a onclick="document.getElementById('form-<%=i%>').submit()"
+                                               class="ILB mr-3"
+                                               style="display: inline-block; cursor: pointer;">
+                                                <form action="/add-carts" method="post" id="form-<%=i%>">
+                                                    <input hidden name="phoneId" value="<%=keys.get(i).getPhoneId()%>">
+                                                    <input hidden name="name" value="user">
+                                                    <input hidden name="num" value="<%=carts.getCartItemIntegerMap().get(keys.get(i))%>" >
+                                                    <input hidden name="colorId" value="<%=keys.get(i).getColorId()%>">
+                                                        <input hidden name="action"  value="delete2" >
+
+                                                </form>
                                             <i class="fa-regular fa-trash-can mr-1"></i>
                                             Xóa
+                                            </a>
+                                        </div>
+                                        <div class="ILB" style="display: inline-block; cursor: pointer;">
+                                            <a href="/phone-detail?id=<%=keys.get(i).getPhoneId()%>&page=1&page2=1&colorId=<%=keys.get(i).getColorId()%>&num=<%=carts.getCartItemIntegerMap().get(keys.get(i))%>"
+                                               class="ILB mr-3"
+                                               style="display: inline-block; cursor: pointer;">
+                                                <i class="fa-solid fa-up-right-from-square mr-1"></i>
+                                                toi
+                                            </a>
                                         </div>
                                     </td>
 
                                 </tr>
-                                <%}%>
+                                <%}
+                                }%>
 
                                 </tbody>
+
                             </table>
-                            <% } else {%>
+
+                            <%
+                            }else {%>
                             <div class=" text-center d-flex justify-content-center align-items-center ">
-                                <a href="/phone-filter" class="btn btn-danger btn-lg px-5 ">mua sam</a>
+                                <a href="/phone-filter?sort=sap+xep+theo+A+-+Z&page=1" class="btn btn-danger btn-lg px-5 ">mua sam</a>
                             </div>
                             <%}%>
                         </div>
@@ -365,55 +425,55 @@
 </main>
 
 
-<footer id="footer" class="p-4 border-top  bg-white"></footer>
 
 
-<script src="/src/lib/mdb4/js/addons/datatables.min.js"></script>
-<script>
+<content tag="local_script">
+    <script src="/lib/mdb4/js/addons/datatables.min.js"></script>
+    <script>
+        // Material Design example
+        $(document).ready(function () {
+            $('#dtMaterialDesignExample').DataTable();
+            $('#dtMaterialDesignExample2').DataTable();
+            $('#dtMaterialDesignExample_wrapper').find('label').each(function () {
+                $(this).parent().append($(this).children());
+            });
+            $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('input').each(function () {
+                const $this = $(this);
+                $this.attr("placeholder", "Search");
+                $this.removeClass('form-control-sm');
+            });
+            $('#dtMaterialDesignExample_wrapper .dataTables_length').addClass('d-flex flex-row');
+            $('#dtMaterialDesignExample_wrapper .dataTables_filter').addClass('md-form');
+            $('#dtMaterialDesignExample_wrapper select').removeClass(
+                'custom-select custom-select-sm form-control form-control-sm');
+            $('#dtMaterialDesignExample_wrapper select').addClass('mdb-select');
+            $('#dtMaterialDesignExample_wrapper .mdb-select').materialSelect();
+            $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('label').remove();
+            $('#dtMaterialDesignExample_paginate .pagination').addClass('pg-red');
 
-    // Material Design example
-    $(document).ready(function () {
-        $('#dtMaterialDesignExample').DataTable();
-        $('#dtMaterialDesignExample2').DataTable();
-        $('#dtMaterialDesignExample_wrapper').find('label').each(function () {
-            $(this).parent().append($(this).children());
+
+            $('#dtMaterialDesignExample2_wrapper').find('label').each(function () {
+                $(this).parent().append($(this).children());
+            });
+            $('#dtMaterialDesignExample2_wrapper .dataTables_filter').find('input').each(function () {
+                const $this = $(this);
+                $this.attr("placeholder", "Search");
+                $this.removeClass('form-control-sm');
+            });
+            $('#dtMaterialDesignExample2_wrapper .dataTables_length').addClass('d-flex flex-row');
+            $('#dtMaterialDesignExample2_wrapper .dataTables_filter').addClass('md-form');
+            $('#dtMaterialDesignExample2_wrapper select').removeClass(
+                'custom-select custom-select-sm form-control form-control-sm');
+            $('#dtMaterialDesignExample2_wrapper select').addClass('mdb-select');
+            $('#dtMaterialDesignExample2_wrapper .mdb-select').materialSelect();
+            $('#dtMaterialDesignExample2_wrapper .dataTables_filter').find('label').remove();
+            $('#dtMaterialDesignExample2_paginate .pagination').addClass('pg-red');
         });
-        $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('input').each(function () {
-            const $this = $(this);
-            $this.attr("placeholder", "Search");
-            $this.removeClass('form-control-sm');
-        });
-        $('#dtMaterialDesignExample_wrapper .dataTables_length').addClass('d-flex flex-row');
-        $('#dtMaterialDesignExample_wrapper .dataTables_filter').addClass('md-form');
-        $('#dtMaterialDesignExample_wrapper select').removeClass(
-            'custom-select custom-select-sm form-control form-control-sm');
-        $('#dtMaterialDesignExample_wrapper select').addClass('mdb-select');
-        $('#dtMaterialDesignExample_wrapper .mdb-select').materialSelect();
-        $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('label').remove();
-        $('#dtMaterialDesignExample_paginate .pagination').addClass('pg-red');
+
+    </script>
+</content>
 
 
-        $('#dtMaterialDesignExample2_wrapper').find('label').each(function () {
-            $(this).parent().append($(this).children());
-        });
-        $('#dtMaterialDesignExample2_wrapper .dataTables_filter').find('input').each(function () {
-            const $this = $(this);
-            $this.attr("placeholder", "Search");
-            $this.removeClass('form-control-sm');
-        });
-        $('#dtMaterialDesignExample2_wrapper .dataTables_length').addClass('d-flex flex-row');
-        $('#dtMaterialDesignExample2_wrapper .dataTables_filter').addClass('md-form');
-        $('#dtMaterialDesignExample2_wrapper select').removeClass(
-            'custom-select custom-select-sm form-control form-control-sm');
-        $('#dtMaterialDesignExample2_wrapper select').addClass('mdb-select');
-        $('#dtMaterialDesignExample2_wrapper .mdb-select').materialSelect();
-        $('#dtMaterialDesignExample2_wrapper .dataTables_filter').find('label').remove();
-        $('#dtMaterialDesignExample2_paginate .pagination').addClass('pg-red');
-    });
-
-</script>
-
-<script src="/src/js/breadcrumb.js"></script>
 </body>
 
 </html>

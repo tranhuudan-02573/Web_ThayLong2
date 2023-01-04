@@ -6,8 +6,8 @@ import vn.edu.hcmuaf.fit.model.user.Customer;
 import java.sql.Timestamp;
 
 public class CustomerDAO extends AbstractDAO<Customer> {
-    public CustomerDAO(String table) {
-        super(table);
+    public CustomerDAO() {
+        super("customers");
     }
 
     public int save(Customer customer) {

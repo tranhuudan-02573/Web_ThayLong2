@@ -19,7 +19,7 @@ public class HeaderFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
 
-        List<Brand> brandList =  new AbstractDAO<Brand>("brands").list("",Brand.class,null,10);
+        List<Brand> brandList =  new AbstractDAO<Brand>("brands").list("",Brand.class,null,10,null, null);
 
         request.setAttribute("brandList", brandList);
 

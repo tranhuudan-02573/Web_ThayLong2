@@ -20,7 +20,7 @@ public class IndexHandle extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-        List<PhoneColor> colors = new AbstractDAO<PhoneColor>("phone_color").list(" GROUP BY phoneId", PhoneColor.class, null, null);
+        List<PhoneColor> colors = new AbstractDAO<PhoneColor>("phone_color").list(" GROUP BY phoneId", PhoneColor.class, null, null,null, null);
         request.setAttribute("colors", colors);
 
         request.getRequestDispatcher("/views/admin/manage/phonecolor/index.jsp").forward(request, response);

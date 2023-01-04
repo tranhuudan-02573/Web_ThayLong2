@@ -7,7 +7,7 @@ To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <header>
-    <div class="modal fade show" id="modalStarRating" tabindex="-1" role="dialog"
+    <div class="modal fade show" id="city" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel" aria-modal="true"
          style="padding-right: 17px; display: none;">
         <div class="modal-dialog" role="document">
@@ -59,7 +59,7 @@ To change this template use File | Settings | File Templates.
                             <i class="fas fa-envelope prefix grey-text text-danger"></i>
                             <input type="email" name="fEmail"
                             <c:if test="${sessionScope.username != null}">
-                                    value="${sessionScope.username}"
+                                   value="${sessionScope.username}"
                             </c:if>
                                    id="defaultForm-email" class="form-control validate">
                             <label data-error="wrong" data-success="right" for="defaultForm-email"> Email</label>
@@ -76,7 +76,8 @@ To change this template use File | Settings | File Templates.
                             <!-- Material checked -->
                             <div class="form-check p-0">
 
-                                <input type="checkbox" name="remember" class="form-check-input" id="materialChecked2" checked>
+                                <input type="checkbox" name="remember" class="form-check-input" id="materialChecked2"
+                                       checked>
                                 <label class="form-check-label" for="materialChecked2">Nhớ mật khẩu</label>
                             </div>
                             <a href="/views/resetpass.html" class="text-danger">Quên mật khẩu</a>
@@ -354,33 +355,35 @@ To change this template use File | Settings | File Templates.
                         </div>
                         <!--end-row-->
                     </div>
-                    <%
-                        User user = (User) session.getAttribute("USER");
-                    %>
                     <!--end col-9-->
                     <div class="col-2 position-absolute overplay"></div>
                     <div class="col-xl-2 col-lg-2 col-md-2 col-4 p-0 ">
-                        <a href="${pageContext.request.contextPath}/home" title=""><img src="/images/fptshop-logo.png"
+                        <a href="${pageContext.request.contextPath}/home?page=1&different=moi" title=""><img src="/images/fptshop-logo.png"
                                                                                         class="img-fluid"></a>
                     </div>
                     <div class="col-7 pull-right d-flex justify-content-end align-items-center d-sm-none text-white"><i
                             class="fa fa-shopping-cart"></i></div>
                     <div class="col-1">
                         <a class="nav-link p-0 text-center text-white " href="/views/user.html" data-toggle="modal"
-                           data-target="#modalStarRating"> <i class="fa-solid fa-location-dot fa-lg mr-2 "></i>xem giá
+                           data-target="#city"> <i class="fa-solid fa-location-dot fa-lg mr-2 "></i>xem giá
                             tại</a>
                     </div>
-
+    <%String search= (String)request.getAttribute("search");%>
                     <div class="col-xl-4 col-lg-4 col-md-4 col-12 p-0 ">
                         <div class="input-group ">
-                            <input type="text" class="form-control " placeholder="Tìm kiếm sản phẩm"
-                                   aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <form action="/phone-filter" id="search" style="width: 80%" >
+                                <input hidden name="sort" value="sap xep theo A - Z">
+                                <input hidden name="page" value="1">
+                            <input type="text" class="form-control " value="<%=(search!=null)?search:"" %>" placeholder="Tìm kiếm sản phẩm"
+                                   aria-label="Recipient's username" aria-describedby="basic-addon2" name="search"  >
+                            </form>
                             <div class="input-group-append ">
-                                <a class="input-group-text bg-dark text-white  border-0 " id="basic-addon2"><i
+                                <a class="input-group-text bg-dark text-white  border-0 " id="basic-addon2" onclick="document.getElementById('search').submit()" ><i
                                         class="fa fa-search"></i></a>
                             </div>
                         </div>
                     </div>
+
                     <!--end col-6-->
                     <div class="col-xl-5 col-lg-5 col-md-5 col-12 d-none d-sm-block p-0">
                         <ul class="nav justify-content-end">
@@ -409,23 +412,24 @@ To change this template use File | Settings | File Templates.
                                     Sản phẩm đã thích</a>
                             </li>
                             <li class="nav-item">
-                                    <a class="nav-link text-center text-white" id="btn-login"
-                                    <c:if test="${sessionScope.personlogin == null}">
-                                        href="/views/user.html" data-toggle="modal" data-target="#modalLoginForm"
-                                    </c:if>
-                                    <c:if test="${sessionScope.personlogin != null}">
-                                        href="/logout"
-                                    </c:if>>
-                                    <div><i class="fa fa-user fa-lg"aria-hidden="true" style="line-height: 1;"></i></div>
-                                        <%= session.getAttribute("personlogin") == null?"Tài khoản":"Đăng xuất"%>
-                                    </a>
-
-                                <a class="nav-link text-center text-white " href="/views/user.html" data-toggle="modal"
-                                   data-target="#modalLoginForm">
+                                <a class="nav-link text-center text-white" id="btn-login"
+                                        <c:if test="${sessionScope.personlogin == null}">
+                                            href="/views/user.html" data-toggle="modal" data-target="#modalLoginForm"
+                                        </c:if>
+                                        <c:if test="${sessionScope.personlogin != null}">
+                                            href="/logout"
+                                        </c:if>>
                                     <div><i class="fa fa-user fa-lg" aria-hidden="true" style="line-height: 1;"></i>
                                     </div>
-                                    Tài khoản
+                                    <%= session.getAttribute("personlogin") == null ? "Tài khoản" : "Đăng xuất"%>
                                 </a>
+
+<%--                                <a class="nav-link text-center text-white " href="/views/user.html" data-toggle="modal"--%>
+<%--                                   data-target="#modalLoginForm">--%>
+<%--                                    <div><i class="fa fa-user fa-lg" aria-hidden="true" style="line-height: 1;"></i>--%>
+<%--                                    </div>--%>
+<%--                                    Tài khoản--%>
+<%--                                </a>--%>
                             </li>
 
                         </ul>

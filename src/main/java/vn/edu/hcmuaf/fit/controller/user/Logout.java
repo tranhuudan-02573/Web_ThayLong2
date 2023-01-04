@@ -12,10 +12,10 @@ import java.io.IOException;
 public class Logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(SessionUntil.get(request,"personlogin") != null){
-            SessionUntil.delItem(request,"personlogin");
-            CookieUntil.add("username",null,0,response);
-            CookieUntil.add("permission",null,0,response);
+        if (SessionUntil.get(request, "personlogin") != null) {
+            SessionUntil.delItem(request, "personlogin");
+            CookieUntil.add("username", null, 0, response);
+            CookieUntil.add("permission", null, 0, response);
             response.sendRedirect("/home");
 
         }

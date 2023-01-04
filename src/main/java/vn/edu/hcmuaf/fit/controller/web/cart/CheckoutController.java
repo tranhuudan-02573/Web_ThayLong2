@@ -1,8 +1,12 @@
 package vn.edu.hcmuaf.fit.controller.web.cart;
 
+import vn.edu.hcmuaf.fit.constant.Variable;
+import vn.edu.hcmuaf.fit.dao.AbstractDAO;
+import vn.edu.hcmuaf.fit.model.cart.Carts;
 import vn.edu.hcmuaf.fit.model.order.Order;
+import vn.edu.hcmuaf.fit.model.user.Customer;
 import vn.edu.hcmuaf.fit.model.user.User;
-import vn.edu.hcmuaf.fit.until.AlertUntil;
+import vn.edu.hcmuaf.fit.until.FormUtil;
 import vn.edu.hcmuaf.fit.until.SessionUntil;
 
 import javax.servlet.ServletException;
@@ -16,11 +20,12 @@ import java.io.IOException;
 public class CheckoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = (User) SessionUntil.get(request, "USER");
-        if (user.getCarts().isEmpty()) {
-            AlertUntil.setMessage(request, "error", "chua co sp nao");
-//            request.getRequestDispatcher("/views/web/cart.jsp").forward(request, response);
-//        } else {
+        Carts carts = (Carts) SessionUntil.get(request, Variable.Global.CART.toString());
+        if (carts==null||carts.getCartItemIntegerMap().isEmpty()) {
+            SessionUntil.set(request, Variable.Global.TYPE.toString(), "error");
+            SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "chua co sp nao");
+            response.sendRedirect("/carts");
+        } else {
             request.getRequestDispatcher("/views/web/checkout.jsp").forward(request, response);
         }
     }
@@ -29,8 +34,8 @@ public class CheckoutController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
 
-        if (SessionUntil.get(request, "USER") != null) {
 
+        if (SessionUntil.get(request, "USER") != null) {
             User user = (User) SessionUntil.get(request, "USER");
             String payment = request.getParameter("payment");
             int code = Integer.parseInt(request.getParameter("code").trim());
@@ -38,10 +43,16 @@ public class CheckoutController extends HttpServlet {
             o.setUserId(user.getId());
             o.setPayment(payment);
             o.setCodeId(code);
-            o.setTotal(user.total());
+//            o.setTotal(user.total());
 
 
         } else {
+            Customer customer = FormUtil.toModel(Customer.class, request);
+
+            int id = new AbstractDAO<Customer>("customers").insertWithId(" insert into customers (name,email,phone,address,gender) values (:t.name,:t.email,:t.phone,:t.address,:t.gender)", customer);
+
+
+
 
         }
 
