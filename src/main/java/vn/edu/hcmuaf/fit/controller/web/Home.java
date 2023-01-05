@@ -5,6 +5,8 @@ import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Brand;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 import vn.edu.hcmuaf.fit.model.phone.Sale;
+import vn.edu.hcmuaf.fit.model.user.User;
+import vn.edu.hcmuaf.fit.until.SessionUntil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +25,9 @@ public class Home extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        SessionUntil.set(request, Variable.Global.USER.toString(),new AbstractDAO<User>("users").get(" and id = 1",User.class,null).get());
+
         Map<String, String> differentList = new HashMap<>();
         differentList.put(" and phones.saleId is not null ", "giam gia");
         differentList.put(" and phone_promot.promotId =1 ", "tra gop");

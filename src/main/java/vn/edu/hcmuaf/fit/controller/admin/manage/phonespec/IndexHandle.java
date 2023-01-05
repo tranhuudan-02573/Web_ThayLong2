@@ -1,10 +1,8 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.phonespec;
 
 import vn.edu.hcmuaf.fit.constant.Variable;
-import vn.edu.hcmuaf.fit.dao.impl.PhoneReviewDAO;
 import vn.edu.hcmuaf.fit.dao.impl.PhoneSpecDAO;
 import vn.edu.hcmuaf.fit.model.phone.PhoneSpec;
-import vn.edu.hcmuaf.fit.model.review.PhoneReview;
 import vn.edu.hcmuaf.fit.model.user.User;
 import vn.edu.hcmuaf.fit.until.SessionUntil;
 
@@ -21,7 +19,7 @@ public class IndexHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = (User) SessionUntil.get(request, Variable.Global.PHONE.toString());
-        if (user != null && user.get(Variable.Global.USER.toString()) != null) {
+        if (user != null && user.get(Variable.Global.PHONE.toString()) != null) {
             List<PhoneSpec> users = new PhoneSpecDAO().list("", PhoneSpec.class, null, null, null, null);
             request.setAttribute("pps", users);
             request.getRequestDispatcher("/views/admin/manage/phonespec/index.jsp").forward(request,response);

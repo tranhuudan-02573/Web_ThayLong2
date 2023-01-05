@@ -2,7 +2,6 @@ package vn.edu.hcmuaf.fit.controller.admin.manage.phone;
 
 import vn.edu.hcmuaf.fit.constant.Variable;
 import vn.edu.hcmuaf.fit.dao.impl.PhoneDAO;
-import vn.edu.hcmuaf.fit.dao.impl.UserDAO;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 import vn.edu.hcmuaf.fit.model.user.User;
 import vn.edu.hcmuaf.fit.until.SessionUntil;
@@ -30,15 +29,12 @@ public class EditHandle extends HttpServlet {
                     request.setAttribute("phone", u);
                 }
             }
-
             request.getRequestDispatcher("/views/admin/manage/phone/edit.jsp").forward(request, response);
         } else {
             SessionUntil.set(request, Variable.Global.TYPE.toString(), "error");
             SessionUntil.set(request, Variable.Global.MESSAGE.toString(), " ban ko co quyen");
             response.sendRedirect("/admin/home");
         }
-
-
     }
 
     @Override

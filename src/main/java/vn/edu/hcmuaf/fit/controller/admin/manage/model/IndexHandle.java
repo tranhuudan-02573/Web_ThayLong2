@@ -7,17 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet( urlPatterns = {"/admin/manage/model"})
+@WebServlet(urlPatterns = {"/admin/manage/model"})
 public class IndexHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
+        request.getRequestDispatcher("/views/admin/manage/model/index.jsp").forward(request, response);
 
-
-
-        request.getRequestDispatcher("/views/admin/manage/model/index.jsp").forward(request,response);
-        
     }
 
     @Override

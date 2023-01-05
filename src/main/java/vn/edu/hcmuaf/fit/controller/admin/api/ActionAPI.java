@@ -1,7 +1,6 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import vn.edu.hcmuaf.fit.model.phone.Color;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
