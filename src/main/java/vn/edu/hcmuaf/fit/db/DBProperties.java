@@ -3,7 +3,7 @@ package vn.edu.hcmuaf.fit.db;
 import java.io.IOException;
 import java.util.Properties;
 
-public class DBProperties {
+public class  DBProperties {
     private static final Properties db = new Properties();
     static {
         try {
