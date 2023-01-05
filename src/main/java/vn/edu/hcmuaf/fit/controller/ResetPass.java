@@ -1,7 +1,5 @@
 package vn.edu.hcmuaf.fit.controller;
-
-import vn.edu.hcmuaf.fit.until.CookieUntil;
-import vn.edu.hcmuaf.fit.until.SessionUntil;
+import vn.edu.hcmuaf.fit.model.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,24 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Login", value = "/Login")
+@WebServlet(name = "resetpass", value = "/resetpass")
 public class ResetPass extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = (String) request.getParameter("email");
+        String passOld = (String) request.getParameter("pass-old");
 
-        String username = CookieUntil.get("username",request);
-        if(username==null){
-            request.getRequestDispatcher("/login").forward(request,response);
+        if(!User.hasInfoAccount(email,passOld)){
+            request.setAttribute("email", email);
+
+            request.setAttribute("err","Tài khoản chưa được đăng ki hoặc mật khẩu cũ không chính xác");
+            request.getRequestDispatcher("views/web/resetpass.jsp").forward(request,response);
             return;
         }
-        SessionUntil.set(request,"username",username);
+        // has account
+        String pass = (String) request.getParameter("pass");
+        User.changePass(email,pass);
         request.getRequestDispatcher("/home").forward(request,response);
-
-
-
-
-
-
     }
 
     @Override

@@ -14,24 +14,23 @@ public class Login extends HttpServlet {
     User account;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println((account!=null) + "ss");
-
+//        System.out.println((account!=null) + "ss");
+//        System.out.println((CookieUntil.get("username",request)) + " ssssss");
         if (CookieUntil.get("username",request)!=null) {
 //            SessionUntil.add(request, "username", CookieUntil.get("username", request));
             if ("manager".equals(account.getPermission())) {
             // code...
 
                 response.sendRedirect("/admin/home");
-
             } else {
             // code...
 
                 response.sendRedirect("/home");
             }
         }
-        else{
-            response.sendRedirect("/home");
-        }
+//        else{
+//            response.sendRedirect("/home");
+//        }
     }
 
     @Override
@@ -60,7 +59,9 @@ public class Login extends HttpServlet {
         }
         /* LOGIN SUCCESSFULLY*/
         // handle turn-off display popup login
-        SessionUntil.delItem(request,"messErr");
+//        SessionUntil.delItem(request,"messErr");
+
+
         // convert label login <->logout
         SessionUntil.set(request,"personlogin", account.getPermission());
 

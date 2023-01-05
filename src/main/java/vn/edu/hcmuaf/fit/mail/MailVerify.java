@@ -2,18 +2,15 @@ package vn.edu.hcmuaf.fit.mail;
 
 import javax.mail.*;
 import javax.mail.internet.*;
-import java.io.File;
 import java.util.Properties;
-import java.util.Random;
+
 
 public class MailVerify {
-
-//    public static String codeRandom(){
-//        int code = new Random().nextInt(999999);
-//        return String.format("%06d",code);
-//    }
-
+/*
+* click btn active send redirect page Login
+* */
     public static void send(String to, String recipient, String link) {
+
         String fromEmail = "20130218@st.hcmuaf.edu.vn";
         String password = "mymeslmspxoogvoo";
 
@@ -25,6 +22,7 @@ public class MailVerify {
             pr.put("mail.smtp.ssl.enable", "true");
 //        pr.put("mail.smtp.socketFactory.port","465");
 //        pr.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+
 
             Session session = Session.getInstance(pr, new Authenticator() {
                 @Override
@@ -84,15 +82,13 @@ public class MailVerify {
                 "                data-saferedirecturl=\"" + link + "\">Kích\n" +
                 "            hoạt tài khoản</a></div>\n" +
                 "    </div>\n" +
+                "        <div style=\"font-size: 16px;padding-top:10px;text-align:left\">Sau 24h mã kích hoạt sẽ bị hủy</div>\n" +
                 "</div>\n" +
                 "</body>\n" +
                 "\n" +
                 "</html>";
     }
 
-    public static void main(String[] args) {
 
-        new MailVerify().send("sgfdainesend@gmail.com", "Lê", "/dădaw");
 
-    }
 }
