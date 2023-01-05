@@ -14,6 +14,7 @@ import vn.edu.hcmuaf.fit.model.review.Review;
 import vn.edu.hcmuaf.fit.model.review.Vote;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -38,9 +39,11 @@ public class User extends Base<User> implements Serializable {
 
     private Carts carts = listToCarts();
 
+
     public Carts listToCarts() {
         return new Carts(cartItemIntegerMap());
     }
+
 
 
     public Action get(String v) {
@@ -54,45 +57,12 @@ public class User extends Base<User> implements Serializable {
         return null;
 
     }
-//    public Wish get(Wish cart) {
-//
-//        for (Wish c : carts
-//        ) {
-//            if (c.getColorId().equals(cart.getPhoneId()) && c.getColorId().equals(cart.getColorId())) return c;
-//
-//        }
-//
-//        return null;
-//    }
-//
-//    public void addCart(Wish cart) {
-//
-//        if (get(cart) != null) {
-//            Wish c = get(cart);
-//            c.setQuantity(c.getQuantity() + cart.getQuantity());
-//        } else {
-//            carts.add(cart);
-//        }
-//
-//    }
-//
-//    public void removeCart(Wish cart) {
-//        if (get(cart) != null) carts.remove(cart);
-//    }
+
+
 
     public UserState _userState() {
         return new AbstractDAO<UserState>("user_states").get(" and id=" + this.user_stateId, UserState.class, null).get();
     }
-
-//    public int total() {
-//        int total = 0;
-//        for (Carts c : carts
-//        ) {
-//            total += c._phone().getPrice();
-////            * c.getQuantity()
-//        }
-//        return total;
-//    }
 
     public String avatar() {
         StringBuilder rs = new StringBuilder();
@@ -132,6 +102,7 @@ public class User extends Base<User> implements Serializable {
     }
 
 
+
     public Timestamp nearBuy() {
         return new AbstractDAO<Order>("orders").get("  and userId =" + this.id + " order by created_at desc limit 1", Order.class, null).get().getCreated_at();
     }
@@ -153,23 +124,48 @@ public class User extends Base<User> implements Serializable {
         return new AbstractDAO<Vote>("votes").list(" and userId =" + this.id, Vote.class, null, null, null, null);
     }
 
-    public List<Order> _orders() {
-
-        return new AbstractDAO<Order>("orders").list(" and userId = " + this.id, Order.class, null, null, null, null);
-    }
-
-    public List<CartItem> _carts() {
-        return new AbstractDAO<CartItem>("carts").list("and userId =" + this.id, CartItem.class, null, null, null, null);
-    }
-
-    Map<CartItem, Integer> cartItemIntegerMap() {
-        Map<CartItem, Integer> rs = new HashMap<>();
-        for (CartItem c : _carts()
-        ) {
-            rs.put(c, c.getQuantity());
+        public static void saveUserRegister (User user){
+            String sql = "INSERT INTO `users` " +
+                    "VALUES (null,'" + user.getPhone() + "','" + user.getPassword() + "','" + user.getName() +
+                    "','" + user.getAddress() + "'," + "b'0'" + ",'" + user.getEmail() + "'," + "CURRENT_TIMESTAMP" + ",NULL,b'0','user',NULL);";
+            new AbstractDAO<User>("users").insert(sql, null);
         }
-        return rs;
-    }
+
+        public static void active (String email){
+            String sql = "UPDATE users SET active = 1 WHERE email='" + email + "'";
+            new AbstractDAO<User>("users").update(sql, null);
+        }
+
+        public static boolean hasInfoAccount (String email, String passOld){
+            User user = getUser(email);
+            if (user == null || !user.getPassword().equalsIgnoreCase(passOld))
+                return false;
+            return true;
+        }
+
+        public static void changePass (String email, String pass){
+            String sql = "UPDATE users SET password ='" + pass + "' WHERE email='" + email + "'";
+            new AbstractDAO<User>("users").update(sql, null);
+        }
+
+
+        public List<Order> _orders () {
+            return new AbstractDAO<Order>("orders").list(" and userId = " + this.id, Order.class, null, null,null,null);
+        }
+
+        public List<CartItem> _carts () {
+            return new AbstractDAO<CartItem>("carts").list("and userId =" + this.id, CartItem.class, null, null, null, null);
+        }
+
+
+        Map<CartItem, Integer> cartItemIntegerMap () {
+            Map<CartItem, Integer> rs = new HashMap<>();
+            for (CartItem c : _carts()) {
+                rs.put(c, c.getQuantity());
+            }
+            return rs;
+        }
+
 
 
 }

@@ -1,10 +1,6 @@
-<%@ page import="vn.edu.hcmuaf.fit.model.user.User" %><%--
-Created by IntelliJ IDEA.
-User: dell
-Date: 11/14/2022
-Time: 3:39 PM
-To change this template use File | Settings | File Templates.
---%>
+
+<%@ page import="vn.edu.hcmuaf.fit.model.user.User" %>
+<%@ page import="vn.edu.hcmuaf.fit.until.CookieUntil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <header>
     <div class="modal fade show" id="city" tabindex="-1" role="dialog"
@@ -80,11 +76,11 @@ To change this template use File | Settings | File Templates.
                                        checked>
                                 <label class="form-check-label" for="materialChecked2">Nhớ mật khẩu</label>
                             </div>
-                            <a href="/views/resetpass.html" class="text-danger">Quên mật khẩu</a>
+                            <a href="/views/web/resetpass.jsp" class="text-danger">Quên mật khẩu</a>
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
-                        <span>Bạn chưa có tài khoản? <a href="/register" class="text-danger">Đăng ký</a></span>
+                        <span>Bạn chưa có tài khoản? <a href="/views/web/signup.jsp" class="text-danger">Đăng ký</a></span>
                         <button class="btn btn-danger " type="submit">Đăng nhập</button>
                     </div>
                 </div>
@@ -412,6 +408,7 @@ To change this template use File | Settings | File Templates.
                                     Sản phẩm đã thích</a>
                             </li>
                             <li class="nav-item">
+
                                 <a class="nav-link text-center text-white" id="btn-login"
                                         <c:if test="${sessionScope.personlogin == null}">
                                             href="/views/user.html" data-toggle="modal" data-target="#modalLoginForm"
@@ -423,6 +420,7 @@ To change this template use File | Settings | File Templates.
                                     </div>
                                     <%= session.getAttribute("personlogin") == null ? "Tài khoản" : "Đăng xuất"%>
                                 </a>
+
 
 <%--                                <a class="nav-link text-center text-white " href="/views/user.html" data-toggle="modal"--%>
 <%--                                   data-target="#modalLoginForm">--%>

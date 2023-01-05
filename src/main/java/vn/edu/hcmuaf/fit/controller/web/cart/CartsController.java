@@ -14,15 +14,14 @@ import java.io.IOException;
 
 @WebServlet(name = "Carts", urlPatterns = {"/carts"})
 public class CartsController extends HttpServlet {
-    @Override
+        @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (SessionUntil.get(request, Variable.Global.CART.toString()) == null) {
-            SessionUntil.set(request, Variable.Global.CART.toString(), new Carts());
+
+            if (SessionUntil.get(request, Variable.Global.CART.toString()) == null) {
+                SessionUntil.set(request, Variable.Global.CART.toString(), new Carts());
+            }
+            request.getRequestDispatcher("/views/web/cart.jsp").forward(request, response);
         }
-
-        request.getRequestDispatcher("/views/web/cart.jsp").forward(request, response);
-    }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
