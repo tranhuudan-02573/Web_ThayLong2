@@ -12,14 +12,7 @@ public class Home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-//
-//
-//        User user = (User) SessionUntil.get(request, Variable.Global.USER.toString());
-
-//        if (user.getPermission() != null && Integer.parseInt(user.getPermission()) >= 2)
         request.getRequestDispatcher("/views/admin/index.jsp").forward(request, response);
-//        else
-//            response.sendRedirect("/home?page=1&different=moi");
     }
 
 

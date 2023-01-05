@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/admin/home/*"}, filterName = "AdminFilter")
+@WebFilter(urlPatterns = {"/admin/*"}, filterName = "AdminFilter")
 public class AdminFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }
@@ -23,11 +23,9 @@ public class AdminFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request1 = (HttpServletRequest) request;
         HttpServletResponse response1 = (HttpServletResponse) response;
-        SessionUntil.set(request1, Variable.Global.USER.toString(), new AbstractDAO<User>("users").get(" and id = 1", User.class, null).get());
-
         User user = (User) SessionUntil.get(request1, Variable.Global.USER.toString());
 
-        if (user.getPermission() != null && Integer.parseInt(user.getPermission()) >= 2)
+        if (user.getPermission() != null && user.getPermission().equals(Variable.Global.ADMIN.toString()))
             chain.doFilter(request, response);
         else {
             SessionUntil.set(request1, Variable.Global.TYPE.toString(), "error");

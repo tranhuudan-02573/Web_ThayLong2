@@ -23,7 +23,7 @@ public class UserAdminFilter implements Filter {
         HttpServletRequest request1 = (HttpServletRequest) request;
         HttpServletResponse response1 = (HttpServletResponse) response;
         User user = (User) SessionUntil.get(request1, Variable.Global.USER.toString());
-        if (user != null && user.get(Variable.Global.USER.toString()) != null) {
+        if (user != null && user.getPermission().equals(Variable.Global.ADMIN.toString()) && user.get(Variable.Global.USER.toString()) != null) {
             chain.doFilter(request, response);
         } else {
             SessionUntil.set(request1, Variable.Global.TYPE.toString(), "error");

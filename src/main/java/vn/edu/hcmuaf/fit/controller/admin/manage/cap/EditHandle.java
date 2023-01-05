@@ -1,7 +1,11 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.cap;
 
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
+import vn.edu.hcmuaf.fit.dao.impl.CapDAO;
+import vn.edu.hcmuaf.fit.dao.impl.SaleDAO;
+import vn.edu.hcmuaf.fit.model.phone.Cap;
 import vn.edu.hcmuaf.fit.model.phone.Color;
+import vn.edu.hcmuaf.fit.model.phone.Sale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,13 +21,14 @@ public class EditHandle extends HttpServlet {
 
         String id = request.getParameter("id");
         int ids = 0;
-        Color color = new Color();
         if (id != null) {
             ids = Integer.parseInt(id.trim());
-            if (ids != 0) color = new AbstractDAO<Color>("colors").get(" and id = " + ids, Color.class, null).get();
+            if (ids != 0) {
+                Cap u = new CapDAO().get(" and id = " + ids, Cap.class, null).get();
+                request.setAttribute("u", u);
+            }
         }
-        request.setAttribute("color", color);
-        request.getRequestDispatcher("/views/admin/manage/color/edit.jsp").forward(request, response);
+
         request.getRequestDispatcher("/views/admin/manage/cap/edit.jsp").forward(request, response);
 
     }

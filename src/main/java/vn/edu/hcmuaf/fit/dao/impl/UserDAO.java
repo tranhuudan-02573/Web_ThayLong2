@@ -10,10 +10,12 @@ public class UserDAO extends AbstractDAO<User> {
         super("users");
     }
 
-    public void update(User u){
+    public boolean update(User u) {
 
         u.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
-        update(" update users set phone=:t.phone,name=:t.name,address=:t.address,gender=:t.gender,email=:t.email,updated_at=:t.updated_at where id="+u.getId(),u);
+        return update(" update users set phone=:t.phone,name=:t.name,address=:t.address,gender=:t.gender,email=:t.email,updated_at=:t.updated_at where id=" + u.getId(), u);
     }
+
 }
+
