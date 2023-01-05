@@ -296,12 +296,8 @@
         <%
             if
             (
-                    !
-                            cartItems
-                                    .
-                                    isEmpty
-                                            (
-                                            )
+                   carts.cartItems()!=0
+
             ) {
         %>
         <section class="mb-5">

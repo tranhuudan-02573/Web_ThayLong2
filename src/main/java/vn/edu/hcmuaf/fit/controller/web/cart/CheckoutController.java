@@ -21,7 +21,7 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Carts carts = (Carts) SessionUntil.get(request, Variable.Global.CART.toString());
-        if (carts==null||carts.getCartItemIntegerMap().isEmpty()) {
+        if (carts.cartItems()==0) {
             SessionUntil.set(request, Variable.Global.TYPE.toString(), "error");
             SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "chua co sp nao");
             response.sendRedirect("/carts");

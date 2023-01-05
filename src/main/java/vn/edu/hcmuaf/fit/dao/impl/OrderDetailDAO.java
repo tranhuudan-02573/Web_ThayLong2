@@ -19,4 +19,5 @@ public class OrderDetailDAO extends AbstractDAO<OrderDetail> {
                 " values (:t.quantity,:t.price,:t.phoneId,:t.orderId,:t.colorId,:t.created_at,:t.updated_at)", od);
 
     }
+
 }

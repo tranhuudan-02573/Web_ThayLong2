@@ -27,7 +27,6 @@ public class Home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        SessionUntil.set(request, Variable.Global.USER.toString(),new AbstractDAO<User>("users").get(" and id = 1",User.class,null).get());
 
         Map<String, String> differentList = new HashMap<>();
         differentList.put(" and phones.saleId is not null ", "giam gia");

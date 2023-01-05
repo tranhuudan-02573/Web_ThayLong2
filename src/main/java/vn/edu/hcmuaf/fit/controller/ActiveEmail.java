@@ -10,19 +10,20 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.Timestamp;
 
-@WebServlet(urlPatterns = {"/ActiveEmail"},name = "ActiveEmail")
+@WebServlet(urlPatterns = {"/ActiveEmail"}, name = "ActiveEmail")
 public class ActiveEmail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = (String) request.getParameter("email");
         String key = (String) request.getParameter("key");
-        System.out.println("ab");
+            String sql = " and token='" + key + "'";
 
-        if (ConfirmationToken.checkExpired_at(key)) {
-            System.out.println("ádb");
-            if (key != null)
-                ConfirmationToken.delActiveCode(key);
+        ConfirmationToken confirmationToken = new AbstractDAO<ConfirmationToken>("confirmationtoken").get(sql, ConfirmationToken.class, null).orElse(null);
+        if (confirmationToken!=null&&confirmationToken.getExpired_at().after(new Timestamp(System.currentTimeMillis()))) {
+
+            ConfirmationToken.delActiveCode(key);
             if (email != null)
                 User.active(email);
         } else {
@@ -39,6 +40,16 @@ public class ActiveEmail extends HttpServlet {
     }
 
     public static void main(String[] args) {
-        System.out.println(ConfirmationToken.checkExpired_at("26ba0245-66a7-4de4-95e3-084cafd90536"));
+        String sql = " and token='" + "key" + "'";
+
+        ConfirmationToken confirmationToken = new AbstractDAO<ConfirmationToken>("confirmationtoken")
+                .get(sql, ConfirmationToken.class, null).orElse(null);
+        if (confirmationToken!=null&&confirmationToken.getExpired_at().after(new Timestamp(System.currentTimeMillis()))) {
+            System.out.println("dă");
+        } else {  System.out.println("d11111ă");
+//            SessionUntil.set(request, Variable.Global.TYPE.toString(), "error");
+//            SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "token da het han vui long ban dang nhap lai");
+
+        }
     }
 }
