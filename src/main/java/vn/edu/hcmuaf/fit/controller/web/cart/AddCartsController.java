@@ -34,31 +34,30 @@ public class AddCartsController extends HttpServlet {
             color = new AbstractDAO<Color>("colors").get(" and id =" + colorId, Color.class, null).get();
         if (quantity != null) num = Integer.parseInt(quantity);
         Carts carts = (Carts) SessionUntil.get(request, Variable.Global.CART.toString());
-        if (carts == null) SessionUntil.set(request, Variable.Global.CART.toString(), new Carts());
-        if (phone.getId() != 0 && action != null  && carts!=null) {
+        if (phone.getId() != 0 && action != null && carts != null) {
             if ("wishes".equals(action)) {
                 CartItem cartItem = new CartItem(phone.getId()
                         , color.getId(), num, phone.getPrice(), true);
                 carts.add(cartItem);
                 SessionUntil.set(request, Variable.Global.CART.toString(), carts);
-                SessionUntil.set(request, Variable.Global.TYPE.toString(),"success");
-                SessionUntil.set(request, Variable.Global.MESSAGE.toString(),"da them thanh cong vao trong yeu thich");
+                SessionUntil.set(request, Variable.Global.TYPE.toString(), "success");
+                SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "da them thanh cong vao trong yeu thich");
             }
             if ("delete".equals(action)) {
                 CartItem cartItem = new CartItem(phone.getId()
                         , color.getId(), num, phone.getPrice(), false);
                 carts.remove(cartItem);
                 SessionUntil.set(request, Variable.Global.CART.toString(), carts);
-                SessionUntil.set(request, Variable.Global.TYPE.toString(),"success");
-                SessionUntil.set(request, Variable.Global.MESSAGE.toString(),"da xoa thanh cong");
+                SessionUntil.set(request, Variable.Global.TYPE.toString(), "success");
+                SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "da xoa thanh cong");
             }
             if ("delete2".equals(action)) {
                 CartItem cartItem = new CartItem(phone.getId()
                         , color.getId(), num, phone.getPrice(), true);
                 carts.remove(cartItem);
                 SessionUntil.set(request, Variable.Global.CART.toString(), carts);
-                SessionUntil.set(request, Variable.Global.TYPE.toString(),"success");
-                SessionUntil.set(request, Variable.Global.MESSAGE.toString(),"da xoa thanh cong");
+                SessionUntil.set(request, Variable.Global.TYPE.toString(), "success");
+                SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "da xoa thanh cong");
             }
             if ("updateColor".equals(action)) {
                 String colorIdU = request.getParameter("colorIdU");
@@ -67,8 +66,8 @@ public class AddCartsController extends HttpServlet {
                 if (colorIdU != null) {
                     carts.updateColor(cartItem, Integer.parseInt(colorIdU));
                     SessionUntil.set(request, Variable.Global.CART.toString(), carts);
-                    SessionUntil.set(request, Variable.Global.TYPE.toString(),"success");
-                    SessionUntil.set(request, Variable.Global.MESSAGE.toString(),"da cap nhat thanh cong");
+                    SessionUntil.set(request, Variable.Global.TYPE.toString(), "success");
+                    SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "da cap nhat thanh cong");
                 }
 
 
@@ -80,8 +79,8 @@ public class AddCartsController extends HttpServlet {
                 if (quantityN != null) {
                     carts.updateQuantity(cartItem, Integer.parseInt(quantityN));
                     SessionUntil.set(request, Variable.Global.CART.toString(), carts);
-                    SessionUntil.set(request, Variable.Global.TYPE.toString(),"success");
-                    SessionUntil.set(request, Variable.Global.MESSAGE.toString(),"da cap nhat thanh cong");
+                    SessionUntil.set(request, Variable.Global.TYPE.toString(), "success");
+                    SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "da cap nhat thanh cong");
                 }
 
 
@@ -90,8 +89,8 @@ public class AddCartsController extends HttpServlet {
                 CartItem cartItem = new CartItem(phone.getId(), color.getId(), num, phone.getPrice(), false);
                 carts.add(cartItem);
                 SessionUntil.set(request, Variable.Global.CART.toString(), carts);
-                SessionUntil.set(request, Variable.Global.TYPE.toString(),"success");
-                SessionUntil.set(request, Variable.Global.MESSAGE.toString(),"da them vao trong gio hang");
+                SessionUntil.set(request, Variable.Global.TYPE.toString(), "success");
+                SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "da them vao trong gio hang");
             }
         }
         if (name != null) {
@@ -101,7 +100,7 @@ public class AddCartsController extends HttpServlet {
                 response.sendRedirect("/phone-detail?id=" + phoneId + "&page=1&page2=1");
             if ("filter".equals(name))
                 response.sendRedirect("/phone-filter?sort=sap+xep+theo+A+-+Z&page=1");
-            if ("carts".equals(name))    response.sendRedirect("/carts");
+            if ("carts".equals(name)) response.sendRedirect("/carts");
             if ("user".equals(name)) response.sendRedirect("/user-profile");
         }
 

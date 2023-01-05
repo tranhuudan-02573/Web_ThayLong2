@@ -34,7 +34,12 @@
         timer: 1500
     })
 </script>
-<%}%>
+<%
+    }
+    SessionUntil.delItem(request, Variable.Global.TYPE.toString());
+    SessionUntil.delItem(request, Variable.Global.MESSAGE.toString());
+
+%>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#modalLoginForm .modal-footer button').click(function () {

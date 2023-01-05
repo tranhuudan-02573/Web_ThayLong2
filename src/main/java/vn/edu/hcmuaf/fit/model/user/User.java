@@ -46,7 +46,6 @@ public class User extends Base<User> implements Serializable {
     public Action get(String v) {
 
         List<PermissionAction> acs = _actions();
-        System.out.println(acs);
         for (PermissionAction a : acs
         ) {
             if (a._action().getCode().equals(v)) return a._action();
