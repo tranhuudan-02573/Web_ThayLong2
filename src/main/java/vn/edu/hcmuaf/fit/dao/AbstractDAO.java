@@ -127,12 +127,12 @@ public class AbstractDAO<T> {
             if (gl.equals(Variable.Global.JOIN_USER)) {
             }
             if (gl.equals(Variable.Global.JOIN_PHONE_REVIEW)) {
-                j =  " cross join phone_review on reviews.id  = phone_review.commentId ";
+                j = " cross join phone_review on reviews.id  = phone_review.commentId ";
             }
         }
 
 
-        String q = "select distinct " +select+ this.table + ".* from <TABLE>" + j + " where true " + sql;
+        String q = "select distinct " + select + this.table + ".* from <TABLE>" + j + " where true " + sql;
 
 
         if (orderby != null) q += " order by " + orderby;
@@ -218,26 +218,24 @@ public class AbstractDAO<T> {
     }
 
 
-    public void insert(String sql, T t) {
-        JDBiConnector.get().useHandle(handle -> {
-            Update u = handle.createUpdate(sql);
-            if (t == null) u.execute();
-            else u.bindBean("t", t).execute();
-        });
+    public boolean insert(String sql, T t) {
+        return update(sql, t);
     }
 
 
-    public void update(String sql, T t) {
-        JDBiConnector.get().useHandle(handle -> {
+    public boolean update(String sql, T t) {
+        int i = JDBiConnector.get().withHandle(handle -> {
             Update u = handle.createUpdate(sql);
-            if (t == null) u.execute();
-            else u.bindBean("t", t).execute();
+            if (t != null)
+                u.bindBean("t", t);
+            return u.execute();
         });
+        return i != 0;
     }
 
 
-    public void delete(String sql, T t) {
-        update(sql, t);
+    public boolean delete(String sql, T t) {
+        return update(sql, t);
 
     }
 

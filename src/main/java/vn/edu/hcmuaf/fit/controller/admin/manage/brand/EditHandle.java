@@ -1,5 +1,10 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.brand;
 
+import vn.edu.hcmuaf.fit.dao.impl.BrandDAO;
+import vn.edu.hcmuaf.fit.dao.impl.SaleDAO;
+import vn.edu.hcmuaf.fit.model.phone.Brand;
+import vn.edu.hcmuaf.fit.model.phone.Sale;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +16,15 @@ import java.io.IOException;
 public class EditHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        int ids = 0;
+        if (id != null) {
+            ids = Integer.parseInt(id.trim());
+            if (ids != 0) {
+                Brand u = new BrandDAO().get(" and id = " + ids, Brand.class, null).get();
+                request.setAttribute("u", u);
+            }
+        }
 
 
         request.getRequestDispatcher("/views/admin/manage/brand/edit.jsp").forward(request, response);

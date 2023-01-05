@@ -26,12 +26,12 @@ import java.util.StringTokenizer;
 public class User extends Base<User> implements Serializable {
     private String name;
     private String password;
+    private String avatar;
     private String phone;
     private String address;
     private boolean gender;
     private boolean active;
     private Integer user_stateId;
-    private String status;
     private String email;
 
     private String permission;

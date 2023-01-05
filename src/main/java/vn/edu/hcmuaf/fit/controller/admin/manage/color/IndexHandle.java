@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.color;
 
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
+import vn.edu.hcmuaf.fit.dao.impl.ColorDAO;
 import vn.edu.hcmuaf.fit.model.phone.Color;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,7 @@ public class IndexHandle extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Color> colors = new AbstractDAO<Color>("colors").list("", Color.class, null, null, null, null);
+        List<Color> colors = new ColorDAO().list("", Color.class, null, null, null, null);
         request.setAttribute("colors", colors);
         request.getRequestDispatcher("/views/admin/manage/color/index.jsp").forward(request, response);
 
