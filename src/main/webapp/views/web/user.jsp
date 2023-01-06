@@ -113,7 +113,7 @@
                 <%
                     if (user != null) {%>
                 <div class="">
-                    <a href="" class="float-right"> | Thoát</a>
+                    <a href="/logout" class="float-right"> | Thoát</a>
                     <a href="#" data-toggle="modal" data-target="#modalChangePass" class="float-right">Đổi mật khẩu
                         |</a>
                 </div>
@@ -131,68 +131,70 @@
                             <h5 class="my-2 h5  text-danger d-inline-block"><%=user.getName() + " - " + user.getPhone()%>
                             </h5>
                         </div>
-                    <form action="" method="post">
-                        <input hidden name="id" value="<%=user.getId()%>"  >
-                        <div class="card-body">
-                            <div class="my-4 row w-100 mx-auto">
-                                <div class="col-12">
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" id="nam"
-                                               name="gender" value="1" <%=(!user.isGender())?"checked":""%>>
-                                        <label class="form-check-label" for="nam">Nam </label>
+                        <form action="" method="post">
+                            <input hidden name="id" value="<%=user.getId()%>">
+                            <div class="card-body">
+                                <div class="my-4 row w-100 mx-auto">
+                                    <div class="col-12">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" id="nam"
+                                                   name="gender" value="1" <%=(!user.isGender())?"checked":""%>>
+                                            <label class="form-check-label" for="nam">Nam </label>
+                                        </div>
+
+                                        <!-- Material inline 2 -->
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" id="nu"
+                                                   name="gender" value="0" <%=(user.isGender())?"checked":""%>>
+                                            <label class="form-check-label" for="nu">Nữ</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row my-4 w-100 mx-auto">
+                                    <div class="col-6">
+                                        <!-- Material input -->
+                                        <div class="md-form m-0">
+                                            <i class="fas fa-user prefix text-danger"></i>
+                                            <input type="text" name="name" id="name" class="form-control"
+                                                   value="<%=user.getName()%>">
+                                            <label for="name">Tên đầy đủ</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <!-- Material input -->
+                                        <div class="md-form m-0">
+                                            <i class="fa-solid fa-phone prefix text-danger"></i>
+                                            <input type="text" id="phone" class="form-control"
+                                                   value="<%=user.getPhone()%>" name="phone">
+                                            <label for="phone">Số điện thoại</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row my-4 w-100 mx-auto">
+                                    <div class="col-6">
+                                        <div class="md-form">
+                                            <i class="fa-solid fa-envelope prefix text-danger"></i>
+                                            <input type="email" name="email" id="email" class="form-control"
+                                                   value="<%=user.getEmail()%>">
+                                            <label for="email">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="md-form">
+                                            <i class="fa-solid fa-address-card prefix text-danger"></i>
+                                            <input type="text" id="address" class="form-control"
+                                                   value="<%=user.getAddress()%>" name="address">
+                                            <label for="address">Địa chỉ</label>
+                                        </div>
                                     </div>
 
-                                    <!-- Material inline 2 -->
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" id="nu"
-                                               name="gender" value="0" <%=(user.isGender())?"checked":""%>>
-                                        <label class="form-check-label" for="nu">Nữ</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row my-4 w-100 mx-auto">
-                                <div class="col-6">
-                                    <!-- Material input -->
-                                    <div class="md-form m-0">
-                                        <i class="fas fa-user prefix text-danger"></i>
-                                        <input type="text" name="name" id="name" class="form-control" value="<%=user.getName()%>">
-                                        <label for="name">Tên đầy đủ</label>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <!-- Material input -->
-                                    <div class="md-form m-0">
-                                        <i class="fa-solid fa-phone prefix text-danger"></i>
-                                        <input type="text" id="phone" class="form-control" value="<%=user.getPhone()%>" name="phone">
-                                        <label for="phone">Số điện thoại</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row my-4 w-100 mx-auto">
-                                <div class="col-6">
-                                    <div class="md-form">
-                                        <i class="fa-solid fa-envelope prefix text-danger"></i>
-                                        <input type="email" name="email" id="email" class="form-control"
-                                               value="<%=user.getEmail()%>">
-                                        <label for="email">Email</label>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="md-form">
-                                        <i class="fa-solid fa-address-card prefix text-danger"></i>
-                                        <input type="text" id="address" class="form-control"
-                                               value="<%=user.getAddress()%>" name="address" >
-                                        <label for="address">Địa chỉ</label>
-                                    </div>
                                 </div>
 
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-danger waves-effect">Cập nhật</button>
+                                </div>
                             </div>
-
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-danger waves-effect">Cập nhật</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
                     </div>
 
                 </div>
@@ -203,7 +205,7 @@
                         <div class="card-header">
 
                             <h5 class="my-2 text-danger  h5 d-inline-block">
-                                <%=(user != null) ? "Ngày mua cuối cùng: " + FormatTime.format(user.nearBuy(), false) : "ban chua dang nhap" %>
+                                <%=(user.nearBuy() != null) ? "Ngày mua cuối cùng: " + FormatTime.format(user.nearBuy(), false) : "ban chua mua sp nao" %>
                             </h5>
                         </div>
 
@@ -289,7 +291,7 @@
                     <div class="card">
 
                         <%
-//                            if (user != null) {
+                            //                            if (user != null) {
 //                                carts = new Carts(carts.merge(user.listToCarts()));
 //                            }
                             List<CartItem> keys = new ArrayList<>(carts.getCartItemIntegerMap().keySet());
@@ -297,7 +299,7 @@
                         %>
 
                         <div class="card-header d-flex justify-content-between align-items-center ">
-                            <%if (user != null) {%>
+                            <%if (user != null && user.nearWish() != null) {%>
                             <h5 class="my-2 h5 text-danger d-inline-block">Ngày yêu thích cuối
                                 cùng:<%=FormatTime.format(user.nearWish(), false)%>
                             </h5>
@@ -306,7 +308,7 @@
                             </h5>
                         </div>
                         <div class="card-body">
-                            <%if (carts.wishItems()!=0) {%>
+                            <%if (carts.wishItems() != 0) {%>
 
                             <table id="dtMaterialDesignExample2" class="table " cellspacing="0" width="100%">
                                 <thead>
@@ -340,7 +342,7 @@
                                              src="<%=keys.get(i)._phone().getThumbnail()%>"
                                              alt=""></td>
                                     <td class="align-middle justify-content-center"><%=keys.get(i)._color().getName()%>
-                                    </td >
+                                    </td>
                                     <td class="justify-content-center align-middle"><%=keys.get(i)._phone().getPrice()%>
                                         VND
                                     </td>
@@ -357,14 +359,15 @@
                                                 <form action="/add-carts" method="post" id="form2-<%=i%>">
                                                     <input hidden name="phoneId" value="<%=keys.get(i).getPhoneId()%>">
                                                     <input hidden name="name" value="user">
-                                                    <input hidden name="num" value="<%=carts.getCartItemIntegerMap().get(keys.get(i))%>" >
+                                                    <input hidden name="num"
+                                                           value="<%=carts.getCartItemIntegerMap().get(keys.get(i))%>">
                                                     <input hidden name="colorId" value="<%=keys.get(i).getColorId()%>">
-                                                    <input hidden name="action"  value="carts" id="action" >
+                                                    <input hidden name="action" value="carts" id="action">
 
                                                 </form>
 
-                                            <i class="fa-solid fa-cart-plus mr-1"></i>
-                                            Thêm
+                                                <i class="fa-solid fa-cart-plus mr-1"></i>
+                                                Thêm
                                             </a>
                                         </div>
                                         <div class="ILB" style="display: inline-block; cursor: pointer;">
@@ -374,13 +377,14 @@
                                                 <form action="/add-carts" method="post" id="form-<%=i%>">
                                                     <input hidden name="phoneId" value="<%=keys.get(i).getPhoneId()%>">
                                                     <input hidden name="name" value="user">
-                                                    <input hidden name="num" value="<%=carts.getCartItemIntegerMap().get(keys.get(i))%>" >
+                                                    <input hidden name="num"
+                                                           value="<%=carts.getCartItemIntegerMap().get(keys.get(i))%>">
                                                     <input hidden name="colorId" value="<%=keys.get(i).getColorId()%>">
-                                                        <input hidden name="action"  value="delete2" >
+                                                    <input hidden name="action" value="delete2">
 
                                                 </form>
-                                            <i class="fa-regular fa-trash-can mr-1"></i>
-                                            Xóa
+                                                <i class="fa-regular fa-trash-can mr-1"></i>
+                                                Xóa
                                             </a>
                                         </div>
                                         <div class="ILB" style="display: inline-block; cursor: pointer;">
@@ -394,17 +398,20 @@
                                     </td>
 
                                 </tr>
-                                <%}
-                                }%>
+                                <%
+                                        }
+                                    }
+                                %>
 
                                 </tbody>
 
                             </table>
 
                             <%
-                            }else {%>
+                            } else {%>
                             <div class=" text-center d-flex justify-content-center align-items-center ">
-                                <a href="/phone-filter?sort=sap+xep+theo+A+-+Z&page=1" class="btn btn-danger btn-lg px-5 ">mua sam</a>
+                                <a href="/phone-filter?sort=sap+xep+theo+A+-+Z&page=1"
+                                   class="btn btn-danger btn-lg px-5 ">mua sam</a>
                             </div>
                             <%}%>
                         </div>
@@ -423,8 +430,6 @@
     </div>
 
 </main>
-
-
 
 
 <content tag="local_script">

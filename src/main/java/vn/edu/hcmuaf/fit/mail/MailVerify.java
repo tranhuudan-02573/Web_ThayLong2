@@ -6,10 +6,10 @@ import java.util.Properties;
 
 
 public class MailVerify {
-/*
-* click btn active send redirect page Login
-* */
-    public static void send(String to, String recipient, String link) {
+    /*
+     * click btn active send redirect page Login
+     * */
+    public static void send(String to, String recipient, String email, String key) {
 
         String fromEmail = "20130218@st.hcmuaf.edu.vn";
         String password = "mymeslmspxoogvoo";
@@ -43,7 +43,7 @@ public class MailVerify {
 
             mess.setSubject("Verity account Email to ShopPhone<");
             multipart.addBodyPart((BodyPart) textPart);
-            textPart.setContent(buildEmail(recipient, link), "text/html; charset=utf-8");
+            textPart.setContent(buildEmail(recipient, email, key), "text/html; charset=utf-8");
             mess.setContent(multipart);
             Transport.send(mess);
 
@@ -53,7 +53,7 @@ public class MailVerify {
         }
     }
 
-    private static String buildEmail(String recipient, String link) {
+    private static String buildEmail(String recipient, String email, String key) {
         return "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
                 "\n" +
@@ -66,7 +66,7 @@ public class MailVerify {
                 "\n" +
                 "<body>\n" +
                 "<div style=\"border-style:solid;border-width:thin;border-color:#dadce0;border-radius:8px;padding:40px 20px\"\n" +
-                "     align=\"center\" class=\"m_-3328082088826946890mdv2rw\"><img src=\"/images/fptshop-logo.png\" width=\"74\" height=\"24\"\n" +
+                "     align=\"center\" class=\"m_-3328082088826946890mdv2rw\"><img src=\"http://localhost:8088/images/fptshop-logo.png\" width=\"74\" height=\"24\"\n" +
                 "                                                              aria-hidden=\"true\" style=\"margin-bottom:16px\"\n" +
                 "                                                              alt=\"logo-shop\" class=\"CToWUd\" data-bit=\"iit\"\n" +
                 "                                                              jslog=\"138226; u014N:xr6bB; 53:W2ZhbHNlLDJd\">\n" +
@@ -75,12 +75,17 @@ public class MailVerify {
                 "        <div style=\"font-size:24px\">Chào " + recipient + "</div>\n" +
                 "        <div style=\"font-size:24px\">Ấn vào nút kích hoạt để tiến hành kích hoạt tài khoản của bạn</div>\n" +
                 "        <div style=\"padding-top:32px;text-align:center\">\n" +
-                "          <a\n" +
-                "                href=\"" + link + "\"\n" +
-                "                style=\"font-family:'Google Sans',Roboto,RobotoDraft,Helvetica,Arial,sans-serif;cursor: pointer;line-height:16px;color:#ffffff;font-weight:400;text-decoration:none;font-size:14px;display:inline-block;padding:10px 24px;background-color:#4184f3;border-radius:5px;min-width:90px\"\n" +
+                "         " +
+                "<form action='http://localhost:8088/active' method='post' >" +
+                "" +
+                "" +
+                "<input  name='email' value=" + email + " hidden>" +
+                "<input  name='key' value=" + key + " hidden>  <button\n  type='submit'   style=\"font-family:'Google Sans',Roboto,RobotoDraft,Helvetica,Arial,sans-serif;cursor: pointer;line-height:16px;color:#ffffff;font-weight:400;text-decoration:none;font-size:14px;display:inline-block;padding:10px 24px;background-color:#4184f3;border-radius:5px;min-width:90px\"\n" +
                 "                target=\"_blank\"\n" +
-                "                data-saferedirecturl=\"" + link + "\">Kích\n" +
-                "            hoạt tài khoản</a></div>\n" +
+                "               >Kích\n" +
+                "            hoạt tài khoản</button>" +
+                "</form>" +
+                "</div>\n" +
                 "    </div>\n" +
                 "        <div style=\"font-size: 16px;padding-top:10px;text-align:left\">Sau 24h mã kích hoạt sẽ bị hủy</div>\n" +
                 "</div>\n" +
@@ -88,7 +93,6 @@ public class MailVerify {
                 "\n" +
                 "</html>";
     }
-
 
 
 }

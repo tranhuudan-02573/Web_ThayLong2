@@ -1,4 +1,3 @@
-
 <%@ page import="vn.edu.hcmuaf.fit.model.user.User" %>
 <%@ page import="vn.edu.hcmuaf.fit.until.CookieUntil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -35,58 +34,6 @@
     </div>
 
 
-    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form action="/login" method="post">
-                <div class="modal-content">
-                    <div class="modal-header text-center">
-                        <h4 class="modal-title w-100 font-weight-bold text-uppercase">đăng nhập tài khoản</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body mx-3">
-                        <c:set var="mess" value="${sessionScope.messErr}" scope="page"/>
-                        <c:if test="${mess!=null}">
-                            <p class="text-danger text-center" id="mess-form">${mess}</p>
-                        </c:if>
-                        <div class="md-form mb-3">
-                            <i class="fas fa-envelope prefix grey-text text-danger"></i>
-                            <input type="email" name="fEmail"
-                            <c:if test="${sessionScope.username != null}">
-                                   value="${sessionScope.username}"
-                            </c:if>
-                                   id="defaultForm-email" class="form-control validate">
-                            <label data-error="wrong" data-success="right" for="defaultForm-email"> Email</label>
-                        </div>
-
-                        <div class="md-form mb-4">
-                            <i class="fas fa-lock prefix grey-text text-danger"></i>
-                            <input type="password" name="fPass" id="defaultForm-pass" class="form-control validate">
-                            <label data-error="wrong" data-success="right" for="defaultForm-pass">Mật khẩu</label>
-
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <!-- Material checked -->
-                            <!-- Material checked -->
-                            <div class="form-check p-0">
-
-                                <input type="checkbox" name="remember" class="form-check-input" id="materialChecked2"
-                                       checked>
-                                <label class="form-check-label" for="materialChecked2">Nhớ mật khẩu</label>
-                            </div>
-                            <a href="/views/web/resetpass.jsp" class="text-danger">Quên mật khẩu</a>
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-between">
-                        <span>Bạn chưa có tài khoản? <a href="/views/web/signup.jsp" class="text-danger">Đăng ký</a></span>
-                        <button class="btn btn-danger " type="submit">Đăng nhập</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
     <div class="d-head ">
         <div class="head-top bg-danger">
             <div class="container">
@@ -354,34 +301,37 @@
                     <!--end col-9-->
                     <div class="col-2 position-absolute overplay"></div>
                     <div class="col-xl-2 col-lg-2 col-md-2 col-4 p-0 ">
-                        <a href="${pageContext.request.contextPath}/home?page=1&different=moi" title=""><img src="/images/fptshop-logo.png"
-                                                                                        class="img-fluid"></a>
+                        <a href="${pageContext.request.contextPath}/home?page=1&different=moi" title=""><img
+                                src="/images/fptshop-logo.png"
+                                class="img-fluid"></a>
                     </div>
                     <div class="col-7 pull-right d-flex justify-content-end align-items-center d-sm-none text-white"><i
                             class="fa fa-shopping-cart"></i></div>
-                    <div class="col-1">
+                    <div class="col-1 ">
                         <a class="nav-link p-0 text-center text-white " href="/views/user.html" data-toggle="modal"
                            data-target="#city"> <i class="fa-solid fa-location-dot fa-lg mr-2 "></i>xem giá
                             tại</a>
                     </div>
-    <%String search= (String)request.getAttribute("search");%>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 p-0 ">
+                    <%String search = (String) request.getAttribute("search");%>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-12 p-0 ">
                         <div class="input-group ">
-                            <form action="/phone-filter" id="search" style="width: 80%" >
+                            <form action="/phone-filter" id="search" style="width: 80%">
                                 <input hidden name="sort" value="sap xep theo A - Z">
                                 <input hidden name="page" value="1">
-                            <input type="text" class="form-control " value="<%=(search!=null)?search:"" %>" placeholder="Tìm kiếm sản phẩm"
-                                   aria-label="Recipient's username" aria-describedby="basic-addon2" name="search"  >
+                                <input type="text" class="form-control " value="<%=(search!=null)?search:"" %>"
+                                       placeholder="Tìm kiếm sản phẩm"
+                                       aria-label="Recipient's username" aria-describedby="basic-addon2" name="search">
                             </form>
                             <div class="input-group-append ">
-                                <a class="input-group-text bg-dark text-white  border-0 " id="basic-addon2" onclick="document.getElementById('search').submit()" ><i
+                                <a class="input-group-text bg-dark text-white  border-0 " id="basic-addon2"
+                                   onclick="document.getElementById('search').submit()"><i
                                         class="fa fa-search"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <!--end col-6-->
-                    <div class="col-xl-5 col-lg-5 col-md-5 col-12 d-none d-sm-block p-0">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-none d-sm-block p-0">
                         <ul class="nav justify-content-end">
 
                             <li class="nav-item ">
@@ -408,65 +358,15 @@
                                     Sản phẩm đã thích</a>
                             </li>
                             <li class="nav-item">
-
+                                <%User user = (User) SessionUntil.get(request, Variable.Global.USER.toString());%>
                                 <a class="nav-link text-center text-white" id="btn-login"
-                                        <c:if test="${sessionScope.personlogin == null}">
-                                            href="/views/user.html" data-toggle="modal" data-target="#modalLoginForm"
-                                        </c:if>
-                                        <c:if test="${sessionScope.personlogin != null}">
-                                            href="/logout"
-                                        </c:if>>
+                                   href="<%=(user!=null)?"/user-profile":"/register"%>">
                                     <div><i class="fa fa-user fa-lg" aria-hidden="true" style="line-height: 1;"></i>
                                     </div>
-                                    <%= session.getAttribute("personlogin") == null ? "Tài khoản" : "Đăng xuất"%>
+                                    <%=(user != null) ? "tai khoan" : "dang nhap/dang ky"%>
                                 </a>
-
-
-<%--                                <a class="nav-link text-center text-white " href="/views/user.html" data-toggle="modal"--%>
-<%--                                   data-target="#modalLoginForm">--%>
-<%--                                    <div><i class="fa fa-user fa-lg" aria-hidden="true" style="line-height: 1;"></i>--%>
-<%--                                    </div>--%>
-<%--                                    Tài khoản--%>
-<%--                                </a>--%>
                             </li>
-
                         </ul>
-                        <!-- <ul class="d ml-auto justify-content-center">
-
-
-     <li class="nav-item">
-                  <a href="" class="nav-link waves-effect text-center" target="_blank">
-                     <div class="text-center">
-                   <i class="fa-regular fa-heart fa-lg"></i>
-                    </div>
-                        <span>yeu thich</span>
-                  </a>
-                </li>
-
-
-    <li class="nav-item">
-     <a href="html/cart.html" class="nav-link waves-effect text-center " target="_blank">
-               <div class="text-center"> <i class="fa-solid fa-cart-arrow-down fa-lg"></i> </div>
-               <span>gio hang</span>
-
-                  </a>
-    </li>
-
-          <li class="nav-item dropdown">
-                <a class="nav-link  waves-effect text-center" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                 <div class="text-center"> <i class="fa-regular fa-user fa-lg"></i></div>
-               <span>tai khoan cua toi</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="userDropdown">
-                <a class="dropdown-item waves-effect waves-light" href="#">log in</a>
-                <a class="dropdown-item waves-effect waves-light" href="#">Log Out</a>
-                </div>
-              </li>
-
-
-
-
-              </ul> -->
                     </div>
                 </div>
             </div>
@@ -480,7 +380,7 @@
                             <a class="nav-link text-white text-uppercase"
                                href="${pageContext.request.contextPath}/phone-filter?name=brand&id=${brand.id}">
                                 <i class="fa-solid fa-mobile-screen mr-2"></i>
-                                </i></i>${brand.name}
+                                    ${brand.name}
                             </a>
                         </li>
                     </c:forEach>

@@ -20,16 +20,14 @@ public class PhoneFilterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int size = 0;
-String search = request.getParameter("search");
-
+        String search = request.getParameter("search");
 
 
         String pagination = request.getParameter("page");
-int paginationnum=0;
-        if(pagination!=null){
-            paginationnum = Integer.parseInt(pagination)-1;
+        int paginationnum = 0;
+        if (pagination != null) {
+            paginationnum = Integer.parseInt(pagination) - 1;
         }
-
 
 
         Brand f = null;
@@ -158,17 +156,17 @@ int paginationnum=0;
             }
             differentCheck2 = checkString(differentList, differentCheck);
         }
-        if(search!=null&&"".equals(search.trim())){
-           String key ="%"+search+"%";
-            sql+=" and phones.`name` like " + key +" or phones.`desc` like "+
-                    key  +" or brands.`name` like "+
-                    key +" or models.`name` like "+key +" or phone_cap.`name` like "+key
-                    +" or phone_color like "+key +" or phone_spec like "+key
-                    +" or phone_promot like "+key +" or types.`name` like "+key;
+        if (search != null && "".equals(search.trim())) {
+            String key = "%" + search + "%";
+            sql += " and phones.`name` like " + key + " or phones.`desc` like " +
+                    key + " or brands.`name` like " +
+                    key + " or models.`name` like " + key + " or phone_cap.`name` like " + key
+                    + " or phone_color like " + key + " or phone_spec like " + key
+                    + " or phone_promot like " + key + " or types.`name` like " + key;
         }
 
 
-        String orderby="";
+        String orderby = "";
         if (sort != null) {
             for (String key : keys2
             ) {
@@ -180,19 +178,19 @@ int paginationnum=0;
         } else {
             orderby = keys2.get(0);
         }
-        phones = new AbstractDAO<Phone>("phones").list0(sql, Phone.class,  null, map, Variable.Global.JOIN_PHONE,orderby,8,paginationnum*8);
-        List<Phone> phones2 = new AbstractDAO<Phone>("phones").list0(sql, Phone.class,  null, map, Variable.Global.JOIN_PHONE,orderby,null,null);
+        phones = new AbstractDAO<Phone>("phones").list0(sql, Phone.class, null, map, Variable.Global.JOIN_PHONE, orderby, 8, paginationnum * 8);
+        List<Phone> phones2 = new AbstractDAO<Phone>("phones").list0(sql, Phone.class, null, map, Variable.Global.JOIN_PHONE, orderby, null, null);
         double s = phones2.size();
-        double total = s/8;
+        double total = s / 8;
 
-        if(Math.floor(total)!=Math.ceil(total)) total =  Math.ceil(total);
+        if (Math.floor(total) != Math.ceil(total)) total = Math.ceil(total);
         boolean[] finalBrandCheck = priceCheck2;
         request.setAttribute("priceCheck0", IntStream.range(0, priceCheck2.length)
                 .mapToObj(idx -> finalBrandCheck[idx]).noneMatch(num -> num.equals(Boolean.TRUE)));
-        request.setAttribute("total",total);
+        request.setAttribute("total", total);
         request.setAttribute("sortList", sortList);
-        request.setAttribute("phoneAll",phones2);
-        request.setAttribute("paginationnum",paginationnum+1);
+        request.setAttribute("phoneAll", phones2);
+        request.setAttribute("paginationnum", paginationnum + 1);
         request.setAttribute("sort", sort);
         request.setAttribute("promotCheck", promotCheck2);
         request.setAttribute("capList", capList);
@@ -201,7 +199,7 @@ int paginationnum=0;
         request.setAttribute("capCheck", capCheck2);
         request.setAttribute("typeList", typeList);
         request.setAttribute("typeCheck", typeCheck2);
-        request.setAttribute("search",search);
+        request.setAttribute("search", search);
         request.setAttribute("brandList", brandList);
         request.setAttribute("priceList", priceList);
         request.setAttribute("promotList", promotList);
@@ -213,7 +211,7 @@ int paginationnum=0;
         request.getRequestDispatcher("/views/web/productlist.jsp").forward(request, response);
     }
 
-     private boolean[] checkSort(List<String> s, String ss) {
+    private boolean[] checkSort(List<String> s, String ss) {
 
         boolean[] rs = new boolean[s.size()];
         for (int i = 0; i < rs.length; i++) {
@@ -311,8 +309,8 @@ int paginationnum=0;
     }
 
     public static void main(String[] args) {
-        System.out.println(Math.ceil((double) 24/7));
-        System.out.println(Math.floor((double)24/7));
+        System.out.println(Math.ceil((double) 24 / 7));
+        System.out.println(Math.floor((double) 24 / 7));
     }
 
 }
