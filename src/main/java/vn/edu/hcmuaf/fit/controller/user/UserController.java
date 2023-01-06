@@ -1,8 +1,7 @@
-package vn.edu.hcmuaf.fit.controller.web.user;
+package vn.edu.hcmuaf.fit.controller.user;
 
 import vn.edu.hcmuaf.fit.constant.Variable;
 import vn.edu.hcmuaf.fit.dao.impl.UserDAO;
-import vn.edu.hcmuaf.fit.model.cart.Carts;
 import vn.edu.hcmuaf.fit.model.user.User;
 import vn.edu.hcmuaf.fit.until.SessionUntil;
 
@@ -17,9 +16,6 @@ import java.io.IOException;
 public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (SessionUntil.get(request, Variable.Global.CART.toString()) == null) {
-            SessionUntil.set(request, Variable.Global.CART.toString(), new Carts());
-        }
 
         request.getRequestDispatcher("/views/web/user.jsp").forward(request, response);
     }
@@ -32,21 +28,19 @@ public class UserController extends HttpServlet {
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
-User u = (User)SessionUntil.get(request, Variable.Global.USER.toString());
-u.setName(name);
-u.setGender((Integer.parseInt(gender) == 1));
-u.setEmail(email);
-u.setPhone(phone);
-u.setAddress(address);
+        User u = (User) SessionUntil.get(request, Variable.Global.USER.toString());
+        u.setName(name);
+        u.setGender((Integer.parseInt(gender) == 1));
+        u.setEmail(email);
+        u.setPhone(phone);
+        u.setAddress(address);
 
 
-        new UserDAO().update( u);
-    SessionUntil.set(request, Variable.Global.TYPE.toString(),"success");
-    SessionUntil.set(request, Variable.Global.MESSAGE.toString(),"da cap nhat thanh cong");
+        new UserDAO().update(u);
+        SessionUntil.set(request, Variable.Global.TYPE.toString(), "success");
+        SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "da cap nhat thanh cong");
 
         response.sendRedirect("/user-profile");
-
-
 
 
     }

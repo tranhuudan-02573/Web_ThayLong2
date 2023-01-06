@@ -3,7 +3,6 @@ package vn.edu.hcmuaf.fit.model.user;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.mindrot.jbcrypt.BCrypt;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.cart.CartItem;
 import vn.edu.hcmuaf.fit.model.cart.Carts;
@@ -14,7 +13,6 @@ import vn.edu.hcmuaf.fit.model.review.Review;
 import vn.edu.hcmuaf.fit.model.review.Vote;
 
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +43,6 @@ public class User extends Base<User> implements Serializable {
     }
 
 
-
     public Action get(String v) {
 
         List<PermissionAction> acs = _actions();
@@ -57,7 +54,6 @@ public class User extends Base<User> implements Serializable {
         return null;
 
     }
-
 
 
     public UserState _userState() {
@@ -83,33 +79,17 @@ public class User extends Base<User> implements Serializable {
         return new AbstractDAO<PermissionAction>("permission_action").list(" and userId =" + this.id, PermissionAction.class, null, null, null, null);
     }
 
-    public static User findAccount(String email, String pass) {
-        User user = getUser(email);
-        if (user == null || !(email.equals(user.getEmail()) && BCrypt.checkpw(pass, user.getPassword())))
-            return null;
-        return user;
-    }
-
-    public static boolean hasEmail(String email) {
-        return getUser(email) != null;
-    }
-
-    public static User getUser(String email) {
-        String sql = " and email = '" + email + "'";
-        List<User> users = new AbstractDAO<User>("users").list(sql, User.class, null, null, null, null);
-        if (users.size() != 1) return null;
-        return users.get(0);
-    }
-
-
 
     public Timestamp nearBuy() {
-        return new AbstractDAO<Order>("orders").get("  and userId =" + this.id + " order by created_at desc limit 1", Order.class, null).get().getCreated_at();
+        Order order = new AbstractDAO<Order>("orders").get("  and userId =" + this.id + " order by created_at desc limit 1", Order.class, null).orElse(null);
+
+        return (order != null) ? order.getCreated_at() : null;
     }
 
 
     public Timestamp nearWish() {
-        return new AbstractDAO<Order>("carts").get("and cart_items.isSave =true   and carts.userId =" + this.id + " order by carts.created_at desc limit 1", " inner join cart_items on carts.cart_itemId = cart_items.id  ", Order.class, null).get().getCreated_at();
+        Order order = new AbstractDAO<Order>("carts").get("and cart_items.isSave =true   and carts.userId =" + this.id + " order by carts.created_at desc limit 1", " inner join cart_items on carts.cart_itemId = cart_items.id  ", Order.class, null).orElse(null);
+        return (order != null) ? order.getCreated_at() : null;
     }
 
     public List<Review> _reviews() {
@@ -124,48 +104,22 @@ public class User extends Base<User> implements Serializable {
         return new AbstractDAO<Vote>("votes").list(" and userId =" + this.id, Vote.class, null, null, null, null);
     }
 
-        public static void saveUserRegister (User user){
-            String sql = "INSERT INTO `users` " +
-                    "VALUES (null,'" + user.getPhone() + "','" + user.getPassword() + "','" + user.getName() +
-                    "','" + user.getAddress() + "'," + "b'0'" + ",'" + user.getEmail() + "'," + "CURRENT_TIMESTAMP" + ",NULL,b'0','user',NULL);";
-            new AbstractDAO<User>("users").insert(sql, null);
+    public List<Order> _orders() {
+        return new AbstractDAO<Order>("orders").list(" and userId = " + this.id, Order.class, null, null, null, null);
+    }
+
+    public List<CartItem> _carts() {
+        return new AbstractDAO<CartItem>("carts").list("and userId =" + this.id, CartItem.class, null, null, null, null);
+    }
+
+
+    Map<CartItem, Integer> cartItemIntegerMap() {
+        Map<CartItem, Integer> rs = new HashMap<>();
+        for (CartItem c : _carts()) {
+            rs.put(c, c.getQuantity());
         }
-
-        public static void active (String email){
-            String sql = "UPDATE users SET active = 1 WHERE email='" + email + "'";
-            new AbstractDAO<User>("users").update(sql, null);
-        }
-
-        public static boolean hasInfoAccount (String email, String passOld){
-            User user = getUser(email);
-            if (user == null || !user.getPassword().equalsIgnoreCase(passOld))
-                return false;
-            return true;
-        }
-
-        public static void changePass (String email, String pass){
-            String sql = "UPDATE users SET password ='" + pass + "' WHERE email='" + email + "'";
-            new AbstractDAO<User>("users").update(sql, null);
-        }
-
-
-        public List<Order> _orders () {
-            return new AbstractDAO<Order>("orders").list(" and userId = " + this.id, Order.class, null, null,null,null);
-        }
-
-        public List<CartItem> _carts () {
-            return new AbstractDAO<CartItem>("carts").list("and userId =" + this.id, CartItem.class, null, null, null, null);
-        }
-
-
-        Map<CartItem, Integer> cartItemIntegerMap () {
-            Map<CartItem, Integer> rs = new HashMap<>();
-            for (CartItem c : _carts()) {
-                rs.put(c, c.getQuantity());
-            }
-            return rs;
-        }
-
+        return rs;
+    }
 
 
 }

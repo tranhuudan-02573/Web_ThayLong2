@@ -1,15 +1,9 @@
 package vn.edu.hcmuaf.fit.dao;
 
-import org.jdbi.v3.core.result.ResultBearing;
 import org.jdbi.v3.core.statement.Query;
 import org.jdbi.v3.core.statement.Update;
-
 import vn.edu.hcmuaf.fit.constant.Variable;
 import vn.edu.hcmuaf.fit.db.JDBiConnector;
-
-import vn.edu.hcmuaf.fit.db.JDBiConnector;
-
-
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -216,8 +210,9 @@ public class AbstractDAO<T> {
 
     public int insertWithId(String sql, T t) {
         return JDBiConnector.get().withHandle(handle -> {
-            ResultBearing rb = handle.createUpdate(sql).bindBean("t", t).executeAndReturnGeneratedKeys("id");
-            Object id = rb.mapToMap().findOnly().get("generated_key");
+            Update rb = handle.createUpdate(sql);
+            if (t != null) rb.bindBean("t", t).executeAndReturnGeneratedKeys("id");
+            Object id = rb.executeAndReturnGeneratedKeys("id").mapToMap().findOnly().get("generated_key");
             return ((BigInteger) id).intValue();
         });
     }
