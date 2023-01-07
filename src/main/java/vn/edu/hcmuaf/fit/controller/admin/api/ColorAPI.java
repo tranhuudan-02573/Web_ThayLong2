@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import vn.edu.hcmuaf.fit.dao.impl.CapDAO;
+import vn.edu.hcmuaf.fit.dao.impl.ColorDAO;
 import vn.edu.hcmuaf.fit.model.phone.Color;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
@@ -28,11 +30,8 @@ public class ColorAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Color color = HttpUtil.of(request.getReader()).toModel(Color.class);
-//        pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
-//        pp.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-//        return insertWithId("insert into colors (name,created_at,updated_at)" +
-//                        " values(:t.name,:t.created_at,:t.updated_at)",
-//                pp);
+        new ColorDAO().insertColor(color);
+        mapper.writeValue(response.getOutputStream(), color);
     }
 
     @Override
@@ -41,9 +40,8 @@ public class ColorAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Color color = HttpUtil.of(request.getReader()).toModel(Color.class);
-//        c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-//        update("update colors set name = :t.name,updated_at = :t.updated_at where id = :t.id", c);
-
+        new ColorDAO().updateColor(color);
+        mapper.writeValue(response.getOutputStream(), color);
     }
 
     @Override
@@ -52,8 +50,8 @@ public class ColorAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Color color = HttpUtil.of(request.getReader()).toModel(Color.class);
-//        delete("delete from colors  where id =:t.id "
-//                , c);
+        new ColorDAO().deleteColor(color);
+        mapper.writeValue(response.getOutputStream(), color);
     }
 
 }

@@ -2,7 +2,9 @@ package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import vn.edu.hcmuaf.fit.dao.impl.ActionDAO;
+import vn.edu.hcmuaf.fit.dao.impl.PermissionActionDAO;
 import vn.edu.hcmuaf.fit.model.user.Action;
+import vn.edu.hcmuaf.fit.model.user.PermissionAction;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
 import javax.servlet.ServletException;
@@ -37,13 +39,28 @@ public class ActionAPI extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+
+        Action action = HttpUtil.of(request.getReader()).toModel(Action.class);
+        new ActionDAO().update(action);
+        mapper.writeValue(response.getOutputStream(), action);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+
+        Action action = HttpUtil.of(request.getReader()).toModel(Action.class);
+        new ActionDAO().delete(action);
+        mapper.writeValue(response.getOutputStream(), action);
+
     }
 
 }

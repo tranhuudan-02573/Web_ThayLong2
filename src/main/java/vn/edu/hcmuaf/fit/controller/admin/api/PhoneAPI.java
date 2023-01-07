@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import vn.edu.hcmuaf.fit.dao.impl.PhoneDAO;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
@@ -30,8 +31,8 @@ public class PhoneAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Phone phone = HttpUtil.of(request.getReader()).toModel(Phone.class);
-//        phone = phoneService.save(phone);
-//        mapper.writeValue(response.getOutputStream(), phone);
+        new PhoneDAO().savePhone(phone);
+        mapper.writeValue(response.getOutputStream(), phone);
     }
 
     @Override
@@ -40,8 +41,8 @@ public class PhoneAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Phone phone = HttpUtil.of(request.getReader()).toModel(Phone.class);
-//        phone = phoneService.update(phone);
-//        mapper.writeValue(response.getOutputStream(), phone);
+        new PhoneDAO().updatePhone(phone);
+        mapper.writeValue(response.getOutputStream(), phone);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class PhoneAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Phone phone = HttpUtil.of(request.getReader()).toModel(Phone.class);
-//        phoneService.delete(phone);
-//        mapper.writeValue(response.getOutputStream(), "{}");
+        new PhoneDAO().delete(phone);
+        mapper.writeValue(response.getOutputStream(), phone);
     }
 }

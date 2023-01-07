@@ -1,6 +1,11 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import vn.edu.hcmuaf.fit.dao.impl.SaleDAO;
+import vn.edu.hcmuaf.fit.dao.impl.SpecDAO;
+import vn.edu.hcmuaf.fit.model.phone.Sale;
+import vn.edu.hcmuaf.fit.model.phone.Spec;
+import vn.edu.hcmuaf.fit.until.HttpUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,17 +29,31 @@ public class SpecAPI extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        Spec spec = HttpUtil.of(request.getReader()).toModel(Spec.class);
+        new SpecDAO().insertSpec(spec);
+        mapper.writeValue(response.getOutputStream(), spec);
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        Spec spec = HttpUtil.of(request.getReader()).toModel(Spec.class);
+        new SpecDAO().updateSpec(spec);
+        mapper.writeValue(response.getOutputStream(), spec);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
-    }
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        Spec spec = HttpUtil.of(request.getReader()).toModel(Spec.class);
+        new SpecDAO().deleteSpec(spec);
+        mapper.writeValue(response.getOutputStream(), spec);    }
 
 }

@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
+import vn.edu.hcmuaf.fit.dao.impl.BrandDAO;
 import vn.edu.hcmuaf.fit.model.phone.Brand;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
@@ -33,11 +34,8 @@ public class BrandAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Brand newModel = HttpUtil.of(request.getReader()).toModel(Brand.class);
-//        br.setCreated_at(new Timestamp(System.currentTimeMillis()));
-//        br.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-//        return insertWithId("insert into brands (name,logo,created_at,updated_at, country)" +
-//                        " values(:t.name,:t.logo,:t.created_at,:t.updated_at, :t.country)",
-//                br);
+        new BrandDAO().insertBrand(newModel);
+        mapper.writeValue(response.getOutputStream(), newModel);
     }
 
     @Override
@@ -46,9 +44,8 @@ public class BrandAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Brand newModel = HttpUtil.of(request.getReader()).toModel(Brand.class);
-//        b.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-//        update("update brands set name = :t.name,logo = :t.logo,updated_at = :t.updated_at, country = :t.country  where id = :t.id", b);
-
+        new BrandDAO().updateBrand(newModel);
+        mapper.writeValue(response.getOutputStream(), newModel);
     }
 
     @Override
@@ -57,7 +54,8 @@ public class BrandAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Brand newModel = HttpUtil.of(request.getReader()).toModel(Brand.class);
-//        brandAbstractDAO.delete("delete from brands  where id = :t.id", b);
+        new BrandDAO().deleteBrand(newModel);
+        mapper.writeValue(response.getOutputStream(), newModel);
 
     }
 

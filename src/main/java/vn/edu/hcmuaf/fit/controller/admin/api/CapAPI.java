@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import vn.edu.hcmuaf.fit.dao.impl.CapDAO;
 import vn.edu.hcmuaf.fit.model.phone.Cap;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
@@ -20,8 +21,7 @@ public class CapAPI extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id").trim());
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-//        Color color = colorDAO.get(" and id = " + id, Color.class, null);
-//        mapper.writeValue(response.getOutputStream(), color);
+
     }
 
     @Override
@@ -30,11 +30,8 @@ public class CapAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Cap cap = HttpUtil.of(request.getReader()).toModel(Cap.class);
-        //        pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
-//        pp.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-//        return insertWithId("insert into caps (cap,name,created_at,updated_at)" +
-//                        " values(:t.cap,:t.name,:t.created_at,:t.updated_at)",
-//                pp);
+        new CapDAO().insertCap(cap);
+        mapper.writeValue(response.getOutputStream(), cap);
     }
 
     @Override
@@ -43,9 +40,8 @@ public class CapAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Cap cap = HttpUtil.of(request.getReader()).toModel(Cap.class);
-//        c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-//        update("update caps set cap = :t.cap, name = :t.name,updated_at = :t.updated_at where id = :t.id", c);
-
+        new CapDAO().updateCap(cap);
+        mapper.writeValue(response.getOutputStream(), cap);
     }
 
     @Override
@@ -54,7 +50,8 @@ public class CapAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         Cap cap = HttpUtil.of(request.getReader()).toModel(Cap.class);
-//        delete("delete from caps  where id = :t.id", c);
+      new CapDAO().deleteCap(cap);
+      mapper.writeValue(response.getOutputStream(), cap);
     }
 
 }
