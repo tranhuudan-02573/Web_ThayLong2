@@ -208,7 +208,8 @@
         </div>
         <!-- Modal: modalAbandonedCart-->
         <div class="modal fade right" id="modalAbandonedCart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true" data-backdrop="false">
+             aria-hidden="true" data-backdrop="
+             false">
             <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
                 <!--Content-->
                 <div class="modal-content">
@@ -1846,7 +1847,108 @@
                             </div>
                         </div>
 
+                        <!-- Button trigger modal -->
 
+
+                        <!-- Modal -->
+                        <%
+
+                            Set<Phone> phoneSet = (Set<Phone>) SessionUntil.get(request, Variable.Global.HISTORY_PHONE.toString());
+                            if (phoneSet != null) {
+                                List<Phone> phones = new ArrayList<>(phoneSet);
+
+                        %>
+                        <!--end thông số kĩ thuật-->
+                        <div class="mb-4">
+
+                            <div class="bg-white ">
+                                <div class="card">
+
+                                    <div class="card-header red-text  text-center">
+                                        <h5 class="font-weight-500 my-1">Sản phẩm đã xem gần đây</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- <h4 class=" titles mb-0 mt-4" id="three"></h4> -->
+                                        <ul class="list-unstyled bg-white">
+                                            <%
+                                                for (Phone ps : phones
+                                                ) {
+
+                                            %>
+                                            <li class="media mt-2">
+                                                <a href="#" title=""><img style="width:80px;"
+                                                                          src="<%=ps.getThumbnail()%>" class="mr-3"
+                                                                          alt="..."></a>
+                                                <div class="media-body">
+                                                    <a href="/phone-detail?page=1&page2=1&id=<%=ps.getId()%>" title="">
+                                                        <h3 class="nameApple"><%=ps.getName()%>
+                                                        </h3>
+                                                        <b class="size text-dark"
+                                                           style="text-decoration: line-through;"><%=ps.getPrice()%>
+                                                            ₫</b>
+                                                        <b class="text-danger size"><%=ps.getPrice()%> ₫</b>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <%}%>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+
+                        <%
+                            Set<Brand> phoneBrandSet = (Set<Brand>) SessionUntil.get(request, Variable.Global.HISTORY_BRAND.toString());
+                            Set<Model> phoneModelSet = (Set<Model>) SessionUntil.get(request, Variable.Global.HISTORY_MODEL.toString());
+                            if (phoneBrandSet != null) {
+                                List<Brand> phoneBrands = new ArrayList<>(phoneBrandSet);
+
+                        %>
+                        <div class="mb-4">
+
+                            <div class="card ">
+
+                                <div class="card-header red-text  text-center">
+                                    <h5 class="font-weight-500 my-1">Các hãng phổ biến</h5>
+                                </div>
+                                <div class="card-body ">
+                                    <div class="mt-4">
+                                        <%
+                                            for (Brand pe : phoneBrands
+                                            ) {
+
+                                        %>
+                                        <a href="/phone-filter?page=1&sort=sap+xep+theo+A+-+Z&brandCheck=<%=pe.getId()%>">
+                                            <div class="chip bg-danger  text-white">
+                                                <%=pe.getName()%>
+
+                                            </div>
+                                        </a>
+                                        <%}%>
+                                        <% if (phoneModelSet != null) {
+                                            List<Model> phoneModels = new ArrayList<>(phoneModelSet);
+                                            for (Model m : phoneModels
+                                            ) {
+                                        %>
+                                        <a href="/phone-filter?page=1&sort=sap+xep+theo+A+-+Z&modelCheck=<%=m.getId()%>&brandCheck=<%=m._brand().getId()%>">
+                                            <div class="chip bg-danger  text-white">
+                                                <%=m.getName()%>
+                                            </div>
+                                        </a>
+                                        <%
+                                                }
+                                            }
+                                        %>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--end phụ kiện-->
+                        <%}%>
                    
                         <div class="modal fade show" id="modalStarRating" tabindex="-1" role="dialog"
                              aria-labelledby="myModalLabel" aria-modal="true"

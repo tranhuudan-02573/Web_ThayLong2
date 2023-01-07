@@ -1763,7 +1763,233 @@
 
 
         </section>
-       
+        <% Set<Phone> phoneSet = (Set<Phone>) SessionUntil.get(request, Variable.Global.HISTORY_PHONE.toString());
+
+            if (phoneSet != null) {
+                List<Phone> phs = new ArrayList<>(phoneSet);
+        %>
+        <section class="py-5">
+            <div class="card">
+                <div class="card-header bg-danger white-text">
+                    <h5 class="mt-2 text-uppercase ">Sản phẩm đã xem gần đây</h5>
+                </div>
+                <div class="row w-100 mx-auto">
+                    <%
+
+
+                        for (Phone pp : phs
+                        ) {
+
+
+                    %>
+                    <div class="col-6 col-sm-2 p-0">
+                        <div class="card border rounded-0" style="box-shadow: unset;">
+                            <div class="card-body" style="padding: 0.75rem;">
+                                <div class=" d-block overflow-hidden   ">
+                                    <style>
+                                        p {
+                                            margin: 0;
+
+                                        }
+
+                                        .quote::before {
+                                            content: '●';
+                                            margin-right: 2px;
+                                            left: 0;
+                                            top: 0;
+                                            color: #333;
+                                            font-size: 10px;
+                                        }
+
+                                    </style>
+                                    <div class="d-flex flex-column h-100 w-100  ">
+
+                                        <div class=" align-self-start" style="height:18px;">
+                                            <% for
+                                            (
+                                                    PhonePromot
+                                                            promot
+                                                    :
+                                                    pp
+                                                            .
+                                                            _promots
+                                                                    (
+                                                                    )
+                                            ) {
+                                                if
+                                                (
+                                                        Variable.Global.TG0.toString()
+                                                                        .
+                                                                equalsIgnoreCase
+                                                                        (
+                                                                                promot
+                                                                                        .
+                                                                                        _promot
+                                                                                                (
+                                                                                                )
+                                                                                                .
+                                                                                        getKey
+                                                                                                (
+                                                                                                )
+                                                                        )
+                                                ) {
+                                            %>
+
+
+                                            <span class="badge badge-danger mr-1"><%=promot
+                                                    .
+                                                    _promot
+                                                            (
+                                                            )
+                                                            .
+                                                    getName
+                                                            (
+                                                            )%></span>
+                                            <%
+                                                    }
+                                                }
+                                            %>
+                                        </div>
+                                        <a href="${pageContext.request.contextPath}phone-detail?id=<%=pp.getId()%>&page=1&page2=1 "
+                                           class="text-dark">
+                                            <div class="align-items-start cart-content  h-100">
+                                                <div class="my-2 d-block overflow-hidden item hvr-float "><img
+                                                        class="object-cover mw-100 "
+                                                        src="<%=pp.getThumbnail()%>"
+                                                        alt=""/></div>
+                                                <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
+                                                    style="display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;font-size: 14px;">
+                                                    <%=pp.getName()%>
+                                                </h3>
+                                                <div class="mb-1">
+                                                    <%
+                                                        for
+                                                        (
+                                                                PhoneSpec
+                                                                        spec
+                                                                :
+                                                                pp
+                                                                        .
+                                                                        _specs
+                                                                                (
+                                                                                )
+                                                        ) {
+                                                            if
+                                                            (
+                                                                    "LR"
+                                                                            .
+                                                                            equalsIgnoreCase
+                                                                                    (
+                                                                                            spec
+                                                                                                    .
+                                                                                                    _spec
+                                                                                                            (
+                                                                                                            )
+                                                                                                            .
+                                                                                                    getKey
+                                                                                                            (
+                                                                                                            )
+
+                                                                                    )
+                                                            ) {
+
+                                                    %>
+
+                                                    <span class="mr-2 badge badge-light mb-1">
+																				<%=spec
+                                                                                        .
+                                                                                        _spec
+                                                                                                (
+                                                                                                )
+                                                                                                .
+                                                                                        getName
+                                                                                                (
+                                                                                                )%>
+																			</span>
+
+
+                                                    <%
+                                                            }
+                                                        }
+                                                    %>
+
+                                                    <span class="mr-2 badge badge-light"><%=pp._cap().getCap() + " " + pp._cap().getUnit()%></span>
+
+                                                </div>
+
+                                                <div class="mb-1">
+                                                    <i class=" d-inline-block text-decoration-line-through price-old"
+                                                       style="text-decoration: line-through">
+                                                        40.000.000đ</i>
+                                                    <b class="d-inline-block price-new ">-25%</b>
+                                                </div>
+                                                <strong
+                                                        class="fw-bold d-block mb-1 text-danger"><%=pp.getPrice()%>
+                                                    đ</strong>
+
+                                                <div class=" mb-1 d-flex flex-end">
+                                                    <p class=" text-warning "
+                                                       style="font-size: 12px;">
+                                                        <%
+                                                            double avg = pp.avg();
+                                                            for (int i = 1; i <= 5; i++) {
+                                                                if (i <= avg) {
+                                                        %>
+                                                        <i class=" fa-solid fa-star "></i>
+                                                        <%
+                                                        } else if (Math.ceil(avg) != Math.floor(avg)) {
+                                                            avg = Math.ceil(avg);
+                                                        %>
+                                                        <i class="fa-solid fa-star-half-stroke "></i>
+                                                        <%
+                                                        } else {
+                                                        %>
+                                                        <i class=" fa-regular fa-star"></i>
+                                                        <%
+                                                                }
+                                                            }
+                                                        %>
+                                                    </p>
+                                                    <p class="ms-1 fw-light d-inline-block align-middle "
+                                                       style="font-size: 12px;"><%=pp.count()%>
+                                                    </p>
+                                                </div>
+
+                                            </div>
+                                        </a>
+                                        <div class="mt-2  d-flex justify-content-between align-items-end">
+                                            <a href="${pageContext.request.contextPath}/add-carts?name=home&action=wishes&phoneId=<%=pp.getId()%>"
+                                               class=" d-block  align-middle"
+                                               style="font-size:14px ;">
+                                                <i class="fa-regular fa-square-plus fa-sm"></i>
+                                                cart
+                                            </a>
+
+                                            <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=pp.getId()%>"
+                                               class="d-block  align-middle"
+                                               style="font-size:14px ;">
+                                                <i class="fa-regular fa-heart fa-sm"></i> yêu
+                                                thích
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <%
+                        }%>
+                </div>
+
+            </div>
+
+
+        </section>
+        <%}%>
     </div>
     <!--end container-->
 </div>
