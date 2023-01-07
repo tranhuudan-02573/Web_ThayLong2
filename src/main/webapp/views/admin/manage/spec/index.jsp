@@ -1,3 +1,5 @@
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.Spec" %>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 
@@ -11,7 +13,9 @@
         <title>Document</title>
     </head>
 <body class="fixed-sn mdb-skin">
-
+<%
+    List<Spec> listSpec = (List<Spec>) request.getAttribute("listSpec");
+%>
   <!--Double navigation-->
 
 
@@ -175,7 +179,7 @@
       </button>
     </div>
 
-    <a href="" class="white-text mx-3 text-uppercase ">danh sách người dùng</a>
+    <a href="" class="white-text mx-3 text-uppercase ">danh sách thông số</a>
 
     <div>
       <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
@@ -331,10 +335,10 @@
              name
             </th>
             <th class="th-lg">
-             phone
+             Key
             </th>
             <th class="th-lg">
-              permission
+              create_at
             </th>
             <th class="th-lg">
 
@@ -350,26 +354,32 @@
 
         <!--Table body-->
         <tbody>
+        <%
+            for (int i = 0; i < listSpec.size() ; i++) {
+
+
+        %>
           <tr>
             <th scope="row">
               <input class="form-check-input" type="checkbox" id="checkbox1">
               <label class="form-check-label" for="checkbox1" class="label-table"></label>
             </th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <td><%= i%></td>
+            <td><%=listSpec.get(i).getId()%></td>
+            <td><%=listSpec.get(i).getName()%></td>
+            <td><%=listSpec.get(i).getKey()%></td>
+            <td><%=listSpec.get(i).getCreated_at()%></td>
+            <td><%=listSpec.get(i).getUpdated_at()%></td>
             <td>
               <a href=""data-toggle="modal" data-target="#modalinfo"><i class="fa-regular fa-eye"></i></a>
-              <a href="/src/views/admin/manausers/edit.html"><i class="far fa-edit"></i></a>
+              <a href="/admin/manage/spec/edit?id=<%=listSpec.get(i).getId()%>"><i class="far fa-edit"></i></a>
 
               <a href=""data-toggle="modal" data-target="#modalConfirmDelete"><i class="far fa-trash-alt"></i></a>
+                <a href="/admin/manage/spec?id=<%=listSpec.get(i).getId()%>"> <i class="fa-solid fa-up-right-from-square mr-1"></i></a>
             </td>
 
           </tr>
-
+<%}%>
         </tbody>
         <!--Table body-->
       </table>

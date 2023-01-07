@@ -24,7 +24,7 @@ public class EditHandle extends HttpServlet {
             ids = Integer.parseInt(id.trim());
             if (ids != 0) {
                 Color u = new ColorDAO().get(" and id = " + ids, Color.class, null).get();
-                request.setAttribute("u", u);
+                request.setAttribute("color", u);
             }
         }
 

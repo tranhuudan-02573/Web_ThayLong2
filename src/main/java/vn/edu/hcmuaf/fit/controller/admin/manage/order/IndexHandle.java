@@ -21,7 +21,7 @@ public class IndexHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Order> users = new OrderDAO().list("", Order.class, null, null, null, null);
-        request.setAttribute("pps", users);
+        request.setAttribute("order", users);
         request.getRequestDispatcher("/views/admin/manage/order/index.jsp").forward(request, response);
 
 

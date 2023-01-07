@@ -1,8 +1,12 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.spec;
 
 import vn.edu.hcmuaf.fit.constant.Variable;
+import vn.edu.hcmuaf.fit.dao.impl.BrandDAO;
 import vn.edu.hcmuaf.fit.dao.impl.SpecDAO;
+import vn.edu.hcmuaf.fit.dao.impl.SpecTypeDAO;
+import vn.edu.hcmuaf.fit.model.phone.Brand;
 import vn.edu.hcmuaf.fit.model.phone.Spec;
+import vn.edu.hcmuaf.fit.model.phone.SpecType;
 import vn.edu.hcmuaf.fit.model.user.User;
 import vn.edu.hcmuaf.fit.until.SessionUntil;
 
@@ -12,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(urlPatterns = {"/admin/manage/spec/edit"})
 public class EditHandle extends HttpServlet {
@@ -23,10 +28,11 @@ public class EditHandle extends HttpServlet {
             ids = Integer.parseInt(id.trim());
             if (ids != 0) {
                 Spec u = new SpecDAO().get(" and id = " + ids, Spec.class, null).get();
-                request.setAttribute("u", u);
+                request.setAttribute("spec", u);
             }
         }
-
+        List<SpecType> specTypes = new SpecTypeDAO().list("", SpecType.class, null, null, null, null);
+        request.setAttribute("specTypes",specTypes);
         request.getRequestDispatcher("/views/admin/manage/spec/edit.jsp").forward(request, response);
 
     }

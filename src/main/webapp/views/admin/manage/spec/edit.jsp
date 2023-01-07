@@ -1,3 +1,6 @@
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.Spec" %>
+<%@ page import="java.util.List" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.SpecType" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 
@@ -11,7 +14,10 @@
         <title>Document</title>
     </head>
 <body class="fixed-sn mdb-skin">
-
+<%
+    Spec spec = (Spec) request.getAttribute("spec");
+    List<SpecType> specTypes = (List<SpecType>) request.getAttribute("specTypes");
+ %>
   <!--Double navigation-->
   <!--/.Double navigation-->
 
@@ -35,7 +41,7 @@
    <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
-    <a href="" class="white-text mx-3 text-uppercase ">sửa thông tin người dùng</a>
+    <a href="" class="white-text mx-3 text-uppercase ">sửa thông tin thông số</a>
     <div>
     <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
        <i class="fa-solid fa-rotate-left"></i>
@@ -60,82 +66,36 @@
 
           </thead>
           <tbody>
-
+<form>
               <tr>
-              <th>Phone</th>
+              <th>Name</th>
                  <td><!-- Material outline counter input -->
- <input id="input-char-counter1" type="text" length="10" class="form-control">
-  <label for="input-char-counter1"></label>
+ <input id="name" type="text" length="10" class="form-control" value="<%=spec.getName()%>">
+  <label for="name"></label>
             </tr>
                  <tr>
-              <th>Name</th>
-               <td> <input id="input-char-counter2" type="text" length="10" class="form-control">
-  <label for="input-char-counter1"></label></td>
+              <th>Key</th>
+               <td> <input id="key" type="text" length="10" class="form-control" value="<%=spec.getKey()%>">
+  <label for="key"></label></td>
                </tr>
-               <tr>
-              <th>Address</th>
-               <td> <input id="input-char-counter2" type="text" length="10" class="form-control">
-  <label for="input-char-counter2"></label></td>
-               </tr>
-               <tr>
-              <th>Gender</th>
-               <td>
-<!-- Material inline 1 -->
 
-
-<!-- Material inline 2 -->
-<div class="form-check form-check-inline">
-  <input type="radio" class="form-check-input" id="materialInline2" name="inlineMaterialRadiosExample">
-  <label class="form-check-label" for="materialInline2">Nam</label>
-</div>
-
-<!-- Material inline 3 -->
-<div class="form-check form-check-inline">
-  <input type="radio" class="form-check-input" id="materialInline3" name="inlineMaterialRadiosExample">
-  <label class="form-check-label" for="materialInline3">Nữ</label>
-</div>
-
-
-               </td>
-               </tr>
-               <tr>
-               <th>Email</th>
-                <td><input id="input-char-counter4" type="text" length="10" class="form-control">
-  <label for="input-char-counter4"></label></td></td>
-                </tr>
-                <tr>
-                <th>Active</th>
-                 <td><div class="custom-control custom-switch">
-  <input type="checkbox" class="custom-control-input" id="customSwitches">
-  <label class="custom-control-label" for="customSwitches"></label>
-</div></td>
-                 </tr>
-                 <tr>
-                 <th>Permission</th>
-                  <td><div class="form-check form-check-inline">
-  <input type="radio" class="form-check-input" id="materialInline1" name="inlineMaterialRadiosExample">
-  <label class="form-check-label" for="materialInline1">user mod</label>
-</div>
-
-<!-- Material inline 2 -->
-<div class="form-check form-check-inline">
-  <input type="radio" class="form-check-input" id="materialInline2" name="inlineMaterialRadiosExample">
-  <label class="form-check-label" for="materialInline2">admin</label>
-</div>
-
-<!-- Material inline 3 -->
-<div class="form-check form-check-inline">
-  <input type="radio" class="form-check-input" id="materialInline3" name="inlineMaterialRadiosExample">
-  <label class="form-check-label" for="materialInline3">admin 2</label>
-</div></td>
-                  </tr>
                   <tr>
-                  <th>Status</th>
-                   <td><input id="input-char-counter5" type="text" length="10" class="form-control">
-  <label for="input-char-counter5"></label></td>
+                      <th>Spectype_id</th>
+                      <td><select class="mdb-select md-form"
+                                  name="BrandId">
+                          <%
+
+                              for (int i = 0; i < specTypes.size(); i++) {
+                          %>
+                          <option  value="<%=specTypes.get(i).getId()%>" <%=(spec.getId() == specTypes.get(i).getId()) ? "selected" : ""%> ><%=specTypes.get(i).getName()%>
+                          </option>
+                          <%
+                              }
+                          %>
+                      </select></td>
                    </tr>
 
-
+</form>
           </tbody>
         </table>
       <!--Table-->
@@ -149,22 +109,23 @@
 
     </div>
   </main>
-  <content tag="local_script">
-      <script>
-          $(document).ready(function() {
+<content tag="local_script">
+    <script>
+        $(document).ready(function () {
+            $('.mdb-select').materialSelect();
+            // SideNav Initialization
+            $(".button-collapse").sideNav({
+                slim: true
+            });
+            new WOW().init();
 
-              // SideNav Initialization
-              $(".button-collapse").sideNav({
-                  slim: true});
-              new WOW().init();
-
-              $('#dtBasicExample').DataTable();
-              $('.dataTables_length').addClass('bs-select');
+            $('#dtBasicExample').DataTable();
+            $('.dataTables_length').addClass('bs-select');
 
 
-          })
-      </script>
-  </content>
+        })
+    </script>
+</content>
 </body>
 
 </html>

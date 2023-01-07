@@ -25,7 +25,7 @@ public class EditHandle extends HttpServlet {
             ids = Integer.parseInt(id.trim());
             if (ids != 0) {
                 Cap u = new CapDAO().get(" and id = " + ids, Cap.class, null).get();
-                request.setAttribute("u", u);
+                request.setAttribute("cap", u);
             }
         }
 

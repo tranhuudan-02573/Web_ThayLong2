@@ -1,3 +1,5 @@
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.Brand" %>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 
@@ -11,7 +13,9 @@
         <title>Document</title>
     </head>
 <body class="fixed-sn mdb-skin">
-
+<%
+List<Brand> listBrand = (List<Brand>) request.getAttribute("listBrand");
+%>
   <!--Double navigation-->
 
 
@@ -331,10 +335,10 @@
              name
             </th>
             <th class="th-lg">
-             phone
+             Logo
             </th>
             <th class="th-lg">
-              permission
+              Country
             </th>
             <th class="th-lg">
 
@@ -350,26 +354,27 @@
 
         <!--Table body-->
         <tbody>
+        <% for (int i = 0; i <listBrand.size() ; i++) {
+
+
+        %>
           <tr>
             <th scope="row">
               <input class="form-check-input" type="checkbox" id="checkbox1">
               <label class="form-check-label" for="checkbox1" class="label-table"></label>
             </th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <td><%= i%></td>
+            <td><%= listBrand.get(i).getId()%></td>
+            <td><%= listBrand.get(i).getName()%></td>
+            <td> <img style=" height: 50px;" src="<%= listBrand.get(i).getLogo()%>"> </td>
+            <td><%= listBrand.get(i).getCountry()%></td>
+            <td><%= listBrand.get(i).getUpdated_at()%></td>
             <td>
-              <a href=""data-toggle="modal" data-target="#modalinfo"><i class="fa-regular fa-eye"></i></a>
-              <a href="/src/views/admin/manausers/edit.html"><i class="far fa-edit"></i></a>
 
-              <a href=""data-toggle="modal" data-target="#modalConfirmDelete"><i class="far fa-trash-alt"></i></a>
             </td>
 
           </tr>
-
+<%}%>
         </tbody>
         <!--Table body-->
       </table>
