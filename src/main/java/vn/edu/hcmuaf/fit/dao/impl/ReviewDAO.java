@@ -14,12 +14,22 @@ public class ReviewDAO extends AbstractDAO<Review> {
         r.setCreated_at(new Timestamp(System.currentTimeMillis()));
         r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
-       return insertWithId(" insert into reviews(phoneId,content,star,created_at,updated_at,isQuestion,isReply,customerId,userId) " +
+        return insertWithId(" insert into reviews(phoneId,content,star,created_at,updated_at,isQuestion,isReply,customerId,userId) " +
                 "values(:t.phoneId,:t.content,:t.star,:t.created_at,:t.updated_at,:t.question,:t.reply,:t.customerId,:t.userId) ", r);
     }
 
 
     public void delete(int parseInt) {
-        update(" delete from reviews where id= " + parseInt,null);
+        update(" delete from reviews where id= " + parseInt, null);
+    }
+
+    public boolean updateReview(Review r) {
+        r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        return update(" update reviews set content = :t.content , star =:t.star,updated_at=:t.updated_at where id=:t.id", r);
+    }
+
+    public boolean updatteQuestion(Review r) {
+        r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        return update(" update reviews set content = :t.content , typeId =:t.typeId,updated_at=:t.updated_at where id=:t.id", r);
     }
 }

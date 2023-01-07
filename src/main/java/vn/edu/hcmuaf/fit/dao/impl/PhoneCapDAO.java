@@ -22,6 +22,14 @@ public class PhoneCapDAO extends AbstractDAO<PhoneCap> {
                 ":t.updated_at,:t.phoneId, :t.capId)", pcap);
     }
 
+    public void insertPhoneCap(PhoneCap pcap) {
+        pcap.setCreated_at(new Timestamp(System.currentTimeMillis()));
+        pcap.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        insert("insert into phone_cap(created_at,updated_at,phoneId, capId) " +
+                "values(:t.created_at," +
+                ":t.updated_at,:t.phoneId, :t.capId)", pcap);
+    }
+
     public void updateCapList(List<PhoneCap> old, List<PhoneCap> colors) {
         if (old.size() < colors.size()) {
             for (PhoneCap color : colors) {

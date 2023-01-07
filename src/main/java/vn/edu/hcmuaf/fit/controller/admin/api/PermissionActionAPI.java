@@ -1,7 +1,9 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import vn.edu.hcmuaf.fit.model.phone.Color;
+import vn.edu.hcmuaf.fit.dao.impl.PermissionActionDAO;
+import vn.edu.hcmuaf.fit.model.user.PermissionAction;
+import vn.edu.hcmuaf.fit.until.HttpUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,32 +12,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ColorAPI", value = "/api/color")
+@WebServlet(value = "/api/permission-action")
 public class PermissionActionAPI extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        int id = Integer.parseInt(request.getParameter("id").trim());
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
-//       Color color = colorDAO.get(" and id = " + id, Color.class, null);
-//        mapper.writeValue(response.getOutputStream(), color);
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        PermissionAction permissionAction = HttpUtil.of(request.getReader()).toModel(PermissionAction.class);
+        new PermissionActionDAO().save(permissionAction);
+        mapper.writeValue(response.getOutputStream(), permissionAction);
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+
+        PermissionAction permissionAction = HttpUtil.of(request.getReader()).toModel(PermissionAction.class);
+        new PermissionActionDAO().update(permissionAction);
+        mapper.writeValue(response.getOutputStream(), permissionAction);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        PermissionAction permissionAction = HttpUtil.of(request.getReader()).toModel(PermissionAction.class);
+        new PermissionActionDAO().delete(permissionAction);
+        mapper.writeValue(response.getOutputStream(), "{}");
     }
 
 }

@@ -22,7 +22,7 @@ public class AdminFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletResponse response1 = (HttpServletResponse) response;
-        SessionUntil.set((HttpServletRequest) request, Variable.Global.USER.toString(), new UserDAO().get(" and id=7", User.class, null).get());
+        SessionUntil.set((HttpServletRequest) request, Variable.Global.USER.toString(), new UserDAO().get(" and id=2", User.class, null).get());
         User user = (User) SessionUntil.get((HttpServletRequest) request, Variable.Global.USER.toString());
         if (user.getPermission() != null && user.getPermission().equals(Variable.Global.ADMIN.toString()))
             chain.doFilter(request, response);

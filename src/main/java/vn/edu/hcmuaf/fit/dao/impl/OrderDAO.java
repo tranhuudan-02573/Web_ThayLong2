@@ -24,8 +24,6 @@ public class OrderDAO extends AbstractDAO<Order> {
         ) {
             new OrderDetailDAO("order_detail").save(od);
         }
-
-
         return id;
     }
 

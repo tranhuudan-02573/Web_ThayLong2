@@ -3,7 +3,6 @@ package vn.edu.hcmuaf.fit.controller.admin.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Brand;
-import vn.edu.hcmuaf.fit.model.phone.Color;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
 import javax.servlet.ServletException;
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ColorAPI", value = "/api/color")
+@WebServlet( value = "/api/brand")
 public class BrandAPI extends HttpServlet {
 
     AbstractDAO<Brand> brandAbstractDAO = new AbstractDAO<>("brands");

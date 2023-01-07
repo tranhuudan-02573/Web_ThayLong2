@@ -12,8 +12,17 @@ public class PhoneSpecDAO extends AbstractDAO<PhoneSpec> {
     public PhoneSpecDAO() {
         super("phone_spec");
     }
+
     public void insertPhoneSpec(PhoneSpec ps, int id) {
         ps.setPhoneId(id);
+        ps.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        ps.setCreated_at(new Timestamp(System.currentTimeMillis()));
+        insert("insert into phone_spec(created_at,updated_at,value, phoneId,specId) " +
+                "values(:t.created_at," +
+                ":t.updated_at,:t.value, :t.phoneId,:t.specId)", ps);
+    }
+
+    public void insertPhoneSpec(PhoneSpec ps) {
         ps.setUpdated_at(new Timestamp(System.currentTimeMillis()));
         ps.setCreated_at(new Timestamp(System.currentTimeMillis()));
         insert("insert into phone_spec(created_at,updated_at,value, phoneId,specId) " +

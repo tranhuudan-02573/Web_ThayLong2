@@ -14,10 +14,6 @@ public class TypeDAO extends AbstractDAO<Type> {
 
     }
 
-    public TypeDAO(String table) {
-        super(table);
-    }
-
     public List<Type> list(int[] s) {
         List<Type> rs = new ArrayList<>();
 

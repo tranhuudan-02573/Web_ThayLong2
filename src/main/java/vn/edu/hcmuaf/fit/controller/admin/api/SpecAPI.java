@@ -1,7 +1,6 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import vn.edu.hcmuaf.fit.model.phone.Color;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ColorAPI", value = "/api/color")
+@WebServlet( value = "/api/spec")
 public class SpecAPI extends HttpServlet {
 
     @Override

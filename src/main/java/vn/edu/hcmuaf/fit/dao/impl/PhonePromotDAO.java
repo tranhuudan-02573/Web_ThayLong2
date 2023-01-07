@@ -22,6 +22,14 @@ public class PhonePromotDAO extends AbstractDAO<PhonePromot> {
                 ":t.updated_at,:t.killed_at,:t.phoneId, :t.promotId)", pp);
     }
 
+    public void insertPhonePromot(PhonePromot pp) {
+        pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
+        pp.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        insert("insert into phone_promot(created_at,updated_at,killed_at,phoneId, promotId) " +
+                "values(:t.created_at," +
+                ":t.updated_at,:t.killed_at,:t.phoneId, :t.promotId)", pp);
+    }
+
     public void deletePhonePromot(PhonePromot pp) {
         delete("delete from phone_promot where promotId = :t.promotId and phoneId = :t.phoneId", pp);
     }

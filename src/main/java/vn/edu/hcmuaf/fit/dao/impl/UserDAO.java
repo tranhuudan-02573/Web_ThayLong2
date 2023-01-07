@@ -17,14 +17,9 @@ public class UserDAO extends AbstractDAO<User> {
     }
 
     public boolean updatePass(User user, String pass) {
-        return update(" update users set password ='" + BCrypt.hashpw(pass, BCrypt.gensalt(10))+"'", null);
+        return update(" update users set password ='" + BCrypt.hashpw(pass, BCrypt.gensalt(10)) + "'", null);
     }
 
-    public static void main(String[] args) {
-        User user = new UserDAO().get(" and id=24",User.class,null).get();
-        System.out.println(new UserDAO().checkPass(user,"12345"));
-//        System.out.println(new UserDAO().updatePass(user,"12345"));
-    }
 
     public boolean update(User u) {
         u.setUpdated_at(new Timestamp(System.currentTimeMillis()));
