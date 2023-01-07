@@ -5,8 +5,6 @@
  */
 package vn.edu.hcmuaf.fit.helper;
 
-import org.mindrot.jbcrypt.BCrypt;
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -34,23 +32,16 @@ public class HashPass {
 
     // A password hashing method.
 
-    public String hashPassword(String password){
+    public String hashPassword(String password) {
         try {
             MessageDigest sha256 = null;
             sha256 = MessageDigest.getInstance("SHA-256");
             byte[] hash = sha256.digest(password.getBytes());
-            BigInteger number = new BigInteger(1,hash);
+            BigInteger number = new BigInteger(1, hash);
             return number.toString();
-        }catch (NoSuchAlgorithmException e){
+        } catch (NoSuchAlgorithmException e) {
             return null;
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(new HashPass().hashPassword("@Bc12345"));
-        System.out.println(new HashPass().hashPassword("@Bc12345"));
-        System.out.println(BCrypt.hashpw("@Bc12345", BCrypt.gensalt(10)));
-        System.out.println(BCrypt.hashpw("@Bc12345", BCrypt.gensalt(10)));
-        System.out.println(BCrypt.checkpw("@Bc12345", ""));
-    }
 }

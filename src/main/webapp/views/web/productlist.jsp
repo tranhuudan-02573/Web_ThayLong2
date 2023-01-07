@@ -7,6 +7,8 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.phone.*" %>
 <%@ page import="java.util.stream.Stream" %>
 <%@ page import="java.util.function.Predicate" %>
+<%@ page import="vn.edu.hcmuaf.fit.until.SessionUntil" %>
+<%@ page import="vn.edu.hcmuaf.fit.constant.Variable" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -159,10 +161,10 @@
             boolean[] differentCheck = (boolean[]) request.getAttribute("differentCheck");
             boolean priceCheck0 = (boolean) request.getAttribute("priceCheck0");
             List<Phone> phones = (List<Phone>) request.getAttribute("phones");
-            String search = (String)request.getAttribute("search");
-            List<Phone> all = (List<Phone>)request.getAttribute("phoneAll");
-double total = (double)request.getAttribute("total");
-int paginationnum = (int)request.getAttribute("paginationnum");
+            String search = (String) request.getAttribute("search");
+            List<Phone> all = (List<Phone>) request.getAttribute("phoneAll");
+            double total = (double) request.getAttribute("total");
+            int paginationnum = (int) request.getAttribute("paginationnum");
         %>
         <form action="/phone-filter" id="form1">
             <section class="homeProducts">
@@ -171,7 +173,6 @@ int paginationnum = (int)request.getAttribute("paginationnum");
                         <div class="cdt-filter__block mb-3">
                             <div class="cdt-filter__title fw-bold fs-4 mb-2 h6">Lọc Theo</div>
                             <div class="d-none d-sm-block">
-
 
 
                                 <%
@@ -302,7 +303,7 @@ int paginationnum = (int)request.getAttribute("paginationnum");
                         </div>
 
                         <%
-                            if (!modelList.isEmpty() ) {%>
+                            if (!modelList.isEmpty()) {%>
 
                         <div class="cdt-filter__block mb-3">
                             <div class="cdt-filter__title fw-bold fs-4 mb-2 h6">model</div>
@@ -320,7 +321,7 @@ int paginationnum = (int)request.getAttribute("paginationnum");
                                 </div>
                                 <%
 
-                                        for (int i = 0; i < modelList.size(); i++) {
+                                    for (int i = 0; i < modelList.size(); i++) {
                                 %>
                                 <div class="form-check form-check-block mb-2 col-6 pr-0 ">
                                     <input type="checkbox" class="form-check-input" name="modelCheck"
@@ -333,7 +334,7 @@ int paginationnum = (int)request.getAttribute("paginationnum");
                                     </label>
                                 </div>
                                 <%
-                                        }
+                                    }
 
                                 %>
                             </div>
@@ -476,10 +477,10 @@ int paginationnum = (int)request.getAttribute("paginationnum");
                                         <h3 class="m-0">
                                             <a href="" title="" class="text-dark h4  " style="font-size: 22px">
 
-                                               <%if(search!=null && !search.equals("")){%>
+                                                <%if (search != null && !search.equals("")) {%>
                                                 <%=search%>
 
-                                                <%}else{%>
+                                                <%} else {%>
                                                 dien thoai
                                                 <%
 
@@ -493,15 +494,15 @@ int paginationnum = (int)request.getAttribute("paginationnum");
                                                     }
                                                 %>
                                                 <%
-                                                if (modelCheckList != null) {
-                                                for (Model m : modelCheckList
-                                                ) {
+                                                    if (modelCheckList != null) {
+                                                        for (Model m : modelCheckList
+                                                        ) {
 
                                                 %>
                                                 <%=m.getName()%>
                                                 <%
-                                                    }
-                                                    }
+                                                            }
+                                                        }
                                                     }
                                                 %>
                                                 <span style="font-size: 14px ; opacity: 0.7">(<%=all.size()%> sản phẩm)</span>
@@ -544,7 +545,7 @@ int paginationnum = (int)request.getAttribute("paginationnum");
 
 
                         <%
-                            if (!modelList.isEmpty()&&modelCheckList==null) { %>
+                            if (!modelList.isEmpty() && modelCheckList == null) { %>
 
                         <div class="card  border  mb-4" style="box-shadow: unset;">
                             <div class="card-header">
@@ -556,7 +557,7 @@ int paginationnum = (int)request.getAttribute("paginationnum");
                                 <div class="model-owl">
                                     <div class="owl-carousel owl-theme ">
                                         <%
-                                            for (int i = 0; i <modelList.size(); i++) {
+                                            for (int i = 0; i < modelList.size(); i++) {
 
                                         %>
                                         <div class="item  ">
@@ -564,16 +565,16 @@ int paginationnum = (int)request.getAttribute("paginationnum");
                                                 <a id="submit"
                                                    onclick="
                                                            document.getElementById('modelId-<%= modelList.get(i).getId()%>').click();
-                                                                                                                     "
+                                                           "
                                                    title="iPhone 12 Series">
-                                                                                                       <input hidden name="modelCheck"
-                                                                                                                                                                                                                                                                                            value="<%=modelList.get(i).getId()%>"
+                                                    <input hidden name="modelCheck"
+                                                           value="<%=modelList.get(i).getId()%>"
                                                            type="checkbox"
-                                                                                                                                                                                                                                  id="modelId-<%=modelList.get(i).getId()%>"
+                                                           id="modelId-<%=modelList.get(i).getId()%>"
                                                            onclick="this.form.submit()">
                                                     <div class="cdt-product__img hvr-shrink mb-2">
                                                         <img src="<%=modelList.get(i).getImg()%>"
-                                                                                                                                                                                     alt="iPhone 12 Series" title="iPhone 12 Series">                                                                                                                                                           </div>
+                                                             alt="iPhone 12 Series" title="iPhone 12 Series"></div>
                                                     <div class="cdt-product__info text-center ">
                                                         <div class="cdt-product__name  mb-1"><%=modelList.get(i).getName()%>
                                                         </div>
@@ -784,8 +785,8 @@ int paginationnum = (int)request.getAttribute("paginationnum");
                                                         ) {
                                                             if
                                                             (
-                                                                    "TG0"
-                                                                            .
+                                                                    Variable.Global.TG0.toString()
+                                                                                    .
                                                                             equalsIgnoreCase
                                                                                     (
                                                                                             promot
@@ -923,15 +924,29 @@ int paginationnum = (int)request.getAttribute("paginationnum");
                                                             <div class=" mb-1 d-flex flex-end">
                                                                 <p class=" text-warning "
                                                                    style="font-size: 12px;">
+                                                                    <%
+                                                                        double avg = phone.avg();
+                                                                        for (int i = 1; i <= 5; i++) {
+                                                                            if (i <= avg) {
+                                                                    %>
                                                                     <i class=" fa-solid fa-star "></i>
-                                                                    <i class=" fa-solid fa-star "></i>
-                                                                    <i class=" fa-solid fa-star "></i>
-                                                                    <i
-                                                                            class="fa-solid fa-star-half-stroke "></i>
-                                                                    <i class="fa-regular fa-star "></i>
+                                                                    <%
+                                                                    } else if (Math.ceil(avg) != Math.floor(avg)) {
+                                                                        avg = Math.ceil(avg);
+                                                                    %>
+                                                                    <i class="fa-solid fa-star-half-stroke "></i>
+                                                                    <%
+                                                                    } else {
+                                                                    %>
+                                                                    <i class=" fa-regular fa-star"></i>
+                                                                    <%
+                                                                            }
+                                                                        }
+                                                                    %>
                                                                 </p>
                                                                 <p class="ms-1 fw-light d-inline-block align-middle "
-                                                                   style="font-size: 12px;">54</p>
+                                                                   style="font-size: 12px;"><%=phone.count()%>
+                                                                </p>
                                                             </div>
                                                             <div class="mt-2 text-ellipsis overflow-hidden text-break  d-none d-sm-block"
                                                                  style="font-size:12px ;">
@@ -974,10 +989,11 @@ int paginationnum = (int)request.getAttribute("paginationnum");
                                                         </div>
                                                     </a>
                                                     <div class="mt-2  d-flex justify-content-between ">
-                                                        <a href="${pageContext.request.contextPath}/add-carts?name=home&action=wishes&phoneId=<%=phone.getId()%>" class=" d-block  align-middle"
+                                                        <a href="${pageContext.request.contextPath}/add-carts?name=home&action=wishes&phoneId=<%=phone.getId()%>"
+                                                           class=" d-block  align-middle"
                                                            style="font-size:14px ;">
                                                             <i class="fa-regular fa-square-plus fa-sm"></i>
-                                                           cart
+                                                            cart
                                                         </a>
 
                                                         <a href="${pageContext.request.contextPath}/add-carts?action=wishes&phoneId=<%=phone.getId()%>"
@@ -999,30 +1015,39 @@ int paginationnum = (int)request.getAttribute("paginationnum");
                             <nav>
                                 <ul class="pagination pg-red">
 
-<%if(total!=0 && paginationnum!=1){%>
+                                    <%if (total != 0 && paginationnum != 1) {%>
                                     <li class="page-item ">
-                                        <a class="page-link" aria-label="Previous" onclick="document.getElementById('pagination<%=paginationnum-1%>').click()">
+                                        <a class="page-link" aria-label="Previous"
+                                           onclick="document.getElementById('pagination<%=paginationnum-1%>').click()">
                                             <span aria-hidden="true">&laquo;</span>
-                                            <input type="radio" class="form-check-input" value="<%=paginationnum-1%>" id="pagination<%=paginationnum-1%>" name="page" onclick="this.form.submit()" >
+                                            <input type="radio" class="form-check-input" value="<%=paginationnum-1%>"
+                                                   id="pagination<%=paginationnum-1%>" name="page"
+                                                   onclick="this.form.submit()">
                                             <span class="sr-only">Previous</span>
                                         </a>
                                     </li>
                                     <%}%>
                                     <%
-                                        for (int i = 1; i < total+1; i++) {
+                                        for (int i = 1; i < total + 1; i++) {
                                     %>
                                     <li class="page-item <%=(i==paginationnum)?"active":""%>">
-                                        <a class="page-link" onclick="document.getElementById('pagination<%=i%>').click()" >
+                                        <a class="page-link"
+                                           onclick="document.getElementById('pagination<%=i%>').click()">
                                             <%=i%>
-                                            <input type="radio" class="form-check-input" value="<%=i%>" id="pagination<%=i%>" name="page" onclick="this.form.submit()"  <%=(paginationnum==i)?"checked":""%>>
+                                            <input type="radio" class="form-check-input" value="<%=i%>"
+                                                   id="pagination<%=i%>" name="page"
+                                                   onclick="this.form.submit()"  <%=(paginationnum==i)?"checked":""%>>
                                         </a>
                                     </li>
                                     <%}%>
-                                    <%if(total!=0 && paginationnum!=total){%>
+                                    <%if (total != 0 && paginationnum != total) {%>
                                     <li class="page-item">
-                                        <a class="page-link" aria-label="Next" onclick="document.getElementById('pagination<%=paginationnum+1%>').click()">
+                                        <a class="page-link" aria-label="Next"
+                                           onclick="document.getElementById('pagination<%=paginationnum+1%>').click()">
                                             <span aria-hidden="true">&raquo;</span>
-                                            <input type="radio" class="form-check-input" value="<%=paginationnum-1%>" id="pagination<%=paginationnum+1%>" name="page" onclick="this.form.submit()" >
+                                            <input type="radio" class="form-check-input" value="<%=paginationnum-1%>"
+                                                   id="pagination<%=paginationnum+1%>" name="page"
+                                                   onclick="this.form.submit()">
                                             <span class="sr-only">Next</span>
                                         </a>
                                     </li>
@@ -1738,538 +1763,7 @@ int paginationnum = (int)request.getAttribute("paginationnum");
 
 
         </section>
-        <section class="py-5">
-            <div class="card">
-                <div class="card-header bg-danger white-text">
-                    <h5 class="mt-2 text-uppercase ">Sản phẩm đã xem gần đây</h5>
-                </div>
-                <div class="row w-100 mx-auto">
-
-                    <div class="col-6 col-sm-2 p-0">
-                        <div class="card border rounded-0" style="box-shadow: unset;">
-                            <div class="card-body" style="padding: 0.75rem;">
-                                <div class=" d-block overflow-hidden   ">
-                                    <style>
-                                        p {
-                                            margin: 0;
-
-                                        }
-
-                                        .quote::before {
-                                            content: '●';
-                                            margin-right: 2px;
-                                            left: 0;
-                                            top: 0;
-                                            color: #333;
-                                            font-size: 10px;
-                                        }
-
-                                    </style>
-                                    <div class="d-flex flex-column h-100 w-100  ">
-
-                                        <div class=" align-items-start">
-                                            <span class="badge badge-danger mr-1">Trả góp 0%</span>
-                                        </div>
-
-                                        <a href="/views/product.html" class="text-dark">
-                                            <div class="align-items-start cart-content  h-100">
-                                                <div class="my-2 d-block overflow-hidden item hvr-float "><img
-                                                        class="object-cover mw-100 "
-                                                        src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-                                                        alt=""/></div>
-                                                <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-                                                    style="display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;font-size: 14px;">
-                                                    iPhone 14 Pro Max 256GB Lorem ipsum dolor sit amet
-                                                    consectetur
-                                                    adipisicing elit. Iste, maiores.
-                                                </h3>
-                                                <div class="mb-1">
-															<span class="mr-2 badge badge-light">6.7 incheslor
-															</span>
-
-                                                    <span class="mr-2 badge badge-light">128 GB</span>
-                                                </div>
-
-                                                <div class="mb-1">
-                                                    <i class=" d-inline-block text-decoration-line-through price-old"
-                                                       style="text-decoration: line-through">
-                                                        40.000.000đ</i>
-                                                    <b class="d-inline-block price-new ">-25%</b>
-                                                </div>
-                                                <strong
-                                                        class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-                                                <div class=" mb-1 d-flex flex-end">
-                                                    <p class=" text-warning " style="font-size: 12px;">
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class="fa-solid fa-star-half-stroke "></i>
-                                                        <i class="fa-regular fa-star "></i>
-                                                    </p>
-                                                    <p class="ms-1 fw-light d-inline-block align-middle "
-                                                       style="font-size: 12px;">54</p>
-                                                </div>
-
-                                            </div>
-                                        </a>
-                                        <div class="mt-2  d-flex justify-content-between align-items-end">
-                                            <a href="" class=" d-block  align-middle" style="font-size:14px ;">
-                                                <i class="fa-regular fa-square-plus fa-sm"></i> so sánh
-                                            </a>
-
-                                            <a href="" class="d-block  align-middle" style="font-size:14px ;">
-                                                <i class="fa-regular fa-heart fa-sm"></i> yêu thích
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="col-6 col-sm-2 p-0">
-                        <div class="card border rounded-0" style="box-shadow: unset;">
-                            <div class="card-body" style="padding: 0.75rem;">
-                                <div class=" d-block overflow-hidden   ">
-                                    <style>
-                                        p {
-                                            margin: 0;
-
-                                        }
-
-                                        .quote::before {
-                                            content: '●';
-                                            margin-right: 2px;
-                                            left: 0;
-                                            top: 0;
-                                            color: #333;
-                                            font-size: 10px;
-                                        }
-
-                                    </style>
-                                    <div class="d-flex flex-column h-100 w-100  ">
-
-                                        <div class=" align-items-start">
-                                            <span class="badge badge-danger mr-1">Trả góp 0%</span>
-                                        </div>
-
-                                        <a href="/views/product.html" class="text-dark">
-                                            <div class="align-items-start cart-content  h-100">
-                                                <div class="my-2 d-block overflow-hidden item hvr-float "><img
-                                                        class="object-cover mw-100 "
-                                                        src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-                                                        alt=""/></div>
-                                                <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-                                                    style="display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;font-size: 14px;">
-                                                    iPhone 14 Pro Max 256GB Lorem ipsum dolor sit amet
-                                                    consectetur
-                                                    adipisicing elit. Iste, maiores.
-                                                </h3>
-                                                <div class="mb-1">
-															<span class="mr-2 badge badge-light">6.7 incheslor
-															</span>
-
-                                                    <span class="mr-2 badge badge-light">128 GB</span>
-                                                </div>
-
-                                                <div class="mb-1">
-                                                    <i class=" d-inline-block text-decoration-line-through price-old"
-                                                       style="text-decoration: line-through">
-                                                        40.000.000đ</i>
-                                                    <b class="d-inline-block price-new ">-25%</b>
-                                                </div>
-                                                <strong
-                                                        class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-                                                <div class=" mb-1 d-flex flex-end">
-                                                    <p class=" text-warning " style="font-size: 12px;">
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class="fa-solid fa-star-half-stroke "></i>
-                                                        <i class="fa-regular fa-star "></i>
-                                                    </p>
-                                                    <p class="ms-1 fw-light d-inline-block align-middle "
-                                                       style="font-size: 12px;">54</p>
-                                                </div>
-
-                                            </div>
-                                        </a>
-                                        <div class="mt-2  d-flex justify-content-between align-items-end">
-                                            <a href="" class=" d-block  align-middle" style="font-size:14px ;">
-                                                <i class="fa-regular fa-square-plus fa-sm"></i> so sánh
-                                            </a>
-
-                                            <a href="" class="d-block  align-middle" style="font-size:14px ;">
-                                                <i class="fa-regular fa-heart fa-sm"></i> yêu thích
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="col-6 col-sm-2 p-0">
-                        <div class="card border rounded-0" style="box-shadow: unset;">
-                            <div class="card-body" style="padding: 0.75rem;">
-                                <div class=" d-block overflow-hidden   ">
-                                    <style>
-                                        p {
-                                            margin: 0;
-
-                                        }
-
-                                        .quote::before {
-                                            content: '●';
-                                            margin-right: 2px;
-                                            left: 0;
-                                            top: 0;
-                                            color: #333;
-                                            font-size: 10px;
-                                        }
-
-                                    </style>
-                                    <div class="d-flex flex-column h-100 w-100  ">
-
-                                        <div class=" align-items-start">
-                                            <span class="badge badge-danger mr-1">Trả góp 0%</span>
-                                        </div>
-
-                                        <a href="/views/product.html" class="text-dark">
-                                            <div class="align-items-start cart-content  h-100">
-                                                <div class="my-2 d-block overflow-hidden item hvr-float "><img
-                                                        class="object-cover mw-100 "
-                                                        src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-                                                        alt=""/></div>
-                                                <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-                                                    style="display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;font-size: 14px;">
-                                                    iPhone 14 Pro Max 256GB Lorem ipsum dolor sit amet
-                                                    consectetur
-                                                    adipisicing elit. Iste, maiores.
-                                                </h3>
-                                                <div class="mb-1">
-															<span class="mr-2 badge badge-light">6.7 incheslor
-															</span>
-
-                                                    <span class="mr-2 badge badge-light">128 GB</span>
-                                                </div>
-
-                                                <div class="mb-1">
-                                                    <i class=" d-inline-block text-decoration-line-through price-old"
-                                                       style="text-decoration: line-through">
-                                                        40.000.000đ</i>
-                                                    <b class="d-inline-block price-new ">-25%</b>
-                                                </div>
-                                                <strong
-                                                        class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-                                                <div class=" mb-1 d-flex flex-end">
-                                                    <p class=" text-warning " style="font-size: 12px;">
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class="fa-solid fa-star-half-stroke "></i>
-                                                        <i class="fa-regular fa-star "></i>
-                                                    </p>
-                                                    <p class="ms-1 fw-light d-inline-block align-middle "
-                                                       style="font-size: 12px;">54</p>
-                                                </div>
-
-                                            </div>
-                                        </a>
-                                        <div class="mt-2  d-flex justify-content-between align-items-end">
-                                            <a href="" class=" d-block  align-middle" style="font-size:14px ;">
-                                                <i class="fa-regular fa-square-plus fa-sm"></i> so sánh
-                                            </a>
-
-                                            <a href="" class="d-block  align-middle" style="font-size:14px ;">
-                                                <i class="fa-regular fa-heart fa-sm"></i> yêu thích
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="col-6 col-sm-2 p-0">
-                        <div class="card border rounded-0" style="box-shadow: unset;">
-                            <div class="card-body" style="padding: 0.75rem;">
-                                <div class=" d-block overflow-hidden   ">
-                                    <style>
-                                        p {
-                                            margin: 0;
-
-                                        }
-
-                                        .quote::before {
-                                            content: '●';
-                                            margin-right: 2px;
-                                            left: 0;
-                                            top: 0;
-                                            color: #333;
-                                            font-size: 10px;
-                                        }
-
-                                    </style>
-                                    <div class="d-flex flex-column h-100 w-100  ">
-
-                                        <div class=" align-items-start">
-                                            <span class="badge badge-danger mr-1">Trả góp 0%</span>
-                                        </div>
-
-                                        <a href="/views/product.html" class="text-dark">
-                                            <div class="align-items-start cart-content  h-100">
-                                                <div class="my-2 d-block overflow-hidden item hvr-float "><img
-                                                        class="object-cover mw-100 "
-                                                        src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-                                                        alt=""/></div>
-                                                <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-                                                    style="display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;font-size: 14px;">
-                                                    iPhone 14 Pro Max 256GB Lorem ipsum dolor sit amet
-                                                    consectetur
-                                                    adipisicing elit. Iste, maiores.
-                                                </h3>
-                                                <div class="mb-1">
-															<span class="mr-2 badge badge-light">6.7 incheslor
-															</span>
-
-                                                    <span class="mr-2 badge badge-light">128 GB</span>
-                                                </div>
-
-                                                <div class="mb-1">
-                                                    <i class=" d-inline-block text-decoration-line-through price-old"
-                                                       style="text-decoration: line-through">
-                                                        40.000.000đ</i>
-                                                    <b class="d-inline-block price-new ">-25%</b>
-                                                </div>
-                                                <strong
-                                                        class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-                                                <div class=" mb-1 d-flex flex-end">
-                                                    <p class=" text-warning " style="font-size: 12px;">
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class="fa-solid fa-star-half-stroke "></i>
-                                                        <i class="fa-regular fa-star "></i>
-                                                    </p>
-                                                    <p class="ms-1 fw-light d-inline-block align-middle "
-                                                       style="font-size: 12px;">54</p>
-                                                </div>
-
-                                            </div>
-                                        </a>
-                                        <div class="mt-2  d-flex justify-content-between align-items-end">
-                                            <a href="" class=" d-block  align-middle" style="font-size:14px ;">
-                                                <i class="fa-regular fa-square-plus fa-sm"></i> so sánh
-                                            </a>
-
-                                            <a href="" class="d-block  align-middle" style="font-size:14px ;">
-                                                <i class="fa-regular fa-heart fa-sm"></i> yêu thích
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="col-6 col-sm-2 p-0">
-                        <div class="card border rounded-0" style="box-shadow: unset;">
-                            <div class="card-body" style="padding: 0.75rem;">
-                                <div class=" d-block overflow-hidden   ">
-                                    <style>
-                                        p {
-                                            margin: 0;
-
-                                        }
-
-                                        .quote::before {
-                                            content: '●';
-                                            margin-right: 2px;
-                                            left: 0;
-                                            top: 0;
-                                            color: #333;
-                                            font-size: 10px;
-                                        }
-
-                                    </style>
-                                    <div class="d-flex flex-column h-100 w-100  ">
-
-                                        <div class=" align-items-start">
-                                            <span class="badge badge-danger mr-1">Trả góp 0%</span>
-                                        </div>
-
-                                        <a href="/views/product.html" class="text-dark">
-                                            <div class="align-items-start cart-content  h-100">
-                                                <div class="my-2 d-block overflow-hidden item hvr-float "><img
-                                                        class="object-cover mw-100 "
-                                                        src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-                                                        alt=""/></div>
-                                                <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-                                                    style="display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;font-size: 14px;">
-                                                    iPhone 14 Pro Max 256GB Lorem ipsum dolor sit amet
-                                                    consectetur
-                                                    adipisicing elit. Iste, maiores.
-                                                </h3>
-                                                <div class="mb-1">
-															<span class="mr-2 badge badge-light">6.7 incheslor
-															</span>
-
-                                                    <span class="mr-2 badge badge-light">128 GB</span>
-                                                </div>
-
-                                                <div class="mb-1">
-                                                    <i class=" d-inline-block text-decoration-line-through price-old"
-                                                       style="text-decoration: line-through">
-                                                        40.000.000đ</i>
-                                                    <b class="d-inline-block price-new ">-25%</b>
-                                                </div>
-                                                <strong
-                                                        class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-                                                <div class=" mb-1 d-flex flex-end">
-                                                    <p class=" text-warning " style="font-size: 12px;">
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class="fa-solid fa-star-half-stroke "></i>
-                                                        <i class="fa-regular fa-star "></i>
-                                                    </p>
-                                                    <p class="ms-1 fw-light d-inline-block align-middle "
-                                                       style="font-size: 12px;">54</p>
-                                                </div>
-
-                                            </div>
-                                        </a>
-                                        <div class="mt-2  d-flex justify-content-between align-items-end">
-                                            <a href="" class=" d-block  align-middle" style="font-size:14px ;">
-                                                <i class="fa-regular fa-square-plus fa-sm"></i> so sánh
-                                            </a>
-
-                                            <a href="" class="d-block  align-middle" style="font-size:14px ;">
-                                                <i class="fa-regular fa-heart fa-sm"></i> yêu thích
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="col-6 col-sm-2 p-0">
-                        <div class="card border rounded-0" style="box-shadow: unset;">
-                            <div class="card-body" style="padding: 0.75rem;">
-                                <div class=" d-block overflow-hidden   ">
-                                    <style>
-                                        p {
-                                            margin: 0;
-
-                                        }
-
-                                        .quote::before {
-                                            content: '●';
-                                            margin-right: 2px;
-                                            left: 0;
-                                            top: 0;
-                                            color: #333;
-                                            font-size: 10px;
-                                        }
-
-                                    </style>
-                                    <div class="d-flex flex-column h-100 w-100  ">
-
-                                        <div class=" align-items-start">
-                                            <span class="badge badge-danger mr-1">Trả góp 0%</span>
-                                        </div>
-
-                                        <a href="/views/product.html" class="text-dark">
-                                            <div class="align-items-start cart-content  h-100">
-                                                <div class="my-2 d-block overflow-hidden item hvr-float "><img
-                                                        class="object-cover mw-100 "
-                                                        src="https://cdn.tgdd.vn/Products/Images/42/210652/iphone-11-pro-512gb-white-600x600.jpg"
-                                                        alt=""/></div>
-                                                <h3 class="text-ellipsis product-title overflow-hidden  mb-1 fw-normal  text-break "
-                                                    style="display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;font-size: 14px;">
-                                                    iPhone 14 Pro Max 256GB Lorem ipsum dolor sit amet
-                                                    consectetur
-                                                    adipisicing elit. Iste, maiores.
-                                                </h3>
-                                                <div class="mb-1">
-															<span class="mr-2 badge badge-light">6.7 incheslor
-															</span>
-
-                                                    <span class="mr-2 badge badge-light">128 GB</span>
-                                                </div>
-
-                                                <div class="mb-1">
-                                                    <i class=" d-inline-block text-decoration-line-through price-old"
-                                                       style="text-decoration: line-through">
-                                                        40.000.000đ</i>
-                                                    <b class="d-inline-block price-new ">-25%</b>
-                                                </div>
-                                                <strong
-                                                        class="fw-bold d-block mb-1 text-danger">38.990.000đ</strong>
-
-                                                <div class=" mb-1 d-flex flex-end">
-                                                    <p class=" text-warning " style="font-size: 12px;">
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class=" fa-solid fa-star "></i>
-                                                        <i class="fa-solid fa-star-half-stroke "></i>
-                                                        <i class="fa-regular fa-star "></i>
-                                                    </p>
-                                                    <p class="ms-1 fw-light d-inline-block align-middle "
-                                                       style="font-size: 12px;">54</p>
-                                                </div>
-
-                                            </div>
-                                        </a>
-                                        <div class="mt-2  d-flex justify-content-between align-items-end">
-                                            <a href="" class=" d-block  align-middle" style="font-size:14px ;">
-                                                <i class="fa-regular fa-square-plus fa-sm"></i> so sánh
-                                            </a>
-
-                                            <a href="" class="d-block  align-middle" style="font-size:14px ;">
-                                                <i class="fa-regular fa-heart fa-sm"></i> yêu thích
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-        </section>
+       
     </div>
     <!--end container-->
 </div>
@@ -2282,7 +1776,7 @@ int paginationnum = (int)request.getAttribute("paginationnum");
         const inputs = document.querySelectorAll('input[name="brandCheck"]');
         const inputs3 = document.querySelectorAll('input[name="modelCheck"]');
         const inputs4 = document.querySelectorAll('input[name="priceCheck"]');
-        const inputs7= document.querySelectorAll('input[name="promotCheck"]');
+        const inputs7 = document.querySelectorAll('input[name="promotCheck"]');
         const inputs6 = document.querySelectorAll('input[name="typeCheck"]');
         const inputs5 = document.querySelectorAll('input[name="capCheck"]');
         const inputs2 = document.querySelectorAll('input[name="modelCheck"]');

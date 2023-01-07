@@ -5,8 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.fit.constant.Variable;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
+import vn.edu.hcmuaf.fit.dao.impl.UserDAO;
 import vn.edu.hcmuaf.fit.model.order.OrderDetail;
 import vn.edu.hcmuaf.fit.model.review.Review;
+import vn.edu.hcmuaf.fit.model.user.User;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -42,9 +44,13 @@ public class Phone extends Base<Phone> implements Serializable {
     private Timestamp deleted_at;
     private boolean isNew;
 
+    public User _createdBy() {
+        return new UserDAO().get(" and id=" + created_by, User.class, null).orElse(null);
+    }
+
+
     public List<Review> question() {
         return new AbstractDAO<Review>("reviews").list1(" count(id) as sl, ", "and isReply =false and star is null and typeId is not null  and isQuestion=true and phoneId =" + this.id + " group by typeId\n", Review.class, null, null, Variable.Global.JOIN_PHONE_REVIEW, "sl desc", 3, 0);
-
     }
 
     public List<Review> _reviews() {
@@ -65,10 +71,6 @@ public class Phone extends Base<Phone> implements Serializable {
         return rs;
     }
 
-    public static void main(String[] args) {
-        System.out.println(new AbstractDAO<Review>("reviews").list1(" count(id) as sl, ", " and isReply =false and star is null and typeId is not null  and isQuestion=true and phoneId = 2"  + " group by typeId\n"
-                , Review.class, null, null, Variable.Global.JOIN_PHONE_REVIEW, " sl desc ", 3, 0));
-    }
 
     public int count(int i) {
 
@@ -161,5 +163,6 @@ public class Phone extends Base<Phone> implements Serializable {
     public Cap _cap() {
         return new AbstractDAO<Cap>("caps").get(" and id = " + this.capId, Cap.class, null).get();
     }
+
 
 }

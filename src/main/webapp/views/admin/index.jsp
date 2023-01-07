@@ -19,7 +19,7 @@
 <!--Double navigation-->
 <!--/.Double navigation-->
 <main class="mt-1">
-    <%User user = (User) SessionUntil.get(request, Variable.Global.USER.toString())%>
+    <%User user = (User) SessionUntil.get(request, Variable.Global.USER.toString());%>
     <div class="container-fluid panel-scroll">
 
         <div id="container">

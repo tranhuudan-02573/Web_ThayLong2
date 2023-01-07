@@ -1474,7 +1474,8 @@
                                                    href="#question-<%=re.getId()%>" aria-expanded="true"
                                                    aria-controls="collapseOne1">
                                                     <h6 class="mb-0">
-                                                        #<%=re.getContent()%><i class="fas fa-angle-down rotate-icon"></i>
+                                                        #<%=re.getContent()%><i
+                                                            class="fas fa-angle-down rotate-icon"></i>
                                                     </h6>
                                                 </a>
                                             </div>
@@ -1514,7 +1515,7 @@
                                             <input hidden name="capId" value="<%=capId%>">
                                             <input hidden name="page" value="<%=paginationnum%>">
                                             <input hidden name="page2" value="1">
-                                            <input hidden name="star" value="<%=star  %>">
+                                            <input hidden name="star" value="<%=(star!=null)?star:0%>">
                                             <input type="text" name="key" oninput="this.form.submit()"
                                                    placeholder="search" value="<%=(key!=null)?key:""%>"
                                                    class="w-100 text-comment">
@@ -1642,8 +1643,8 @@
                                                 </style>
                                                 <span class="text-light text-weight-500 "><%=FormatTime.format(reply.getCreated_at(), false)%>
                                                     <button
-                                                        class="like pr-2 pl-2"
-                                                        onclick="document.getElementById('like3-<%=reply.getReplyId()%>').submit()">thích
+                                                            class="like pr-2 pl-2"
+                                                            onclick="document.getElementById('like3-<%=reply.getReplyId()%>').submit()">thích
                                                     <form action="/phone-detail" method="post"
                                                           id="like3-<%=reply.getReplyId()%>">
                                                     <input hidden name="reviewId" value="<%=reply.getReplyId()%>">
@@ -1655,7 +1656,7 @@
 															</button>
                                                     <button
                                                             class="like pr-2 pl-2"
-                                                            onclick="document.getElementById('dislike3-<%=reply.getReplyId()%>').submit()" >khong thich
+                                                            onclick="document.getElementById('dislike3-<%=reply.getReplyId()%>').submit()">khong thich
                                                         <form action="/phone-detail" method="post"
                                                               id="dislike3-<%=reply.getReplyId()%>">
                                                     <input hidden name="reviewId" value="<%=reply.getReplyId()%>">
@@ -1666,13 +1667,13 @@
                                                         <span>(<%=reply._reply()._dislike().size()%>)</span>
 															</button>
                                                     <button class="rep"
-                                                                   href="">trả lời</button> <%if (user != null && r.getUserId() != null && r.getUserId() == user.getId()) {%>
+                                                            href="">trả lời</button> <%if (user != null && r.getUserId() != null && r.getUserId() == user.getId()) {%>
                                                                <a class="rep pr-2 pl-2" href="">chinh sua
                                                                </a>
 
                                                               <button
                                                                       class="rep pr-2 pl-2"
-                                                                 onclick="document.getElementById('delete-<%=r.getId()%>').submit()">
+                                                                      onclick="document.getElementById('delete-<%=r.getId()%>').submit()">
  <form action="/phone-detail" method="post" id="delete-<%=r.getId()%>">
                                                     <input hidden name="reviewId" value="<%=reply.getReplyId()%>">
                                                     <input hidden name="action" value="delete">
@@ -1846,130 +1847,7 @@
                         </div>
 
 
-                        <!-- Button trigger modal -->
-
-
-                        <!-- Modal -->
-
-                        <!--end thông số kĩ thuật-->
-                        <div class="mb-4">
-
-                            <div class="bg-white ">
-                                <div class="card">
-
-                                    <div class="card-header red-text  text-center">
-                                        <h5 class="font-weight-500 my-1">Sản phẩm đã xem gần đây</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <!-- <h4 class=" titles mb-0 mt-4" id="three"></h4> -->
-                                        <ul class="list-unstyled bg-white">
-                                            <li class="media mt-2">
-                                                <a href="#" title=""><img src="/images/c2.jpg" class="mr-3"
-                                                                          alt="..."></a>
-                                                <div class="media-body">
-                                                    <a href="#" title="">
-                                                        <h3 class="nameApple">Apple Ốp lưng iPhone XS Max
-                                                            Silicon
-                                                            Red</h3>
-                                                        <b class="size text-dark"
-                                                           style="text-decoration: line-through;">1.290.000
-                                                            ₫</b>
-                                                        <b class="text-danger size">1.290.000 ₫</b>
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            <li class="media my-4">
-                                                <a href="#" title=""><img src="/images/c3.jpg" class="mr-3"
-                                                                          alt="..."></a>
-                                                <div class="media-body">
-                                                    <a href="#" title="">
-                                                        <h3 class="nameApple">Apple Ốp lưng iPhone XS Max
-                                                            Silicon
-                                                            Red</h3>
-                                                        <b class="size text-dark"
-                                                           style="text-decoration: line-through;">1.290.000
-                                                            ₫</b>
-                                                        <b class="text-danger  size">1.290.000 ₫</b>
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            <li class="media mt-2">
-                                                <a href="#" title=""><img src="/images/c2.jpg" class="mr-3"
-                                                                          alt="..."></a>
-                                                <div class="media-body">
-                                                    <a href="#" title="">
-                                                        <h3 class="nameApple">Apple Ốp lưng iPhone XS Max
-                                                            Silicon
-                                                            Red</h3>
-                                                        <b class="size text-dark"
-                                                           style="text-decoration: line-through;">1.290.000
-                                                            ₫</b>
-                                                        <b class="text-danger size">1.290.000 ₫</b>
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            <li class="media my-4">
-                                                <a href="#" title=""><img src="/images/c3.jpg" class="mr-3"
-                                                                          alt="..."></a>
-                                                <div class="media-body">
-                                                    <a href="#" title="">
-                                                        <h3 class="nameApple">Apple Ốp lưng iPhone XS Max
-                                                            Silicon
-                                                            Red</h3>
-                                                        <b class="size text-dark"
-                                                           style="text-decoration: line-through;">1.290.000
-                                                            ₫</b>
-                                                        <b class="text-danger  size">1.290.000 ₫</b>
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            <li class="media mt-2">
-                                                <a href="#" title=""><img src="/images/c2.jpg" class="mr-3"
-                                                                          alt="..."></a>
-                                                <div class="media-body">
-                                                    <a href="#" title="">
-                                                        <h3 class="nameApple">Apple Ốp lưng iPhone XS Max
-                                                            Silicon
-                                                            Red</h3>
-                                                        <b class="size text-dark"
-                                                           style="text-decoration: line-through;">1.290.000
-                                                            ₫</b>
-                                                        <b class="text-danger size">1.290.000 ₫</b>
-                                                    </a>
-                                                </div>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-4">
-
-                            <div class="card ">
-
-                                <div class="card-header red-text  text-center">
-                                    <h5 class="font-weight-500 my-1">Các hãng phổ biến</h5>
-                                </div>
-                                <div class="card-body ">
-                                    <div class="mt-4">
-                                        <div class="chip bg-danger  text-white">
-                                            Samsung
-                                        </div>
-                                        <div class="chip bg-danger  text-white">
-                                            Iphone
-                                        </div>
-                                        <div class="chip bg-danger  text-white">
-                                            Asus
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <!--end phụ kiện-->
+                   
                         <div class="modal fade show" id="modalStarRating" tabindex="-1" role="dialog"
                              aria-labelledby="myModalLabel" aria-modal="true"
                              style="padding-right: 17px; display: none;">

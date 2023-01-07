@@ -313,7 +313,7 @@
                             tại</a>
                     </div>
                     <%String search = (String) request.getAttribute("search");%>
-                    <div class="col-xl-3 col-lg-3 col-md-3 col-12 p-0 ">
+                    <div class="col-xl-4 col-lg-4 col-md-4   col-12 p-0 ">
                         <div class="input-group ">
                             <form action="/phone-filter" id="search" style="width: 80%">
                                 <input hidden name="sort" value="sap xep theo A - Z">
@@ -329,13 +329,11 @@
                             </div>
                         </div>
                     </div>
-
                     <!--end col-6-->
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-none d-sm-block p-0">
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-12 d-none d-sm-block p-0">
                         <ul class="nav justify-content-end">
-
                             <li class="nav-item ">
-                                <a class="nav-link text-center text-white " href="/user-profile">
+                                <a class="nav-link text-center text-white " href="/views/web/user.jsp#panel22">
                                     <div>
                                         <i class="fa-solid fa-clock-rotate-left fa-lg " style="line-height: 1;"></i>
                                     </div>
@@ -352,7 +350,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-center text-white " href="/user-profile">
+                                <a class="nav-link text-center text-white " href="/views/web/user.jsp#panel23">
                                     <div><i class="fa fa-heart fa-lg" style="line-height: 1;" aria-hidden="true"></i>
                                     </div>
                                     Sản phẩm đã thích</a>
@@ -360,10 +358,10 @@
                             <li class="nav-item">
                                 <%User user = (User) SessionUntil.get(request, Variable.Global.USER.toString());%>
                                 <a class="nav-link text-center text-white" id="btn-login"
-                                   href="<%=(user!=null)?"/user-profile":"/register"%>">
+                                   href="<%=(user!=null)?"/views/web/user.jsp#panel21":"/register"%>">
                                     <div><i class="fa fa-user fa-lg" aria-hidden="true" style="line-height: 1;"></i>
                                     </div>
-                                    <%=(user != null) ? "tai khoan" : "dang nhap/dang ky"%>
+                                    <%=(user != null) ? "tai khoan" : "dang ky"%>
                                 </a>
                             </li>
                         </ul>
@@ -378,7 +376,7 @@
                     <c:forEach var="brand" items="${requestScope.brandList}">
                         <li class="nav-item ol-md-4 hvr-grow_color">
                             <a class="nav-link text-white text-uppercase"
-                               href="${pageContext.request.contextPath}/phone-filter?name=brand&id=${brand.id}">
+                               href="${pageContext.request.contextPath}/phone-filter?brandCheck=${brand.id}&sort=sap+xep+theo+A+-+Z&page=1">
                                 <i class="fa-solid fa-mobile-screen mr-2"></i>
                                     ${brand.name}
                             </a>

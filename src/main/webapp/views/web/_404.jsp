@@ -33,11 +33,19 @@
 
                         </h3>
                         <div class="input-group lg-form form-sm form-2 pl-0">
-                            <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search"
-                                   aria-label="Search">
+                            <form action="/phone-filter" id="search" style="width: 80%">
+                                <input hidden name="sort" value="sap xep theo A - Z">
+                                <input hidden name="page" value="1">
+                                <input type="text" class="form-control "
+                                       placeholder="Tìm kiếm sản phẩm"
+                                       aria-label="Recipient's username" aria-describedby="basic-addon2" name="search">
+                            </form>
                             <div class="input-group-append">
-    <span class="input-group-text red lighten-3" id="basic-text1"><i class="fas fa-search text-grey"
-                                                                     aria-hidden="true"></i></span>
+    <span class="input-group-text red lighten-3" id="basic-text1">
+        <a
+                onclick="document.getElementById('search').submit()"> <i class="fas fa-search text-grey"
+                                                                         aria-hidden="true"></i></a>
+       </span>
                             </div>
 
                         </div>

@@ -318,7 +318,7 @@
         </div>
         <!-- Breadcrumb-->
         <div class="breadcrumb-dn mr-auto">
-            <p>FPT shop.com.vn</p>
+            <a href="/">FPT shop.com.vn</a>
         </div>
         <ul class="nav navbar-nav nav-flex-icons ml-auto">
 
