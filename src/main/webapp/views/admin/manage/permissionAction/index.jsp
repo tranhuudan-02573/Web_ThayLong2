@@ -1,5 +1,6 @@
-<%@ page import="vn.edu.hcmuaf.fit.model.user.User" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.user.PermissionAction" %>
 <%@ page import="java.util.List" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.user.User" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 
@@ -13,12 +14,6 @@
     <title>Document</title>
 </head>
 <body class="fixed-sn mdb-skin">
-
-<!--Double navigation-->
-<%
-    List<User> users = (List<User>) request.getAttribute("users");
-%>
-
 <!-- Central Modal Medium Success -->
 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -172,6 +167,12 @@
 <!-- Central Modal Medium Success-->
 <!--Main Layout-->
 <main class="mt-1">
+
+    <%
+        List<PermissionAction> permissionActionList = (List<PermissionAction>) request.getAttribute("actions");
+        User user = (User) request.getAttribute("user");
+    %>
+
     <div class="container-fluid panel-scroll">
 
         <div id="container">
@@ -191,7 +192,8 @@
                         </button>
                     </div>
 
-                    <a href="" class="white-text mx-3 text-uppercase ">danh sách người dùng</a>
+                    <a href="" class="white-text mx-3 text-uppercase ">danh sách quyen <%=user.getName()%>
+                    </a>
 
                     <div>
                         <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
@@ -346,19 +348,15 @@
                                     #
                                 </th>
                                 <th class="th-sm">
-                                    id
+                                    active
                                 </th>
                                 <th class="th-lg">
-                                    name
+                                    key
                                 </th>
                                 <th class="th-lg">
-                                    phone
+                                    group
                                 </th>
                                 <th class="th-lg">
-                                    permission
-                                </th>
-                                <th class="th-lg">
-
                                     updated_at
                                 </th>
                                 <th class="th-lg">
@@ -372,8 +370,8 @@
                             <!--Table body-->
                             <tbody>
                             <%
-                                for (int i = 0; i < users.size(); i++
-                                ) {
+                                for (int i = 0; i < permissionActionList.size(); i++) {
+
 
                             %>
                             <tr>
@@ -383,26 +381,22 @@
                                 </th>
                                 <td><%=i%>
                                 </td>
-                                <td><%=users.get(i).getId()%>
+                                <td><%=permissionActionList.get(i).isLicensed()%>
                                 </td>
-                                <td><%=users.get(i).getName()%>
+                                <td><%=permissionActionList.get(i)._action().getCode()%>
                                 </td>
-                                <td><%=users.get(i).getPhone()%>
+                                <td><%=permissionActionList.get(i)._action().getGroup()%>
                                 </td>
-                                <td><%=users.get(i).getPermission()%>
+                                <td><%=permissionActionList.get(i).getUpdated_at()%>
                                 </td>
-                                <td><%=users.get(i).getUpdated_at()%>
-                                </td>
-
                                 <td>
                                     <a href="" data-toggle="modal" data-target="#modalinfo"><i
                                             class="fa-regular fa-eye"></i></a>
                                     <a href="/src/views/admin/manausers/edit.html"><i class="far fa-edit"></i></a>
 
-                                    <a href="" data-toggle="modal" data-target="#modalConfirmDelete"><i
-                                            class="far fa-trash-alt"></i></a>
-                                    <a href="/admin/manage/user?id=<%=users.get(i).getId()%>"> <i
-                                            class="fa-solid fa-up-right-from-square mr-1"></i></a>
+                                    <a><i val2="<%=user.getId()%>"
+                                          val="<%=permissionActionList.get(i)._action().getId()%>"
+                                          class="far fa-trash-alt"></i></a>
                                 </td>
 
                             </tr>
@@ -429,6 +423,60 @@
 
     <script>
         $(document).ready(function () {
+            $('tbody').on('click', 'i.fa-trash-alt', function () {
+                console.log('dan')
+                dele($(this).attr('val'), $(this).attr('val2'));
+            });
+            $("#btnDelete").click(function() {
+                var data = {};
+                var ids = $('tbody input[type=checkbox]:checked').map(function () {
+                    return $(this).val();
+                }).get();
+                data['ids'] = ids;
+                deleteNew(data);
+            });
+
+            function dele(i, i2) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value === true) {
+                        $.ajax({
+                            type: 'DELETE', url: '/', data: {'actionId': i, 'userId': i2}
+                        }).done(function (responseText) {
+                            alert('Xóa Thành Công');
+                            row.remove().draw();
+                            if (DOMException != null) delTrue();
+                        }).fail(function (jqXHR, status, error) {
+                            if (jqXHR.status !== 500) {
+                                warningAlert(jqXHR.responseText);
+                            } else warningAlert("Xảy ra lỗi. <br/>Vui lòng liên hệ Admin để sửa lỗi.");
+                            if (delFalse != null) delFalse();
+                        })
+                    }
+                })
+            }
+
+            function alert(mes, type) {
+                Swal.fire({
+                    position: 'top',
+                    title: 'THÔNG BÁO',
+                    html: mes,
+                    icon: type != null ? type : 'success',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    showCancelButton: false,
+                    // confirmButtonText: 'Yes!'
+                })
+            }
+
             $('#exportjson').on('click', function () {
                 $("#detail").tableHTMLExport({
 

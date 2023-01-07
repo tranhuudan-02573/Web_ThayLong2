@@ -1450,7 +1450,7 @@
                             </div>
                         </div>
                         </form>
-
+                        <%if (p.question() != null && !p.question().isEmpty()) {%>
                         <div class="homecate d-none d-sm-block mb-4">
                             <div class="card">
                                 <div class="card-header text-danger    text-center">
@@ -1498,7 +1498,7 @@
                             </div>
 
                         </div>
-
+                        <%}%>
                         <div class="card mb-4" id="question">
                             <div class="card-header red-text  text-center">
                                 <h5 class="font-weight-500 my-1">Hỏi Đáp
@@ -1949,7 +1949,7 @@
                         </div>
                         <!--end phụ kiện-->
                         <%}%>
-                   
+
                         <div class="modal fade show" id="modalStarRating" tabindex="-1" role="dialog"
                              aria-labelledby="myModalLabel" aria-modal="true"
                              style="padding-right: 17px; display: none;">

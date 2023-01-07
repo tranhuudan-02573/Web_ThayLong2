@@ -39,9 +39,13 @@ public class PhoneDAO extends AbstractDAO<Phone> {
                 "saleId=:t.saleId " +
                 "  where id = :t.id", phone);
     }
+
     public void deleteSoftPhone(Phone phone) {
         phone.setDeleted_at(new Timestamp(System.currentTimeMillis()));
         update("update phones set status = 'da xoa' , deleted_at =:t.deleted_at,delete_by=:t.delete_by where id = :t.id ", phone);
+    }
 
+    public void delete(Phone phone) {
+        update(" delete from phones where id=:t.id", phone);
     }
 }

@@ -21,6 +21,13 @@ public class PhoneColorDAO extends AbstractDAO<PhoneColor> {
                 color);
     }
 
+    public void savePhoneColor(PhoneColor color) {
+        color.setCreated_at(new Timestamp(System.currentTimeMillis()));
+        color.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        insert("insert into phone_color (phoneId,colorId,img,created_at,updated_at,total) values(:t.phoneId,:t.colorId,:t.img,:t.created_at,:t.updated_at,:t.total)",
+                color);
+    }
+
 
     public void deletePhoneColor(Set<PhoneColor> s) {
         List<PhoneColor> imgs = new ArrayList<>(s);

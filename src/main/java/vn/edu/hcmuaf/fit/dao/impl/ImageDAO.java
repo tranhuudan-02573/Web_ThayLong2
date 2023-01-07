@@ -20,6 +20,13 @@ public class ImageDAO extends AbstractDAO<Image> {
                 img);
     }
 
+    public int insertImage(Image img) {
+        img.setCreated_at(new Timestamp(System.currentTimeMillis()));
+        img.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        return insertWithId("insert into images (link,`desc`,phoneId,created_at,updated_at) values(:t.link,:t.desc,:t.phoneId,:t.created_at,:t.updated_at)",
+                img);
+    }
+
     public void updateImageList(List<Image> old, List<Image> imgs) {
         if (old.size() < imgs.size()) {
             for (Image img : imgs) {

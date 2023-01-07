@@ -4,15 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
-import javax.inject.Inject;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-@WebServlet(name = "PhoneAPI", urlPatterns = {"/api/phone"})
+@WebServlet( urlPatterns = {"/api/phone"})
 public class PhoneAPI extends HttpServlet {
 
     @Override

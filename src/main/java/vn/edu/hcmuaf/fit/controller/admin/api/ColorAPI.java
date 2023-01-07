@@ -9,7 +9,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "ColorAPI", value = "/api/color")
+@WebServlet(value = "/api/color")
 public class ColorAPI extends HttpServlet {
 
     @Override
