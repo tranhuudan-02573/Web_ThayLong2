@@ -1,6 +1,10 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import vn.edu.hcmuaf.fit.dao.impl.PhoneReviewDAO;
+import vn.edu.hcmuaf.fit.model.phone.PhoneState;
+import vn.edu.hcmuaf.fit.model.review.PhoneReview;
+import vn.edu.hcmuaf.fit.until.HttpUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +28,10 @@ public class PhoneStateAPI extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        PhoneState phoneState = HttpUtil.of(request.getReader()).toModel(PhoneState.class);
 
     }
 

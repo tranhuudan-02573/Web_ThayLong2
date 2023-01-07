@@ -1,6 +1,11 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import vn.edu.hcmuaf.fit.dao.impl.PhoneDAO;
+import vn.edu.hcmuaf.fit.dao.impl.PhoneReviewDAO;
+import vn.edu.hcmuaf.fit.model.phone.Phone;
+import vn.edu.hcmuaf.fit.model.review.PhoneReview;
+import vn.edu.hcmuaf.fit.until.HttpUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,23 +23,32 @@ public class PhoneReviewAPI extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id").trim());
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-//       Color color = colorDAO.get(" and id = " + id, Color.class, null);
-//        mapper.writeValue(response.getOutputStream(), color);
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        PhoneReview phoneReview = HttpUtil.of(request.getReader()).toModel(PhoneReview.class);
+        new PhoneReviewDAO().insert(phoneReview);
+        mapper.writeValue(response.getOutputStream(), phoneReview);
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        PhoneReview phoneReview = HttpUtil.of(request.getReader()).toModel(PhoneReview.class);
+        new PhoneReviewDAO().delete(phoneReview);
+        mapper.writeValue(response.getOutputStream(), phoneReview);
     }
 
 }

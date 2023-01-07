@@ -1,6 +1,11 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import vn.edu.hcmuaf.fit.dao.impl.SpecDAO;
+import vn.edu.hcmuaf.fit.dao.impl.SpecTypeDAO;
+import vn.edu.hcmuaf.fit.model.phone.Spec;
+import vn.edu.hcmuaf.fit.model.phone.SpecType;
+import vn.edu.hcmuaf.fit.until.HttpUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,17 +29,32 @@ public class SpecTypeAPI extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        SpecType specType = HttpUtil.of(request.getReader()).toModel(SpecType.class);
+        new SpecTypeDAO().insertSpecType(specType);
+        mapper.writeValue(response.getOutputStream(), specType);
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        SpecType specType = HttpUtil.of(request.getReader()).toModel(SpecType.class);
+        new SpecTypeDAO().updateSpecType(specType);
+        mapper.writeValue(response.getOutputStream(), specType);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        SpecType specType = HttpUtil.of(request.getReader()).toModel(SpecType.class);
+        new SpecTypeDAO().deleteSpecType(specType);
+        mapper.writeValue(response.getOutputStream(), specType);
     }
 
 }

@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import vn.edu.hcmuaf.fit.dao.impl.UserDAO;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 import vn.edu.hcmuaf.fit.model.user.User;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
@@ -33,8 +34,8 @@ public class UserAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         User user = HttpUtil.of(request.getReader()).toModel(User.class);
-//        user = userService.save(user);
-//        mapper.writeValue(response.getOutputStream(), user);
+        new UserDAO().save(user);
+        mapper.writeValue(response.getOutputStream(), user);
     }
 
     @Override
@@ -43,8 +44,8 @@ public class UserAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         User user = HttpUtil.of(request.getReader()).toModel(User.class);
-//        user = userService.update(user);
-//        mapper.writeValue(response.getOutputStream(), user);
+        new UserDAO().update(user);
+        mapper.writeValue(response.getOutputStream(), user);
     }
 
     @Override
@@ -53,7 +54,8 @@ public class UserAPI extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         User user = HttpUtil.of(request.getReader()).toModel(User.class);
-//        userService.delete(user);
-//        mapper.writeValue(response.getOutputStream(), "{}");
+        new UserDAO().delete(user);
+        mapper.writeValue(response.getOutputStream(), user);
+
     }
 }

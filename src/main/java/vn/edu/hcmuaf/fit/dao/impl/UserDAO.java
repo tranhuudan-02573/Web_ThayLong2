@@ -51,6 +51,9 @@ public class UserDAO extends AbstractDAO<User> {
         return get(" and phone=" + phone, User.class, null).orElse(null) != null;
     }
 
+    public void delete(User s) {
+        update(" delete from users where id=:t.id", s);
+    }
 
 }
 
