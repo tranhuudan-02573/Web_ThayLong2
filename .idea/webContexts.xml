@@ -4,7 +4,10 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/common/web/header.jsp" value="file://$PROJECT_DIR$/src/main/webapp/common/web" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/admin/manage/brand/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/admin/manage/brand" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/admin/manage/color/edit.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/admin/manage/color" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/admin/manage/model/edit.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/admin/manage/model" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/admin/manage/sale/edit.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/admin/manage/sale" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/layout/header.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/layout" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/product.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views" />

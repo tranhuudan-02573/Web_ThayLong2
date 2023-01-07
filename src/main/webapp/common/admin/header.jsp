@@ -126,7 +126,7 @@
                                 <%}%>
                                 <%if (user.get(Variable.Global.PHONE.toString()) != null) {%>
                                 <li>
-                                    <a class="collapsible-header active text-white waves-effect arrow-r "
+                                    <a class="collapsible-header  text-white waves-effect arrow-r "
                                        style="font-size: 16px;"><i
                                             class=" fas fa-solid fa-mobile-screen-button "></i>Điện thoại<i
                                             class="fas fa-angle-down rotate-icon"></i></a>

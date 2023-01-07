@@ -22,7 +22,7 @@ public class EditHandle extends HttpServlet {
             ids = Integer.parseInt(id.trim());
             if (ids != 0) {
                 Brand u = new BrandDAO().get(" and id = " + ids, Brand.class, null).get();
-                request.setAttribute("u", u);
+                request.setAttribute("brand", u);
             }
         }
 

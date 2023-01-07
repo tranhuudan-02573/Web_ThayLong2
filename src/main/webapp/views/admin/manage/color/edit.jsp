@@ -72,10 +72,22 @@
                                         name
                                     </th>
                                     <td><!-- Material outline counter input -->
-                                        <input id="name" value="<%=(color.getId()!=0)?color.getName():""%>" type="text"
+                                        <input id="name" value="<%=color.getName()%>"
+                                               type="text"
                                                length="10"
                                                class="form-control">
                                         <label for="name"></label>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Key
+                                    </th>
+                                    <td><!-- Material outline counter input -->
+                                        <input id="key" value="<%=color.getKey()%>"
+                                               type="text"
+                                               length="10"
+                                               class="form-control">
+                                        <label for="key"></label>
                                 </tr>
                                 </tbody>
                             </table>
@@ -83,7 +95,9 @@
                     </div>
                 </div>
                 <input type="hidden" value="<%=(color.getId()!=0)?color.getId():""%>" id="id" name="id"/>
-                <button type="submit" id="btnAddOrUpdateNew" class="btn btn-lg btn-primary"><%= (color.getId()!=0) ? "update":"create" %></button>
+                <button type="submit" id="btnAddOrUpdateNew"
+                        class="btn btn-lg btn-primary"><%= (color.getId() != 0) ? "update" : "create" %>
+                </button>
             </form>
         </div>
     </div>
@@ -98,7 +112,7 @@
                 var data = {};
                 var formData = $('#formSubmit').serializeArray();
                 $.each(formData, function (i, v) {
-                    data[""+v.name+""] = v.value;
+                    data["" + v.name + ""] = v.value;
                 });
                 var id = $('#id').val();
                 if (id == "") {
@@ -107,6 +121,7 @@
                     // updateNew(data);
                 }
             });
+
             function addNew(data) {
                 $.ajax({
                     url: '/admin/manage/color/edit',
@@ -122,6 +137,7 @@
                     }
                 });
             }
+
             // SideNav Initialization
             $(".button-collapse").sideNav({
                 slim: true

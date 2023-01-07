@@ -235,7 +235,7 @@
 
             <td>
              <i class="fa-regular fa-eye view-detail" val="<%=colors.get(i).getId()%>"></i>
-              <a href="${pageContext.request.contextPath}/admin/manage/color/edit?id=<%=colors.get(i).getId()%>"><i class="far fa-edit"></i></a>
+              <a href="/admin/manage/color/edit?id=<%=colors.get(i).getId()%>"><i class="far fa-edit"></i></a>
 
               <a href="" data-toggle="modal" data-target="#modalConfirmDelete"><i class="far fa-trash-alt"></i></a>
             </td>

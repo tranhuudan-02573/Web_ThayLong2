@@ -18,7 +18,7 @@ public class IndexHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Spec> users = new SpecDAO().list("", Spec.class, null, null, null, null);
-        request.setAttribute("pps", users);
+        request.setAttribute("listSpec", users);
         request.getRequestDispatcher("/views/admin/manage/spec/index.jsp").forward(request, response);
 
     }

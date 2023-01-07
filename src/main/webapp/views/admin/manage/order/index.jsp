@@ -1,3 +1,5 @@
+<%@ page import="vn.edu.hcmuaf.fit.model.order.Order" %>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
@@ -10,7 +12,9 @@
         <title>Document</title>
     </head>
 <body class="fixed-sn mdb-skin">
-
+<%
+    List<Order> listOrder = (List<Order>) request.getAttribute("order");
+%>
   <!--Double navigation-->
   <!--/.Double navigation-->
 
@@ -177,18 +181,12 @@
                                                           id
                                                       </th>
                                                       <th class="th-lg">
-                                                          name
+                                                          payment
                                                       </th>
                                                       <th class="th-lg">
-                                                          phone
+                                                          total
                                                       </th>
-                                                      <th class="th-lg">
-                                                          permission
-                                                      </th>
-                                                      <th class="th-lg">
 
-                                                          updated_at
-                                                      </th>
                                                       <th class="th-lg">
 
                                                           action
@@ -199,17 +197,21 @@
 
                                                   <!--Table body-->
                                                   <tbody>
+                                                  <%
+                                                      for (int i = 0; i <listOrder.size() ; i++) {
+
+
+                                                  %>
                                                   <tr>
                                                       <th scope="row">
                                                           <input class="form-check-input" type="checkbox" id="checkbox1">
                                                           <label class="form-check-label" for="checkbox1" class="label-table"></label>
                                                       </th>
-                                                      <td>Mark</td>
-                                                      <td>Otto</td>
-                                                      <td>@mdo</td>
-                                                      <td>Mark</td>
-                                                      <td>Otto</td>
-                                                      <td>@mdo</td>
+                                                      <td><%=i%></td>
+                                                      <td><%=listOrder.get(i).getId()%></td>
+                                                      <td><%=listOrder.get(i).getPayment()%></td>
+                                                      <td><%=listOrder.get(i).getTotal()%></td>
+
                                                       <td>
                                                           <a href=""data-toggle="modal" data-target="#modalinfo"><i class="fa-regular fa-eye"></i></a>
                                                           <a href=""><i class="far fa-edit"></i></a>
@@ -217,7 +219,7 @@
                                                       </td>
 
                                                   </tr>
-
+<% }%>
                                                   </tbody>
                                                   <!--Table body-->
                                               </table>
