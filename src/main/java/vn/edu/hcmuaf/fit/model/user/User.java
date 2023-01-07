@@ -44,17 +44,14 @@ public class User extends Base<User> implements Serializable {
 
 
     public Action get(String v) {
-
         List<PermissionAction> acs = _actions();
         for (PermissionAction a : acs
         ) {
             if (a._action().getCode().equals(v)) return a._action();
-
         }
         return null;
 
     }
-
 
     public UserState _userState() {
         return new AbstractDAO<UserState>("user_states").get(" and id=" + this.user_stateId, UserState.class, null).get();

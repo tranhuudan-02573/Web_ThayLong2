@@ -1,9 +1,7 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.user;
 
-import vn.edu.hcmuaf.fit.constant.Variable;
 import vn.edu.hcmuaf.fit.dao.impl.UserDAO;
 import vn.edu.hcmuaf.fit.model.user.User;
-import vn.edu.hcmuaf.fit.until.SessionUntil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +18,6 @@ public class IndexHandle extends HttpServlet {
         List<User> users = new UserDAO().list("", User.class, null, null, null, null);
         request.setAttribute("users", users);
         request.getRequestDispatcher("/views/admin/manage/user/index.jsp").forward(request, response);
-
     }
 
     @Override

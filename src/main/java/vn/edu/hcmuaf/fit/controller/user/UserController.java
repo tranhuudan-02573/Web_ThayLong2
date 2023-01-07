@@ -16,31 +16,69 @@ import java.io.IOException;
 public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        request.getRequestDispatcher("/views/web/user.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/web/user.jsp#panel21");
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String name = request.getParameter("name");
-        String gender = request.getParameter("gender");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
+            ServletException, IOException {
+        String action = request.getParameter("action");
         User u = (User) SessionUntil.get(request, Variable.Global.USER.toString());
-        u.setName(name);
-        u.setGender((Integer.parseInt(gender) == 1));
-        u.setEmail(email);
-        u.setPhone(phone);
-        u.setAddress(address);
+        if (action != null && action.equals("update-info")) {
+
+            String name = request.getParameter("name");
+            String gender = request.getParameter("gender");
+            String email = request.getParameter("email");
+            String phone = request.getParameter("phone");
+            String address = request.getParameter("address");
+
+            u.setName(name);
+            u.setGender((Integer.parseInt(gender) == 1));
+            u.setEmail(email);
+            u.setPhone(phone);
+            u.setAddress(address);
 
 
-        new UserDAO().update(u);
-        SessionUntil.set(request, Variable.Global.TYPE.toString(), "success");
-        SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "da cap nhat thanh cong");
+            if (new UserDAO().update(u)) {
+                SessionUntil.set(request, Variable.Global.TYPE.toString(), "success");
+                SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "da cap nhat thanh cong");
+            } else {
+                SessionUntil.set(request, Variable.Global.TYPE.toString(), "error");
+                SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "cap nhat that bai");
+            }
+            response.sendRedirect("/user-profile");
 
-        response.sendRedirect("/user-profile");
+        }
+        if (action != null && action.equals("update-pass")) {
+            String passOld = request.getParameter("pass-old");
+            String passN = request.getParameter("pass-new");
+            String log = request.getParameter("log");
+            String page = "";
+            if (new UserDAO().checkPass(u, passOld)) {
+                if (!new UserDAO().checkPass(u, passN)) {
+                    if (new UserDAO().updatePass(u, passN)) {
+                        SessionUntil.set(request, Variable.Global.TYPE.toString(), "success");
+                        SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "da cap nhat thanh cong");
+                        page = "/user-profile";
+                    } else {
+                        SessionUntil.set(request, Variable.Global.TYPE.toString(), "error");
+                        SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "cap nhat that bai");
+                        page = "/user-profile";
+                    }
+                    if (log == null) page = "/logout";
+
+                } else {
+                    SessionUntil.set(request, Variable.Global.TYPE.toString(), "error");
+                    SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "mat khau moi khong dc trung mat khau cu");
+                    page = "/user-profile";
+                }
+            } else {
+                SessionUntil.set(request, Variable.Global.TYPE.toString(), "error");
+                SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "mat khau cu ko dung");
+                page = "/user-profile";
+            }
+            response.sendRedirect(page);
+        }
 
 
     }

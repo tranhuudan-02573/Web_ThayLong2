@@ -101,7 +101,7 @@
                         <div class="card-footer">
                             <div class=" d-flex justify-content-between align-items-center">
 											<span>Bạn đã có tài khoản? <a href="/login"
-                                                                          target="_blank"
+                                                                          target="_parent"
                                                                           class="text-danger">Đăng nhập</a></span>
                                 <button type="submit" class="btn btn-danger waves-effect" id="btn-register">
                                     Đăng ký

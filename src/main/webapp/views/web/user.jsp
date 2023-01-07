@@ -27,57 +27,63 @@
 
 <body>
 
-<div class="modal fade" id="modalChangePass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold text-uppercase ">đổi mật khẩu tài khoản</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body mx-3">
-                <div class="md-form mb-5">
-                    <i class="fas fa-envelope prefix grey-text text-danger"></i>
-                    <input type="email" id="email2" class="form-control validate">
-                    <label data-error="wrong" data-success="right" for="email2">Email</label>
-                </div>
-                <div class="md-form mb-5">
-                    <i class="fas fa-lock prefix grey-text text-danger"></i>
-                    <input type="email" id="password" class="form-control validate">
-                    <label data-error="wrong" data-success="right" for="password">Mật khẩu</label>
-                </div>
-
-                <div class="md-form mb-4">
-                    <i class="fas fa-repeat prefix grey-text text-danger"></i>
-                    <input type="password" id="defaultForm-pass" class="form-control validate">
-                    <label data-error="wrong" data-success="right" for="defaultForm-pass">Nhập lại mật khẩu</label>
-
-                </div>
-                <div class="d-flex justify-content-between">
-                    <!-- Material checked -->
-                    <!-- Material checked -->
-                    <div class="form-check p-0">
-                        <input type="checkbox" class="form-check-input" id="materialChecked2" checked>
-                        <label class="form-check-label" for="materialChecked2">Ghi nhớ mật khẩu</label>
+<main>
+    <%
+        User user = (User) session.getAttribute(Variable.Global.USER.toString());
+        Carts carts = (Carts) session.getAttribute(Variable.Global.CART.toString());
+    %>
+    <div class="modal fade" id="modalChangePass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="/user-profile" method="post" id="form2">
+                    <input hidden name="action" value="update-pass">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold text-uppercase ">đổi mật khẩu tài khoản</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <a href="/src/views/resetpass.html" class="text-danger">Quên mật khẩu</a>
-                </div>
-            </div>
-            <div class="modal-footer d-flex justify-content-between">
-                <span> Đăng nhập tài khoản khác? <a href="/src/index.html" class="text-danger">Thoát</a></span>
-                <button class="btn btn-danger waves-effect ">Thay đổi</button>
+                    <div class="modal-body mx-3">
+                        <div class="md-form mb-5">
+                            <i class="fas fa-envelope prefix grey-text text-danger"></i>
+                            <input type="password" id="pass-old" name="pass-old" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="pass-old">mat khau cu</label>
+                        </div>
+                        <div class="md-form mb-5">
+                            <i class="fas fa-lock prefix grey-text text-danger"></i>
+                            <input type="password" id="pass-new" name="pass-new" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="pass-new">Mật khẩu moi</label>
+                        </div>
+
+                        <div class="md-form mb-4">
+                            <i class="fas fa-repeat prefix grey-text text-danger"></i>
+                            <input type="password" id="repass-new" name="repass-new" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="repass-new">Nhập lại mật khẩu</label>
+
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <!-- Material checked -->
+                            <!-- Material checked -->
+                            <div class="form-check p-0">
+                                <input type="checkbox" class="form-check-input" name="log" id="log" checked>
+                                <label class="form-check-label" for="log">duy tri dang nhap</label>
+                            </div>
+                            <a href="/views/web/resetpass.jsp" class="text-danger">Quên mật khẩu</a>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <span> Đăng nhập tài khoản khác? <a href="/logout" class="text-danger">Thoát</a></span>
+                        <button type="submit" onclick="document.getElementById('form2').submit()"
+                                class="btn btn-danger waves-effect ">Thay đổi
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
 
-<%
-    User user = (User) session.getAttribute(Variable.Global.USER.toString());
-    Carts carts = (Carts) session.getAttribute(Variable.Global.CART.toString());
-%>
-<main>
+
     <div class="container">
         <div id="breadcrumb"></div>
         <section class="my-5">
@@ -132,7 +138,7 @@
                             </h5>
                         </div>
                         <form action="" method="post">
-                            <input hidden name="id" value="<%=user.getId()%>">
+                            <input hidden name="action" value="update-info">
                             <div class="card-body">
                                 <div class="my-4 row w-100 mx-auto">
                                     <div class="col-12">
@@ -431,12 +437,31 @@
 
 </main>
 
-
 <content tag="local_script">
     <script src="/lib/mdb4/js/addons/datatables.min.js"></script>
     <script>
         // Material Design example
         $(document).ready(function () {
+
+            let url = location.href.replace(/\/$/, "");
+            if (location.hash) {
+                const hash = url.split("#");
+                $('#myTabProductList a[href="#' + hash[1] + '"]').tab("show");
+                url = location.href.replace(/\/#/, "#");
+                history.replaceState(null, null, url);
+                setTimeout(() => {
+                    $(window).scrollTop(0);
+                }, 400);
+            }
+
+            $('a[data-toggle="tab"]').on("click", function () {
+                let newUrl;
+                const hash = $(this).attr("href");
+                newUrl = url.split("#")[0] + hash;
+                history.replaceState(null, null, newUrl);
+            });
+
+
             $('#dtMaterialDesignExample').DataTable();
             $('#dtMaterialDesignExample2').DataTable();
             $('#dtMaterialDesignExample_wrapper').find('label').each(function () {
