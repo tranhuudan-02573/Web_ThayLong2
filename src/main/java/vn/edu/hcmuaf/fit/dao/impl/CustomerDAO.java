@@ -28,8 +28,4 @@ public class CustomerDAO extends AbstractDAO<Customer> {
 
     }
 
-    public static void main(String[] args) {
-        System.out.println(new CustomerDAO().getID( "w1231@"));
-
-    }
 }

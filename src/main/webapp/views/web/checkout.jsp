@@ -42,7 +42,7 @@
                             <h5 class="font-weight-500 my-1 text-uppercase">Thông tin khách hàng</h5>
                         </div>
                         <div class="card-body">
-                            <form id="checkout-form">
+                            <form id="checkout-form" method="post">
                                 <div class="mb-2">
 
                                     <div class="my-2">
@@ -149,7 +149,7 @@
 
                                 for (CartItem c : cartItems
                                 ) {
-                                    if(!c.isSave()){
+                                    if(!c.getSave()){
 
                             %>
                             <dl class="row">

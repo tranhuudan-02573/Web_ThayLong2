@@ -156,6 +156,20 @@ public class Carts extends Base<Carts> {
         }
     }
 
+    public List<CartItem> carts() {
+        List<CartItem> rs = new ArrayList<>();
+
+        List<CartItem> c = new ArrayList<>(cartItemIntegerMap.keySet());
+        for (CartItem ci : c
+        ) {
+            if (!ci.getSave()) rs.add(ci);
+
+        }
+
+        return rs;
+
+    }
+
     public void updateQuantity(CartItem cartItem, int parseInt) {
         if (get(cartItem) != null) {
             cartItemIntegerMap.remove(get(cartItem));

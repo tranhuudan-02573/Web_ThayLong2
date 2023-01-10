@@ -7,6 +7,7 @@ import vn.edu.hcmuaf.fit.mail.MailReceipt;
 import vn.edu.hcmuaf.fit.model.cart.CartItem;
 import vn.edu.hcmuaf.fit.model.cart.Carts;
 import vn.edu.hcmuaf.fit.model.order.Order;
+import vn.edu.hcmuaf.fit.model.order.OrderDetail;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
 import vn.edu.hcmuaf.fit.model.user.Customer;
 import vn.edu.hcmuaf.fit.model.user.User;
@@ -30,90 +31,76 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Carts carts = (Carts) SessionUntil.get(request, Variable.Global.CART.toString());
-        if (carts.cartItems()==0) {
+        if (carts.cartItems() == 0) {
             SessionUntil.set(request, Variable.Global.TYPE.toString(), "error");
             SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "chua co sp nao");
             response.sendRedirect("/carts");
         }
 
-        else {
-            List<CartItem> cartItems = new ArrayList<>(carts.getCartItemIntegerMap().keySet());
-            // is customer
-            User user = (User) SessionUntil.get(request, "USER");
-            String cusEmail = request.getParameter("cus-email");
-            Customer cus;
-
-            if(cusEmail!=null && !new UserDAO().hasEmail(cusEmail)){
-                String cusGender = request.getParameter("gender");
-                String cusName = request.getParameter("cus-name");
-                String cusPhone = request.getParameter("cus-phone");
-                String cusAddress = request.getParameter("cus-address");
-
-                cus = new Customer();
-                cus.setEmail(cusEmail);cus.setName(cusName);
-                cus.setAddress(cusAddress);cus.setPhone(cusPhone);cus.setGender(cusGender);
-
-                new CustomerDAO().save(cus);
-            }
-//            MailReceipt.send(cusEmail,carts.cartItems(),carts.total(),cartItems);
-
-            if(user!=null){
-                Order order = new Order();
-                order.setUserId(user.getId());
-                order.setCustomerId(new CustomerDAO().getID(cusEmail));
-
-                new OrderDAO().save(order);
-            }
-
-            CartItemsDao itemsDao = new CartItemsDao();
-            carts.setUserId(new UserDAO().getID(cusEmail));
-            CartDao cartDao = new CartDao();
-            for (CartItem item:cartItems) {
-                // save cart Items
-                itemsDao.save(item);
-                // save cart
-                carts.setCart_itemId(itemsDao.getID());
-                try {
-                    cartDao.save(carts);
-                }
-                catch (Exception e){
-                }
-            }
-
-
 
 
 
             request.getRequestDispatcher("/views/web/checkout.jsp").forward(request, response);
-        }
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
+        Carts carts = (Carts) SessionUntil.get(request, Variable.Global.CART.toString());
+        List<CartItem> cartItems = new ArrayList<>(carts.getCartItemIntegerMap().keySet());
+        // is customer
+        User user = (User) SessionUntil.get(request, Variable.Global.USER.toString());
+        String cusEmail = request.getParameter("cus-email");
+        Customer cus;
+        String cusGender = request.getParameter("gender");
+        String cusName = request.getParameter("cus-name");
+        String cusPhone = request.getParameter("cus-phone");
+        String cusAddress = request.getParameter("cus-address");
 
 
-        if (SessionUntil.get(request, "USER") != null) {
-            User user = (User) SessionUntil.get(request, "USER");
-            String payment = request.getParameter("payment");
-            int code = Integer.parseInt(request.getParameter("code").trim());
-            Order o = new Order();
-            o.setUserId(user.getId());
-            o.setPayment(payment);
-            o.setCodeId(code);
-//            o.setTotal(user.total());
+        Order order = new Order();
 
+        if (user != null) {
+            order.setUserId(user.getId());
 
         } else {
-            Customer customer = FormUtil.toModel(Customer.class, request);
+            Customer customer = new Customer();
+            customer.setEmail(cusEmail);
+            customer.setAddress(cusAddress);
+            customer.setPhone(cusPhone);
+            customer.setName(cusName);
+            int idcus = new CustomerDAO().save(customer);
+            order.setCustomerId(idcus);
+        }
+        order.setTotal(carts.total());
+        int id = new OrderDAO().save(order);
+        List<CartItem> cartItemList = carts.carts();
 
-            int id = new AbstractDAO<Customer>("customers").insertWithId(" insert into customers (name,email,phone,address,gender) values (:t.name,:t.email,:t.phone,:t.address,:t.gender)", customer);
+        for (CartItem item : cartItemList) {
+            // save cart Items
+            OrderDetail oderDetail = new OrderDetail();
 
+            oderDetail.setQuantity(item.getQuantity());
+            oderDetail.setPrice(Double.parseDouble(item.getPrice()));
+//                oderDetail.setDiscount(null);
+            oderDetail.setPhoneId(item.getPhoneId());
+            oderDetail.setColorId(item.getColorId());
+            oderDetail.setOrderId(id);
 
+            new OrderDetailDAO().save(oderDetail);
 
+            new CartItemDAO().delete(item);
 
         }
 
+        MailReceipt.send(cusEmail, carts.cartItems(), carts.total(), cartItems);
+        carts.getCartItemIntegerMap().clear();
+
+        SessionUntil.set(request, Variable.Global.TYPE.toString(), "success");
+        SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "kiem tra mail cua ban");
+
+        response.sendRedirect("/user-profile#panel22");
     }
 
     public static void main(String[] args) {

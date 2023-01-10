@@ -10,12 +10,12 @@ public class OrderDetailDAO extends AbstractDAO<OrderDetail> {
         super("order_detail");
     }
 
-    public void save(OrderDetail od) {
+    public boolean save(OrderDetail od) {
 
         od.setCreated_at(new Timestamp(System.currentTimeMillis()));
         od.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
-        insert(" insert into order_detail (quantity,price,phoneId,orderId,colorId,created_at,updated_at)" +
+        return insert(" insert into order_detail (quantity,price,phoneId,orderId,colorId,created_at,updated_at)" +
                 " values (:t.quantity,:t.price,:t.phoneId,:t.orderId,:t.colorId,:t.created_at,:t.updated_at)", od);
 
     }
