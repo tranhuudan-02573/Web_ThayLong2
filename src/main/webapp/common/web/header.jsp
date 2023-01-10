@@ -21,7 +21,7 @@
                         </button>
                     </div>
                     <c:if test="${requestScope.messErr != null}">
-                        <div>
+                        <div id="mess-form">
                             <p style="color: red;text-align: center;padding-top: 19px;margin: 0;font-size: 18px;">${requestScope.messErr}</p>
                         </div>
                     </c:if>

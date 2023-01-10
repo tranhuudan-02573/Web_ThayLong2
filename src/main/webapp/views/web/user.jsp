@@ -7,6 +7,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.cart.CartItem" %>
 <%@ page import="vn.edu.hcmuaf.fit.constant.Variable" %>
+<%@ page import="vn.edu.hcmuaf.fit.until.SessionUntil" %>
+<%@ page import="vn.edu.hcmuaf.fit.dao.impl.UserDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 
@@ -137,7 +139,7 @@
                             <h5 class="my-2 h5  text-danger d-inline-block"><%=user.getName() + " - " + user.getPhone()%>
                             </h5>
                         </div>
-                        <form id="form">
+                        <form action="/user-profile" method="post">
                             <div class="card-body">
                                 <div class="my-4 row w-100 mx-auto">
                                     <div class="col-12">
@@ -444,17 +446,6 @@
     <script>
         // Material Design example
         $(document).ready(function () {
-            <%if(user!=null){%>
-            $('form#form').submit(function (event) {
-                event.preventDefault();
-                var form = $(this);
-                var j = {};
-                j = form.serializeJSON();
-                j['id'] = <%=user.getId()%>;
-                update(j, "/api/user");
-            });
-            <%}%>
-
 
             let url = location.href.replace(/\/$/, "");
             if (location.hash) {
