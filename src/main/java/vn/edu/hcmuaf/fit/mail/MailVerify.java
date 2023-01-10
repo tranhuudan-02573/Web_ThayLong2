@@ -1,7 +1,10 @@
 package vn.edu.hcmuaf.fit.mail;
 
+import vn.edu.hcmuaf.fit.model.cart.CartItem;
+
 import javax.mail.*;
 import javax.mail.internet.*;
+import java.util.List;
 import java.util.Properties;
 
 
@@ -10,9 +13,12 @@ public class MailVerify {
      * click btn active send redirect page Login
      * */
     public static void send(String to, String recipient, String email, String key) {
+    //    String fromEmail = "20130218@st.hcmuaf.edu.vn";
+//        String password = "mymeslmspxoogvoo";
 
-        String fromEmail = "20130218@st.hcmuaf.edu.vn";
-        String password = "mymeslmspxoogvoo";
+
+        String fromEmail = "sgfdainesend@gmail.com";
+        String password = "dtgpcnjxhmifbxxs";
 
         try {
             Properties pr = System.getProperties();
@@ -92,6 +98,10 @@ public class MailVerify {
                 "</body>\n" +
                 "\n" +
                 "</html>";
+    }
+
+    public static void main(String[] args) {
+
     }
 
 

@@ -42,13 +42,13 @@
                             <h5 class="font-weight-500 my-1 text-uppercase">Thông tin khách hàng</h5>
                         </div>
                         <div class="card-body">
-                            <form>
+                            <form id="checkout-form">
                                 <div class="mb-2">
 
                                     <div class="my-2">
                                         <div class="form-check form-check-inline ">
                                             <input type="radio" class="form-check-input"
-                                                   id="nam"
+                                                   id="nam" value="nam"
                                                    name="gender"  <%=(user!=null)?(!user.isGender()?"checked":""):"checked"%>>
                                             <label class="form-check-label"
                                                    for="nam">nam</label>
@@ -56,7 +56,7 @@
                                         </div>
                                         <div class="form-check form-check-inline ">
                                             <input type="radio" class="form-check-input"
-                                                   id="nu"
+                                                   id="nu" value="nu"
                                                    name="gender"<%=(user!=null)?(user.isGender()?"checked":""):""%>>
                                             <label class="form-check-label"
                                                    for="nu">nữ</label>
@@ -70,7 +70,7 @@
                                         <div class="md-form m-0">
                                             <i class="fas fa-user prefix text-danger"></i>
 
-                                            <input type="text" id="name" class="form-control"
+                                            <input type="text" id="name" class="form-control validate" name="cus-name"
                                                    value="<%=(user!=null)?user.getName():""%>">
                                             <label for="name">Tên khách hàng</label>
                                         </div>
@@ -79,7 +79,7 @@
                                         <!-- Material input -->
                                         <div class="md-form  m-0">
                                             <i class="fa-solid fa-phone prefix text-danger"></i>
-                                            <input type="text" id="phone" class="form-control"
+                                            <input type="text" id="phone" class="form-control validate" name="cus-phone"
                                                    value="<%=(user!=null)?user.getPhone():""%>">
                                             <label for="phone">Số điện thoại</label>
                                         </div>
@@ -91,13 +91,13 @@
                                 <div class="md-form">
                                     <i class="fa-solid fa-address-card prefix text-danger"></i>
                                     <input type="text" id="address"
-                                           class="form-control" value="<%=(user!=null)?user.getAddress():""%>">
+                                           class="form-control validate" name="cus-address" value="<%=(user!=null)?user.getAddress():""%>">
                                     <label for="address">Địa chỉ</label>
                                 </div>
                                 <div class="md-form">
                                     <i class="fa-solid fa-envelope prefix text-danger"></i>
                                     <input type="text" id="email"
-                                           class="form-control" value="<%=(user!=null)?user.getEmail():""%>">
+                                           class="form-control validate" name="cus-email" value="<%=(user!=null)?user.getEmail():""%>">
                                     <label for="email">Email</label>
                                 </div>
 
@@ -114,8 +114,6 @@
                                            id="safeTheInfo">
                                     <label class="form-check-label" for="safeTheInfo">Lưu thông tin đơn hàng</label>
                                 </div>
-
-
                             </form>
 
                         </div>
@@ -180,8 +178,13 @@
                                     <%=carts.total()%>
                                 </dt>
                             </dl>
-                            <button class="btn btn-danger waves-effect btn-lg btn-block" type="submit">Thanh toán
-                            </button>
+                               <button class="btn btn-danger waves-effect btn-lg btn-block" id="btn-pay">
+                                   Thanh toán
+                               </button>
+
+
+
+
                         </div>
 
                     </div>
@@ -200,10 +203,18 @@
 
 </main>
 
+<content tag="local_script">
+    <script>
+        $(document).ready(function () {
+            // $('.mdb-select').material_select();
+            $("#btn-pay").on("click", function (e) {
+                e.preventDefault();
+                $('#checkout-form').attr('action', '/checkout').submit();
+            });
+        })
+    </script>
 
-<script>$(document).ready(function () {
-    $('.mdb-select').material_select();
-});</script>
+</content>
 </body>
 
 </html>

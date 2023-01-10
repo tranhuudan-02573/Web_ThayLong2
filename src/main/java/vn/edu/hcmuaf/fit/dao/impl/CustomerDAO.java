@@ -13,8 +13,23 @@ public class CustomerDAO extends AbstractDAO<Customer> {
     public int save(Customer customer) {
         customer.setCreated_at(new Timestamp(System.currentTimeMillis()));
         customer.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        return insertWithId(" insert into customers (name,email,phone,address,gender,created_at,updated_at) " +
-                "values (:t.name,:t.email,:t.phone,:t.address,:t.gender,:t.created_at,:t.updated_at)", customer);
+        return insertWithId(" insert into customers (name,email,phone,address,created_at,updated_at,gender) " +
+                "values (:t.name,:t.email,:t.phone,:t.address,:t.created_at,:t.updated_at,"+("nam".equalsIgnoreCase(customer.getGender())?1:0)+")", customer);
+
+    }
+
+    public Integer getID(String cusEmail) {
+        try {
+            return  Integer.parseInt(getCustom("id","and email='"+cusEmail+"'"));
+        }
+        catch (Exception e){
+            return null;
+        }
+
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new CustomerDAO().getID( "w1231@"));
 
     }
 }

@@ -336,7 +336,7 @@
                             </table>
                             <hr>
                             <a class="btn btn-danger waves-effect btn-lg btn-block" type="submit"
-                               href="/checkout">đặt hàng</a>
+                               href="/views/web/checkout.jsp">đặt hàng</a>
                         </div>
                     </div>
                 </div>

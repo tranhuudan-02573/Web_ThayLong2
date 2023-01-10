@@ -6,6 +6,7 @@ import vn.edu.hcmuaf.fit.model.phone.Base;
 import vn.edu.hcmuaf.fit.model.phone.Color;
 import vn.edu.hcmuaf.fit.model.phone.PhoneColor;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,11 +14,20 @@ import java.util.Map;
 
 @Data
 @AllArgsConstructor
-public class Carts extends Base<Carts> {
+public class
+Carts extends Base<Carts> {
+    private Integer userId;
+    private Timestamp created_at;
+    private Timestamp updated_at;
+    private Integer cart_itemId;
+    private Integer quantity;
     private Map<CartItem, Integer> cartItemIntegerMap;
 
     public Carts() {
         cartItemIntegerMap = new HashMap<>();
+    }
+
+    public Carts(Map<CartItem, Integer> cartItemIntegerMap) {
     }
 
     public int cartItems() {
@@ -92,6 +102,7 @@ public class Carts extends Base<Carts> {
         ) {
             if (!c.isSave()) {
                 rs += c.getPrice() * getCartItemIntegerMap().get(c);
+
             }
 
         }

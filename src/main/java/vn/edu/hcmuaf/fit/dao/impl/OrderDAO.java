@@ -19,7 +19,7 @@ public class OrderDAO extends AbstractDAO<Order> {
         order.setUpdated_at(new Timestamp(System.currentTimeMillis()));
         order.setOrder_stateId(1);
         int id = insertWithId(" insert into orders (userId,customerId,payment,total,codeId,order_stateId,created_at,updated_at) " +
-                "values (:t.userId,:t.payment,:t.total,:t.codeId,:t.order_stateId,:t.created_at,:t.updated_at)", order);
+                "values (:t.userId,:t.customerId,:t.payment,:t.total,:t.codeId,:t.order_stateId,:t.created_at,:t.updated_at)", order);
         for (OrderDetail od : order._orderDetails()
         ) {
             new OrderDetailDAO("order_detail").save(od);

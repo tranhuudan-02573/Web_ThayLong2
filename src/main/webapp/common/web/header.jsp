@@ -361,8 +361,28 @@
                                    href="<%=(user!=null)?"/views/web/user.jsp#panel21":"/register"%>">
                                     <div><i class="fa fa-user fa-lg" aria-hidden="true" style="line-height: 1;"></i>
                                     </div>
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                     <%=(user != null) ? "tai khoan" : "dang ky"%>
+=======
+                                    <%=(user != null) ? "Tài khoản" : "Đăng ký"%>
+>>>>>>> Stashed changes
+=======
+                                    <%=(user != null) ? "Tài khoản" : "Đăng ký"%>
+>>>>>>> Stashed changes
+=======
+                                    <%=(user != null) ? "Tài khoản" : "Đăng ký"%>
+>>>>>>> Stashed changes
                                 </a>
+
+
+<%--                                <a class="nav-link text-center` `text-white " href="/views/user.html" data-toggle="modal"--%>
+<%--                                   data-target="#modalLoginForm">--%>
+<%--                                    <div><i class="fa fa-user fa-lg" aria-hidden="true" style="line-height: 1;"></i>--%>
+<%--                                    </div>--%>
+<%--                                    Tài khoản--%>
+<%--                                </a>--%>
                             </li>
                         </ul>
                     </div>

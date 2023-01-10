@@ -21,17 +21,17 @@
     %>
     <section class="my-5 ">
 
-        <div class="row ">
+        <div class="row justify-content-center">
 
             <%
 
                 if (user == null) {
             %>
-            <div class="col-xl-6 p-4 justify-content-center">
+            <div class="col-xl-6 p-4 ">
                 <div class="card" id="form-login">
                     <form action="/login" method="post" class="needs-validation2" novalidate>
                         <div class="card-header text-white text-center bg-danger text-uppercase font-weight-bold ">
-                            <h4 class="mt-2"> đăng nhap tài khoản</h4>
+                            <h4 class="mt-2"> đăng nhập tài khoản</h4>
                         </div>
                         <c:if test="${requestScope.messErr != null}">
                             <div>
@@ -72,7 +72,7 @@
                                                                            target="_blank"
                                                                            class="text-danger">Đăng ký</a></span>
                             <button type="submit" class="btn btn-danger waves-effect" id="btn-login">
-                                Đăng nhap
+                                Đăng nhập
                             </button>
                             <c:if test="${requestScope.messActive!=null}">
                                 <script>
