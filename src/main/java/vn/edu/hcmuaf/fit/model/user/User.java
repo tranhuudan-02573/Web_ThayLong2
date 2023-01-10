@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.model.user;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vn.edu.hcmuaf.fit.constant.Variable;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.dao.impl.CartItemDAO;
 import vn.edu.hcmuaf.fit.dao.impl.UserStateDAO;
@@ -14,17 +15,16 @@ import vn.edu.hcmuaf.fit.model.phone.Phone;
 import vn.edu.hcmuaf.fit.model.review.Review;
 import vn.edu.hcmuaf.fit.model.review.Vote;
 
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends Base<User> implements Serializable {
+public class User extends Base<User> implements Serializable, HttpSessionBindingListener {
     private String name;
     private String password;
     private String avatar;
@@ -119,4 +119,38 @@ public class User extends Base<User> implements Serializable {
     }
 
 
+    @Override
+    public void valueBound(HttpSessionBindingEvent event) {
+        System.out.println("-- HttpSessionBindingListener#valueBound() --");
+        System.out.printf("added attribute name: %s, value:%s %n",
+                event.getName(), event.getValue());
+        String attributeName = event.getName();
+        Object attributeValue = event.getValue();
+        if (attributeName.equals(Variable.Global.USER.toString())) {
+            Carts cart = (Carts) event.getSession().getAttribute(Variable.Global.CART.toString());
+            User user = (User) event.getValue();
+            cart.merge(user.listToCarts());
+        }
+    }
+
+    @Override
+    public void valueUnbound(HttpSessionBindingEvent event) {
+        System.out.println("-- HttpSessionBindingEvent#valueUnbound() --");
+        System.out.printf("removed attribute name: %s, value:%s %n",
+                event.getName(), event.getValue());
+
+        String attributeName = event.getName();
+        Object attributeValue = event.getValue();
+        if (attributeName.equals(Variable.Global.USER.toString())) {
+            Carts cart = (Carts) event.getSession().getAttribute(Variable.Global.CART.toString());
+            User user = (User) event.getValue();
+            List<CartItem> cartItems = new ArrayList<>(cart.getCartItemIntegerMap().keySet());
+            for (CartItem c : cartItems
+            ) {
+                c.setUserId(user.getId());
+                new CartItemDAO().delete(c);
+                new CartItemDAO().save(c);
+            }
+        }
+    }
 }

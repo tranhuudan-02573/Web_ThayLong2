@@ -11,7 +11,6 @@ public class CartItemDAO extends AbstractDAO<CartItem> {
     }
 
     public void save(CartItem c) {
-        System.out.println("save");
         c.setCreated_at(new Timestamp(System.currentTimeMillis()));
         c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
         insert(" insert into cart_items(phoneId,colorId,quantity,price,isSave,userId,created_at,updated_at) values(:t.phoneId,:t.colorId,:t.quantity,:t.price,:t.save,:t.userId,:t.created_at,:t.updated_at)", c);
