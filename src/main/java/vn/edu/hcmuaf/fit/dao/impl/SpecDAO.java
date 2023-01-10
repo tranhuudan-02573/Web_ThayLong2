@@ -9,24 +9,24 @@ public class SpecDAO extends AbstractDAO<Spec> {
     public SpecDAO() {
         super("specs");
     }
+
     public int insertSpec(Spec pp) {
 
         pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
         pp.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        return  insertWithId("insert into specs (name,created_at,updated_at, spec_typeId)" +
-                        " values(:t.name,:t.created_at,:t.updated_at,:t.specTypeId)",
+        return insertWithId("insert into specs (`name`,`key`,created_at,updated_at, spec_typeId)" +
+                        " values(:t.name,:t.key,:t.created_at,:t.updated_at,:t.spec_typeId)",
                 pp);
     }
+
     public void deleteSpec(Spec c) {
-        delete("delete from specs  where id = :t.id" , c);
+        delete("delete from specs  where id = :t.id", c);
     }
 
 
     public void updateSpec(Spec c) {
         c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        update("update specs set name = :t.name,updated_at = :t.updated_at, spec_typeId = :t.specTypeId where id = :t.id", c);
-
-
+        update("update specs set `name` = :t.name,`key`=:t.key,updated_at = :t.updated_at, spec_typeId = :t.spec_typeId where id = :t.id", c);
     }
 
 }

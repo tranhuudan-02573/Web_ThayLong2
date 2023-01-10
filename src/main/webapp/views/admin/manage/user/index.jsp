@@ -1,5 +1,10 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.user.User" %>
 <%@ page import="java.util.List" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.user.UserState" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.Type" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.Brand" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.Cap" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.Model" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 
@@ -17,6 +22,8 @@
 <!--Double navigation-->
 <%
     List<User> users = (List<User>) request.getAttribute("users");
+
+
 %>
 
 <!-- Central Modal Medium Success -->
@@ -33,100 +40,125 @@
                     <span aria-hidden="true" class="white-text">&times;</span>
                 </button>
             </div>
+            <form id="form">
+                <!--Body-->
+                <div class="modal-body">
+                    <table class="table table-hover border">
+                        <thead>
 
-            <!--Body-->
-            <div class="modal-body">
-                <table class="table table-hover border">
-                    <thead>
-
-                    </thead>
-                    <tbody>
-
-
-                    <tr>
-                        <th>name</th>
-                        <td><input id="input-char-counter1" type="text" length="10" class="form-control">
-                            <label for="input-char-counter1"></label></td>
-                    </tr>
-                    <tr>
-                        <th>address</th>
-                        <td><input id="input-char-counter2" type="text" length="10" class="form-control">
-                            <label for="input-char-counter2"></label></td>
-                    </tr>
-                    <tr>
-                        <th>gender</th>
-                        <td>
-
-                            <!-- Material inline 2 -->
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline2"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline2">Nam</label>
-                            </div>
-
-                            <!-- Material inline 3 -->
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline3"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline3">Nữ</label>
-                            </div>
+                        </thead>
+                        <tbody>
 
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>email</th>
-                        <td><input id="input-char-counter4" type="text" length="10" class="form-control">
-                            <label for="input-char-counter4"></label></td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>active</th>
-                        <td>
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="customSwitches">
-                                <label class="custom-control-label" for="customSwitches"></label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>permission</th>
-                        <td>
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline1"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline1">user mod</label>
-                            </div>
+                        <tr>
+                            <th>name</th>
+                            <td><input id="input-char-counter1" type="text" name="name" length="10"
+                                       class="form-control">
+                                <label for="input-char-counter1"></label></td>
+                        </tr>
+                        <tr>
+                            <th>address</th>
+                            <td><input id="input-char-counter2" name="address" type="text" length="10"
+                                       class="form-control">
+                                <label for="input-char-counter2"></label></td>
+                        </tr>
+                        <tr>
+                            <th>gender</th>
+                            <td>
 
-                            <!-- Material inline 2 -->
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline2"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline2">admin</label>
-                            </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" id="nam"
+                                           name="gender" data-value-type="number" value="1" checked>
+                                    <label class="form-check-label" for="nam">Nam</label>
+                                </div>
 
-                            <!-- Material inline 3 -->
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline3"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline3">admin 2</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>status</th>
-                        <td><input id="input-char-counter5" type="text" length="10" class="form-control">
-                            <label for="input-char-counter5"></label></td>
-                    </tr>
+                                <!-- Material inline 3 -->
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" id="nu"
+                                           name="gender" data-value-type="number" value="0">
+                                    <label class="form-check-label" for="nu">Nữ</label>
+                                </div>
 
 
-                    </tbody>
-                </table>
-            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>email</th>
+                            <td><input id="input-char-counter4" name="email" type="text" length="10"
+                                       class="form-control">
+                                <label for="input-char-counter4"></label></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>phone</th>
+                            <td><input id="input-char-counter5" name="phone" type="text" length="10"
+                                       class="form-control">
+                                <label for="input-char-counter5"></label></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>password</th>
+                            <td><input id="pass" name="password" type="password"
+                                       class="form-control">
+                                <label for="pass"></label></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>active</th>
+                            <td>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" name="active" data-value-type="number" value="1"
+                                           data-unchecked-value="0" checked
+                                           class="custom-control-input" id="customSwitches">
+                                    <label class="custom-control-label" for="customSwitches"></label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>permission</th>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" id="user"
+                                           name="permission" value="USER" checked>
+                                    <label class="form-check-label" for="user">USER</label>
+                                </div>
 
+                                <!-- Material inline 3 -->
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" id="admin"
+                                           name="permission" value="ADMIN">
+                                    <label class="form-check-label" for="admin">ADMIN</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>status</th>
+                            <td>
+                                <select data-value-type="number" class="mdb-select md-form" name="user_stateId">
+                                    <%
+                                        List<UserState> us = (List<UserState>) request.getAttribute("us");
+                                        for (int i = 0; i < us.size(); i++) {
+
+                                    %>
+                                    <option <%=(i == 0) ? "selected" : ""%>
+                                            value="<%=us.get(i).getId()%>"><%=us.get(i).getName()%>
+                                    </option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
+
+                            </td>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </form>
             <!--Footer-->
             <div class="modal-footer justify-content-center">
-                <a type="button" data-toggle="modal" data-target="#centralModalSuccess"
+                <a type="button" onclick="$('#form').submit()"
                    class="btn btn-warning text-uppercase  ">tạo</a>
                 <a type="button" class="btn btn-outline-warning waves-effect text-uppercase  "
                    data-dismiss="modal">Hủy</a>
@@ -136,39 +168,6 @@
     </div>
 </div>
 <!-- Central Modal Medium Success -->
-<div class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-notify modal-success" role="document">
-        <!--Content-->
-        <div class="modal-content">
-            <!--Header-->
-            <div class="modal-header">
-                <p class="heading lead">Modal Success</p>
-
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="white-text">&times;</span>
-                </button>
-            </div>
-
-            <!--Body-->
-            <div class="modal-body">
-                <div class="text-center">
-                    <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit iusto nulla aperiam blanditiis
-                        ad consequatur in dolores culpa, dignissimos, eius non possimus fugiat. Esse ratione fuga, enim,
-                        ab officiis totam.</p>
-                </div>
-            </div>
-
-            <!--Footer-->
-            <div class="modal-footer justify-content-center">
-                <a type="button" class="btn btn-success">Get it now <i class="far fa-gem ml-1 text-white"></i></a>
-                <a type="button" class="btn btn-outline-success waves-effect" data-dismiss="modal">No, thanks</a>
-            </div>
-        </div>
-        <!--/.Content-->
-    </div>
-</div>
 <!-- Central Modal Medium Success-->
 <!--Main Layout-->
 <main class="mt-1">
@@ -194,7 +193,8 @@
                     <a href="" class="white-text mx-3 text-uppercase ">danh sách người dùng</a>
 
                     <div>
-                        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                        <button type="button" onclick="location.reload()"
+                                class="btn btn-outline-white btn-rounded btn-sm px-2">
                             <i class="fa-solid fa-rotate-left"></i>
                         </button>
                         <button data-toggle="modal" data-target="#add" type="button"
@@ -216,7 +216,7 @@
                 <!--/Card image-->
 
                 <!-- Modal: modalCart -->
-                <div class="modal fade" id="modalinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="viewDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog-scrollable modal-dialog modal-lg" role="document">
                         <div class="modal-content">
@@ -237,51 +237,51 @@
                                     <tbody>
 
                                     <tr>
-                                        <th>#</th>
-                                        <td>da</td>
+                                        <th>id</th>
+                                        <td class="font-weight-normal align-left-10 detail-id"></td>
                                     </tr>
                                     <tr>
                                         <th>Name</th>
-                                        <td>da</td>
+                                        <td class="font-weight-normal align-left-10 detail-name"></td>
                                     </tr>
                                     <tr>
                                         <th>Phone</th>
-                                        <td>da</td>
+                                        <td class="font-weight-normal align-left-10 detail-phone"></td>
                                     </tr>
                                     <tr>
                                         <th>Address</th>
-                                        <td>da</td>
+                                        <td class="font-weight-normal align-left-10 detail-addess"></td>
                                     </tr>
                                     <tr>
                                         <th>Gender</th>
-                                        <td>da</td>
+                                        <td class="font-weight-normal align-left-10 detail-gender"></td>
                                     </tr>
                                     <tr>
-                                        <th>Eamil</th>
-                                        <td>da</td>
+                                        <th>email</th>
+                                        <td class="font-weight-normal align-left-10 detail-email"></td>
                                     </tr>
                                     <tr>
                                         <th>Avatar</th>
-                                        <td>da</td>
+                                        <td class="font-weight-normal align-left-10 detail-avatar"></td>
                                     </tr>
                                     <tr>
                                         <th>Created_at</th>
-                                        <td>da</td>
+                                        <td class="font-weight-normal align-left-10 detail-created"></td>
                                     </tr>
                                     <tr>
                                         <th>Updated_at</th>
-                                        <td>da</td>
+                                        <td class="font-weight-normal align-left-10 detail-updated"></td>
                                     </tr>
                                     <tr>
                                         <th>Active</th>
-                                        <td>da</td>
+                                        <td class="font-weight-normal align-left-10 detail-active"></td>
                                     </tr>
                                     <th>Permission</th>
-                                    <td>da</td>
+                                    <td class="font-weight-normal align-left-10 detail-permission"></td>
                                     </tr>
                                     <tr>
                                         <th>Status</th>
-                                        <td>da</td>
+                                        <td class="font-weight-normal align-left-10 detail-status"></td>
                                     </tr>
 
                                     </tbody>
@@ -290,10 +290,10 @@
                             </div>
                             <!--Footer-->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-default text-uppercase"
-                                        data-dismiss="modal">xóa
+                                <button type="button" val="" class="btn btn-outline-default text-uppercase"
+                                        id="delete">xóa
                                 </button>
-                                <a href="/src/views/admin/manausers/edit.html" class="btn btn-default text-uppercase">chỉnh
+                                <a href="" id="edit" class="btn btn-default text-uppercase">chỉnh
                                     sửa</a>
                             </div>
                         </div>
@@ -301,33 +301,6 @@
                 </div>
                 <!-- Modal: modalCart -->
                 <!--Modal: modalConfirmDelete-->
-                <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
-                        <!--Content-->
-                        <div class="modal-content text-center">
-                            <!--Header-->
-                            <div class="modal-header d-flex justify-content-center">
-                                <p class="heading">Are you sure?</p>
-                            </div>
-
-                            <!--Body-->
-                            <div class="modal-body">
-
-                                <i class="fas fa-times fa-4x animated rotateIn"></i>
-
-                            </div>
-
-                            <!--Footer-->
-                            <div class="modal-footer flex-center">
-                                <a href="" class="btn  btn-outline-danger">Yes</a>
-                                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
-                            </div>
-                        </div>
-                        <!--/.Content-->
-                    </div>
-                </div>
                 <!--Modal: modalConfirmDelete-->
                 <div class="px-4">
 
@@ -395,12 +368,12 @@
                                 </td>
 
                                 <td>
-                                    <a href="" data-toggle="modal" data-target="#modalinfo"><i
-                                            class="fa-regular fa-eye"></i></a>
-                                    <a href="/src/views/admin/manausers/edit.html"><i class="far fa-edit"></i></a>
-
-                                    <a href="" data-toggle="modal" data-target="#modalConfirmDelete"><i
-                                            class="far fa-trash-alt"></i></a>
+                                    <a><i val="<%=users.get(i).getId()%>"
+                                          class="fa-regular fa-eye"></i></a>
+                                    <a href="/admin/manage/user/edit?id=<%=users.get(i).getId()%>"><i
+                                            class="far fa-edit"></i></a>
+                                    <a><i val="<%=users.get(i).getId()%>"
+                                          class="far fa-trash-alt"></i></a>
                                     <a href="/admin/manage/user?id=<%=users.get(i).getId()%>"> <i
                                             class="fa-solid fa-up-right-from-square mr-1"></i></a>
                                 </td>
@@ -423,61 +396,63 @@
 </main>
 <content tag="local_script">
     <script src="/src/js/admin/form.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.2.3/jspdf.plugin.autotable.js"></script>
-    <script src="/src/lib/export-table-json-csv-txt-pdf/src/tableHTMLExport.js"></script>
-
     <script>
         $(document).ready(function () {
-            $('#exportjson').on('click', function () {
-                $("#detail").tableHTMLExport({
-
-                    // csv, txt, json, pdf
-                    type: 'json',
-
-                    // file name
-                    filename: 'sample.json'
-
-                });
-            })
-            $('#exportpdf').on('click', function () {
-                var doc = new jsPDF('p', 'pt', 'a4');
-
-                doc.autoTable({
-                    html: '#detail'
-                });
-                doc.save('table.pdf');
 
 
-            })
-            $('#exportcsv').on('click', function () {
-                $("#detail").tableHTMLExport({
+            $('form#form-add').submit(function (event) {
+                event.preventDefault(); // Prevent the form from submitting via the browser
+                var form = $(this);
+                var j = {};
+                j = form.serializeJSON();
+                add(j, "/api/user");
+            });
 
-// csv, txt, json, pdf
-                    type: 'csv',
-
-                    // default file name
-                    filename: 'tableHTMLExport.csv',
-
-                    // for csv
-                    separator: ',',
-                    newline: '\r\n',
-                    trimContent: true,
-                    quoteFields: true,
-
-                    // CSS selector(s)
-                    ignoreColumns: '',
-                    ignoreRows: '',
-
-                    // your html table has html content?
-                    htmlContent: false,
-
-                    // debug
-                    consoleLog: false,
-
-                });
+            $(' tbody').on('click', 'i.fa-trash-alt ', function () {
+                data = {
+                    id: $(this).attr('val')
+                }
+                dele(data, "/api/user");
+            });
+            $('#delete').on('click', function () {
+                data = {
+                    id: $(this).attr('val')
+                }
+                dele(data, "/api/user");
             })
 
+
+            $(' tbody').on('click', 'i.fa-eye', function () {
+                view($(this).attr('val'));
+            });
+
+
+            function view(id) {
+                $.ajax({
+                    type: 'GET', url: "/api/user" + "?id=" + id
+
+
+                }).done(function (responseText) {
+                    $('#viewDetail').modal();
+                    $('#viewDetail .detail-id').text(responseText.id);
+                    $('#viewDetail .detail-name').text(responseText.name);
+                    $('#viewDetail .detail-phone').text(responseText.phone);
+                    $('#viewDetail .detail-address').text(responseText.address);
+                    $('#viewDetail .detail-gender').text(responseText.gender);
+                    $('#viewDetail .detail-email').text(responseText.email);
+                    $('#viewDetail .detail-created').text(responseText.created_at);
+                    $('#viewDetail .detail-updated').text(responseText.updated_at);
+                    $('#viewDetail .detail-active').text(responseText.active);
+                    $('#viewDetail .detail-permission').text(responseText.permission);
+                    $('#viewDetail .detail-status').text(responseText.user_stateId);
+                    $('#viewDetail #edit').attr('href', '/admin/manage/user/edit?id=' + responseText.id);
+                    $('#viewDetail #delete').attr('val', responseText.id);
+                }).fail(function (jqXHR, status, error) {
+                    if (jqXHR.status !== 500) {
+                        warningAlert('Lỗi liệu lỗi');
+                    } else warningAlert("Xảy ra lỗi. <br/>Vui lòng liên hệ Admin.");
+                })
+            }
 
             $('table#detail').DataTable({
                 "scrollY": "100vh",

@@ -65,8 +65,5 @@ public class Home extends HttpServlet {
 
     }
 
-    public static void main(String[] args) {
-        System.out.println(new AbstractDAO<Sale>("sales").list(" and now() between start_at and end_at ", Sale.class, null, 6, null, null));
-    }
 
 }

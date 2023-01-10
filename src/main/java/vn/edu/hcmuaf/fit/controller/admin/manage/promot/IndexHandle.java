@@ -16,7 +16,7 @@ public class IndexHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Promot> users = new PromotDAO().list("", Promot.class, null, null, null, null);
-        request.setAttribute("pps", users);
+        request.setAttribute("promots", users);
         request.getRequestDispatcher("/views/admin/manage/promot/index.jsp").forward(request, response);
 
     }

@@ -166,7 +166,7 @@
                                     for (int i = 0; i < cartItems.size(); i++
                                     ) {
 
-                                        if (!cartItems.get(i).isSave()) {
+                                        if (!cartItems.get(i).getSave()) {
                                 %>
 
                                     <tr>

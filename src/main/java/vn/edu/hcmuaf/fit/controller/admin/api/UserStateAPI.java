@@ -1,8 +1,7 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import vn.edu.hcmuaf.fit.dao.impl.UserDAO;
-import vn.edu.hcmuaf.fit.model.user.User;
+import vn.edu.hcmuaf.fit.dao.impl.UserStateDAO;
 import vn.edu.hcmuaf.fit.model.user.UserState;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
@@ -19,11 +18,15 @@ public class UserStateAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ObjectMapper mapper = new ObjectMapper();
-        int id = Integer.parseInt(request.getParameter("id").trim());
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-//       Color color = colorDAO.get(" and id = " + id, Color.class, null);
-//        mapper.writeValue(response.getOutputStream(), color);
+        String id = request.getParameter("id");
+
+        if (id != null) {
+            UserState users = new UserStateDAO().get(" and id= " + id, UserState.class, null).get();
+            mapper.writeValue(response.getOutputStream(), users);
+        } else
+            mapper.writeValue(response.getOutputStream(), "{}");
     }
 
     @Override

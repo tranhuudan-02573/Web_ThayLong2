@@ -36,7 +36,7 @@
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="/user-profile" method="post" id="form2">
+                <form action="/change-pass" method="post" id="form2">
                     <input hidden name="action" value="update-pass">
                     <div class="modal-header text-center">
                         <h4 class="modal-title w-100 font-weight-bold text-uppercase ">đổi mật khẩu tài khoản</h4>
@@ -69,7 +69,7 @@
                                 <input type="checkbox" class="form-check-input" name="log" id="log" checked>
                                 <label class="form-check-label" for="log">duy tri dang nhap</label>
                             </div>
-                            <a href="/views/web/resetpass.jsp" class="text-danger">Quên mật khẩu</a>
+                            <a href="/reset-pass" class="text-danger">Quên mật khẩu</a>
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
@@ -137,21 +137,22 @@
                             <h5 class="my-2 h5  text-danger d-inline-block"><%=user.getName() + " - " + user.getPhone()%>
                             </h5>
                         </div>
-                        <form action="" method="post">
-                            <input hidden name="action" value="update-info">
+                        <form id="form">
                             <div class="card-body">
                                 <div class="my-4 row w-100 mx-auto">
                                     <div class="col-12">
                                         <div class="form-check form-check-inline">
                                             <input type="radio" class="form-check-input" id="nam"
-                                                   name="gender" value="1" <%=(!user.isGender())?"checked":""%>>
+                                                   name="gender" value="1"
+                                                   data-value-type="number" <%=(user.isGender())?"checked":""%>>
                                             <label class="form-check-label" for="nam">Nam </label>
                                         </div>
 
                                         <!-- Material inline 2 -->
                                         <div class="form-check form-check-inline">
                                             <input type="radio" class="form-check-input" id="nu"
-                                                   name="gender" value="0" <%=(user.isGender())?"checked":""%>>
+                                                   data-value-type="number"
+                                                   name="gender" value="1" <%=(!user.isGender())?"checked":""%>>
                                             <label class="form-check-label" for="nu">Nữ</label>
                                         </div>
                                     </div>
@@ -162,7 +163,7 @@
                                         <div class="md-form m-0">
                                             <i class="fas fa-user prefix text-danger"></i>
                                             <input type="text" name="name" id="name" class="form-control"
-                                                   value="<%=user.getName()%>">
+                                                   value="<%=(user.getName()!=null)?user.getName():""%>">
                                             <label for="name">Tên đầy đủ</label>
                                         </div>
                                     </div>
@@ -171,7 +172,7 @@
                                         <div class="md-form m-0">
                                             <i class="fa-solid fa-phone prefix text-danger"></i>
                                             <input type="text" id="phone" class="form-control"
-                                                   value="<%=user.getPhone()%>" name="phone">
+                                                   value="<%=(user.getPhone()!=null)?user.getPhone():""%>" name="phone">
                                             <label for="phone">Số điện thoại</label>
                                         </div>
                                     </div>
@@ -181,7 +182,7 @@
                                         <div class="md-form">
                                             <i class="fa-solid fa-envelope prefix text-danger"></i>
                                             <input type="email" name="email" id="email" class="form-control"
-                                                   value="<%=user.getEmail()%>">
+                                                   value="<%=(user.getEmail()!=null)?user.getEmail():""%>">
                                             <label for="email">Email</label>
                                         </div>
                                     </div>
@@ -189,15 +190,16 @@
                                         <div class="md-form">
                                             <i class="fa-solid fa-address-card prefix text-danger"></i>
                                             <input type="text" id="address" class="form-control"
-                                                   value="<%=user.getAddress()%>" name="address">
+                                                   value="<%=(user.getAddress()!=null)?user.getAddress():""%>"
+                                                   name="address">
                                             <label for="address">Địa chỉ</label>
                                         </div>
                                     </div>
 
                                 </div>
 
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-danger waves-effect">Cập nhật</button>
+                                <div class="text-center mt-4">
+                                    <input type="submit" class="btn btn-danger ">
                                 </div>
                             </div>
                         </form>
@@ -335,7 +337,7 @@
 
                                     for (int i = 0; i < keys.size(); i++
                                     ) {
-                                        if (keys.get(i).isSave()) {
+                                        if (keys.get(i).getSave()) {
 
                                 %>
 
@@ -442,6 +444,17 @@
     <script>
         // Material Design example
         $(document).ready(function () {
+            <%if(user!=null){%>
+            $('form#form').submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                var j = {};
+                j = form.serializeJSON();
+                j['id'] = <%=user.getId()%>;
+                update(j, "/api/user");
+            });
+            <%}%>
+
 
             let url = location.href.replace(/\/$/, "");
             if (location.hash) {

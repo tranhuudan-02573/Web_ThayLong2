@@ -20,14 +20,6 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = CookieUntil.get("username", request);
-        String password = CookieUntil.get("password", request);
-        if (username != null && password != null) {
-            request.setAttribute("username", username);
-            request.setAttribute("password", password);
-            request.getRequestDispatcher("/views/web/signin.jsp").forward(request, response);
-        }
-        request.getRequestDispatcher("/views/web/signin.jsp").forward(request, response);
     }
 
     @Override
@@ -62,38 +54,9 @@ public class Login extends HttpServlet {
                     else response.sendRedirect("/home?page=1&different=moi");
                 }
             } else {
-<<<<<<< Updated upstream
                 request.setAttribute("email", userName);
                 request.setAttribute("messErr", "mat khau khong dung");
-                request.getRequestDispatcher("/views/web/signin.jsp").forward(request, response);
-=======
-                if (remember != null) {
-                    CookieUntil.add("username", userName, 3, response);
-                    CookieUntil.add("password", userPass, 3, response);
-                }
-                if (remember == null) {
-                    CookieUntil.add("username", userName, 0, response);
-                    CookieUntil.add("password", userPass, 0, response);
-                }
-                SessionUntil.set(request, Variable.Global.USER.toString(), user);
-                if (user.getPermission().equals(Variable.Global.ADMIN.toString())) response.sendRedirect("/admin/home");
-                else response.sendRedirect("/home?page=1&different=moi");
-            }
-
-        } else {
-            if (new UserDAO().get(" and email='" + userName + "'", User.class, null, null).orElse(null) == null) {
-                request.setAttribute("messErr", "email không tồn tại");
-            }
-            if (new UserDAO().get(" and email='" + userName + "' and password='" + userPass + "'", User.class, null, null).orElse(null) == null) {
-                request.setAttribute("email", userName);
-                request.setAttribute("messErr", "mật khẩu không đúng");
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+                request.getRequestDispatcher("/views/web/signup.jsp").forward(request, response);
             }
         } else {
             request.setAttribute("messErr", "email ko ton tai");

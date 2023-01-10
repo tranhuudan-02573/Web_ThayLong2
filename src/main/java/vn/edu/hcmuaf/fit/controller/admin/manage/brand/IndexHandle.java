@@ -1,9 +1,7 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.brand;
 
 import vn.edu.hcmuaf.fit.dao.impl.BrandDAO;
-import vn.edu.hcmuaf.fit.dao.impl.PhoneSpecDAO;
 import vn.edu.hcmuaf.fit.model.phone.Brand;
-import vn.edu.hcmuaf.fit.model.phone.PhoneSpec;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +16,7 @@ public class IndexHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Brand> users = new BrandDAO().list("", Brand.class, null, null, null, null);
-        request.setAttribute("listBrand", users);
+        request.setAttribute("brands", users);
 
         request.getRequestDispatcher("/views/admin/manage/brand/index.jsp").forward(request, response);
 

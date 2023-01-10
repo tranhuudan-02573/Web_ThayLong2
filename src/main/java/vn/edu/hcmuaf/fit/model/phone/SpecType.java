@@ -13,11 +13,11 @@ import java.util.List;
 @AllArgsConstructor
 public class SpecType extends Base<SpecType> implements Serializable {
     private String name;
+    private String key;
 
     public List<Spec> _specs() {
-        return new AbstractDAO<Spec>("specs").list(" and spec_typeId=" + this.id, Spec.class, null, null,null, null);
+        return new AbstractDAO<Spec>("specs").list(" and spec_typeId=" + this.id, Spec.class, null, null, null, null);
     }
-
 
 
 }

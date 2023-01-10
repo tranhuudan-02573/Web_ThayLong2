@@ -25,9 +25,9 @@ public class PhonePromotDAO extends AbstractDAO<PhonePromot> {
     public void insertPhonePromot(PhonePromot pp) {
         pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
         pp.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        insert("insert into phone_promot(created_at,updated_at,killed_at,phoneId, promotId) " +
+        insert("insert into phone_promot(created_at,updated_at,start_at,end_at,phoneId, promotId) " +
                 "values(:t.created_at," +
-                ":t.updated_at,:t.killed_at,:t.phoneId, :t.promotId)", pp);
+                ":t.updated_at,:t.start_at,end_at,:t.phoneId, :t.promotId)", pp);
     }
 
     public void deletePhonePromot(PhonePromot pp) {
@@ -75,7 +75,13 @@ public class PhonePromotDAO extends AbstractDAO<PhonePromot> {
     private void updatePromot(PhonePromot c, int pp) {
         c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
         update("update phone_promot set promotId = :t.promotId," +
-                "updated_at=:t.updated_at and killed_at=:t.killed_at where phoneId = :t.phoneId and promotId = " + pp, c);
+                "updated_at=:t.updated_at , start_at=:t.start_at,end_at=:t.end_at where phoneId = :t.phoneId and promotId = " + pp, c);
+    }
+
+    public boolean updatePromot(PhonePromot c) {
+        c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        return update("update phone_promot set promotId = :t.promotId," +
+                "updated_at=:t.updated_at , start_at=:t.start_at,end_at=:t.end_at where phoneId = :t.phoneId and promotId = :t.promotId", c);
     }
 
     private boolean checkSame(List<PhonePromot> s, Integer id) {

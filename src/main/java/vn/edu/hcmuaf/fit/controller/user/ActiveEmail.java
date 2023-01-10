@@ -37,19 +37,20 @@ public class ActiveEmail extends HttpServlet {
         String email = request.getParameter("email");
         String key = request.getParameter("key");
         ConfirmationToken confirmationToken = new AbstractDAO<ConfirmationToken>("confirmationtoken").get(" and token='" + key + "'", ConfirmationToken.class, null).orElse(null);
-        if (confirmationToken != null && confirmationToken.getConfirmed_at() != null) {
-            SessionUntil.set(request, Variable.Global.TYPE.toString(), "error");
-            SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "token da sd vui long ban dang nhap lai");
-        }
         if (confirmationToken != null && confirmationToken.getExpired_at().before(new Timestamp(System.currentTimeMillis()))) {
             SessionUntil.set(request, Variable.Global.TYPE.toString(), "error");
             SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "token da het han vui long ban dang nhap lai");
-        }
-        new ConfirmationTokenDAO().active(key);
-        new UserDAO().active(email);
+        } else if (confirmationToken != null && confirmationToken.getConfirmed_at() != null) {
+            SessionUntil.set(request, Variable.Global.TYPE.toString(), "error");
+            SessionUntil.set(request, Variable.Global.MESSAGE.toString(), "token da sd vui long ban dang nhap lai");
+        } else {
 
-        SessionUntil.delItem(request, Variable.Global.USER.toString());
-        SessionUntil.set(request, Variable.Global.USER.toString(), new UserDAO().get(" and email='" + email + "'", User.class, null, null).get());
+            new ConfirmationTokenDAO().active(key);
+            new UserDAO().active(email);
+
+            SessionUntil.delItem(request, Variable.Global.USER.toString());
+            SessionUntil.set(request, Variable.Global.USER.toString(), new UserDAO().get(" and email='" + email + "'", User.class, null, null).get());
+        }
         response.sendRedirect("/home?page=1&different=moi");
     }
 

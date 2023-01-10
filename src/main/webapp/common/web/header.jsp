@@ -2,6 +2,65 @@
 <%@ page import="vn.edu.hcmuaf.fit.until.CookieUntil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <header>
+    <%
+        String password = (String) request.getAttribute("password");
+        String username = (String) request.getAttribute("username");
+        User user = (User) SessionUntil.get(request, Variable.Global.USER.toString());
+    %>
+    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <form action="/login" method="post" class="needs-validation2" novalidate>
+
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold text-uppercase">đăng nhập tài khoản</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <c:if test="${requestScope.messErr != null}">
+                        <div>
+                            <p style="color: red;text-align: center;padding-top: 19px;margin: 0;font-size: 18px;">${requestScope.messErr}</p>
+                        </div>
+                    </c:if>
+                    <div class="modal-body mx-3">
+                        <div class="md-form mb-3">
+                            <i class="fas fa-envelope prefix grey-text text-danger"></i>
+                            <input type="email" name="fEmail" value="<%=(username!=null)?username:""%>"
+                                   id="defaultForm-email" class="form-control validate" required>
+                            <label data-error="wrong" data-success="right" for="defaultForm-email"> Email</label>
+                        </div>
+
+                        <div class="md-form mb-4">
+                            <i class="fas fa-lock prefix grey-text text-danger"></i>
+                            <input type="password" name="fPass" id="defaultForm-pass"
+                                   value="<%=(password!=null)?password:""%>" class="form-control validate" required>
+                            <label data-error="wrong" data-success="right" for="defaultForm-pass">Mật khẩu</label>
+
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <!-- Material checked -->
+                            <!-- Material checked -->
+                            <div class="form-check p-0">
+
+                                <input type="checkbox" name="remember" class="form-check-input"
+                                       id="remember"
+                                    <%=(username!=null&&password!=null)?"checked":""%>>
+                                <label class="form-check-label" for="remember">Nhớ mật khẩu</label>
+                            </div>
+                            <a href="/reset-pass" class="text-danger">Quên mật khẩu</a>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <span>Bạn chưa có tài khoản? <a href="/register" class="text-danger">Đăng ký</a></span>
+                        <button type="submit" class="btn btn-danger ">Đăng nhập</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade show" id="city" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel" aria-modal="true"
          style="padding-right: 17px; display: none;">
@@ -333,7 +392,7 @@
                     <div class="col-xl-5 col-lg-5 col-md-5 col-12 d-none d-sm-block p-0">
                         <ul class="nav justify-content-end">
                             <li class="nav-item ">
-                                <a class="nav-link text-center text-white " href="/views/web/user.jsp#panel22">
+                                <a class="nav-link text-center text-white " href="/user-profile#panel22">
                                     <div>
                                         <i class="fa-solid fa-clock-rotate-left fa-lg " style="line-height: 1;"></i>
                                     </div>
@@ -350,39 +409,33 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-center text-white " href="/views/web/user.jsp#panel23">
+                                <a class="nav-link text-center text-white " href="/user-profile#panel23">
                                     <div><i class="fa fa-heart fa-lg" style="line-height: 1;" aria-hidden="true"></i>
                                     </div>
                                     Sản phẩm đã thích</a>
                             </li>
                             <li class="nav-item">
-                                <%User user = (User) SessionUntil.get(request, Variable.Global.USER.toString());%>
+                                <%
+                                    //                                    User user = (User) SessionUntil.get(request, Variable.Global.USER.toString());
+                                    if (user == null) {
+                                %>
                                 <a class="nav-link text-center text-white" id="btn-login"
-                                   href="<%=(user!=null)?"/views/web/user.jsp#panel21":"/register"%>">
+                                   data-toggle="modal"
+                                   data-target="#modalLoginForm"
+                                >
                                     <div><i class="fa fa-user fa-lg" aria-hidden="true" style="line-height: 1;"></i>
                                     </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                                    <%=(user != null) ? "tai khoan" : "dang ky"%>
-=======
-                                    <%=(user != null) ? "Tài khoản" : "Đăng ký"%>
->>>>>>> Stashed changes
-=======
-                                    <%=(user != null) ? "Tài khoản" : "Đăng ký"%>
->>>>>>> Stashed changes
-=======
-                                    <%=(user != null) ? "Tài khoản" : "Đăng ký"%>
->>>>>>> Stashed changes
+                                    dang nhap
                                 </a>
+                                <%} else {%>
+                                <a class="nav-link text-center text-white" id="btn-login"
+                                   href=" /user-profile#panel21 ">
+                                    <div><i class="fa fa-user fa-lg" aria-hidden="true" style="line-height: 1;"></i>
+                                    </div>
+                                    tai khoan
+                                </a>
+                                <%}%>
 
-
-<%--                                <a class="nav-link text-center` `text-white " href="/views/user.html" data-toggle="modal"--%>
-<%--                                   data-target="#modalLoginForm">--%>
-<%--                                    <div><i class="fa fa-user fa-lg" aria-hidden="true" style="line-height: 1;"></i>--%>
-<%--                                    </div>--%>
-<%--                                    Tài khoản--%>
-<%--                                </a>--%>
                             </li>
                         </ul>
                     </div>

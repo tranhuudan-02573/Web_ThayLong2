@@ -1,9 +1,8 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import vn.edu.hcmuaf.fit.dao.impl.CapDAO;
+import vn.edu.hcmuaf.fit.dao.impl.CodeDAO;
 import vn.edu.hcmuaf.fit.model.order.Code;
-import vn.edu.hcmuaf.fit.model.phone.Cap;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
 import javax.servlet.ServletException;
@@ -13,15 +12,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet( value = "/api/code")
+@WebServlet(value = "/api/code")
 public class CodeAPI extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ObjectMapper mapper = new ObjectMapper();
-        int id = Integer.parseInt(request.getParameter("id").trim());
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
+        String id = request.getParameter("id");
+
+        if (id != null) {
+            Code users = new CodeDAO().get(" and id= " + id, Code.class, null).get();
+            mapper.writeValue(response.getOutputStream(), users);
+        } else
+            mapper.writeValue(response.getOutputStream(), "{}");
 
     }
 
