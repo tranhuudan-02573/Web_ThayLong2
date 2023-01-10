@@ -1,6 +1,7 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.user.PermissionAction" %>
 <%@ page import="java.util.List" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.user.User" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.user.Action" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 
@@ -15,6 +16,11 @@
 </head>
 <body class="fixed-sn mdb-skin">
 <!-- Central Modal Medium Success -->
+<%
+    List<PermissionAction> permissionActionList = (List<PermissionAction>) request.getAttribute("actions");
+    User user = (User) request.getAttribute("user");
+    List<Action> actions = (List<Action>) request.getAttribute("actions1");
+%>
 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-notify modal-warning" role="document">
@@ -22,106 +28,52 @@
         <div class="modal-content">
             <!--Header-->
             <div class="modal-header">
-                <p class="heading lead text-uppercase">thêm người dùng</p>
+                <p class="heading lead text-uppercase">thêm quyen</p>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="white-text">&times;</span>
                 </button>
             </div>
 
-            <!--Body-->
-            <div class="modal-body">
-                <table class="table table-hover border">
-                    <thead>
-
-                    </thead>
-                    <tbody>
-
-
-                    <tr>
-                        <th>name</th>
-                        <td><input id="input-char-counter1" type="text" length="10" class="form-control">
-                            <label for="input-char-counter1"></label></td>
-                    </tr>
-                    <tr>
-                        <th>address</th>
-                        <td><input id="input-char-counter2" type="text" length="10" class="form-control">
-                            <label for="input-char-counter2"></label></td>
-                    </tr>
-                    <tr>
-                        <th>gender</th>
-                        <td>
-
-                            <!-- Material inline 2 -->
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline2"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline2">Nam</label>
-                            </div>
-
-                            <!-- Material inline 3 -->
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline3"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline3">Nữ</label>
-                            </div>
+            <form id="form-add">
+                <div class="modal-body">
+                    <table class="table table-hover border">
+                        <thead>
+                        </thead>
+                        <tbody>
 
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>email</th>
-                        <td><input id="input-char-counter4" type="text" length="10" class="form-control">
-                            <label for="input-char-counter4"></label></td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>active</th>
-                        <td>
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="customSwitches">
-                                <label class="custom-control-label" for="customSwitches"></label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>permission</th>
-                        <td>
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline1"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline1">user mod</label>
-                            </div>
+                        <select type="text" class="mdb-select md-form" name="actionId">
+                            <%
 
-                            <!-- Material inline 2 -->
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline2"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline2">admin</label>
-                            </div>
-
-                            <!-- Material inline 3 -->
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline3"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline3">admin 2</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>status</th>
-                        <td><input id="input-char-counter5" type="text" length="10" class="form-control">
-                            <label for="input-char-counter5"></label></td>
-                    </tr>
+                                for (Action pc : actions
+                                ) {
+                            %>
+                            <option value="<%=pc.getId()%>"><%=pc.getGroup()%>
+                            </option>
+                            <%
+                                }
+                            %>
+                        </select>
+                        <tr>
+                            <th>active</th>
+                            <td>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" name="licensed" class="custom-control-input"
+                                           data-value-type="number" value="1" id="licensed" data-unchecked-value="0">
+                                    <label class="custom-control-label" for="licensed"></label>
+                                </div>
+                            </td>
+                        </tr>
 
 
-                    </tbody>
-                </table>
-            </div>
-
+                        </tbody>
+                    </table>
+                </div>
+            </form>
             <!--Footer-->
             <div class="modal-footer justify-content-center">
-                <a type="button" data-toggle="modal" data-target="#centralModalSuccess"
+                <a type="button" onclick="$('form#form-add').trigger('submit')"
                    class="btn btn-warning text-uppercase  ">tạo</a>
                 <a type="button" class="btn btn-outline-warning waves-effect text-uppercase  "
                    data-dismiss="modal">Hủy</a>
@@ -168,10 +120,6 @@
 <!--Main Layout-->
 <main class="mt-1">
 
-    <%
-        List<PermissionAction> permissionActionList = (List<PermissionAction>) request.getAttribute("actions");
-        User user = (User) request.getAttribute("user");
-    %>
 
     <div class="container-fluid panel-scroll">
 
@@ -184,19 +132,21 @@
                         class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
 
                     <div>
-                        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                        <button type="button" onclick="history.back()"
+                                class="btn btn-outline-white btn-rounded btn-sm px-2">
                             <i class="fa-solid fa-arrow-left-long"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                        <a href="/admin/manage/user" class="btn btn-outline-white btn-rounded btn-sm px-2">
                             <i class="fa-solid fa-xmark"></i>
-                        </button>
+                        </a>
                     </div>
 
                     <a href="" class="white-text mx-3 text-uppercase ">danh sách quyen <%=user.getName()%>
                     </a>
 
                     <div>
-                        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                        <button type="button" onclick="location.reload()"
+                                class="btn btn-outline-white btn-rounded btn-sm px-2">
                             <i class="fa-solid fa-rotate-left"></i>
                         </button>
                         <button data-toggle="modal" data-target="#add" type="button"
@@ -218,7 +168,7 @@
                 <!--/Card image-->
 
                 <!-- Modal: modalCart -->
-                <div class="modal fade" id="modalinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="viewDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog-scrollable modal-dialog modal-lg" role="document">
                         <div class="modal-content">
@@ -239,51 +189,24 @@
                                     <tbody>
 
                                     <tr>
-                                        <th>#</th>
-                                        <td>da</td>
+                                        <th>licensed</th>
+                                        <td class="font-weight-normal align-left-10 detail-licensed"></td>
                                     </tr>
                                     <tr>
-                                        <th>Name</th>
-                                        <td>da</td>
+                                        <th>userId</th>
+                                        <td class="font-weight-normal align-left-10 detail-userId"></td>
                                     </tr>
                                     <tr>
-                                        <th>Phone</th>
-                                        <td>da</td>
+                                        <th>actionId</th>
+                                        <td class="font-weight-normal align-left-10 detail-actionId"></td>
                                     </tr>
                                     <tr>
-                                        <th>Address</th>
-                                        <td>da</td>
+                                        <th>created_at</th>
+                                        <td class="font-weight-normal align-left-10 detail-created_at"></td>
                                     </tr>
                                     <tr>
-                                        <th>Gender</th>
-                                        <td>da</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Eamil</th>
-                                        <td>da</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Avatar</th>
-                                        <td>da</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Created_at</th>
-                                        <td>da</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Updated_at</th>
-                                        <td>da</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Active</th>
-                                        <td>da</td>
-                                    </tr>
-                                    <th>Permission</th>
-                                    <td>da</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Status</th>
-                                        <td>da</td>
+                                        <th>updated_at</th>
+                                        <td class="font-weight-normal align-left-10 detail-updated_at"></td>
                                     </tr>
 
                                     </tbody>
@@ -292,10 +215,10 @@
                             </div>
                             <!--Footer-->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-default text-uppercase"
-                                        data-dismiss="modal">xóa
+                                <button type="button" val="" val2="" class="btn btn-outline-default text-uppercase"
+                                        id="delete">xóa
                                 </button>
-                                <a href="/src/views/admin/manausers/edit.html" class="btn btn-default text-uppercase">chỉnh
+                                <a href="" id="edit" class="btn btn-default text-uppercase">chỉnh
                                     sửa</a>
                             </div>
                         </div>
@@ -381,7 +304,15 @@
                                 </th>
                                 <td><%=i%>
                                 </td>
-                                <td><%=permissionActionList.get(i).isLicensed()%>
+                                <td>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" name="licensed" class="custom-control-input"
+                                               value="<%=permissionActionList.get(i).getActionId()%>"
+                                               id="licensed-<%=i%>" <%=(permissionActionList.get(i).isLicensed())?"checked":""%>
+                                               readonly>
+                                        <label class="custom-control-label" for="licensed-<%=i%>"></label>
+                                    </div>
+
                                 </td>
                                 <td><%=permissionActionList.get(i)._action().getCode()%>
                                 </td>
@@ -390,12 +321,13 @@
                                 <td><%=permissionActionList.get(i).getUpdated_at()%>
                                 </td>
                                 <td>
-                                    <a href="" data-toggle="modal" data-target="#modalinfo"><i
-                                            class="fa-regular fa-eye"></i></a>
-                                    <a href="/src/views/admin/manausers/edit.html"><i class="far fa-edit"></i></a>
-
-                                    <a><i val2="<%=user.getId()%>"
-                                          val="<%=permissionActionList.get(i)._action().getId()%>"
+                                    <a><i val="<%=permissionActionList.get(i).getUserId()%>"
+                                          val2="<%=permissionActionList.get(i).getActionId()%>"
+                                          class="fa-regular fa-eye"></i></a>
+                                    <a href="/admin/manage/user/edit?userId=<%=user.getId()%>&actionId=<%=permissionActionList.get(i).getActionId()%>"><i
+                                            class="far fa-edit"></i></a>
+                                    <a><i val="<%=user.getId()%>"
+                                          val2="<%=permissionActionList.get(i).getActionId()%>"
                                           class="far fa-trash-alt"></i></a>
                                 </td>
 
@@ -416,18 +348,63 @@
     </div>
 </main>
 <content tag="local_script">
-    <script src="/src/js/admin/form.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.2.3/jspdf.plugin.autotable.js"></script>
-    <script src="/src/lib/export-table-json-csv-txt-pdf/src/tableHTMLExport.js"></script>
+    <script src="/js/admin/form.js"></script>
 
     <script>
         $(document).ready(function () {
-            $('tbody').on('click', 'i.fa-trash-alt', function () {
-                console.log('dan')
-                dele($(this).attr('val'), $(this).attr('val2'));
+            $('.mdb-select').materialSelect();
+            $('form#form-add').submit(function (event) {
+                event.preventDefault(); // Prevent the form from submitting via the browser
+                var form = $(this);
+                var j = {};
+                j = form.serializeJSON();
+                j['userId'] = <%=user.getId()%>;
+                add(j, "/api/permission-action");
             });
-            $("#btnDelete").click(function() {
+            $(' tbody').on('click', 'i.fa-trash-alt', function () {
+                data = {
+                    userId: $(this).attr('val'),
+                    actionId: $(this).attr('val2')
+                }
+                dele(data, "/api/permission-action");
+            });
+            $('#delete').on('click', function () {
+                data = {
+                    userId: $(this).attr('val'),
+                    actionId: $(this).attr('val2')
+                }
+                dele(data, "/api/permission-action");
+            })
+
+
+            $(' tbody').on('click', 'i.fa-eye', function () {
+                view($(this).attr('val'), $(this).attr('val2'));
+            });
+
+
+            function view(userId, actionId) {
+                $.ajax({
+                    type: 'GET', url: "/api/permission-action?userId=" + userId + "&actionId=" + actionId
+
+                }).done(function (responseText) {
+                    $('#viewDetail').modal();
+                    $('#viewDetail .detail-userId').text(responseText.userId);
+                    $('#viewDetail .detail-actionId').text(responseText.actionId);
+                    $('#viewDetail .detail-licensed').text(responseText.licensed);
+                    $('#viewDetail .detail-created_at').text(responseText.created_at);
+                    $('#viewDetail .detail-updated_at').text(responseText.updated_at);
+                    $('#viewDetail #edit').attr('href', '/admin/manage/user/edit?userId=' + responseText.userId + '&actionId=' + responseText.actionId);
+                    $('#viewDetail #delete').attr('val', responseText.userId);
+                    $('#viewDetail #delete').attr('val2', responseText.actionId);
+                }).fail(function (jqXHR, status, error) {
+                    if (jqXHR.status !== 500) {
+                        warningAlert('Lỗi liệu lỗi');
+                    } else warningAlert("Xảy ra lỗi. <br/>Vui lòng liên hệ Admin.");
+                })
+            }
+
+
+            $("#btnDelete").click(function () {
                 var data = {};
                 var ids = $('tbody input[type=checkbox]:checked').map(function () {
                     return $(this).val();
@@ -435,96 +412,6 @@
                 data['ids'] = ids;
                 deleteNew(data);
             });
-
-            function dele(i, i2) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.value === true) {
-                        $.ajax({
-                            type: 'DELETE', url: '/', data: {'actionId': i, 'userId': i2}
-                        }).done(function (responseText) {
-                            alert('Xóa Thành Công');
-                            row.remove().draw();
-                            if (DOMException != null) delTrue();
-                        }).fail(function (jqXHR, status, error) {
-                            if (jqXHR.status !== 500) {
-                                warningAlert(jqXHR.responseText);
-                            } else warningAlert("Xảy ra lỗi. <br/>Vui lòng liên hệ Admin để sửa lỗi.");
-                            if (delFalse != null) delFalse();
-                        })
-                    }
-                })
-            }
-
-            function alert(mes, type) {
-                Swal.fire({
-                    position: 'top',
-                    title: 'THÔNG BÁO',
-                    html: mes,
-                    icon: type != null ? type : 'success',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    showCancelButton: false,
-                    // confirmButtonText: 'Yes!'
-                })
-            }
-
-            $('#exportjson').on('click', function () {
-                $("#detail").tableHTMLExport({
-
-                    // csv, txt, json, pdf
-                    type: 'json',
-
-                    // file name
-                    filename: 'sample.json'
-
-                });
-            })
-            $('#exportpdf').on('click', function () {
-                var doc = new jsPDF('p', 'pt', 'a4');
-
-                doc.autoTable({
-                    html: '#detail'
-                });
-                doc.save('table.pdf');
-
-
-            })
-            $('#exportcsv').on('click', function () {
-                $("#detail").tableHTMLExport({
-
-// csv, txt, json, pdf
-                    type: 'csv',
-
-                    // default file name
-                    filename: 'tableHTMLExport.csv',
-
-                    // for csv
-                    separator: ',',
-                    newline: '\r\n',
-                    trimContent: true,
-                    quoteFields: true,
-
-                    // CSS selector(s)
-                    ignoreColumns: '',
-                    ignoreRows: '',
-
-                    // your html table has html content?
-                    htmlContent: false,
-
-                    // debug
-                    consoleLog: false,
-
-                });
-            })
 
 
             $('table#detail').DataTable({

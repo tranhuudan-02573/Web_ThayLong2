@@ -16,7 +16,7 @@
 <body class="fixed-sn mdb-skin">
 <%
     Model model = (Model) request.getAttribute("model");
-    List<Brand> listBrand = (List<Brand>) request.getAttribute("lbrand");
+    List<Brand> listBrand = (List<Brand>) request.getAttribute("brands");
 %>
 <!--Double navigation-->
 <!--/.Double navigation-->
@@ -49,7 +49,7 @@
                         <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
                             <i class="fa-solid fa-repeat"></i>
                         </button>
-                        <button onclick="document.getElementById('form').submit()" type="button"
+                        <button onclick="$('form#form').submit()" type="button"
                                 class="btn btn-outline-white btn-rounded btn-sm px-2">
                             <i class="fa-regular fa-floppy-disk"></i>
                         </button>
@@ -60,43 +60,48 @@
 
                 <div class="px-4">
 
-                    <div class="table-wrapper">
-                        <!--Table-->
+                    <form id="form">
                         <table class="table table-hover border">
                             <thead>
 
                             </thead>
-
                             <tbody>
-                            <form action="/admin/manage/model/edit" method="post" id="form">
-                                <tr>
-                                    <th>Name</th>
-                                    <td><input id="name" name="name" type="text" length="10"
-                                               class="form-control" value="<%=model.getName()%>">
-                                        <label for="name"></label></td>
-                                </tr>
-                                <tr>
-                                    <th>BrandId</th>
-                                    <td><select class="mdb-select md-form"
-                                                name="BrandId">
+
+                            <tr>
+                                <th>name</th>
+                                <td><!-- Material outline counter input -->
+                                    <input id="name" type="text" name="name" class="form-control"
+                                           value="<%= (model.getName()!=null)?model.getName():"" %>">
+                                    <label for="name"></label>
+                            </tr>
+                            <tr>
+                                <th>img</th>
+                                <td><input id="img" type="file" name="img" class="form-control"
+                                           value="<%=(model.getImg()!=null)?model.getImg():""%>">
+                                    <label for="img"></label></td>
+                            </tr>
+
+                            <tr>
+                                <th>bandId</th>
+                                <td>
+                                    <select data-value-type="number" class="mdb-select md-form" name="brandId">
                                         <%
 
-                                            for (int i = 0; i < listBrand.size(); i++) {
+                                            for (Brand pc : listBrand
+                                            ) {
                                         %>
-                                        <option  value="<%=listBrand.get(i).getId()%>" <%=(model.getId() == listBrand.get(i).getId()) ? "selected" : ""%> ><%=listBrand.get(i).getName()%>
+                                        <option value="<%=pc.getId()%>" <%=(pc.getId() == model.getBrandId() ? "selected" : "")%> ><%=pc.getName()%>
                                         </option>
                                         <%
                                             }
                                         %>
-                                    </select></td>
-                                </tr>
+                                    </select>
+                                </td>
+                            </tr>
 
-                            </form>
                             </tbody>
                         </table>
-                        <!--Table-->
-                    </div>
-
+                    </form>
                 </div>
 
             </div>
@@ -109,6 +114,14 @@
     <script>
         $(document).ready(function () {
             $('.mdb-select').materialSelect();
+            $('form#form').submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                var j = {};
+                j = form.serializeJSON();
+                j['id'] = <%=model.getId()%>;
+                update(j, "/api/model");
+            });
             // SideNav Initialization
             $(".button-collapse").sideNav({
                 slim: true

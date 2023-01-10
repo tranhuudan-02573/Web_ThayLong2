@@ -1,12 +1,6 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.user.User" %>
 <%@ page import="vn.edu.hcmuaf.fit.until.SessionUntil" %>
-<%@ page import="vn.edu.hcmuaf.fit.constant.Variable" %><%--
-  Created by IntelliJ IDEA.
-  User: dell
-  Date: 11/14/2022
-  Time: 4:23 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="vn.edu.hcmuaf.fit.constant.Variable" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%User user = (User) SessionUntil.get(request, Variable.Global.USER.toString()); %>
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -88,7 +82,7 @@
                                                                 </span></a>
                                             </li>
                                             <li>
-                                                <a href="/admin/manage/user"
+                                                <a href="/admin/manage/action"
                                                    class="waves-effect ">
 
                                                                 <span class="sv-normal" style="font-size: 16px;"><i
@@ -101,29 +95,7 @@
                                     </div>
                                 </li>
                                 <%}%>
-                                <%if (user.get(Variable.Global.ORDER.toString()) != null) {%>
-                                <li>
-                                    <a class="collapsible-header  text-white waves-effect arrow-r "
-                                       style="font-size: 16px;"><i
-                                            class=" fas fa-regular fa-pen-to-square"></i>Đơn hàng<i
-                                            class="fas fa-angle-down rotate-icon"></i></a>
-                                    <div class="collapsible-body">
-                                        <ul class="">
-                                            <li>
-                                                <a href="/admin/manage/order"
-                                                   class="waves-effect ">
-                                                    <span class="sv-slim"> SL </span>
-                                                    <span class="sv-normal"
-                                                          style="font-size: 16px;"><i
-                                                            class="fas fa-circle blue-text"></i>Danh sách đơn hàng
-                                                                            </span></a>
-                                            </li>
 
-
-                                        </ul>
-                                    </div>
-                                </li>
-                                <%}%>
                                 <%if (user.get(Variable.Global.PHONE.toString()) != null) {%>
                                 <li>
                                     <a class="collapsible-header  text-white waves-effect arrow-r "
@@ -142,41 +114,6 @@
                                             </li>
 
 
-                                            <li>
-                                                <a href="/admin/manage/phonecolor"
-                                                   class="waves-effect ">
-                                                    <span class="sv-slim"> SL </span>
-                                                    <span class="sv-normal" style="font-size: 16px;"><i
-                                                            class="fas fa-circle blue-text"></i>
-                                                                    Màu</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="/admin/manage/phonecap"
-                                                   class="waves-effect ">
-                                                    <span class="sv-slim"> SL </span>
-                                                    <span class="sv-normal" style="font-size: 16px;"><i
-                                                            class="fas fa-circle blue-text"></i>
-                                                                    bộ nhớ</span></a>
-                                            </li>
-
-                                            <li>
-                                                <a href="/admin/manage/phonespec"
-                                                   class="waves-effect ">
-                                                    <span class="sv-slim"> SL </span>
-                                                    <span class="sv-normal" style="font-size: 16px;"><i
-                                                            class="fas fa-circle blue-text"></i>
-                                                                    Thông số</span></a>
-                                            </li>
-
-
-                                            <li>
-                                                <a href="/admin/manage/phonepromot"
-                                                   class="waves-effect ">
-                                                    <span class="sv-slim"> SL </span>
-                                                    <span class="sv-normal"
-                                                          style="font-size: 16px;"><i
-                                                            class="fas fa-circle blue-text"></i>Khuyến mãi</span></a>
-                                            </li>
                                         </ul>
                                     </div>
                                 </li>
@@ -189,19 +126,20 @@
                                     <div class="collapsible-body">
                                         <ul class=" ">
                                             <li>
-                                                <a href="/admin/manage/phonereview" class="waves-effect">
+                                                <a href="/admin/manage/review" class="waves-effect">
                                                     <span class="sv-slim"> RF </span>
                                                     <span class="sv-normal" style="font-size: 16px;"><i
                                                             class="fas fa-circle blue-text"></i>review</span></a>
 
                                             </li>
                                             <li>
-                                                <a href="/admin/manage/phonereview" class="waves-effect">
+                                                <a href="/admin/manage/question" class="waves-effect">
                                                     <span class="sv-slim"> RF </span>
                                                     <span class="sv-normal" style="font-size: 16px;"><i
                                                             class="fas fa-circle blue-text"></i>question</span></a>
 
                                             </li>
+
                                         </ul>
 
                                     </div>
@@ -254,7 +192,29 @@
                                     </div>
                                 </li>
                                 <%}%>
+                                <%if (user.get(Variable.Global.ORDER.toString()) != null) {%>
+                                <li>
+                                    <a class="collapsible-header  text-white waves-effect arrow-r "
+                                       style="font-size: 16px;"><i
+                                            class=" fas fa-regular fa-pen-to-square"></i>Đơn hàng<i
+                                            class="fas fa-angle-down rotate-icon"></i></a>
+                                    <div class="collapsible-body">
+                                        <ul class="">
+                                            <li>
+                                                <a href="/admin/manage/order"
+                                                   class="waves-effect ">
+                                                    <span class="sv-slim"> SL </span>
+                                                    <span class="sv-normal"
+                                                          style="font-size: 16px;"><i
+                                                            class="fas fa-circle blue-text"></i>Danh sách đơn hàng
+                                                                            </span></a>
+                                            </li>
 
+
+                                        </ul>
+                                    </div>
+                                </li>
+                                <%}%>
                             </ul>
 
                         </div>

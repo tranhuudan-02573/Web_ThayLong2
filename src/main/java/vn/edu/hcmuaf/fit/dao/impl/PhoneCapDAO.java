@@ -25,9 +25,9 @@ public class PhoneCapDAO extends AbstractDAO<PhoneCap> {
     public void insertPhoneCap(PhoneCap pcap) {
         pcap.setCreated_at(new Timestamp(System.currentTimeMillis()));
         pcap.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        insert("insert into phone_cap(created_at,updated_at,phoneId, capId) " +
+        insert("insert into phone_cap(created_at,updated_at,phoneId, capId,phone_capId) " +
                 "values(:t.created_at," +
-                ":t.updated_at,:t.phoneId, :t.capId)", pcap);
+                ":t.updated_at,:t.phoneId, :t.capId,:t.phone_capId)", pcap);
     }
 
     public void updateCapList(List<PhoneCap> old, List<PhoneCap> colors) {
@@ -77,7 +77,15 @@ public class PhoneCapDAO extends AbstractDAO<PhoneCap> {
 
     }
 
-    private void deleteCap(PhoneCap img) {
+    public boolean updateCap(PhoneCap c) {
+        c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        return update("update phone_cap set capId = :t.capId," +
+                "updated_at=:t.updated_at,phone_capId=:t.phone_capId where phoneId = :t.phoneId and capId = :t.capId", c);
+
+
+    }
+
+    public void deleteCap(PhoneCap img) {
 
         delete("delete from phone_cap where phoneId =:t.phoneId and capId = :t.capId", img);
 

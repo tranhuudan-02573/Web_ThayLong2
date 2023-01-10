@@ -250,7 +250,6 @@ public class AbstractDAO<T> {
                 List<String> keys = new ArrayList<>(map.keySet());
                 for (String key : keys
                 ) {
-                    System.out.println("dan");
                     query.bindList(key, map.get(key));
                 }
             }

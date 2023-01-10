@@ -20,14 +20,6 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = CookieUntil.get("username", request);
-        String password = CookieUntil.get("password", request);
-        if (username != null && password != null) {
-            request.setAttribute("username", username);
-            request.setAttribute("password", password);
-            request.getRequestDispatcher("/views/web/signin.jsp").forward(request, response);
-        }
-        request.getRequestDispatcher("/views/web/signin.jsp").forward(request, response);
     }
 
     @Override
@@ -64,7 +56,7 @@ public class Login extends HttpServlet {
             } else {
                 request.setAttribute("email", userName);
                 request.setAttribute("messErr", "mat khau khong dung");
-                request.getRequestDispatcher("/views/web/signin.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/web/signup.jsp").forward(request, response);
             }
         } else {
             request.setAttribute("messErr", "email ko ton tai");

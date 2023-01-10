@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
+import vn.edu.hcmuaf.fit.dao.impl.CartItemDAO;
+import vn.edu.hcmuaf.fit.dao.impl.UserStateDAO;
 import vn.edu.hcmuaf.fit.model.cart.CartItem;
 import vn.edu.hcmuaf.fit.model.cart.Carts;
 import vn.edu.hcmuaf.fit.model.order.Order;
@@ -35,9 +37,6 @@ public class User extends Base<User> implements Serializable {
 
     private String permission;
 
-    private Carts carts = listToCarts();
-
-
     public Carts listToCarts() {
         return new Carts(cartItemIntegerMap());
     }
@@ -54,8 +53,9 @@ public class User extends Base<User> implements Serializable {
     }
 
     public UserState _userState() {
-        return new AbstractDAO<UserState>("user_states").get(" and id=" + this.user_stateId, UserState.class, null).get();
+        return new UserStateDAO().get(" and id=" + this.user_stateId, UserState.class, null).get();
     }
+
 
     public String avatar() {
         StringBuilder rs = new StringBuilder();
@@ -85,7 +85,7 @@ public class User extends Base<User> implements Serializable {
 
 
     public Timestamp nearWish() {
-        Order order = new AbstractDAO<Order>("carts").get("and cart_items.isSave =true   and carts.userId =" + this.id + " order by carts.created_at desc limit 1", " inner join cart_items on carts.cart_itemId = cart_items.id  ", Order.class, null).orElse(null);
+        Order order = new AbstractDAO<Order>("cart_items").get("and cart_items.isSave =true   and userId =" + this.id + " order by created_at desc limit 1", Order.class, null).orElse(null);
         return (order != null) ? order.getCreated_at() : null;
     }
 
@@ -106,7 +106,7 @@ public class User extends Base<User> implements Serializable {
     }
 
     public List<CartItem> _carts() {
-        return new AbstractDAO<CartItem>("carts").list("and userId =" + this.id, CartItem.class, null, null, null, null);
+        return new CartItemDAO().list("and userId =" + this.id, CartItem.class, null, null, null, null);
     }
 
 

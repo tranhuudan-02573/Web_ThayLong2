@@ -1,4 +1,7 @@
-package vn.edu.hcmuaf.fit.controller.admin.manage.phonereview;
+package vn.edu.hcmuaf.fit.controller.admin.manage.action;
+
+import vn.edu.hcmuaf.fit.dao.impl.ActionDAO;
+import vn.edu.hcmuaf.fit.model.user.Action;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -6,15 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
-@WebServlet(urlPatterns = {"/admin/manage/phonereview/edit"})
-public class EditHandle extends HttpServlet {
+@WebServlet(urlPatterns = {"/admin/manage/action"})
+public class IndexHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-        request.getRequestDispatcher("/views/admin/manage/phonereview/edit.jsp").forward(request, response);
-
+        List<Action> users = new ActionDAO().list("", Action.class, null, null, null, null);
+        request.setAttribute("actions", users);
+        request.getRequestDispatcher("/views/admin/manage/action/index.jsp").forward(request, response);
     }
 
     @Override

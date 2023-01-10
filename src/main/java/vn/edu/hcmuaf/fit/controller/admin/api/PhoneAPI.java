@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet( urlPatterns = {"/api/phone"})
+@WebServlet(urlPatterns = {"/api/phone"})
 public class PhoneAPI extends HttpServlet {
 
     @Override
@@ -20,9 +20,13 @@ public class PhoneAPI extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        Phone phone = HttpUtil.of(request.getReader()).toModel(Phone.class);
-//        phone = phoneService.get(phone);
-//        mapper.writeValue(response.getOutputStream(), phone);
+        String id = request.getParameter("id");
+
+        if (id != null) {
+            Phone users = new PhoneDAO().get(" and id= " + id, Phone.class, null).get();
+            mapper.writeValue(response.getOutputStream(), users);
+        } else
+            mapper.writeValue(response.getOutputStream(), "{}");
     }
 
     @Override
@@ -32,6 +36,7 @@ public class PhoneAPI extends HttpServlet {
         response.setContentType("application/json");
         Phone phone = HttpUtil.of(request.getReader()).toModel(Phone.class);
         new PhoneDAO().savePhone(phone);
+        System.out.println(phone);
         mapper.writeValue(response.getOutputStream(), phone);
     }
 

@@ -2,18 +2,15 @@ package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import vn.edu.hcmuaf.fit.dao.impl.UserDAO;
-import vn.edu.hcmuaf.fit.model.phone.Phone;
 import vn.edu.hcmuaf.fit.model.user.User;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
-import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(urlPatterns = {"/api/user"})
 public class UserAPI extends HttpServlet {
@@ -23,10 +20,15 @@ public class UserAPI extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        List<User> ps = HttpUtil.of(request.getReader()).listModel(User.class);
-//        ps = userService.getAll();
-//        mapper.writeValue(response.getOutputStream(), ps);
+        String id = request.getParameter("id");
+
+        if (id != null) {
+            User users = new UserDAO().get(" and id= " + id, User.class, null).get();
+            mapper.writeValue(response.getOutputStream(), users);
+        } else
+            mapper.writeValue(response.getOutputStream(), "{}");
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

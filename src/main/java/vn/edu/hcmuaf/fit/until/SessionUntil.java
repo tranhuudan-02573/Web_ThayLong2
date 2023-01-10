@@ -10,6 +10,13 @@ public class SessionUntil {
         session.setAttribute(name, value);
     }
 
+    public static void message(HttpServletRequest request, String name, Object value) {
+        HttpSession session = request.getSession(true);
+        session.setAttribute(name, value);
+        session.setMaxInactiveInterval(5);
+    }
+
+
     public static Object get(HttpServletRequest request, String name) {
         HttpSession session = request.getSession(true);
         return session.getAttribute(name);
@@ -29,7 +36,8 @@ public class SessionUntil {
         return username == null ? null : username.toString();
 
     }
-    public static void delItem(HttpServletRequest request, String name){
+
+    public static void delItem(HttpServletRequest request, String name) {
         HttpSession session = request.getSession();
         session.removeAttribute(name);
     }

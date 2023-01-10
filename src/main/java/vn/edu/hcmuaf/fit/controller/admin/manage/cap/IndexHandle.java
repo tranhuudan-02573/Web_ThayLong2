@@ -1,14 +1,7 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.cap;
 
-import vn.edu.hcmuaf.fit.constant.Variable;
 import vn.edu.hcmuaf.fit.dao.impl.CapDAO;
-import vn.edu.hcmuaf.fit.dao.impl.PhoneCapDAO;
-import vn.edu.hcmuaf.fit.dao.impl.PhoneSpecDAO;
 import vn.edu.hcmuaf.fit.model.phone.Cap;
-import vn.edu.hcmuaf.fit.model.phone.PhoneCap;
-import vn.edu.hcmuaf.fit.model.phone.PhoneSpec;
-import vn.edu.hcmuaf.fit.model.user.User;
-import vn.edu.hcmuaf.fit.until.SessionUntil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +16,7 @@ public class IndexHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Cap> users = new CapDAO().list("", Cap.class, null, null, null, null);
-        request.setAttribute("listCap", users);
+        request.setAttribute("caps", users);
         request.getRequestDispatcher("/views/admin/manage/cap/index.jsp").forward(request, response);
 
     }

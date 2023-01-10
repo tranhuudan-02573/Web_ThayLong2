@@ -46,6 +46,12 @@ public class PhoneColorDAO extends AbstractDAO<PhoneColor> {
                 "updated_at=:t.updated_at where phoneId = :t.phoneId and colorId = '" + name + "'", c);
     }
 
+    public boolean updatePhoneColor(PhoneColor c) {
+        c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        return update("update phone_color set colorId = :t.colorId,img =:t.img,total=:t.total," +
+                "updated_at=:t.updated_at where phoneId = :t.phoneId and colorId = :t.colorId", c);
+    }
+
     public void updatePhoneColorList(List<PhoneColor> old, List<PhoneColor> colors) {
         if (old.size() < colors.size()) {
             for (PhoneColor color : colors) {
@@ -74,7 +80,7 @@ public class PhoneColorDAO extends AbstractDAO<PhoneColor> {
         }
     }
 
-    private void deleteColor(PhoneColor img) {
+    public void deleteColor(PhoneColor img) {
 
         delete("delete from phone_color where phoneId =:t.phoneId and colorId = :t.colorId", img);
 

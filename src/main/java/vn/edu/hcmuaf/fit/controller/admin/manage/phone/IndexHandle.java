@@ -1,11 +1,7 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.phone;
 
-import vn.edu.hcmuaf.fit.constant.Variable;
-import vn.edu.hcmuaf.fit.dao.impl.PhoneDAO;
-import vn.edu.hcmuaf.fit.dao.impl.UserDAO;
-import vn.edu.hcmuaf.fit.model.phone.Phone;
-import vn.edu.hcmuaf.fit.model.user.User;
-import vn.edu.hcmuaf.fit.until.SessionUntil;
+import vn.edu.hcmuaf.fit.dao.impl.*;
+import vn.edu.hcmuaf.fit.model.phone.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,10 +15,34 @@ import java.util.List;
 public class IndexHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Phone> users = new PhoneDAO().list("", Phone.class, null, null, null, null);
-        request.setAttribute("phones", users);
+        String id = request.getParameter("id");
+        String page = "";
+        int ids = 0;
+        if (id != null) {
+            ids = Integer.parseInt(id);
+            if (ids != 0) {
+                Phone phone = new PhoneDAO().get(" and id=" + ids, Phone.class, null, null).get();
+                request.setAttribute("phone", phone);
+                page = "/views/admin/manage/phone/detail.jsp";
 
-        request.getRequestDispatcher("/views/admin/manage/phone/index.jsp").forward(request, response);
+            }
+        } else {
+            List<Phone> users = new PhoneDAO().list("", Phone.class, null, null, null, null);
+            request.setAttribute("phones", users);
+            List<Type> types = new TypeDAO().list("", Type.class, null, null, null, null);
+            List<Brand> brands = new BrandDAO().list("", Brand.class, null, null, null, null);
+            List<Model> models = new ModelDAO().list("", Model.class, null, null, null, null);
+            List<Cap> caps = new CapDAO().list("", Cap.class, null, null, null, null);
+            request.setAttribute("types", types);
+            List<Sale> sales = new SaleDAO().list("", Sale.class, null, null, null, null);
+            request.setAttribute("sales", sales);
+            request.setAttribute("brands", brands);
+            request.setAttribute("caps", caps);
+            request.setAttribute("models", models);
+            page = "/views/admin/manage/phone/index.jsp";
+        }
+        request.getRequestDispatcher(page).forward(request, response);
+
 
     }
 

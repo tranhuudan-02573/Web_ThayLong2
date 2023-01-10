@@ -2,10 +2,8 @@ package vn.edu.hcmuaf.fit.controller.admin.manage.model;
 
 import vn.edu.hcmuaf.fit.dao.impl.BrandDAO;
 import vn.edu.hcmuaf.fit.dao.impl.ModelDAO;
-import vn.edu.hcmuaf.fit.dao.impl.SaleDAO;
 import vn.edu.hcmuaf.fit.model.phone.Brand;
 import vn.edu.hcmuaf.fit.model.phone.Model;
-import vn.edu.hcmuaf.fit.model.phone.Sale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,8 +27,8 @@ public class EditHandle extends HttpServlet {
                 request.setAttribute("model", u);
             }
         }
-                List<Brand> lbrand = new BrandDAO().list("", Brand.class, null, null, null, null);
-                request.setAttribute("lbrand",lbrand);
+        List<Brand> lbrand = new BrandDAO().list("", Brand.class, null, null, null, null);
+        request.setAttribute("brands", lbrand);
 
         request.getRequestDispatcher("/views/admin/manage/model/edit.jsp").forward(request, response);
 

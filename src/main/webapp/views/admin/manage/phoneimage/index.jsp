@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
@@ -9,143 +11,319 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-
 <body class="fixed-sn mdb-skin">
 
-    <!--Double navigation-->
-    <!--/.Double navigation-->
+<%
+    List<Image> iamges = (List<Image>) request.getAttribute("pimage");
+    Phone phone = (Phone) request.getAttribute("phone");
 
-    <!--Main Layout-->
-    <main class="mt-1">
-        <div class="container-fluid panel-scroll">
+%>
+<div class="modal fade" id="viewDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog-scrollable modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">thông tin chi tiết</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
 
-            <div id="container">
-                <div class="row col col-12 col-sm-12 col-md-12 col-lg-12 ml-auto mr-auto float-none pl-1 pr-0">
-                    <div class="col col-12 p-0">
-                        <div class="card card-cascade narrower ml-2 mr-2 mb-1 ">
-                            <div class="view view-cascade gradient-card-header blue-gradient d-flex  ">
-                                <div class="text-center w-100 text-uppercase"><span class="h5">Danh sách đánh giá</span>
-                                </div>
+            <div class="modal-body">
 
+                <table class="table table-hover border">
+                    <thead>
 
-                            </div>
-                            <div id="card-body-main" class="card-body card-body-cascade "
-                                style="padding: 1.25rem 5px;">
-                                <div id="config_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="col col-12 col-sm-12 col-md-12 col-lg-10 ml-auto mr-auto">
-                                                <!-- Horizontal material form -->
-                                                <!-- Material column sizing form -->
-                                                <form>
-                                                    <!-- Grid row -->
-                                                    <div class="form-row">
-                                                        <!-- Grid column -->
-                                                        <div class="col-md-12">
-                                                            <!-- Material input -->
-                                                            <div class="form-group">
-                                                                <label for="reply"
-                                                                    style="float: left; color: #6c757d;">câu hỏi</label>
-                                                                <textarea placeholder="Viết ở đây" class="form-control"
-                                                                    id="reply" rows="7"
-                                                                    style="height: 80px; " readonly disabled></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <!-- Material input -->
-                                                            <div class="form-group">
-                                                                <label for="question"
-                                                                    style="float: left; color: #6c757d;">Câu trả
-                                                                    lời</label>
-                                                                <textarea placeholder="Viết ở đây" class="form-control"
-                                                                    id="question" rows="7"
-                                                                    style="height: 80px; "></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Grid column -->
-                                                    </div>
-                                                    <!-- Grid row -->
-                                                    <div class="action">
-                                                        <div class="btn btn-danger btn-md">Delete</div>
-                                                        <div class="btn btn-default btn-md">Create</div>
-                                                        <div class="btn btn-warning btn-md">Update</div>
-                                                        <div class="btn btn-info btn-md">Reset</div>
-                                                      </div>
+                    </thead>
+                    <tbody>
 
-                                                </form>
-                                                <!-- Material column sizing form -->
-                                                <!-- Horizontal material form -->
-                                            </div>
-                                        </div>
+                    <tr>
+                        <th>phoneId</th>
+                        <td class="font-weight-normal align-left-10 detail-phoneId"></td>
+                    </tr>
+                    <tr>
+                        <th>id</th>
+                        <td class="font-weight-normal align-left-10 detail-id"></td>
+                    </tr>
+                    <tr>
+                        <th>link</th>
+                        <td class="font-weight-normal align-left-10 detail-link"></td>
+                    </tr>
+                    <tr>
+                        <th>desc</th>
+                        <td class="font-weight-normal align-left-10 detail-desc"></td>
+                    </tr>
+                    <tr>
 
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="col col-12 col-sm-12 col-md-12 col-lg-10 ml-auto mr-auto">
-                                                <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th width="0px">Mã đáng giá</th>
-                                                            <th>Tên người dùng</th>
-                                                            <th>Số sao</th>
-                                                            <th>Là câu hỏi</th>
-                                                            <th>Lượt thích</th>
-                                                            <th>Tiêu đề</th>
-                                                            <th>Thao tác</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>3213</td>
-                                                            <td>Trần Hữu Thủm</td>
-                                                            <td>4</td>
-                                                            <td>yes</td>
-                                                            <td>221</td>
-                                                            <td>thông số</td>
-                                                            <td>
-                                                                <i class="fa-solid fa-eye"></i>
-                                                                <a href="/src/html/admin/manauser/edit.html"
-                                                                    class="fa-solid fa-pencil" aria-hidden="true"></a>
-                                                                <i class="fa-solid fa-trash">
-                                                                    <input type="hidden" id="url" value="">
-                                                                    <input type="hidden" name="_token" id="_token"
-                                                                        value="">
-                                                                </i>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                        <th>created_at</th>
+                        <td class="font-weight-normal align-left-10 detail-created"></td>
+                    </tr>
+                    <tr>
+                        <th> updated_at</th>
+                        <td class="font-weight-normal align-left-10 detail-updated"></td>
+                    </tr>
+                    <tr>
+                    </tbody>
+                </table>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            </div>
+            <!--Footer-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-default text-uppercase" id="delete" val="">
+                    xoa
+                </button>
+                <a href="" id="edit" class="btn btn-default text-uppercase edit">chỉnh sửa</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-warning" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+                <p class="heading lead text-uppercase">thêm </p>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="white-text">&times;</span>
+                </button>
             </div>
 
+            <!--Body-->
+            <div class="modal-body">
+                <form id="form">
+                    <table class="table table-hover border">
+                        <thead>
+
+                        </thead>
+                        <tbody>
+
+
+                        <tr>
+                            <th>link</th>
+                            <td><input id="link" type="file" name="link"
+                                       class="form-control">
+                                <label for="link"></label></td>
+                        </tr>
+                        <tr>
+                            <th>desc</th>
+                            <td><input id="desc" type="text" name="desc" class="form-control">
+                                <label for="desc"></label></td>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer justify-content-center">
+                <a type="button" onclick="$('#form').submit()" class="btn btn-warning text-uppercase  ">tạo</a>
+                <a type="button" class="btn btn-outline-warning waves-effect text-uppercase  "
+                   data-dismiss="modal">Hủy</a>
+            </div>
         </div>
-    </main>
-    <content tag="local_script">
-        <script src="/src/js/admin/form.js"></script>
-        <script>
-            $(document).ready(function () {
+        <!--/.Content-->
+    </div>
+</div>
 
-                // SideNav Initialization
-                $(".button-collapse").sideNav({
-                    slim: true
-                });
-                new WOW().init();
+<main class="mt-1">
+    <div class="container-fluid panel-scroll">
 
-                $('#dtBasicExample').DataTable();
-                $('.dataTables_length').addClass('bs-select');
+        <div id="container">
+            <!-- Table with panel -->
+            <div class="card card-cascade narrower">
 
+                <!--Card image-->
+                <div
+                        class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
 
+                    <div>
+                        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                            <i class="fa-solid fa-arrow-left-long"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <a href="" class="white-text mx-3">DANH SÁCH MÀU</a>
+
+                    <div>
+                        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                        <button data-toggle="modal" data-target="#add" type="button"
+                                class="btn btn-outline-white btn-rounded btn-sm px-2">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                            <i class="fa-solid fa-file-arrow-down"></i>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="px-4">
+
+                    <div class="table-wrapper">
+                        <!--Table-->
+                        <table id="detail" class="table border table-hover mb-0">
+
+                            <!--Table head-->
+                            <thead>
+                            <tr>
+                                <th>
+                                    <input class="form-check-input" type="checkbox" id="checkbox">
+                                    <label class="form-check-label" for="checkbox" class="mr-2 label-table"></label>
+                                </th>
+                                <th class="th-sm">
+                                    #
+                                </th>
+                                <th class="th-sm">
+                                    id
+                                </th>
+                                <th class="th-sm">
+                                    desc
+                                </th>
+                                <th class="th-lg">
+                                    link
+                                </th>
+                                <th class="th-lg">
+                                    update
+                                </th>
+                                <th class="th-lg">
+                                    Action
+                                </th>
+                            </tr>
+                            </thead>
+                            <!--Table head-->
+
+                            <!--Table body-->
+                            <tbody>
+
+                            <%
+                                for (int i = 0; i < iamges.size(); i++) {
+
+                            %>
+
+                            <tr>
+                                <th scope="row">
+                                    <input class="form-check-input" type="checkbox"
+                                           id="checkbox-<%=iamges.get(i).getId()%>">
+                                    <label class="form-check-label" for="checkbox-<%=iamges.get(i).getId()%>"
+                                           class="label-table"></label>
+                                </th>
+                                <td><%=i%>
+                                </td>
+                                <td><%=iamges.get(i).getId()%>
+                                </td>
+                                <td><%=iamges.get(i).getDesc()%>
+                                </td>
+                                <td><%=iamges.get(i).getLink()%>
+                                </td>
+                                <td><%=iamges.get(i).getUpdated_at()%>
+                                </td>
+
+                                <td>
+                                    <a><i val="<%=iamges.get(i).getId()%>"
+                                          class="fa-regular fa-eye"></i></a>
+                                    <a href="/admin/manage/phoneimage/edit?id=<%=iamges.get(i).getId()%>"><i
+                                            class="far fa-edit"></i></a>
+
+                                    <a><i val="<%=iamges.get(i).getId()%>"
+                                          class="far fa-trash-alt"></i></a>
+                                </td>
+
+                            </tr>
+                            <%}%>
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                        <!--Table-->
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- Table with panel -->
+        </div>
+
+    </div>
+</main>
+<content tag="local_script">
+    <script src="/js/admin/form.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('form#form').submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                var j = {};
+                j = form.serializeJSON();
+                j['phoneId'] = <%=phone.getId()%>
+                    add(j, "/api/image");
+            });
+
+            $(' tbody').on('click', 'i.fa-trash-alt', function () {
+                data = {
+
+                    id: $(this).attr('val')
+                }
+                dele(data, "/api/image");
+            });
+            $('#delete').on('click', function () {
+                data = {
+
+                    id: $(this).attr('val')
+                }
+                dele(data, "/api/image");
             })
-        </script>
-    </content>
+
+
+            $(' tbody').on('click', 'i.fa-eye', function () {
+                view($(this).attr('val'));
+            });
+
+
+            function view(id) {
+                $.ajax({
+                    type: 'GET', url: "/api/image" + "?id=" + id
+                }).done(function (responseText) {
+                    $('#viewDetail').modal();
+                    $('#viewDetail .detail-id').text(responseText.id);
+                    $('#viewDetail .detail-link').text(responseText.link);
+                    $('#viewDetail .detail-desc').text(responseText.desc);
+                    $('#viewDetail .detail-phoneId').text(responseText.phoneId);
+                    $('#viewDetail .detail-created').text(responseText.created_at);
+                    $('#viewDetail .detail-updated').text(responseText.updated_at);
+                    $('#viewDetail #edit').attr('href', '/admin/manage/phoneimage/edit?id=' + responseText.id);
+                    $('#viewDetail #delete').attr('val', responseText.id);
+                }).fail(function (jqXHR, status, error) {
+                    if (jqXHR.status !== 500) {
+                        warningAlert('Lỗi liệu lỗi');
+                    } else warningAlert("Xảy ra lỗi. <br/>Vui lòng liên hệ Admin.");
+                })
+            }
+
+            $('.mdb-select').materialSelect({});
+            $('table#detail').DataTable({
+                "scrollY": "100vh",
+                "scrollCollapse": true,
+                "paging": true,
+                "pagingType": "full_numbers"
+            });
+            $('.dataTables_length').addClass('bs-select');
+            // SideNav Initialization
+
+        })
+    </script>
+</content>
 </body>
 
 </html>

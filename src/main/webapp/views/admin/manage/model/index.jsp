@@ -1,5 +1,6 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.phone.Model" %>
 <%@ page import="java.util.List" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.phone.Brand" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 
@@ -14,12 +15,12 @@
 </head>
 <body class="fixed-sn mdb-skin">
 <%
-    List<Model> listModel = (List<Model>) request.getAttribute("listModel");
+    List<Model> listModel = (List<Model>) request.getAttribute("models");
 %>
 <!--Double navigation-->
 
 
-<!-- Central Modal Medium Success -->
+<!--Double navigation-->
 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-notify modal-warning" role="document">
@@ -27,7 +28,7 @@
         <div class="modal-content">
             <!--Header-->
             <div class="modal-header">
-                <p class="heading lead text-uppercase">thêm người dùng</p>
+                <p class="heading lead text-uppercase">thêm </p>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="white-text">&times;</span>
@@ -36,98 +37,52 @@
 
             <!--Body-->
             <div class="modal-body">
-                <table class="table table-hover border">
-                    <thead>
+                <form id="form">
+                    <table class="table table-hover border">
+                        <thead>
 
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>name</th>
+                            <td><input id="name" type="text" name="name" class="form-control">
+                                <label for="name"></label></td>
+                        </tr>
+                        <tr>
+                            <th>img</th>
+                            <td><input id="img" type="file" name="img" class="form-control">
+                                <label for="img"></label></td>
+                        </tr>
 
+                        <tr>
+                            <th>brandId</th>
+                            <td>
+                                <%
+                                    List<Brand> brands = (List<Brand>) request.getAttribute("brands");
+                                %>
+                                <select data-value-type="number" class="mdb-select md-form" name="brandId">
+                                    <%
 
-                    <tr>
-                        <th>name</th>
-                        <td><input id="input-char-counter1" type="text" length="10" class="form-control">
-                            <label for="input-char-counter1"></label></td>
-                    </tr>
-                    <tr>
-                        <th>address</th>
-                        <td><input id="input-char-counter2" type="text" length="10" class="form-control">
-                            <label for="input-char-counter2"></label></td>
-                    </tr>
-                    <tr>
-                        <th>gender</th>
-                        <td>
+                                        for (Brand pc : brands
+                                        ) {
+                                    %>
+                                    <option value="<%=pc.getId()%>"><%=pc.getName()%>
+                                    </option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                            </td>
+                        </tr>
 
-                            <!-- Material inline 2 -->
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline2"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline2">Nam</label>
-                            </div>
-
-                            <!-- Material inline 3 -->
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline3"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline3">Nữ</label>
-                            </div>
-
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>email</th>
-                        <td><input id="input-char-counter4" type="text" length="10" class="form-control">
-                            <label for="input-char-counter4"></label></td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>active</th>
-                        <td>
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="customSwitches">
-                                <label class="custom-control-label" for="customSwitches"></label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>permission</th>
-                        <td>
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline1"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline1">user mod</label>
-                            </div>
-
-                            <!-- Material inline 2 -->
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline2"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline2">admin</label>
-                            </div>
-
-                            <!-- Material inline 3 -->
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="materialInline3"
-                                       name="inlineMaterialRadiosExample">
-                                <label class="form-check-label" for="materialInline3">admin 2</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>status</th>
-                        <td><input id="input-char-counter5" type="text" length="10" class="form-control">
-                            <label for="input-char-counter5"></label></td>
-                    </tr>
-
-
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </form>
             </div>
 
             <!--Footer-->
             <div class="modal-footer justify-content-center">
-                <a type="button" data-toggle="modal" data-target="#centralModalSuccess"
-                   class="btn btn-warning text-uppercase  ">tạo</a>
+                <a type="button" onclick="$('#form').submit()" class="btn btn-warning text-uppercase  ">tạo</a>
                 <a type="button" class="btn btn-outline-warning waves-effect text-uppercase  "
                    data-dismiss="modal">Hủy</a>
             </div>
@@ -135,40 +90,8 @@
         <!--/.Content-->
     </div>
 </div>
+
 <!-- Central Modal Medium Success -->
-<div class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-notify modal-success" role="document">
-        <!--Content-->
-        <div class="modal-content">
-            <!--Header-->
-            <div class="modal-header">
-                <p class="heading lead">Modal Success</p>
-
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="white-text">&times;</span>
-                </button>
-            </div>
-
-            <!--Body-->
-            <div class="modal-body">
-                <div class="text-center">
-                    <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit iusto nulla aperiam blanditiis
-                        ad consequatur in dolores culpa, dignissimos, eius non possimus fugiat. Esse ratione fuga, enim,
-                        ab officiis totam.</p>
-                </div>
-            </div>
-
-            <!--Footer-->
-            <div class="modal-footer justify-content-center">
-                <a type="button" class="btn btn-success">Get it now <i class="far fa-gem ml-1 text-white"></i></a>
-                <a type="button" class="btn btn-outline-success waves-effect" data-dismiss="modal">No, thanks</a>
-            </div>
-        </div>
-        <!--/.Content-->
-    </div>
-</div>
 <!-- Central Modal Medium Success-->
 <!--Main Layout-->
 <main class="mt-1">
@@ -216,7 +139,8 @@
                 <!--/Card image-->
 
                 <!-- Modal: modalCart -->
-                <div class="modal fade" id="modalinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                <!-- Modal: modalCart -->
+                <div class="modal fade" id="viewDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog-scrollable modal-dialog modal-lg" role="document">
                         <div class="modal-content">
@@ -228,6 +152,7 @@
                                 </button>
                             </div>
                             <!--Body-->
+
                             <div class="modal-body">
 
                                 <table class="table table-hover border">
@@ -237,97 +162,48 @@
                                     <tbody>
 
                                     <tr>
-                                        <th>#</th>
-                                        <td>da</td>
+                                        <th>id</th>
+                                        <td class="font-weight-normal align-left-10 detail-id"></td>
                                     </tr>
                                     <tr>
                                         <th>Name</th>
-                                        <td>da</td>
+                                        <td class="font-weight-normal align-left-10 detail-name"></td>
                                     </tr>
                                     <tr>
-                                        <th>Phone</th>
-                                        <td>da</td>
+                                        <th>img</th>
+                                        <td class="font-weight-normal align-left-10 detail-img"></td>
                                     </tr>
                                     <tr>
-                                        <th>Address</th>
-                                        <td>da</td>
+                                        <th>brandId</th>
+                                        <td class="font-weight-normal align-left-10 detail-brandId"></td>
                                     </tr>
                                     <tr>
-                                        <th>Gender</th>
-                                        <td>da</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Eamil</th>
-                                        <td>da</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Avatar</th>
-                                        <td>da</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Created_at</th>
-                                        <td>da</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Updated_at</th>
-                                        <td>da</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Active</th>
-                                        <td>da</td>
-                                    </tr>
-                                    <th>Permission</th>
-                                    <td>da</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Status</th>
-                                        <td>da</td>
-                                    </tr>
 
+                                        <th>created_at</th>
+                                        <td class="font-weight-normal align-left-10 detail-created"></td>
+                                    </tr>
+                                    <tr>
+                                        <th> updated_at</th>
+                                        <td class="font-weight-normal align-left-10 detail-updated"></td>
+                                    </tr>
+                                    <tr>
                                     </tbody>
                                 </table>
 
                             </div>
                             <!--Footer-->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-default text-uppercase"
-                                        data-dismiss="modal">xóa
+                                <button type="button" class="btn btn-outline-default text-uppercase" id="delete" val="">
+                                    close
                                 </button>
-                                <a href="/src/views/admin/manausers/edit.html" class="btn btn-default text-uppercase">chỉnh
-                                    sửa</a>
+                                <a href="" id="edit" class="btn btn-default text-uppercase edit">chỉnh sửa</a>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <!-- Modal: modalCart -->
                 <!--Modal: modalConfirmDelete-->
-                <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
-                        <!--Content-->
-                        <div class="modal-content text-center">
-                            <!--Header-->
-                            <div class="modal-header d-flex justify-content-center">
-                                <p class="heading">Are you sure?</p>
-                            </div>
-
-                            <!--Body-->
-                            <div class="modal-body">
-
-                                <i class="fas fa-times fa-4x animated rotateIn"></i>
-
-                            </div>
-
-                            <!--Footer-->
-                            <div class="modal-footer flex-center">
-                                <a href="" class="btn  btn-outline-danger">Yes</a>
-                                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
-                            </div>
-                        </div>
-                        <!--/.Content-->
-                    </div>
-                </div>
                 <!--Modal: modalConfirmDelete-->
                 <div class="px-4">
 
@@ -387,15 +263,13 @@
                                 <td><%=listModel.get(i).getUpdated_at()%>
                                 </td>
                                 <td>
-                                    <a href="" data-toggle="modal" data-target="#modalinfo"><i
-                                            class="fa-regular fa-eye"></i></a>
+                                    <a><i val="<%=listModel.get(i).getId()%>"
+                                          class="fa-regular fa-eye"></i></a>
                                     <a href="/admin/manage/model/edit?id=<%=listModel.get(i).getId()%>"><i
                                             class="far fa-edit"></i></a>
 
-                                    <a href="" data-toggle="modal" data-target="#modalConfirmDelete"><i
-                                            class="far fa-trash-alt"></i></a>
-                                    <a href="/admin/manage/modal?id=<%=listModel.get(i).getId()%>"> <i
-                                            class="fa-solid fa-up-right-from-square mr-1"></i></a>
+                                    <a><i val="<%=listModel.get(i).getId()%>"
+                                          class="far fa-trash-alt"></i></a>
                                 </td>
 
                             </tr>
@@ -415,61 +289,63 @@
     </div>
 </main>
 <content tag="local_script">
-    <script src="/src/js/admin/form.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.2.3/jspdf.plugin.autotable.js"></script>
-    <script src="/src/lib/export-table-json-csv-txt-pdf/src/tableHTMLExport.js"></script>
+    <script src="/js/admin/form.js"></script>
 
     <script>
         $(document).ready(function () {
-            $('#exportjson').on('click', function () {
-                $("#detail").tableHTMLExport({
 
-                    // csv, txt, json, pdf
-                    type: 'json',
+            $('.mdb-select').materialSelect({});
 
-                    // file name
-                    filename: 'sample.json'
+            $('form#form').submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                var j = {};
+                j = form.serializeJSON();
+                add(j, "/api/model");
+            });
 
-                });
+            $(' tbody').on('click', 'i.fa-trash-alt', function () {
+                data = {
+
+                    id: $(this).attr('val')
+                }
+                dele(data, "/api/model");
+            });
+            $('#delete').on('click', function () {
+                data = {
+
+                    id: $(this).attr('val')
+                }
+                dele(data, "/api/model");
             })
-            $('#exportpdf').on('click', function () {
-                var doc = new jsPDF('p', 'pt', 'a4');
-
-                doc.autoTable({
-                    html: '#detail'
-                });
-                doc.save('table.pdf');
 
 
-            })
-            $('#exportcsv').on('click', function () {
-                $("#detail").tableHTMLExport({
+            $(' tbody').on('click', 'i.fa-eye', function () {
+                view($(this).attr('val'));
+            });
 
-// csv, txt, json, pdf
-                    type: 'csv',
 
-                    // default file name
-                    filename: 'tableHTMLExport.csv',
+            function view(id) {
+                $.ajax({
+                    type: 'GET', url: "/api/model" + "?id=" + id
 
-                    // for csv
-                    separator: ',',
-                    newline: '\r\n',
-                    trimContent: true,
-                    quoteFields: true,
 
-                    // CSS selector(s)
-                    ignoreColumns: '',
-                    ignoreRows: '',
-
-                    // your html table has html content?
-                    htmlContent: false,
-
-                    // debug
-                    consoleLog: false,
-
-                });
-            })
+                }).done(function (responseText) {
+                    $('#viewDetail').modal();
+                    $('#viewDetail .detail-id').text(responseText.id);
+                    $('#viewDetail .detail-name').text(responseText.name);
+                    $('#viewDetail .detail-img').text(responseText.img);
+                    $('#viewDetail .detail-brandId').text(responseText.brandId);
+                    $('#viewDetail .detail-created').text(responseText.created_at);
+                    $('#viewDetail .detail-updated').text(responseText.updated_at);
+                    $('#viewDetail #edit').attr('href', '/admin/manage/model/edit?id=' + responseText.id);
+                    $('#viewDetail #delete').attr('val', responseText.id);
+                }).fail(function (jqXHR, status, error) {
+                    if (jqXHR.status !== 500) {
+                        warningAlert('Lỗi liệu lỗi');
+                    } else warningAlert("Xảy ra lỗi. <br/>Vui lòng liên hệ Admin.");
+                })
+            }
 
 
             $('table#detail').DataTable({

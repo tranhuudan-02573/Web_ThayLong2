@@ -1,14 +1,9 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.spec;
 
-import vn.edu.hcmuaf.fit.constant.Variable;
-import vn.edu.hcmuaf.fit.dao.impl.BrandDAO;
 import vn.edu.hcmuaf.fit.dao.impl.SpecDAO;
 import vn.edu.hcmuaf.fit.dao.impl.SpecTypeDAO;
-import vn.edu.hcmuaf.fit.model.phone.Brand;
 import vn.edu.hcmuaf.fit.model.phone.Spec;
 import vn.edu.hcmuaf.fit.model.phone.SpecType;
-import vn.edu.hcmuaf.fit.model.user.User;
-import vn.edu.hcmuaf.fit.until.SessionUntil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,7 +27,7 @@ public class EditHandle extends HttpServlet {
             }
         }
         List<SpecType> specTypes = new SpecTypeDAO().list("", SpecType.class, null, null, null, null);
-        request.setAttribute("specTypes",specTypes);
+        request.setAttribute("specTs", specTypes);
         request.getRequestDispatcher("/views/admin/manage/spec/edit.jsp").forward(request, response);
 
     }

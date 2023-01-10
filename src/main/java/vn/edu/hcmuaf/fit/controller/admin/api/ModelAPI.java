@@ -1,9 +1,7 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import vn.edu.hcmuaf.fit.dao.impl.ColorDAO;
 import vn.edu.hcmuaf.fit.dao.impl.ModelDAO;
-import vn.edu.hcmuaf.fit.model.phone.Color;
 import vn.edu.hcmuaf.fit.model.phone.Model;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
@@ -20,9 +18,15 @@ public class ModelAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ObjectMapper mapper = new ObjectMapper();
-        int id = Integer.parseInt(request.getParameter("id").trim());
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
+        String id = request.getParameter("id");
+
+        if (id != null) {
+            Model users = new ModelDAO().get(" and id= " + id, Model.class, null).get();
+            mapper.writeValue(response.getOutputStream(), users);
+        } else
+            mapper.writeValue(response.getOutputStream(), "{}");
 
     }
 

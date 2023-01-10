@@ -1,9 +1,11 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.user;
 
-import vn.edu.hcmuaf.fit.constant.Variable;
+import vn.edu.hcmuaf.fit.dao.impl.PermissionActionDAO;
 import vn.edu.hcmuaf.fit.dao.impl.UserDAO;
+import vn.edu.hcmuaf.fit.dao.impl.UserStateDAO;
+import vn.edu.hcmuaf.fit.model.user.PermissionAction;
 import vn.edu.hcmuaf.fit.model.user.User;
-import vn.edu.hcmuaf.fit.until.SessionUntil;
+import vn.edu.hcmuaf.fit.model.user.UserState;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(urlPatterns = {"/admin/manage/user/edit"})
 public class EditHandle extends HttpServlet {
@@ -19,15 +22,23 @@ public class EditHandle extends HttpServlet {
 
 
         String id = request.getParameter("id");
-        int ids = 0;
+        String page = "";
+
         if (id != null) {
-            ids = Integer.parseInt(id.trim());
-            if (ids != 0) {
-                User u = new UserDAO().get(" and id = " + ids, User.class, null).get();
-                request.setAttribute("u", u);
-            }
+            User u = new UserDAO().get(" and id = " + id, User.class, null).get();
+            request.setAttribute("u", u);
+            List<UserState> us = new UserStateDAO().list("", UserState.class, null, null, null, null);
+            request.setAttribute("us", us);
+            page = "/views/admin/manage/user/edit.jsp";
+        } else {
+            String userId = request.getParameter("userId");
+            String actionId = request.getParameter("actionId");
+            PermissionAction permissionAction = new PermissionActionDAO().get(" and userId=" + userId + " and actionId=" + actionId, PermissionAction.class, null).get();
+            request.setAttribute("p", permissionAction);
+            page = "/views/admin/manage/permissionAction/edit.jsp";
+
         }
-        request.getRequestDispatcher("/views/admin/manage/user/edit.jsp").forward(request, response);
+        request.getRequestDispatcher(page).forward(request, response);
 
 
     }

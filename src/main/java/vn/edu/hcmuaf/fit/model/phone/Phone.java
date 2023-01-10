@@ -25,7 +25,7 @@ import java.util.Set;
 
 public class Phone extends Base<Phone> implements Serializable {
     private String name;
-    private Integer price;
+    private String price;
     private Integer typeId;
     private Integer updated_by;
     private String content;

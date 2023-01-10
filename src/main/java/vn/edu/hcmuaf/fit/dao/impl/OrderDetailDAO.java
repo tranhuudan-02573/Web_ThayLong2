@@ -6,8 +6,8 @@ import vn.edu.hcmuaf.fit.model.order.OrderDetail;
 import java.sql.Timestamp;
 
 public class OrderDetailDAO extends AbstractDAO<OrderDetail> {
-    public OrderDetailDAO(String table) {
-        super(table);
+    public OrderDetailDAO( ) {
+        super("order_detail");
     }
 
     public void save(OrderDetail od) {
