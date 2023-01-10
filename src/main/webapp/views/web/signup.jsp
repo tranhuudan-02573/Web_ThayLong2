@@ -26,9 +26,9 @@
     %>
     <section class="my-5 ">
 
-        <div class="row ">
+        <div class="row justify-content-center">
 
-            <div class="col-xl-6 p-4 justify-content-center ">
+            <div class="col-xl-6 p-4 ">
 
                 <div class="card" id="form-register">
                     <form action="/register" method="post" id="form" class="needs-validation" novalidate>

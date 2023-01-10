@@ -17,5 +17,8 @@ public class CartItemDAO extends AbstractDAO<CartItem> {
         insert(" insert into cart_items(phoneId,colorId,quantity,price,isSave,userId,created_at,updated_at) values(:t.phoneId,:t.colorId,:t.quantity,:t.price,:t.save,:t.userId,:t.created_at,:t.updated_at)", c);
     }
 
+    public void delete(CartItem c) {
+        delete(" delete from cart_items where phoneId=:t.phoneId and colorId = :t.colorId and userId =:t.userId ", c);
+    }
 
 }

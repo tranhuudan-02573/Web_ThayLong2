@@ -155,20 +155,25 @@ public class AbstractDAO<T> {
     }
 
     public String getCustom(String custom, String sql) {
-        String q = "select  " + custom + "from <TABLE>" + " where 0 =0 " + sql;
+        String q = "select " + custom + " from <TABLE> " + "where 0=0 " + sql;
         return JDBiConnector.get().withHandle(handle -> {
             return handle.createQuery(q).define("TABLE", this.table).mapTo(String.class).one();
         });
     }
 
-
     public int count(String count, String sql) {
-        String q = "select count(" + count + ")" + "from <TABLE>" + " where 0 =0" + sql;
+        String q = "select count(" + count + ")" + " from <TABLE>" + " where 0=0 " + sql;
         return (int) JDBiConnector.get().withHandle(handle -> {
             return handle.createQuery(q).define("TABLE", this.table).mapTo(int.class).one();
         });
     }
 
+    public int max(String max, String sql) {
+        String q = "select max(" + max + ")" + " from <TABLE>" + " where 0=0 " + sql;
+        return (int) JDBiConnector.get().withHandle(handle -> {
+            return handle.createQuery(q).define("TABLE", this.table).mapTo(int.class).one();
+        });
+    }
 
     public Optional<T> get(String sql, Class<T> t, T t2) {
         String q = "select distinct " + this.table + ".* from <TABLE> where 0=0 " + sql;

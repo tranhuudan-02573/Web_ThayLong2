@@ -6,7 +6,9 @@ import vn.edu.hcmuaf.fit.dao.AbstractDAO;
 import vn.edu.hcmuaf.fit.model.phone.Base;
 import vn.edu.hcmuaf.fit.model.phone.Color;
 import vn.edu.hcmuaf.fit.model.phone.Phone;
+import vn.edu.hcmuaf.fit.model.user.PermissionAction;
 
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -61,5 +63,6 @@ public class CartItem extends Base<CartItem> {
     public Phone _phone() {
         return new AbstractDAO<Phone>("phones").get(" and id =" + this.phoneId, Phone.class, null).get();
     }
+
 
 }

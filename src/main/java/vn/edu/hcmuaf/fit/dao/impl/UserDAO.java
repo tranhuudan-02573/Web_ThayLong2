@@ -53,5 +53,14 @@ public class UserDAO extends AbstractDAO<User> {
         update(" delete from users where id=:t.id", s);
     }
 
+    public Integer getID(String cusEmail) {
+        try {
+            return  Integer.parseInt(getCustom("id","and email='"+cusEmail+"'"));
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
+
 }
 
