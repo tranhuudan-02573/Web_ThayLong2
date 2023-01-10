@@ -25,119 +25,82 @@
         %>
         <div id="container">
             <!-- Table with panel -->
-            <form id="formSubmit">
 
-                <div class="card card-cascade narrower">
+            <div class="card card-cascade narrower">
 
-                    <!--Card image-->
-                    <div
-                            class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+                <!--Card image-->
+                <div
+                        class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
 
-                        <div>
-                            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                                <i class="fa-solid fa-arrow-left-long"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                        </div>
-                        <a href="" class="white-text mx-3 text-uppercase ">sửa thông tin người dùng</a>
-                        <div>
-                            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                                <i class="fa-solid fa-rotate-left"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                                <i class="fa-solid fa-repeat"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                                <i class="fa-regular fa-floppy-disk"></i>
-                            </button>
-                        </div>
-
+                    <div>
+                        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                            <i class="fa-solid fa-arrow-left-long"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
                     </div>
-                    <!--/Card image-->
-
-                    <div class="px-4">
-
-                        <div class="table-wrapper">
-                            <!--Table-->
-                            <table class="table table-hover border">
-                                <thead>
-
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <th>
-                                        name
-                                    </th>
-                                    <td><!-- Material outline counter input -->
-                                        <input id="name" value="<%=color.getName()%>"
-                                               type="text"
-                                               length="10"
-                                               class="form-control">
-                                        <label for="name"></label>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        Key
-                                    </th>
-                                    <td><!-- Material outline counter input -->
-                                        <input id="key" value="<%=color.getKey()%>"
-                                               type="text"
-                                               length="10"
-                                               class="form-control">
-                                        <label for="key"></label>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <a href="" class="white-text mx-3 text-uppercase ">sửa thông tin người dùng</a>
+                    <div>
+                        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                            <i class="fa-solid fa-repeat"></i>
+                        </button>
+                        <button type="button" onclick="$('form#form').submit()"
+                                class="btn btn-outline-white btn-rounded btn-sm px-2">
+                            <i class="fa-regular fa-floppy-disk"></i>
+                        </button>
                     </div>
+
                 </div>
-                <input type="hidden" value="<%=(color.getId()!=0)?color.getId():""%>" id="id" name="id"/>
-                <button type="submit" id="btnAddOrUpdateNew"
-                        class="btn btn-lg btn-primary"><%= (color.getId() != 0) ? "update" : "create" %>
-                </button>
-            </form>
+                <!--/Card image-->
+
+                <div class="px-4">
+
+                    <form id="form">
+                        <table class="table table-hover border">
+                            <thead>
+
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <th>name</th>
+                                <td><!-- Material outline counter input -->
+                                    <input id="name" type="text" name="name" class="form-control"
+                                           value="<%=(color.getName()!=null)?color.getName():""%>">
+                                    <label for="name"></label>
+                            </tr>
+                            <tr>
+                                <th>key</th>
+                                <td><input id="key" type="text" name="key" class="form-control"
+                                           value="<%=(color.getKey()!=null)?color.getKey():""%>">
+                                    <label for="key"></label></td>
+                            </tr>
+
+
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+            </div>
         </div>
     </div>
 </main>
 <content tag="local_script">
     <script>
         $(document).ready(function () {
-
-
-            $('#btnAddOrUpdateNew').click(function (e) {
-                e.preventDefault();
-                var data = {};
-                var formData = $('#formSubmit').serializeArray();
-                $.each(formData, function (i, v) {
-                    data["" + v.name + ""] = v.value;
-                });
-                var id = $('#id').val();
-                if (id == "") {
-                    addNew(data);
-                } else {
-                    // updateNew(data);
-                }
+            $('form#form').submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                var j = {};
+                j = form.serializeJSON();
+                j['id'] = <%=color.getId()%>;
+                update(j, "/api/color");
             });
-
-            function addNew(data) {
-                $.ajax({
-                    url: '/admin/manage/color/edit',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(data),
-                    dataType: 'json',
-                    success: function (result) {
-                        window.location.href = "/admin/manage/color";
-                    },
-                    error: function (error) {
-                        window.location.href = "/admin/manage/color";
-                    }
-                });
-            }
-
             // SideNav Initialization
             $(".button-collapse").sideNav({
                 slim: true

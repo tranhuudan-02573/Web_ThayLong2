@@ -1,8 +1,6 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.sale;
 
-import vn.edu.hcmuaf.fit.dao.impl.PromotDAO;
 import vn.edu.hcmuaf.fit.dao.impl.SaleDAO;
-import vn.edu.hcmuaf.fit.model.phone.Promot;
 import vn.edu.hcmuaf.fit.model.phone.Sale;
 
 import javax.servlet.ServletException;
@@ -18,7 +16,7 @@ public class IndexHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Sale> users = new SaleDAO().list("", Sale.class, null, null, null, null);
-        request.setAttribute("listSale", users);
+        request.setAttribute("sales", users);
         request.getRequestDispatcher("/views/admin/manage/sale/index.jsp").forward(request, response);
 
     }

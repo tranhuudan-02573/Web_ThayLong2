@@ -1,9 +1,8 @@
 package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import vn.edu.hcmuaf.fit.dao.impl.PhoneReviewDAO;
+import vn.edu.hcmuaf.fit.dao.impl.PhoneStateDAO;
 import vn.edu.hcmuaf.fit.model.phone.PhoneState;
-import vn.edu.hcmuaf.fit.model.review.PhoneReview;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
 import javax.servlet.ServletException;
@@ -19,11 +18,15 @@ public class PhoneStateAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ObjectMapper mapper = new ObjectMapper();
-        int id = Integer.parseInt(request.getParameter("id").trim());
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-//       Color color = colorDAO.get(" and id = " + id, Color.class, null);
-//        mapper.writeValue(response.getOutputStream(), color);
+        String id = request.getParameter("id");
+
+        if (id != null) {
+            PhoneState users = new PhoneStateDAO().get(" and id= " + id, PhoneState.class, null).get();
+            mapper.writeValue(response.getOutputStream(), users);
+        } else
+            mapper.writeValue(response.getOutputStream(), "{}");
     }
 
     @Override

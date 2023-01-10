@@ -14,9 +14,6 @@ public class CapDAO extends AbstractDAO<Cap> {
 
     }
 
-    public CapDAO(String table) {
-        super(table);
-    }
 
     public List<Cap> list(int[] s) {
         List<Cap> rs = new ArrayList<>();
@@ -28,11 +25,12 @@ public class CapDAO extends AbstractDAO<Cap> {
         return rs;
 
     }
+
     public int insertCap(Cap pp) {
         pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
         pp.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        return insertWithId("insert into caps (cap,name,created_at,updated_at)" +
-                        " values(:t.cap,:t.name,:t.created_at,:t.updated_at)",
+        return insertWithId("insert into caps (cap,`unit`,created_at,updated_at)" +
+                        " values(:t.cap,:t.unit,:t.created_at,:t.updated_at)",
                 pp);
     }
 
@@ -43,7 +41,7 @@ public class CapDAO extends AbstractDAO<Cap> {
 
     public void updateCap(Cap c) {
         c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        update("update caps set cap = :t.cap, name = :t.name,updated_at = :t.updated_at where id = :t.id", c);
+        update("update caps set cap = :t.cap, `unit` = :t.unit,updated_at = :t.updated_at where id = :t.id", c);
 
 
     }

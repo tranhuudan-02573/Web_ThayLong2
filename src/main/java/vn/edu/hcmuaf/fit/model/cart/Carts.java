@@ -25,7 +25,7 @@ public class Carts extends Base<Carts> {
         int rs = 0;
         for (CartItem c : ci
         ) {
-            if (!c.isSave())
+            if (!c.getSave())
                 rs++;
         }
 
@@ -37,7 +37,7 @@ public class Carts extends Base<Carts> {
         int rs = 0;
         for (CartItem c : ci
         ) {
-            if (!c.isSave())
+            if (!c.getSave())
                 rs += cartItemIntegerMap.get(c);
         }
 
@@ -49,7 +49,7 @@ public class Carts extends Base<Carts> {
         int rs = 0;
         for (CartItem c : ci
         ) {
-            if (c.isSave())
+            if (c.getSave())
                 rs++;
         }
 
@@ -90,8 +90,8 @@ public class Carts extends Base<Carts> {
         List<CartItem> cart = new ArrayList<>(cartItemIntegerMap.keySet());
         for (CartItem c : cart
         ) {
-            if (!c.isSave()) {
-                rs += c.getPrice() * getCartItemIntegerMap().get(c);
+            if (!c.getSave()) {
+                rs += Integer.parseInt(c.getPrice()) * getCartItemIntegerMap().get(c);
             }
 
         }
@@ -104,7 +104,7 @@ public class Carts extends Base<Carts> {
         List<CartItem> keys = new ArrayList<>(cartItemIntegerMap.keySet());
         for (CartItem ci : keys
         ) {
-            if (ci.isSave() == cartItem.isSave() && ci.getColorId() == cartItem.getColorId() && ci.getPhoneId() == cartItem.getPhoneId())
+            if (ci.getSave() == cartItem.getSave() && ci.getColorId() == cartItem.getColorId() && ci.getPhoneId() == cartItem.getPhoneId())
                 return ci;
         }
         return null;
@@ -116,7 +116,7 @@ public class Carts extends Base<Carts> {
         List<CartItem> keys = new ArrayList<>(cartItemIntegerMap.keySet());
         for (CartItem ci : keys
         ) {
-            if (ci.isSave() == cartItem.isSave() && ci.getPhoneId() == cartItem.getPhoneId())
+            if (ci.getSave() == cartItem.getSave() && ci.getPhoneId() == cartItem.getPhoneId())
                 rs.add(ci);
         }
         return rs;
@@ -143,14 +143,6 @@ public class Carts extends Base<Carts> {
         }
     }
 
-    public static void main(String[] args) {
-        Carts c = new Carts();
-//        c.add(new CartItem(2,1,1,2000,false));
-//        c.add(new CartItem(2,1,1,2000,true));
-        c.remove(new CartItem(2, 1, 1, 2000, true));
-        c.remove(new CartItem(2, 1, 1, 2000, true));
-        System.out.println(c.cartItemIntegerMap);
-    }
 
     public void updateColor(CartItem cartItem, int colorIdU) {
 

@@ -9,13 +9,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.fit.dao.AbstractDAO;
+import vn.edu.hcmuaf.fit.dao.impl.CustomerDAO;
 import vn.edu.hcmuaf.fit.model.phone.Base;
+import vn.edu.hcmuaf.fit.model.user.Customer;
 import vn.edu.hcmuaf.fit.model.user.User;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,7 +31,7 @@ public class Order extends Base<Order> implements Serializable {
 
 
     public List<OrderDetail> _orderDetails() {
-        return  new AbstractDAO<OrderDetail>("order_detail").list(" and orderId =" + this.id, OrderDetail.class, null, null,null,null);
+        return new AbstractDAO<OrderDetail>("order_detail").list(" and orderId =" + this.id, OrderDetail.class, null, null, null, null);
     }
 
     public Code _code() {
@@ -45,6 +45,10 @@ public class Order extends Base<Order> implements Serializable {
 
     public User _user() {
         return new AbstractDAO<User>("users").get(" and id=" + this.userId, User.class, null).get();
+    }
+
+    public Customer _customer() {
+        return new CustomerDAO().get(" and id=" + this.customerId, Customer.class, null).get();
     }
 
 

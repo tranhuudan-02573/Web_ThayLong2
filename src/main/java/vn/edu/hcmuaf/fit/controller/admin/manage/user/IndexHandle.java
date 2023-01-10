@@ -1,9 +1,13 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.user;
 
+import vn.edu.hcmuaf.fit.dao.impl.ActionDAO;
 import vn.edu.hcmuaf.fit.dao.impl.PermissionActionDAO;
 import vn.edu.hcmuaf.fit.dao.impl.UserDAO;
+import vn.edu.hcmuaf.fit.dao.impl.UserStateDAO;
+import vn.edu.hcmuaf.fit.model.user.Action;
 import vn.edu.hcmuaf.fit.model.user.PermissionAction;
 import vn.edu.hcmuaf.fit.model.user.User;
+import vn.edu.hcmuaf.fit.model.user.UserState;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +15,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(urlPatterns = {"/admin/manage/user"})
 public class IndexHandle extends HttpServlet {
@@ -27,12 +34,19 @@ public class IndexHandle extends HttpServlet {
                 request.setAttribute("actions", actions);
                 User user = new UserDAO().get(" and id=" + ids, User.class, null).get();
                 request.setAttribute("user", user);
+                Map<String, List<Object>> map = new HashMap<>();
+                List<Object> obs = new ArrayList<>(new PermissionActionDAO().listValue(" actionId ", " and userId=" + user.getId(), Integer.class));
+                map.put("id", obs);
+                List<Action> actions1 = new ActionDAO().list(" and id not in (<id>)", Action.class, null, null, map, null);
+                request.setAttribute("actions1", actions1);
                 page = "/views/admin/manage/permissionAction/index.jsp";
 
             }
         } else {
+            List<UserState> us = new UserStateDAO().list("", UserState.class, null, null, null, null);
             List<User> users = new UserDAO().list("", User.class, null, null, null, null);
             request.setAttribute("users", users);
+            request.setAttribute("us", us);
             page = "/views/admin/manage/user/index.jsp";
         }
         request.getRequestDispatcher(page).forward(request, response);

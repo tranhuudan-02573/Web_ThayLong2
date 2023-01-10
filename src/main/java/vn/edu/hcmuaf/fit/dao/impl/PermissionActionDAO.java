@@ -13,10 +13,18 @@ public class PermissionActionDAO extends AbstractDAO<PermissionAction> {
     public void save(PermissionAction p) {
         p.setUpdated_at(new Timestamp(System.currentTimeMillis()));
         p.setCreated_at(new Timestamp(System.currentTimeMillis()));
-        p.setLicensed(true);
+        System.out.println(p);
         update(" insert into permission_action(created_at,updated_at,licensed,userId,actionId)" +
                 " values (:t.created_at,:t.updated_at,:t.licensed,:t.userId,:t.actionId)", p);
 
+    }
+
+    public static void main(String[] args) {
+        PermissionAction p = new PermissionAction();
+        p.setLicensed(true);
+        p.setActionId(1);
+        p.setUserId(5);
+        new PermissionActionDAO().save(p);
     }
 
     public boolean update(PermissionAction p) {

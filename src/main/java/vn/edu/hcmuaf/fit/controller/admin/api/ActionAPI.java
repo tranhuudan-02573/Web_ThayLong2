@@ -2,9 +2,7 @@ package vn.edu.hcmuaf.fit.controller.admin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import vn.edu.hcmuaf.fit.dao.impl.ActionDAO;
-import vn.edu.hcmuaf.fit.dao.impl.PermissionActionDAO;
 import vn.edu.hcmuaf.fit.model.user.Action;
-import vn.edu.hcmuaf.fit.model.user.PermissionAction;
 import vn.edu.hcmuaf.fit.until.HttpUtil;
 
 import javax.servlet.ServletException;
@@ -20,14 +18,19 @@ public class ActionAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ObjectMapper mapper = new ObjectMapper();
-        int id = Integer.parseInt(request.getParameter("id").trim());
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-//       Color color = colorDAO.get(" and id = " + id, Color.class, null);
-//        mapper.writeValue(response.getOutputStream(), color);
+        String id = request.getParameter("id");
+
+        if (id != null) {
+            Action users = new ActionDAO().get(" and id= " + id, Action.class, null).get();
+            mapper.writeValue(response.getOutputStream(), users);
+        } else
+            mapper.writeValue(response.getOutputStream(), "{}");
     }
 
     @Override
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ObjectMapper mapper = new ObjectMapper();
         request.setCharacterEncoding("UTF-8");

@@ -1,9 +1,7 @@
 package vn.edu.hcmuaf.fit.controller.admin.manage.promot;
 
 import vn.edu.hcmuaf.fit.dao.impl.PromotDAO;
-import vn.edu.hcmuaf.fit.dao.impl.SaleDAO;
 import vn.edu.hcmuaf.fit.model.phone.Promot;
-import vn.edu.hcmuaf.fit.model.phone.Sale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +21,7 @@ public class EditHandle extends HttpServlet {
             ids = Integer.parseInt(id.trim());
             if (ids != 0) {
                 Promot u = new PromotDAO().get(" and id = " + ids, Promot.class, null).get();
-                request.setAttribute("u", u);
+                request.setAttribute("promot", u);
             }
         }
 

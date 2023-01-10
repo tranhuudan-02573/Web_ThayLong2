@@ -50,6 +50,8 @@ public class Register extends HttpServlet {
             user.setAddress(address);
             user.setEmail(email);
             user.setPassword(pass);
+            user.setPermission(Variable.Global.USER.toString());
+            user.setUser_stateId(1);
             new UserDAO().save(user);
             String code = UUID.randomUUID().toString();
             MailVerify.send(email, userName, email, code);

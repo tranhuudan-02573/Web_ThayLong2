@@ -69,9 +69,9 @@ public class ImageDAO extends AbstractDAO<Image> {
 
     public void updateImage(Image i) {
         i.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        update("update images List link = :t.link, `desc`=:t.desc,updated_at = :t.updated_at where id = :t.id", i);
-
+        update("update images  set link = :t.link, `desc`=:t.desc,updated_at = :t.updated_at where id = :t.id", i);
     }
+
 
     public void deleteImage(Image i) {
         delete("delete from images where id = :t.id", i);

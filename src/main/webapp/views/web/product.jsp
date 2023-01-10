@@ -425,12 +425,12 @@
                                         <div class="p-1  col-4 ">
                                             <div class="form-check p-0   rounded">
                                                 <input type="radio" class="form-check-input"
-                                                       id="cap-<%=pcs.get(i)._cap().getId()%>"
-                                                       value="<%=pcs.get(i)._phoneCap().getId()%>"
-                                                       name="capId" <%=(phoneP.getId()!=p.getId())?(pcs.get(i)._cap().getId()==p._cap().getId()?"checked":""):((i==0)?"checked":"")%>
+                                                       id="cap-<%=pcs.get(i).getCapId()%>"
+                                                       value="<%=pcs.get(i).getPhone_capId()%>"
+                                                       name="capId" <%=(phoneP.getId()!=p.getId())?(pcs.get(i).getCapId()==p._cap().getId()?"checked":""):((i==0)?"checked":"")%>
                                                        onclick="this.form.submit()">
                                                 <label class="form-check-label  px-3 "
-                                                       for="cap-<%=pcs.get(i)._cap().getId()%>"
+                                                       for="cap-<%=pcs.get(i).getCapId()%>"
                                                        style="width: 96.5%; height: 100%; ">
                                                     <div class="text-center">
                                                         <div class=" text-center">
@@ -460,11 +460,11 @@
                                         <div class="p-1  col-4 ">
                                             <div class="form-check p-0 rounded">
                                                 <input type="radio" class="form-check-input"
-                                                       id="color-<%=colors.get(i)._color().getId()%>"
-                                                       value="<%=colors.get(i)._color().getId()%>"
+                                                       id="color-<%=colors.get(i).getColorId()%>"
+                                                       value="<%=colors.get(i).getColorId()%>"
                                                        name="colorId" <%=((colorId!=null)?((Integer.parseInt(colorId)==colors.get(i).getColorId())?"checked":""):(i==0?"checked":""))%>  >
                                                 <label class="form-check-label  px-1 " style=" height: 100%; "
-                                                       for="color-<%=colors.get(i)._color().getId()%>">
+                                                       for="color-<%=colors.get(i).getColorId()%>">
                                                     <div class="d-flex justify-content-center align-items-center  ">
                                                         <img src="<%=colors.get(i).getImg()%>"
                                                              alt="" class="img-fluid">

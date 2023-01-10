@@ -408,7 +408,8 @@
                         </div>
                     </div>
                     <div class="text-center mt-2">
-                        <a href="/phone-filter?page=1&sort=sap+xep+theo+A+-+Z&differentCheck=giam+gia" class="btn btn-warning text-uppercase px-5">xem thêm</a>
+                        <a href="/phone-filter?page=1&sort=sap+xep+theo+A+-+Z&differentCheck=giam+gia"
+                           class="btn btn-warning text-uppercase px-5">xem thêm</a>
                     </div>
                 </div>
             </div>
@@ -915,13 +916,13 @@
                 <ul class="nav w-75 nav-tabs row " id="myTab" role="tablist" style="border: 0;">
 
                     <%
-                        String diff = (String)request.getAttribute("different");
+                        String diff = (String) request.getAttribute("different");
                         List<Phone> phoneList = (List<Phone>) request.getAttribute("phones");
-Map<String,String> map = (Map<String, String>) request.getAttribute("differentList");
-List<String> key = new ArrayList<>(map.keySet());
-                        String pagen =(String) request.getAttribute("page");
-                        for (String s: key
-                             ) {
+                        Map<String, String> map = (Map<String, String>) request.getAttribute("differentList");
+                        List<String> key = new ArrayList<>(map.keySet());
+                        String pagen = (String) request.getAttribute("page");
+                        for (String s : key
+                        ) {
 
 
                     %>
@@ -930,12 +931,11 @@ List<String> key = new ArrayList<>(map.keySet());
                         <a class="nav-link bg-light text-dark text-uppercase	<%=(diff.equals(map.get(s)))?"active":""%> "
                            href="/home?page=<%=Integer.parseInt(pagen)%>&different=<%=map.get(s)%>"
                         > <span class="btn-floating btn-md  btn-default m-0 mr-2"
-                                                       style="box-shadow: none;">
+                                style="box-shadow: none;">
                             <i
-                                class="fas fa-bolt"></i></span><strong>
+                                    class="fas fa-bolt"></i></span><strong>
                             <%=map.get(s)%>
                         </strong></a>
-
 
 
                     </li>
@@ -949,8 +949,10 @@ List<String> key = new ArrayList<>(map.keySet());
                 <div class="tab-content    pl-0 pr-0 " id="myTabContent">
 
 
-<%for (String s:key
-) {%>
+                    <%
+                        for (String s : key
+                        ) {
+                    %>
                     <div class="tab-pane fade  <%=(  diff.equals(map.get(s)))?"show active":""%>">
 
 
@@ -1093,18 +1095,20 @@ List<String> key = new ArrayList<>(map.keySet());
                             </div>
                         </div>
 
-                        <%if(pagen!=null){%>
+                        <%if (pagen != null) {%>
                         <form action="/home">
-                        <div class="text-center mt-2">
-                            <a class="btn btn-danger text-uppercase px-5" href="/home?page=<%=Integer.parseInt(pagen)+1%>&different=<%=map.get(s)%>" >xem thêm</a>
+                            <div class="text-center mt-2">
+                                <a class="btn btn-danger text-uppercase px-5"
+                                   href="/home?page=<%=Integer.parseInt(pagen)+1%>&different=<%=map.get(s)%>">xem
+                                    thêm</a>
 
-                        </div>
+                            </div>
                         </form>
-                     <%}%>
+                        <%}%>
                     </div>
 
 
-<%}%>
+                    <%}%>
                 </div>
 
 
@@ -1131,11 +1135,11 @@ List<String> key = new ArrayList<>(map.keySet());
 
                     <h5 class="mt-2 text-uppercase font-weight-bold">
                         <a href="/phone-filter?page=1&sort=sap+xep+theo+A+-+Z&brandCheck=<%=b.getId()%>">
-                        <%=b
-                            .
-                            getName
-                                    (
-                                    )%>
+                            <%=b
+                                    .
+                                    getName
+                                            (
+                                            )%>
                         </a>
                     </h5>
 
@@ -1280,7 +1284,8 @@ List<String> key = new ArrayList<>(map.keySet());
                                                     </div>
                                                 </a>
                                                 <div class="mt-2  d-flex justify-content-between ">
-                                                    <a href="${pageContext.request.contextPath}/add-carts?name=home&action=carts&phoneId=<%=phone.getId()%>" class=" d-block  align-middle" style="font-size:14px ;">
+                                                    <a href="${pageContext.request.contextPath}/add-carts?name=home&action=carts&phoneId=<%=phone.getId()%>"
+                                                       class=" d-block  align-middle" style="font-size:14px ;">
                                                         <i class="fa-regular fa-square-plus fa-sm"></i> cart
                                                     </a>
 

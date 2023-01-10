@@ -29,7 +29,7 @@ public class ModelDAO extends AbstractDAO<Model> {
 
         pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
         pp.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        return insertWithId("insert into models (name,created_at,updated_at, img, brandId)" +
+        return insertWithId("insert into models (`name`,created_at,updated_at, img, brandId)" +
                         " values(:t.name,:t.created_at,:t.updated_at, :t.img, :t.brandId)",
                 pp);
     }
@@ -41,6 +41,6 @@ public class ModelDAO extends AbstractDAO<Model> {
 
     public void updateModel(Model c) {
         c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-        update("update models set name = :t.name,updated_at = :t.updated_at, img = :t.img, brandId = :t.brandId where id = :t.id", c);
+        update("update models set `name` = :t.name,updated_at = :t.updated_at, img = :t.img, brandId = :t.brandId where id = :t.id", c);
     }
 }

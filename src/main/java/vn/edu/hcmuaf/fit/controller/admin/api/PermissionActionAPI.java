@@ -15,6 +15,20 @@ import java.io.IOException;
 @WebServlet(value = "/api/permission-action")
 public class PermissionActionAPI extends HttpServlet {
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        String id = request.getParameter("userId");
+        String id2 = request.getParameter("actionId");
+
+        if (id != null && id2 != null) {
+            PermissionAction permissionAction = new PermissionActionDAO().get(" and userId=" + id + " and actionId=" + id2, PermissionAction.class, null).get();
+            mapper.writeValue(response.getOutputStream(), permissionAction);
+        } else
+            mapper.writeValue(response.getOutputStream(), "{}");
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,8 +48,12 @@ public class PermissionActionAPI extends HttpServlet {
         response.setContentType("application/json");
 
         PermissionAction permissionAction = HttpUtil.of(request.getReader()).toModel(PermissionAction.class);
-        new PermissionActionDAO().update(permissionAction);
-        mapper.writeValue(response.getOutputStream(), permissionAction);
+        if (new PermissionActionDAO().update(permissionAction)) {
+            mapper.writeValue(response.getOutputStream(), permissionAction);
+        } else {
+            mapper.writeValue(response.getOutputStream(), "{}");
+        }
+
     }
 
     @Override

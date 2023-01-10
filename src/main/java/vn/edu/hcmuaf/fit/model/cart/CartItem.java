@@ -15,15 +15,20 @@ public class CartItem extends Base<CartItem> {
     private int phoneId;
     private int colorId;
     private int quantity;
-    private int price;
+    private String price;
     private boolean isSave;
+    private Integer userId;
 
 
-    public CartItem(int phoneId, int colorId, int price, boolean isSave) {
+    public CartItem(int phoneId, int colorId, String price, boolean isSave) {
         this.phoneId = phoneId;
         this.colorId = colorId;
         this.price = price;
         this.isSave = isSave;
+    }
+
+    public boolean getSave() {
+        return isSave;
     }
 
     @Override
@@ -40,7 +45,7 @@ public class CartItem extends Base<CartItem> {
         return Objects.hash(super.hashCode(), phoneId, colorId, quantity, price, isSave);
     }
 
-    public CartItem(int phoneId, int colorId, int num, int price, boolean isSave) {
+    public CartItem(int phoneId, int colorId, int num, String price, boolean isSave) {
         this.phoneId = phoneId;
         this.colorId = colorId;
         this.price = price;

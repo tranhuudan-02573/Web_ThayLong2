@@ -77,7 +77,13 @@ public class PhoneSpecDAO extends AbstractDAO<PhoneSpec> {
                 "updated_at=:t.updated_at where phoneId = :t.phoneId and specId = " + sp, c);
     }
 
-    private void deleteSpec(PhoneSpec img) {
+    public boolean updateSpec(PhoneSpec c) {
+        c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        return update("update phone_spec set value = :t.value,specId = :t.specId," +
+                "updated_at=:t.updated_at where phoneId = :t.phoneId and specId = :t.specId", c);
+    }
+
+    public void deleteSpec(PhoneSpec img) {
 
         delete("delete from phone_spec where phoneId =:t.phoneId and specId = :t.specId", img);
 

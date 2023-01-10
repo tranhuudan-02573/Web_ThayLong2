@@ -18,7 +18,9 @@ public class IndexHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Model> users = new ModelDAO().list("", Model.class, null, null, null, null);
-        request.setAttribute("listModel", users);
+        request.setAttribute("models", users);
+        List<Brand> brands = new BrandDAO().list("", Brand.class, null, null, null, null);
+        request.setAttribute("brands", brands);
 
         request.getRequestDispatcher("/views/admin/manage/model/index.jsp").forward(request, response);
 

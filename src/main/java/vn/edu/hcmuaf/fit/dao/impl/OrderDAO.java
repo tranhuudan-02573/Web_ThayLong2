@@ -22,7 +22,7 @@ public class OrderDAO extends AbstractDAO<Order> {
                 "values (:t.userId,:t.payment,:t.total,:t.codeId,:t.order_stateId,:t.created_at,:t.updated_at)", order);
         for (OrderDetail od : order._orderDetails()
         ) {
-            new OrderDetailDAO("order_detail").save(od);
+            new OrderDetailDAO().save(od);
         }
         return id;
     }

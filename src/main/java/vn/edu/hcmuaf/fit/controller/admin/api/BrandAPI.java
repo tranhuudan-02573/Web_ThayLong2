@@ -21,11 +21,15 @@ public class BrandAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ObjectMapper mapper = new ObjectMapper();
-        int id = Integer.parseInt(request.getParameter("id").trim());
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-//       Color color = colorDAO.get(" and id = " + id, Color.class, null);
-//        mapper.writeValue(response.getOutputStream(), color);
+        String id = request.getParameter("id");
+
+        if (id != null) {
+            Brand users = new BrandDAO().get(" and id= " + id, Brand.class, null).get();
+            mapper.writeValue(response.getOutputStream(), users);
+        } else
+            mapper.writeValue(response.getOutputStream(), "{}");
     }
 
     @Override
@@ -55,7 +59,7 @@ public class BrandAPI extends HttpServlet {
         response.setContentType("application/json");
         Brand newModel = HttpUtil.of(request.getReader()).toModel(Brand.class);
         new BrandDAO().deleteBrand(newModel);
-        mapper.writeValue(response.getOutputStream(), newModel);
+        mapper.writeValue(response.getOutputStream(), "{}");
 
     }
 

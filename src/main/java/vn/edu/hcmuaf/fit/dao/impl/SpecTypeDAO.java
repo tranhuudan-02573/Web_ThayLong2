@@ -6,9 +6,10 @@ import vn.edu.hcmuaf.fit.model.phone.SpecType;
 import java.sql.Timestamp;
 
 public class SpecTypeDAO extends AbstractDAO<SpecType> {
-    public SpecTypeDAO( ) {
+    public SpecTypeDAO() {
         super("spec_types");
     }
+
     public int insertSpecType(SpecType pp) {
 
         pp.setCreated_at(new Timestamp(System.currentTimeMillis()));
@@ -18,6 +19,7 @@ public class SpecTypeDAO extends AbstractDAO<SpecType> {
                         " values(:t.name,:t.created_at,:t.updated_at)",
                 pp);
     }
+
     public void deleteSpecType(SpecType c) {
         delete("delete from spec_types  where id = :t.id", c);
 

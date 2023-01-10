@@ -32,7 +32,7 @@
                         <div class="card-body">
                             <!-- Header -->
                             <!-- Body -->
-                            <form action="/resetpass">
+                            <form action="/reset-pass" method="post">
 
 
                                 <!-- Material input -->
@@ -41,12 +41,6 @@
                                     <input type="email" name="email" id="email" class="form-control validate" required
                                            value="${requestScope.email}">
                                     <label for="email" data-error="wrong" data-success="right">Email</label>
-                                </div>
-                                <div class="md-form mb-4">
-                                    <i class="fas fa-lock prefix text-danger"></i>
-                                    <input type="password" name="pass-old" id="pass-old" class="form-control validate"
-                                           required>
-                                    <label data-error="wrong" data-success="right" for="pass-old">Mật khẩu cũ</label>
                                 </div>
 
                                 <div class="md-form mb-4">
@@ -64,9 +58,10 @@
                                 </div>
 
                                 <div class=" d-flex justify-content-between align-items-center">
-											<span>Đăng nhập bằng tài khoản khác? <a href="/views/web/index.jsp"
+											<span>Đăng nhập bằng tài khoản khác? <a href="/logout"
                                                                                     class="text-danger">Đăng nhập</a></span>
-                                    <button id="btn-reset" class="btn btn-danger waves-effect">cập nhật</button>
+                                    <button type="submit" id="btn-reset" class="btn btn-danger waves-effect">cập nhật
+                                    </button>
                                 </div>
                             </form>
                         </div>
